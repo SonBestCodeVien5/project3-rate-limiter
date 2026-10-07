@@ -1,6 +1,6 @@
 # Project 3 brief
 
-**Status:** no application code. [Experiment spec](../experiments/EXPERIMENT_SPEC.md) is a draft; architecture, quota parameters and tech stack are open.
+**Status:** no application code. The [roadmap to defense](../PROJECT_ROADMAP.md) and [experiment spec](../experiments/EXPERIMENT_SPEC.md) are drafts; architecture, quota parameters and tech stack are open.
 
 Project 3 studies traffic control when an API scales from one instance with local state to multiple instances with Redis shared state. The business need is to protect backend services from unstable or abnormal traffic without losing quota correctness or creating excessive overhead. Project 2 was an application project; a broader traffic management platform belongs to the future graduation thesis.
 

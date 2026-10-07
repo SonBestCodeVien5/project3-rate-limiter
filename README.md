@@ -4,6 +4,6 @@ Research prototype for traffic control in multi-instance API systems. Start with
 
 Current state: no application code. Architecture, experiment parameters, and implementation stack remain to be decided.
 
-Discussion draft: [experiment specification](docs/experiments/EXPERIMENT_SPEC.md). Its proposed parameters and open questions are not approved decisions.
+Discussion drafts: [roadmap to defense](docs/PROJECT_ROADMAP.md) and [experiment specification](docs/experiments/EXPERIMENT_SPEC.md). Their proposed timeline and parameters are not approved decisions.
 
 Codex repository instructions: [AGENTS.md](AGENTS.md).
