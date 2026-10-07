@@ -1,0 +1,33 @@
+# 10. Positioning Against Existing Solutions
+
+
+10.1 Production solutions
+
+
+- Nginx
+- Envoy
+- Redis-based implementations
+- Cloud API Gateway
+
+
+
+
+10.2 Why not directly use existing tools?
+
+
+Because Project 3 focuses on:
+
+
+- algorithm analysis;
+- distributed state trade-off;
+- concurrency correctness;
+- performance evaluation.
+
+
+
+
+10.3 Research contribution
+
+
+Build an experimental distributed rate limiting platform,
+not a production replacement.
