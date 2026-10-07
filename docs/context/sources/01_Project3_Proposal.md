@@ -4,7 +4,7 @@
 
 ## Đề tài và bài toán
 
-**Nghiên cứu và xây dựng cơ chế kiểm soát lưu lượng phân tán cho hệ thống API nhiều instance.** Khi backend mở rộng ra nhiều instance, limiter dùng state cục bộ có thể áp quota khác nhau tại mỗi instance. Traffic tăng đột biến còn có thể làm CPU, memory, database và response time xấu đi. Giải pháp đề xuất là prototype có load balancer, API instances, rate limiter và Redis shared state.
+**Nghiên cứu và xây dựng cơ chế kiểm soát lưu lượng phân tán cho hệ thống API nhiều instance.** Proposal dùng tình huống doanh nghiệp giả định vận hành API bán hàng trong đợt flash sale. Nếu limiter giữ state cục bộ tại mỗi instance, tổng request được chấp nhận có thể vượt quota chung; nếu cập nhật Redis không atomic, concurrent requests vẫn có thể gây race condition. Traffic vượt kiểm soát có thể làm API/database chậm hoặc lỗi, ảnh hưởng người mua hợp lệ và tạo rủi ro mất giao dịch. Đây là kịch bản nghiên cứu, chưa có số liệu sự cố doanh nghiệp thật.
 
 ## Câu hỏi nghiên cứu
 
@@ -17,7 +17,7 @@
 
 - **Bắt buộc theo Proposal:** API instances, Redis shared state, rate limiter, Fixed Window, Token Bucket, load testing và performance evaluation.
 - **Mở rộng theo Proposal:** Sliding Window, Redis Lua Script và monitoring. Roadmap lại đặt atomic operation với Lua Script trong trọng tâm nghiên cứu; giữ nghiên cứu atomicity trong phạm vi và làm rõ cơ chế khi lập kế hoạch.
-- **Đánh giá:** allow/reject correctness và overshoot; p50/p95/p99 latency; requests/giây; Redis CPU/memory và network overhead.
+- **Đánh giá:** allow/reject correctness và overshoot; p50/p95/p99 latency; requests/giây; Redis CPU/memory và network overhead. Các phép đo cần trả lời quota chung có được giữ khi tăng instance/concurrency không, burst được kiểm soát thế nào và chi phí Redis là bao nhiêu.
 - **Kết quả mong đợi:** prototype, so sánh thuật toán, phân tích trade-off correctness–performance và đánh giá scaling.
 
 Proposal minh họa limiter gắn với API instances; Roadmap minh họa một lớp traffic control phía trước. Vị trí limiter chưa phải quyết định triển khai.

@@ -1,6 +1,8 @@
 # Project 3 brief
 
-**Status:** no application code. The [roadmap to defense](../PROJECT_ROADMAP.md) and [experiment spec](../experiments/EXPERIMENT_SPEC.md) are drafts; architecture, quota parameters and tech stack are open.
+**Status:** Week 1 business framing and scope are complete, but the foundational knowledge self-check is pending; Week 1 overall remains in progress. Week 2 policy work has not started. There is no application code. The [roadmap to defense](../PROJECT_ROADMAP.md) and [experiment spec](../experiments/EXPERIMENT_SPEC.md) remain drafts; architecture, quota parameters and tech stack are open.
+
+The adviser accepted the topic and asked for stronger business-problem framing. The user selected a hypothetical e-commerce flash sale scenario; the Drive Proposal now includes its pain point, business impact and evaluation link. Required hand-in items are report, source code, slides and demo; the deadline is tentatively in the last 2–3 weeks of December 2026. Exact dates and grading rubric are unknown. See the [Week 1 business case](../WEEK1_BUSINESS_CASE.md).
 
 Project 3 studies traffic control when an API scales from one instance with local state to multiple instances with Redis shared state. The business need is to protect backend services from unstable or abnormal traffic without losing quota correctness or creating excessive overhead. Project 2 was an application project; a broader traffic management platform belongs to the future graduation thesis.
 

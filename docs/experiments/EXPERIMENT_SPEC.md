@@ -4,6 +4,8 @@
 **Nguồn:** [Roadmap](../context/sources/00_Project3_Roadmap.md) → [Proposal](../context/sources/01_Project3_Proposal.md) → [Research Context](../context/sources/10_Supplementary_Research_Context.md).  
 **Nhãn:** **Yêu cầu** = từ tài liệu dự án; **Đề xuất** = cần duyệt; **Mở** = chưa quyết định.
 
+**Bối cảnh đã chọn:** API bán hàng trong flash sale, dùng để giải thích tác động doanh nghiệp. Đây là kịch bản giả định; prototype chỉ mô phỏng API/traffic cần cho thí nghiệm, không xây hệ thống bán hàng.
+
 ## Mục tiêu và câu hỏi
 
 **Yêu cầu:** đo cách một limiter bảo vệ backend nhiều instance khi chuyển từ local state sang Redis shared state. So sánh:
