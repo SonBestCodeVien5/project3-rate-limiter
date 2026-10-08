@@ -10,15 +10,15 @@
 
 **Tác động nghiệp vụ.** Lưu lượng vượt kiểm soát có thể làm API và database chậm hoặc lỗi. Người mua hợp lệ bị ảnh hưởng, tạo rủi ro mất giao dịch và giảm độ tin cậy của dịch vụ. Chưa có log, doanh thu hoặc SLO của một doanh nghiệp cụ thể, nên báo cáo phải trình bày đây là **rủi ro trong kịch bản giả định**, không phải thiệt hại đã đo được.
 
-**Yêu cầu kỹ thuật.** Doanh nghiệp cần một quota chung theo client trên nhiều instance, quyết định allow/reject trước xử lý backend, giữ correctness khi request đồng thời và hạn chế chi phí latency/throughput do lớp kiểm soát thêm vào.
+**Yêu cầu kỹ thuật.** Doanh nghiệp cần một quota chung theo client trên nhiều instance, quyết định allow/reject trước xử lý backend, giữ correctness khi request đồng thời, hạn chế chi phí latency/throughput và bảo vệ khả năng phục vụ client hợp lệ khi client khác tạo tải bất thường. Khi Redis unavailable, prototype cần có hành vi fail-open hoặc fail-closed xác định rõ để đo trade-off giữa quota và availability.
 
-**Giải pháp và đánh giá.** Project 3 xây prototype nhỏ với load balancer, API instances, Redis shared state và rate limiter. So Fixed Window với Token Bucket, local state với Redis, một với nhiều instance, thao tác không atomic với atomic trong bài concurrent. Chạy tải bình thường, burst, concurrent và scaling; đo allow/reject correctness, overshoot theo policy, p50/p95/p99 latency, requests/giây và Redis CPU/memory. Kết quả phải cho thấy lợi ích bảo vệ quota cùng chi phí hiệu năng, thay vì chỉ chứng minh limiter chạy được.
+**Giải pháp và đánh giá.** Project 3 xây prototype nhỏ với load balancer, API instances, Redis shared state và rate limiter. So Fixed Window với Token Bucket, local state với Redis, một với nhiều instance, thao tác không atomic với atomic trong bài concurrent. Chạy tải bình thường, burst, concurrent, scaling và workload hỗn hợp gồm client hợp lệ cùng client tạo burst. So không limiter, local và Redis shared trên cùng tải/backend; đo legitimate goodput, p95/p99 của client hợp lệ, request vào backend, 429, timeout/5xx bên cạnh correctness, overshoot, throughput và Redis CPU/memory. Thử ngắt Redis ngắn để so fail-open/fail-closed theo availability, quota violation và recovery. Kết quả phải chứng minh mức bảo vệ backend và nêu chi phí/trade-off, thay vì chỉ chứng minh limiter chạy được.
 
-**Ranh giới.** Chỉ mô phỏng API/traffic cần cho thí nghiệm; không xây đơn hàng, thanh toán hay API Gateway hoàn chỉnh. Nền tảng traffic management rộng hơn là hướng phát triển cho đồ án tốt nghiệp.
+**Ranh giới.** Chỉ mô phỏng API/traffic cần cho thí nghiệm; không xây đơn hàng, thanh toán, Redis Cluster, hệ thống HA production hay API Gateway hoàn chỉnh. Nền tảng traffic management rộng hơn là hướng phát triển cho đồ án tốt nghiệp.
 
 ## Kết quả tuần 1 và thông tin hành chính
 
-- **Đã chốt:** đề tài distributed rate limiting, bối cảnh flash sale, phạm vi Project 3, bốn câu hỏi nghiên cứu trong Proposal, luồng lập luận doanh nghiệp → vấn đề → tác động → yêu cầu → giải pháp → đánh giá.
+- **Đã chốt:** đề tài distributed rate limiting, bối cảnh flash sale, baseline đánh giá mới và năm câu hỏi nghiên cứu trong Proposal, luồng lập luận doanh nghiệp → vấn đề → tác động → yêu cầu → giải pháp → thí nghiệm → đánh giá.
 - **Sản phẩm được yêu cầu:** báo cáo, mã nguồn, slide và demo.
 - **Thời hạn:** dự kiến trong 2–3 tuần cuối tháng 12/2026. Ngày nộp/bảo vệ và rubric chi tiết chưa được công bố hoặc cung cấp; cập nhật [lộ trình](PROJECT_ROADMAP.md) khi có.
 - **Kiến thức nền còn phải học trong tuần 1:** đường đi của một HTTP request qua load balancer và API instances; quota theo client và local state; khác biệt giữa reject hợp lệ của limiter và lỗi backend. Câu hỏi tự kiểm tra và điều kiện hoàn tất nằm trong [lộ trình](PROJECT_ROADMAP.md#kiến-thức-nền-và-cách-tự-kiểm-tra-để-hoàn-tất-tuần-1).

@@ -15,9 +15,13 @@ Bài toán bắt đầu từ traffic API không ổn định hoặc tăng đột
 - **Thành phần triển khai:** API instances, load balancer, Redis shared state, rate limiter.
 - **So sánh nghiên cứu:** Fixed Window và Token Bucket; local state và Redis shared state; một và nhiều API instance; atomic operation với Lua Script. Sliding Window là mở rộng.
 - **Thí nghiệm:** traffic bình thường, burst và concurrent requests. Đo correctness, p50/p95/p99 latency, requests/giây, overshoot và Redis CPU/memory.
+- **Baseline cập nhật:** workload hỗn hợp gồm client hợp lệ và client tạo burst; so không limiter, local limiter và Redis shared limiter trên cùng tải để đo mức bảo vệ backend. Thử nghiệm ngắt Redis có kiểm soát dùng để đánh giá fail-open/fail-closed, quota violation, availability và recovery, không xây hệ thống chịu lỗi production.
+- **Chỉ số bổ sung:** goodput và p95/p99 của client hợp lệ, số request vào backend, 429, timeout/5xx; tách các lỗi này khỏi reject hợp lệ.
 
 ## Ranh giới
 
 Không triển khai API Gateway platform hoàn chỉnh, service mesh, Kubernetes production hoặc full cloud infrastructure trong Project 3. Adaptive rate limiting, circuit breaker, load shedding, retry control, multi-dimensional quota và observability-driven traffic control thuộc hướng mở rộng cho đồ án tốt nghiệp.
+
+Redis Cluster, dashboard quản trị và policy management nhiều tầng không cần cho baseline Project 3. Cấu hình policy tĩnh, được lưu theo từng lượt chạy, là đủ cho thí nghiệm tái lập.
 
 Tài liệu và báo cáo cần đi theo mạch: vấn đề doanh nghiệp → pain point → tác động → yêu cầu kỹ thuật → giải pháp → thí nghiệm → đánh giá → phát triển tương lai.

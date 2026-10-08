@@ -12,12 +12,13 @@
 2. Distributed shared state ảnh hưởng thế nào đến correctness và performance?
 3. Hệ thống thay đổi thế nào khi tăng số lượng API instance?
 4. Atomic operation như Redis Lua Script có cải thiện correctness khi có concurrent requests không?
+5. Trong tải hỗn hợp hoặc khi Redis tạm thời unavailable, limiter thay đổi khả năng phục vụ client hợp lệ, quota correctness và độ trễ ra sao?
 
 ## Phạm vi và kết quả
 
-- **Bắt buộc theo Proposal:** API instances, Redis shared state, rate limiter, Fixed Window, Token Bucket, load testing và performance evaluation.
-- **Mở rộng theo Proposal:** Sliding Window, Redis Lua Script và monitoring. Roadmap lại đặt atomic operation với Lua Script trong trọng tâm nghiên cứu; giữ nghiên cứu atomicity trong phạm vi và làm rõ cơ chế khi lập kế hoạch.
-- **Đánh giá:** allow/reject correctness và overshoot; p50/p95/p99 latency; requests/giây; Redis CPU/memory và network overhead. Các phép đo cần trả lời quota chung có được giữ khi tăng instance/concurrency không, burst được kiểm soát thế nào và chi phí Redis là bao nhiêu.
-- **Kết quả mong đợi:** prototype, so sánh thuật toán, phân tích trade-off correctness–performance và đánh giá scaling.
+- **Bắt buộc theo Proposal cập nhật:** API instances, Redis shared state, rate limiter, Fixed Window, Token Bucket, load testing và performance evaluation; kiểm chứng quyết định quota atomic dưới concurrent load; workload hỗn hợp để đo bảo vệ backend/client hợp lệ; fault injection Redis ngắn và có kiểm soát.
+- **Mở rộng theo Proposal cập nhật:** Sliding Window, so sánh thêm Redis Functions với cơ chế atomic đã chọn và monitoring. Atomicity là phần lõi; Lua Script là một cơ chế có thể chọn, không phải thuật toán rate limiting thứ ba.
+- **Đánh giá:** allow/reject correctness và overshoot; p50/p95/p99 latency; requests/giây; Redis CPU/memory và network overhead. Với workload hỗn hợp, đo goodput và p95/p99 của client hợp lệ, request vào backend, 429, timeout/5xx. Khi Redis unavailable, đo quota violation, availability và recovery; không suy kết quả thành độ sẵn sàng production.
+- **Kết quả mong đợi:** prototype, so sánh thuật toán, phân tích trade-off correctness–performance, đánh giá scaling, bằng chứng bảo vệ backend và dữ liệu về hành vi khi Redis lỗi.
 
 Proposal minh họa limiter gắn với API instances; Roadmap minh họa một lớp traffic control phía trước. Vị trí limiter chưa phải quyết định triển khai.

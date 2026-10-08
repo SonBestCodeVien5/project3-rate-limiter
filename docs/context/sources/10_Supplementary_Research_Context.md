@@ -27,3 +27,7 @@ Local state thuận tiện cho một instance nhưng không chia sẻ quota gi�
 4. Tăng số API instance có thể tăng throughput nhưng tăng chi phí phối hợp state.
 
 Tài liệu này xem Project 3 là nền tảng thí nghiệm về thuật toán, distributed state, concurrency và performance; không phải sản phẩm API Gateway hoàn chỉnh.
+
+## Baseline đánh giá cập nhật
+
+Bản nguồn đã bổ sung workload hỗn hợp để đo goodput/p95/p99 của client hợp lệ, request vào backend, 429, timeout và 5xx; so không limiter, local và Redis shared trên cùng tải và năng lực backend. Một thí nghiệm Redis outage có kiểm soát so fail-open/fail-closed bằng quota violation, availability và recovery. Policy cần được lưu phiên bản theo lượt chạy; raw requests, cấu hình môi trường và các lượt lặp phải truy lại được. Đây là testbed giới hạn, không phải Redis Cluster hay nền tảng HA production.
