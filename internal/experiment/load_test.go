@@ -177,3 +177,217 @@ func TestRedirectDoesNotCreateAnUnrecordedRequest(t *testing.T) {
 		t.Fatalf("unexpected redirect accounting: %+v calls=%d err=%v", s, calls.Load(), err)
 	}
 }
+
+func TestProfilePlansAndPhases(t *testing.T) {
+	base := testConfig("http://localhost/work")
+	for _, tc := range []struct {
+		name       string
+		edit       func(*Config)
+		want       int
+		phases     map[string]int
+		legitimate int
+	}{
+		{"mixed", func(c *Config) { c.Profile = "mixed" }, 10, map[string]int{"measurement": 10}, 5},
+		{"normal", func(c *Config) { c.Profile = "normal" }, 10, map[string]int{"measurement": 10}, 10},
+		{"burst", func(c *Config) {
+			c.Profile = "burst"
+			c.BurstStart = 20 * time.Millisecond
+			c.BurstDuration = 40 * time.Millisecond
+			c.BurstRPS = 200
+		}, 16, map[string]int{"measurement": 5, "base": 3, "burst": 8}, 5},
+		{"concurrent", func(c *Config) {
+			c.Profile = "concurrent"
+			c.ConcurrentAt = 20 * time.Millisecond
+			c.ConcurrentCount = 8
+		}, 8, map[string]int{"batch": 8}, 0},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			c := base
+			tc.edit(&c)
+			if err := c.Validate(); err != nil {
+				t.Fatal(err)
+			}
+			if got := c.plannedCount(); got != int64(tc.want) {
+				t.Fatalf("planned=%d want=%d", got, tc.want)
+			}
+			start := time.Unix(100, 0)
+			streams := c.streams(start)
+			phases := map[string]int{}
+			legit := 0
+			for i := range streams {
+				for {
+					at, ok := streams[i].next()
+					if !ok {
+						break
+					}
+					if at.Before(start) || !at.Before(start.Add(c.Duration)) {
+						t.Fatalf("schedule outside duration: %v", at)
+					}
+					phases[streams[i].phase]++
+					if streams[i].class == "legitimate" {
+						legit++
+					}
+					if tc.name == "concurrent" && !at.Equal(start.Add(c.ConcurrentAt)) {
+						t.Fatalf("batch schedule differs: %v", at)
+					}
+					if tc.name == "burst" && streams[i].phase == "burst" && (at.Before(start.Add(c.BurstStart)) || !at.Before(start.Add(c.BurstStart+c.BurstDuration))) {
+						t.Fatalf("burst schedule outside phase: %v", at)
+					}
+					streams[i].index++
+				}
+			}
+			if len(phases) != len(tc.phases) || legit != tc.legitimate {
+				t.Fatalf("phases=%v legitimate=%d", phases, legit)
+			}
+			for phase, want := range tc.phases {
+				if phases[phase] != want {
+					t.Fatalf("phase %s=%d want=%d", phase, phases[phase], want)
+				}
+			}
+		})
+	}
+}
+
+func TestConcurrentBatchHasOneKeyAndRecordsActualLag(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(200) }))
+	defer server.Close()
+	c := testConfig(server.URL)
+	c.Profile, c.ConcurrentCount, c.ConcurrentAt = "concurrent", 8, 10*time.Millisecond
+	var out bytes.Buffer
+	s, err := Run(context.Background(), c, &out)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if s.Scheduled != 8 || s.Sent != 8 || s.LegitimateSent != 0 {
+		t.Fatalf("unexpected summary: %+v", s)
+	}
+	decoder := json.NewDecoder(&out)
+	var scheduled time.Time
+	for i := 0; i < 8; i++ {
+		var r Record
+		if err := decoder.Decode(&r); err != nil {
+			t.Fatal(err)
+		}
+		if r.Phase != "batch" || r.ClientKey != "concurrent-0001" || r.Sent == nil {
+			t.Fatalf("bad batch record: %+v", r)
+		}
+		if i == 0 {
+			scheduled = r.Scheduled
+		} else if !r.Scheduled.Equal(scheduled) {
+			t.Fatalf("batch has different schedule: %v vs %v", r.Scheduled, scheduled)
+		}
+		if r.ScheduleLagMS < 0 {
+			t.Fatalf("negative lag: %+v", r)
+		}
+	}
+}
+
+func TestBurstRunLabelsBothClassesByFinitePhase(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(200) }))
+	defer server.Close()
+	c := testConfig(server.URL)
+	c.Profile, c.BurstStart, c.BurstDuration, c.BurstRPS = "burst", 20*time.Millisecond, 40*time.Millisecond, 200
+	var out bytes.Buffer
+	s, err := Run(context.Background(), c, &out)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if s.Scheduled != 16 {
+		t.Fatalf("scheduled=%d", s.Scheduled)
+	}
+	decoder := json.NewDecoder(&out)
+	phases := map[string]int{}
+	legitimateBurst := 0
+	for i := 0; i < s.Scheduled; i++ {
+		var r Record
+		if err := decoder.Decode(&r); err != nil {
+			t.Fatal(err)
+		}
+		phases[r.Phase]++
+		if r.Phase == "burst" {
+			if r.Scheduled.Before(s.Started.Add(c.BurstStart)) || !r.Scheduled.Before(s.Started.Add(c.BurstStart+c.BurstDuration)) {
+				t.Fatalf("wrong burst time: %+v", r)
+			}
+			if r.ClientClass == "legitimate" {
+				legitimateBurst++
+			}
+		}
+	}
+	if phases["base"] != 6 || phases["burst"] != 10 || legitimateBurst != 2 {
+		t.Fatalf("phases=%v legitimate burst=%d", phases, legitimateBurst)
+	}
+}
+
+func TestConcurrentBatchDropsAtInflightBound(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { time.Sleep(40 * time.Millisecond); w.WriteHeader(200) }))
+	defer server.Close()
+	c := testConfig(server.URL)
+	c.Profile, c.ConcurrentCount, c.MaxInflight = "concurrent", 20, 1
+	s, err := Run(context.Background(), c, io.Discard)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if s.Scheduled != 20 || s.Sent != 1 || s.Drops["max_inflight"] != 19 {
+		t.Fatalf("batch escaped in-flight bound: %+v", s)
+	}
+}
+
+func TestProfileValidationRejectsBadPhaseAndTotalWork(t *testing.T) {
+	base := testConfig("http://localhost/work")
+	for _, edit := range []func(*Config){
+		func(c *Config) { c.Profile = "unknown" },
+		func(c *Config) { c.Profile = "burst"; c.BurstDuration = time.Second; c.BurstRPS = 200 },
+		func(c *Config) {
+			c.Profile = "burst"
+			c.BurstStart = 20 * time.Millisecond
+			c.BurstDuration = 20 * time.Millisecond
+			c.BurstRPS = 50
+		},
+		func(c *Config) {
+			c.Profile = "burst"
+			c.BurstDuration = 60 * time.Second
+			c.BurstRPS = 100000
+			c.Duration = 10 * time.Minute
+		},
+		func(c *Config) { c.Profile = "concurrent"; c.ConcurrentAt = c.Duration; c.ConcurrentCount = 5 },
+		func(c *Config) { c.Profile = "concurrent"; c.ConcurrentCount = 10001 },
+		func(c *Config) { c.Profile = "normal"; c.BurstRPS = 10 },
+	} {
+		c := base
+		edit(&c)
+		if c.Validate() == nil {
+			t.Fatalf("accepted invalid config: %+v", c)
+		}
+	}
+}
+
+func TestBacklogSkipsOldSlotsButNotSimultaneousBatch(t *testing.T) {
+	start := time.Unix(100, 0)
+	periodic := []stream{{start: start, end: start.Add(100 * time.Millisecond), rate: 100}}
+	periodic[0].index = 1
+	if !laterScheduleAlreadyDue(periodic, start, start.Add(15*time.Millisecond)) {
+		t.Fatal("older slot would be sent alongside a newer due slot")
+	}
+	if laterScheduleAlreadyDue(periodic, start, start.Add(5*time.Millisecond)) {
+		t.Fatal("future slot should not suppress the current one")
+	}
+	batch := []stream{{start: start, count: 10, index: 1}}
+	if laterScheduleAlreadyDue(batch, start, start.Add(15*time.Millisecond)) {
+		t.Fatal("same-instant batch slots must remain eligible")
+	}
+}
+
+func TestNormalAndConcurrentIgnoreLegitimateSplit(t *testing.T) {
+	for _, profile := range []string{"normal", "concurrent"} {
+		c := testConfig("http://localhost/work")
+		c.Profile = profile
+		c.RPS = 10
+		c.LegitimateRPS = 20 // CLI default remains valid for profiles that ignore this split.
+		if profile == "concurrent" {
+			c.ConcurrentCount = 5
+		}
+		if err := c.Validate(); err != nil {
+			t.Fatalf("%s rejected unused legitimate split: %v", profile, err)
+		}
+	}
+}

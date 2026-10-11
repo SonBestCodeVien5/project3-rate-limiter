@@ -28,6 +28,7 @@ func run() error {
 	var out string
 	flag.StringVar(&c.Target, "target", "http://localhost:8080/work", "Full /work URL")
 	flag.StringVar(&c.RunID, "run-id", time.Now().UTC().Format("20060102T150405.000000000Z"), "Unique run identifier")
+	flag.StringVar(&c.Profile, "profile", "mixed", "Workload profile: mixed, normal, burst, concurrent")
 	flag.DurationVar(&c.Duration, "duration", 10*time.Second, "Offered load duration (maximum 10m)")
 	flag.IntVar(&c.RPS, "rps", 100, "Total offered requests/second, including legitimate traffic")
 	flag.IntVar(&c.LegitimateRPS, "legitimate-rps", 20, "Legitimate offered requests/second")
@@ -35,6 +36,11 @@ func run() error {
 	flag.IntVar(&c.MaxInflight, "max-inflight", 100, "Maximum concurrent HTTP requests")
 	flag.DurationVar(&c.Timeout, "timeout", 2*time.Second, "Per-request timeout")
 	flag.DurationVar(&c.MaxScheduleLag, "max-schedule-lag", 100*time.Millisecond, "Drop stale schedules rather than catch-up bursts")
+	flag.DurationVar(&c.BurstStart, "burst-start", 0, "Burst phase start relative to run start")
+	flag.DurationVar(&c.BurstDuration, "burst-duration", 0, "Finite burst phase duration")
+	flag.IntVar(&c.BurstRPS, "burst-rps", 0, "Abusive requests/second during burst phase; must exceed baseline abusive rate")
+	flag.DurationVar(&c.ConcurrentAt, "concurrent-at", 0, "Common scheduled instant of concurrent batch, relative to run start")
+	flag.IntVar(&c.ConcurrentCount, "concurrent-count", 0, "Number of same-key requests in concurrent batch")
 	flag.StringVar(&c.Mode, "mode", "unspecified", "Metadata label: none/local/redis")
 	flag.StringVar(&c.Algorithm, "algorithm", "unspecified", "Metadata label: fixed-window/token-bucket")
 	flag.StringVar(&c.FailPolicy, "fail-policy", "unspecified", "Metadata label: open/closed")
@@ -63,7 +69,7 @@ func run() error {
 		return strings.TrimSpace(string(b))
 	}
 	host, _ := os.Hostname()
-	metadata := map[string]any{"schema_version": 1, "config": c, "command_argv": os.Args, "git_revision": git("rev-parse", "HEAD"), "git_status_porcelain": git("status", "--porcelain"), "go_version": runtime.Version(), "os": runtime.GOOS, "arch": runtime.GOARCH, "cpu_count": runtime.NumCPU(), "gomaxprocs": runtime.GOMAXPROCS(0), "hostname": host, "recorded_at": time.Now().UTC(), "scope": "smoke/pilot; configuration labels do not verify server state"}
+	metadata := map[string]any{"schema_version": 2, "workload_version": 2, "config": c, "command_argv": os.Args, "git_revision": git("rev-parse", "HEAD"), "git_status_porcelain": git("status", "--porcelain"), "go_version": runtime.Version(), "os": runtime.GOOS, "arch": runtime.GOARCH, "cpu_count": runtime.NumCPU(), "gomaxprocs": runtime.GOMAXPROCS(0), "hostname": host, "recorded_at": time.Now().UTC(), "scope": "smoke/pilot; configuration labels do not verify server state"}
 	writeJSON := func(name string, v any) error {
 		b, err := json.MarshalIndent(v, "", "  ")
 		if err != nil {
