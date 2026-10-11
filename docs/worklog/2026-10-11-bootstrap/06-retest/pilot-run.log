@@ -1,0 +1,20 @@
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-agent" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-agent: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-ai" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-ai: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-compose" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-compose: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-debug" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-debug: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-desktop" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-desktop: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-extension" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-extension: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-init" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-init: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-mcp" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-mcp: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-model" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-model: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-offload" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-offload: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-pass" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-pass: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-sandbox" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-sandbox: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-sbom" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-sbom: no such file or directory
+WARNING: Plugin "/usr/local/lib/docker/cli-plugins/docker-scout" is not valid: failed to fetch metadata: fork/exec /usr/local/lib/docker/cli-plugins/docker-scout: no such file or directory
+artifacts=/home/khanhson2005/projects/project3-rate-limiter/artifacts/bootstrap-pilot/none-fixed-window/load sent=1500 completed=1500 dropped=0 legitimate_goodput=9.31/s
+artifacts=/home/khanhson2005/projects/project3-rate-limiter/artifacts/bootstrap-pilot/local-fixed-window/load sent=1500 completed=1500 dropped=0 legitimate_goodput=17.06/s
+artifacts=/home/khanhson2005/projects/project3-rate-limiter/artifacts/bootstrap-pilot/local-token-bucket/load sent=1500 completed=1500 dropped=0 legitimate_goodput=19.34/s
+artifacts=/home/khanhson2005/projects/project3-rate-limiter/artifacts/bootstrap-pilot/redis-fixed-window/load sent=1500 completed=1500 dropped=0 legitimate_goodput=18.99/s
+artifacts=/home/khanhson2005/projects/project3-rate-limiter/artifacts/bootstrap-pilot/redis-token-bucket/load sent=1500 completed=1500 dropped=0 legitimate_goodput=19.76/s
+Pilot artifacts: /home/khanhson2005/projects/project3-rate-limiter/artifacts/bootstrap-pilot

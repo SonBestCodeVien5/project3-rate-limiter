@@ -1,0 +1,42 @@
+=== RUN   TestLocalPolicySequences
+=== RUN   TestLocalPolicySequences/fixed-window
+=== RUN   TestLocalPolicySequences/token-bucket
+--- PASS: TestLocalPolicySequences (0.00s)
+    --- PASS: TestLocalPolicySequences/fixed-window (0.00s)
+    --- PASS: TestLocalPolicySequences/token-bucket (0.00s)
+=== RUN   TestLocalConcurrentAndScaling
+=== RUN   TestLocalConcurrentAndScaling/fixed-window
+=== RUN   TestLocalConcurrentAndScaling/token-bucket
+--- PASS: TestLocalConcurrentAndScaling (0.01s)
+    --- PASS: TestLocalConcurrentAndScaling/fixed-window (0.00s)
+    --- PASS: TestLocalConcurrentAndScaling/token-bucket (0.00s)
+=== RUN   TestLocalExpiryAndClockRollback
+--- PASS: TestLocalExpiryAndClockRollback (0.00s)
+=== RUN   TestLocalCanceledContext
+--- PASS: TestLocalCanceledContext (0.00s)
+=== RUN   TestPolicyValidation
+--- PASS: TestPolicyValidation (0.00s)
+=== RUN   TestTokenBucketEnvelope
+--- PASS: TestTokenBucketEnvelope (0.00s)
+=== RUN   TestRedisConcurrentSharedQuota
+=== RUN   TestRedisConcurrentSharedQuota/fixed-window
+    redis_test.go:32: set REDIS_TEST_ADDR for real Redis integration tests
+=== RUN   TestRedisConcurrentSharedQuota/token-bucket
+    redis_test.go:32: set REDIS_TEST_ADDR for real Redis integration tests
+--- PASS: TestRedisConcurrentSharedQuota (0.00s)
+    --- SKIP: TestRedisConcurrentSharedQuota/fixed-window (0.00s)
+    --- SKIP: TestRedisConcurrentSharedQuota/token-bucket (0.00s)
+=== RUN   TestRedisRefillExpiryAndPolicyIsolation
+    redis_test.go:95: set REDIS_TEST_ADDR for real Redis integration tests
+--- SKIP: TestRedisRefillExpiryAndPolicyIsolation (0.00s)
+=== RUN   TestRedisFixedWindowBoundary
+    redis_test.go:126: set REDIS_TEST_ADDR for real Redis integration tests
+--- SKIP: TestRedisFixedWindowBoundary (0.00s)
+=== RUN   TestRedisTokenEnvelope
+    redis_test.go:144: set REDIS_TEST_ADDR for real Redis integration tests
+--- SKIP: TestRedisTokenEnvelope (0.00s)
+=== RUN   TestRedisNonAtomicControlDemonstratesOvershoot
+    redis_test.go:171: set REDIS_TEST_ADDR for real Redis integration tests
+--- SKIP: TestRedisNonAtomicControlDemonstratesOvershoot (0.00s)
+PASS
+ok  	project3/ratelimiter/internal/limiter	1.035s
