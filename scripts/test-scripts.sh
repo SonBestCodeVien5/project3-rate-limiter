@@ -23,4 +23,14 @@ for status in 0 9; do
   expected=$'unpause redis\ndown --remove-orphans'
   [[ "$(cat "$tmp/cleanup-$status.log")" == "$expected" ]]
 done
-echo 'Script cleanup tests passed'
+mkdir -p "$root/artifacts"
+exec 9>"$root/artifacts/.research-pilot.lock"
+flock -n 9
+if bash "$root/scripts/research-pilot.sh" --case mixed-redis --output "$tmp/should-not-start" >"$tmp/locked.log" 2>&1; then
+  echo 'research pilot accepted a second runner' >&2
+  exit 1
+fi
+[[ ! -e "$tmp/should-not-start" ]]
+grep -q 'research pilot already running' "$tmp/locked.log"
+flock -u 9
+echo 'Script cleanup and runner lock tests passed'

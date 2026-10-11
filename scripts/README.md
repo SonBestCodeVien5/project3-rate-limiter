@@ -1,6 +1,6 @@
 # Chạy kiểm tra và pilot
 
-Các giá trị tải ở đây là lựa chọn kỹ thuật để smoke/pilot, chưa phải protocol được khóa hoặc kết luận RQ1–RQ5. Cần Go, Docker Compose, `curl` và GNU `timeout`. Các script Docker dùng cố định project `project3-lab`, từ chối chạy nếu project này đã có container, và dọn container do lượt chạy tạo ra khi thoát. Không dùng `FLUSHDB`.
+Các giá trị tải ở đây là lựa chọn kỹ thuật để smoke/pilot, chưa phải protocol được khóa hoặc kết luận RQ1–RQ5. Cần Go, Docker Compose, `curl` và GNU `timeout`; `research-pilot.sh` cần thêm `flock` để khóa một runner trong cùng checkout. Các script Docker dùng cố định project `project3-lab`, từ chối chạy nếu project này đã có container, và dọn container do lượt chạy tạo ra khi thoát. Không dùng `FLUSHDB`.
 
 ```bash
 bash scripts/verify.sh

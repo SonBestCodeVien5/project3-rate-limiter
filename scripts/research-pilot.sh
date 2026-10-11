@@ -53,6 +53,10 @@ done
 if ((RUN_ANALYSIS)) && [[ ! -f "$LAB_ROOT/scripts/analyze.py" ]]; then
   echo 'analyzer unavailable: scripts/analyze.py' >&2; exit 2
 fi
+command -v flock >/dev/null
+mkdir -p "$LAB_ROOT/artifacts"
+exec 9>"$LAB_ROOT/artifacts/.research-pilot.lock"
+flock -n 9 || { echo 'research pilot already running' >&2; exit 1; }
 
 if [[ -z "$LAB_OUTPUT" ]]; then LAB_OUTPUT="$LAB_ROOT/artifacts/research-pilot-$(date -u +%Y%m%dT%H%M%S)-$$"; fi
 [[ ! -e "$LAB_OUTPUT" ]] || { echo "output already exists: $LAB_OUTPUT" >&2; exit 2; }
