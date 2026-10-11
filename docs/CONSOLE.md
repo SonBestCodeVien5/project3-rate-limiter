@@ -29,3 +29,20 @@ Console chỉ bind `127.0.0.1`. `/api/runs/{id}/metrics` poll `/metrics` trong c
 Khi hủy hoặc dừng Console bằng SIGINT/SIGTERM, controller gửi SIGTERM tới process group, đợi runner cleanup rồi kiểm tra container của project. Nếu Console bị SIGKILL/restart bất ngờ, run dở được đánh dấu `interrupted`; kiểm tra `docker ps --filter label=com.docker.compose.project=project3-research-lab` và log trước khi chạy lại. Runner giữ khóa trong suốt tiến trình còn chạy. `cleanup-error` nghĩa là còn container hoặc không xác minh được cleanup; cần kiểm tra thủ công trước khi diễn tập tiếp.
 
 Phạm vi hiện tại không cho chỉnh quota, backend capacity, thuật toán hay fault injection từ UI; dùng CLI và artifact để thử các phép đo đó. Các biểu đồ, history database và truy cập LAN cũng chưa có.
+
+## Giao diện và hướng phát triển
+
+Bản hiện tại đặt chỉ số cuối lượt thành các thẻ riêng (request đã gửi, 2xx, 429, goodput và p95 của client hợp lệ, backend arrivals xác nhận). Cấu hình thực tế, snapshot từng instance và artifact vẫn xem được; JSON thô nằm trong phần mở rộng để dòng dài không kéo giãn trang. Cách phân cấp thẻ chỉ số và phần xem chi tiết được tham khảo từ [Custom Dashboards của Langfuse](https://langfuse.com/docs/metrics/features/custom-dashboards); Console không dùng Langfuse hay dữ liệu LLM.
+
+Các mục sau là **đề xuất tùy chọn**, không phải yêu cầu Roadmap/Proposal hoặc tính năng đã triển khai:
+
+| Ưu tiên | Tính năng có thể thêm | Điều kiện trước khi làm |
+| --- | --- | --- |
+| 1 | So sánh ba run `mixed-none/local/redis` cạnh nhau theo goodput hợp lệ, p95/p99, 429/5xx và backend arrivals | Chỉ ghép run có cùng workload, backend config, số API và revision; hiển thị khác biệt cấu hình nếu không khớp. |
+| 2 | Biểu đồ nhỏ từ artifacts sau run: traffic hợp lệ/toàn tải, quyết định limiter và backend overload theo thời gian | Kiểm tra timestamp, đơn vị, dropped requests và tác động của xử lý dữ liệu; không gọi snapshot cuối là live. |
+| 3 | Mở thêm preset `normal`, `burst`, `concurrent`, `scale-1/2/4` với tham số được khóa theo từng preset | Pilot và protocol phải xác định tổ hợp hợp lệ, giới hạn tải, phép so sánh và nhãn cấu hình thực tế. |
+| 4 | Hiện tiến trình runner và Redis CPU/memory sample rõ thời điểm lấy | Cần đo overhead polling/sampling trước khi dùng số liệu này trong báo cáo. |
+| 5 | Trình diễn Redis outage có thời lượng cố định và cleanup được kiểm chứng | Chỉ sau khi fault injection CLI ổn định; không mở lệnh Docker hay thời lượng tùy ý từ trình duyệt. |
+| Sau cùng | Export gói artifact/báo cáo hoặc dashboard lưu lịch sử nhiều run | Chỉ thêm khi một buổi demo/đánh giá thật cần; không thay trace và analyzer hiện có. |
+
+Prometheus/Grafana hay Loki/Alloy chỉ nên xem xét nếu cần quan sát dài hạn hoặc tìm log qua nhiều run mà artifacts hiện tại không đáp ứng. Truy cập LAN cần thiết kế quyền điều khiển process riêng. Những mục này không thuộc bản Console local hiện tại.
