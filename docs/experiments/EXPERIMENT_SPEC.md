@@ -60,7 +60,7 @@ Mỗi lượt chạy cần lưu cấu hình, version code/policy, `run_id`, requ
 
 Prototype đã chọn client key, policy/time semantics, vị trí limiter, Redis Lua, fail policies và stack; xem [thiết kế](../IMPLEMENTATION.md). Lượt smoke ban đầu đã chạy, nhưng chưa khóa protocol nghiên cứu. Các quyết định còn lại là:
 
-1. Xây oracle độc lập cho trace concurrent của từng thuật toán và cách tính quota violation/recovery theo pha outage.
+1. Analyzer độc lập đã có kiểm tra trace FW/TB và phân pha outage/recovery; xem [hợp đồng phân tích](ANALYSIS.md). Còn phải xác định mức quan sát cho cửa sổ đầy đủ và quota violation khi fail-open có quyết định không rõ; không coi kết quả inconclusive là pass.
 2. Dùng pilot để chốt ngưỡng backend, mức tải, warm-up, số lần lặp, số API instance, cửa sổ Redis outage và cách đo tài nguyên.
 3. Kiểm chứng generator đạt offered load ở các mức đã chọn, rồi khóa protocol trước các lượt đo chính thức.
 

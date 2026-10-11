@@ -51,3 +51,7 @@ Clock wall time vẫn có thể nhảy (đặc biệt FW). Môi trường thí n
 - Smoke Compose: load balancer → 2 API → backend; lưu raw requests/config/summary/metrics và outage events.
 
 Xem [hồ sơ từng bước](worklog/2026-10-11-bootstrap/README.md) để biết phép nào thực sự đã chạy. Benchmark lặp, oracle đầy đủ trên trace, kiểm định generator, ngưỡng recovery và protocol chính thức vẫn là công việc nghiên cứu tiếp theo.
+
+## Bổ sung công cụ đo vòng 2
+
+Đã có profile normal/burst/concurrent, topology 1/2/4 và [analyzer trace độc lập](experiments/ANALYSIS.md). [Hồ sơ vòng đo](worklog/2026-10-11-measurement/README.md) ghi pilot thực, các lượt generator không đạt tải và hiệu chỉnh. Chưa khóa protocol hoặc kết luận RQ1–RQ5; analyzer giữ nhãn inconclusive khi độ phủ cửa sổ/state không đủ.

@@ -40,6 +40,8 @@ Lượt phát triển dùng vòng plan → code → test → review → sửa/re
 ```bash
 bash scripts/pilot-matrix.sh
 bash scripts/redis-outage.sh
+# Pilot normal/burst/concurrent và scaling 1/2/4:
+bash scripts/research-pilot.sh --analyze
 # Một lượt tùy chỉnh khi stack đang chạy:
 go run ./cmd/loadgen -duration 10s -rps 100 -legitimate-rps 20 \
   -mode redis -algorithm fixed-window -fail-policy closed -out artifacts/my-run
@@ -52,3 +54,5 @@ Mỗi run lưu `metadata.json`, `requests.jsonl`, `summary.json`; runner thêm c
 Summary chưa phải oracle quota hoặc đánh giá recovery. Cần khóa tải, warm-up, số lượt lặp, kiểm chứng generator và phân tích riêng từng thuật toán trước kết luận RQ1–RQ5. Test đối chứng non-atomic có barrier chỉ chứng minh khả năng lost update, không đo tần suất race tự nhiên. Xem [trạng thái triển khai và việc còn lại](docs/IMPLEMENTATION_STATUS.md) và [chi tiết runner](scripts/README.md).
 
 Workspace hội thoại: [ChatGPT Project 3](https://chatgpt.com/g/g-p-6ac5bc31497c81919197782e9d2226c6-project3/project). Hướng dẫn agent: [AGENTS.md](AGENTS.md).
+
+Vòng công cụ đo tiếp theo có [protocol ứng viên](docs/experiments/PILOT_PROTOCOL.md), [analyzer độc lập](docs/experiments/ANALYSIS.md) và [hồ sơ kiểm chứng](docs/worklog/2026-10-11-measurement/README.md). Runner mới dùng project `project3-research-lab`, mặc định loopback 18080; tách khỏi runner bootstrap. [Đánh giá scope và chiến lược học](docs/SCOPE_PROGRESS_2026-10-11.md) giải thích vì sao chưa mở rộng tính năng.

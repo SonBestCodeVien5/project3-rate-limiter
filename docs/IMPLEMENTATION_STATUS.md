@@ -1,6 +1,6 @@
 # Trạng thái triển khai — 11/10/2026
 
-Theo yêu cầu tự động hóa, prototype kỹ thuật được triển khai sớm hơn lịch tuần đề xuất. Không đánh dấu thay người học hoặc biến smoke thành kết luận nghiên cứu.
+Theo yêu cầu tự động hóa, prototype kỹ thuật và vòng công cụ đo đã được triển khai sớm hơn lịch tuần đề xuất. Không đánh dấu thay người học hoặc biến smoke thành kết luận nghiên cứu.
 
 | Hạng mục | Trạng thái | Bằng chứng / việc tiếp theo |
 | --- | --- | --- |
@@ -11,16 +11,17 @@ Theo yêu cầu tự động hóa, prototype kỹ thuật được triển khai 
 | Redis atomic FW/TB | Đã triển khai/test với Redis thật | Lua, Redis TIME, TTL, shared quota; non-atomic control chỉ trong test |
 | API + backend + LB | Đã triển khai | 2 API, Nginx, backend dùng chung giới hạn capacity |
 | Fail-open/fail-closed | Đã triển khai/test | Phân biệt 429/503/502 và timestamp fallback |
-| Bộ tạo tải và raw data | Đã triển khai/test | Open-loop đều theo lịch, JSONL/config/summary, drops/lag riêng |
+| Bộ tạo tải và raw data | Đã triển khai/test | Normal/mixed/burst theo pha/concurrent batch, JSONL/config/summary, drops/lag riêng |
 | Mixed traffic/outage runners | Đã triển khai | 5 case mixed smoke, 2 fail policies; kết quả thực chạy trong RETEST |
+| Scaling và analyzer | Đã triển khai/test | Render 1/2/4 API; replay/cận dưới quota theo trace, phân pha outage/recovery có điều kiện |
 | RQ1–RQ5 chính thức | Chưa hoàn tất | Cần pilot khóa protocol, nhiều lượt lặp và phân tích độc lập |
 
-## Phần tự động hóa tiếp theo sau prototype
+## Việc tiếp theo sau vòng công cụ đo
 
-1. Khóa workload/protocol: warm-up, reset, số client, quota, burst theo pha/biên, tải và số lượt lặp; cần đánh giá generator đạt offered load.
-2. Mở ma trận scaling 1/2/n API qua cấu hình, giữ backend không đổi; Compose hiện dựng cố định 2 API. Kiểm chứng local nhiều instance hiện có bằng unit test và smoke 2 API.
-3. Tạo analyzer trace: FW theo key/window server, TB theo oracle/thứ tự hoặc invariant phù hợp; phân tích pre/during/post outage, quota violation và recovery theo tiêu chí đã khóa.
-4. Đo normal, burst, concurrent, scaling lặp đủ số lần, phân tích Redis CPU/memory/network và sai lệch; không gọi snapshots CPU counter là phần trăm CPU.
-5. Viết báo cáo/slide dựa trên dữ liệu đã khóa, nêu giới hạn mô hình backend và identity tin cậy.
+1. Hiệu chỉnh và khóa protocol: warm-up/cold-start, quota, tải, thời lượng, số lượt lặp và tiêu chí loại lượt lỗi. Burst theo pha đã có; burst sát biên server cần thiết kế và xác minh riêng.
+2. Dùng topology 1/2/4 đã có để mở các tổ hợp thuật toán/state cần trả lời RQ3; pilot hiện chưa thay toàn bộ ma trận nghiên cứu.
+3. Dùng analyzer để kiểm tra các trace; hoàn thiện quota violation dưới fail-open khi state/response không xác định, độ đồng bộ clock và mức quan sát cần để xác nhận cửa sổ đầy đủ. Không đổi `inconclusive` thành pass khi thiếu evidence.
+4. Chạy benchmark chính thức lặp đủ số lần, phân tích biến thiên và bottleneck, xuất biểu đồ/tables tái lập. Chọn tiêu chí recovery trước khi đo, không chọn sau khi thấy kết quả đẹp.
+5. Học lại theo commit/test, viết báo cáo/slide, diễn tập demo và tự giải thích; cập nhật ngày/rubric với giảng viên.
 
-Các việc này là bước nghiên cứu tiếp theo có phụ thuộc protocol, không phải giả định đã đạt chỉ vì code chạy. Không thêm dashboard, Redis Cluster, gateway hoặc nghiệp vụ bán hàng.
+Xem [hồ sơ vòng đo](worklog/2026-10-11-measurement/README.md), [protocol ứng viên](experiments/PILOT_PROTOCOL.md), [hợp đồng analyzer](experiments/ANALYSIS.md) và [ước lượng tiến độ/phạm vi](SCOPE_PROGRESS_2026-10-11.md). Các việc còn lại có phụ thuộc phương pháp nghiên cứu; code/test hoàn thành không đồng nghĩa RQ1–RQ5 hoặc việc học đã hoàn tất. Không thêm dashboard, Redis Cluster, gateway hoặc nghiệp vụ bán hàng.
