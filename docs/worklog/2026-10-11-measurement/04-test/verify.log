@@ -1,0 +1,16 @@
+?   	project3/ratelimiter/cmd/loadgen	[no test files]
+?   	project3/ratelimiter/cmd/server	[no test files]
+ok  	project3/ratelimiter/internal/experiment	1.872s
+ok  	project3/ratelimiter/internal/limiter	1.054s
+ok  	project3/ratelimiter/internal/server	1.062s
+Script cleanup tests passed
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.063s
+
+OK
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.008s
+
+OK

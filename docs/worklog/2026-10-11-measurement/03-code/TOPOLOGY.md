@@ -1,0 +1,7 @@
+# Topology and runner implementation
+
+The baseline `compose.yaml`, `deploy/nginx.conf`, `pilot-matrix.sh`, and `redis-outage.sh` remain available for the original two-API smoke lab. The new renderer consumes Docker Compose's resolved JSON, clones the API service into exactly 1, 2, or 4 instances, rewrites Nginx upstream and health dependencies, preserves the single backend and Redis service, removes their direct host port bindings, and publishes only Nginx to a loopback host port. Rendering refuses an existing output directory and unsupported counts.
+
+`research-pilot.sh` uses a distinct Compose project and refuses pre-existing containers. Each case has a fresh namespace and containers. It captures the resolved server policy and raw artifacts before optional analysis; cleanup is trapped for success, interruption and failure. This is an engineering candidate matrix for workload validation, not an approved research protocol. See [PILOT_PROTOCOL.md](../../../experiments/PILOT_PROTOCOL.md) for case settings and invalidation criteria.
+
+Validation without Docker: `python3 scripts/test_topology.py`, `bash -n scripts/research-pilot.sh`, and `bash scripts/test-scripts.sh`. The renderer tests cover 1/2/4 upstreams, API count, unchanged backend capacity, loopback binding, invalid counts, and safe refusal to overwrite output. Integrated Docker execution is left for the combined pilot run after the workload and analyzer changes are ready.

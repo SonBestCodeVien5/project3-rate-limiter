@@ -1,0 +1,2 @@
+analysis=artifacts/measurement-outage-analysis/open/analysis.json oracle=inconclusive
+analysis=artifacts/measurement-outage-analysis/closed/analysis.json oracle=inconclusive
