@@ -1,6 +1,6 @@
 # Đặc tả thí nghiệm Project 3 — baseline cập nhật
 
-**Trạng thái:** phạm vi đánh giá đã cập nhật theo Roadmap/Proposal; policy, kiến trúc, tech stack, tham số tải và ngưỡng đạt vẫn cần chốt qua thiết kế/pilot.
+**Trạng thái cập nhật 11/10/2026:** phạm vi đánh giá theo Roadmap/Proposal; [thiết kế prototype](../IMPLEMENTATION.md) đã chọn Go, middleware trước backend, local mutex/Redis Lua, policy và time semantics. Các mục **Mở** bên dưới là baseline thiết kế trước triển khai; xem thiết kế để biết phần đã chọn. Tham số tải, warm-up, số lần lặp, ngưỡng recovery và protocol chính thức vẫn cần khóa sau pilot. [Hồ sơ triển khai](../worklog/2026-10-11-bootstrap/README.md) phân biệt verification/smoke với dữ liệu nghiên cứu chính thức.
 
 **Nguồn:** [Roadmap](../context/sources/00_Project3_Roadmap.md) → [Proposal](../context/sources/01_Project3_Proposal.md) → [Research Context](../context/sources/10_Supplementary_Research_Context.md).  
 
@@ -58,9 +58,10 @@ Mỗi lượt chạy cần lưu cấu hình, version code/policy, `run_id`, requ
 
 ## Quyết định tiếp theo
 
-1. Chốt `client_key`, `Q/W/B/r`, nguồn thời gian và oracle.
-2. Chốt vị trí limiter, cơ chế atomic/đối chứng và hành vi fail-open/fail-closed.
-3. Chạy pilot để chọn ngưỡng backend, mức tải, số lần lặp, cửa sổ Redis outage và cách đo tài nguyên.
-4. Sau đó chọn tech stack và triển khai.
+Prototype đã chọn client key, policy/time semantics, vị trí limiter, Redis Lua, fail policies và stack; xem [thiết kế](../IMPLEMENTATION.md). Lượt smoke ban đầu đã chạy, nhưng chưa khóa protocol nghiên cứu. Các quyết định còn lại là:
+
+1. Xây oracle độc lập cho trace concurrent của từng thuật toán và cách tính quota violation/recovery theo pha outage.
+2. Dùng pilot để chốt ngưỡng backend, mức tải, warm-up, số lần lặp, số API instance, cửa sổ Redis outage và cách đo tài nguyên.
+3. Kiểm chứng generator đạt offered load ở các mức đã chọn, rồi khóa protocol trước các lượt đo chính thức.
 
 Kết quả mong muốn là dữ liệu tái chạy được để trả lời RQ1–RQ5 và giải thích trade-off correctness–performance–backend protection–availability; chưa đặt trước kết luận thuật toán hay fail policy nào tốt hơn. Redis Cluster, dashboard, tier/endpoint policy management và gateway đầy đủ nằm ngoài lõi.

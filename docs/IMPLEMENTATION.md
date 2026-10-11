@@ -1,0 +1,53 @@
+# Prototype và quyết định triển khai
+
+Đây là thiết kế kỹ thuật của lượt triển khai được ủy quyền ngày 11/10/2026. Phạm vi nguồn vẫn theo [SOURCE_INDEX](context/SOURCE_INDEX.md); tham số dưới đây chỉ là mặc định pilot.
+
+```mermaid
+flowchart LR
+    G[Load generator] --> N[Nginx round robin]
+    N --> A[API 1 + limiter]
+    N --> B[API 2 + limiter]
+    A <--> R[(Redis shared state)]
+    B <--> R
+    A --> C[Backend giới hạn concurrency]
+    B --> C
+```
+
+Roadmap vẽ lớp traffic control trước backend, Proposal gắn limiter vào API. Prototype chọn middleware ở đầu API, trước xử lý backend dùng chung. Local mode giữ map riêng từng tiến trình; Redis mode chia sẻ state. Backend là workload mô phỏng để giữ năng lực cố định khi thay số API instance.
+
+## Policy
+
+| Thành phần | Semantics |
+| --- | --- |
+| Identity | `X-Client-ID`, tối đa 256 bytes; định danh tin cậy do generator cung cấp, không phải cơ chế xác thực |
+| Chi phí | 1 request = 1 đơn vị; không hoàn quota khi backend lỗi |
+| Fixed Window | Cửa sổ epoch `[kW,(k+1)W)`; allow khi count < Q; reject không tăng count; reset ở biên |
+| Token Bucket | Ban đầu đầy B; refill liên tục r/s, tối đa B; allow nếu tokens ≥ 1; reject không tiêu token |
+| Precision | Milisecond; Redis TIME cho shared, wall clock tiến trình cho local; TB không refill lặp khi clock lùi |
+| Atomicity | Mutex bao trọn local decision; Lua bao trọn shared read/decide/write |
+| TTL | FW hết hạn ở biên cửa sổ; TB không hết hạn sớm hơn thời gian refill đầy; local sweep cơ hội khi có request |
+| Namespace | Redis key gồm namespace run, fingerprint policy và hash client; không FLUSHDB |
+| Quota exhausted | 429, Retry-After làm tròn lên giây |
+| Redis unavailable | fail-closed: 503, không tới backend; fail-open: tiếp tục và gắn nhãn riêng |
+
+Mặc định `Q=20,W=1s,B=20,r=20/s` cho cùng tốc độ dài hạn, không đồng nhất burst semantics. Không gọi TB nhận hơn Q trong một cửa sổ là overshoot FW. Kết quả được ghi theo thời điểm quyết định phía limiter; timestamp client không xác định thứ tự concurrent decisions.
+
+## Tính đúng và giới hạn
+
+Local nhiều instance cố ý không đảm bảo quota chung; đó là đối chứng RQ2/RQ3. Redis Lua giữ quyết định atomic; script chạy trên Redis và có tính blocking theo [tài liệu Redis](https://redis.io/docs/latest/develop/programmability/eval-intro/). Thời gian shared lấy từ [Redis TIME](https://redis.io/docs/latest/commands/time/). Redis client tắt retry tự động để không lặp thao tác quota sau mất phản hồi; timeout vẫn có thể là kết quả không xác định (script đã chạy nhưng reply bị mất). Fail-open trong tình huống đó không chứng minh quota đúng.
+
+Đối chứng không atomic chỉ ở integration test, dùng barrier buộc các goroutine đọc cùng counter cũ. Nó minh họa lost update một cách tái lập, không đo tần suất race tự nhiên hay hiệu năng bản không atomic.
+
+Backend có semaphore không chờ và service time cấu hình. Arrival được đếm trước admission; overload trả 503. Counter phía backend là nguồn đúng cho arrivals; header phía client chỉ xác nhận arrivals khi nhận được phản hồi. HTTP transport error có thể xảy ra sau khi backend nhận request.
+
+Clock wall time vẫn có thể nhảy (đặc biệt FW). Môi trường thí nghiệm cần đồng hồ ổn định; local sweep O(số key), JSON/logging, goroutine scheduling và chung một host có thể ảnh hưởng latency. Không suy kết quả thành production readiness.
+
+## Các phép kiểm chứng
+
+- Chuỗi tính tay cho FW boundary và TB refill/reject/idle; kiểm tra key độc lập, clock lùi, expiry và hủy context.
+- Nhiều goroutine với local state: quota trong instance đúng nhưng cộng hai instance gấp đôi quota.
+- Redis thật: nhiều đối tượng limiter dùng cùng namespace, nhóm theo thời điểm/window server; Token Bucket kiểm tra envelope B+rΔt.
+- HTTP: reject không gọi backend; phân biệt fail-open/fail-closed, overload, transport failure.
+- Smoke Compose: load balancer → 2 API → backend; lưu raw requests/config/summary/metrics và outage events.
+
+Xem [hồ sơ từng bước](worklog/2026-10-11-bootstrap/README.md) để biết phép nào thực sự đã chạy. Benchmark lặp, oracle đầy đủ trên trace, kiểm định generator, ngưỡng recovery và protocol chính thức vẫn là công việc nghiên cứu tiếp theo.

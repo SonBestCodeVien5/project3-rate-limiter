@@ -1,5 +1,7 @@
 # Lộ trình Project 3: từ bắt đầu đến bảo vệ
 
+**Cập nhật triển khai 11/10/2026:** đã thực hiện tự động phần prototype kỹ thuật theo [thiết kế](IMPLEMENTATION.md), [trạng thái triển khai](IMPLEMENTATION_STATUS.md) và [hồ sơ plan–code–test–review–retest–commit](worklog/2026-10-11-bootstrap/README.md). Bảng tuần dưới giữ nguyên mốc kiểm tra 08/10 để không coi việc code xong là hoàn tất việc học hoặc nghiên cứu. Protocol chính thức, benchmark lặp và tự kiểm tra kiến thức vẫn chưa hoàn tất.
+
 **Trạng thái:** kế hoạch đề xuất để thảo luận, chưa phải lịch chính thức. [Roadmap gốc](context/sources/00_Project3_Roadmap.md) định hướng Project 3 trong khoảng **10–11 tuần**, nhưng chưa nêu ngày nộp hoặc ngày bảo vệ. Dùng bảng dưới theo **tuần tương đối**; khi có lịch của trường và giảng viên hướng dẫn, đặt ngày thật và điều chỉnh. [Proposal](context/sources/01_Project3_Proposal.md) xác định câu hỏi nghiên cứu, còn [đặc tả thí nghiệm](experiments/EXPERIMENT_SPEC.md) hiện là bản nháp.
 
 **Tiến độ kiểm tra ngày 08/10/2026:** 🟢 hoàn thành có bằng chứng; 🟡 đang làm; ⚪ chưa bắt đầu. Đánh giá dựa trên những gì có trong repo và cuộc trao đổi; công việc làm bên ngoài repo cần được xác nhận trước khi đánh dấu hoàn thành.
