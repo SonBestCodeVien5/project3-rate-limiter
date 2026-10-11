@@ -1,0 +1,5 @@
+/bin/
+/artifacts/
+/.env
+*.test
+coverage.out
