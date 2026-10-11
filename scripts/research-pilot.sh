@@ -7,6 +7,7 @@ LAB_COMPOSE_FILE=
 LAB_HOST_PORT=${LAB_HOST_PORT:-18080}
 REPETITIONS=1
 RUN_ANALYSIS=0
+MIXED_RPS=${MIXED_RPS:-300}
 SELECTED=()
 LAB_OUTPUT=
 
@@ -35,6 +36,7 @@ while (($#)); do
   esac
 done
 [[ "$REPETITIONS" =~ ^[1-3]$ ]] || { echo 'repetitions must be 1..3' >&2; exit 2; }
+[[ "$MIXED_RPS" =~ ^[1-9][0-9]{0,5}$ ]] && (( MIXED_RPS > 20 && MIXED_RPS <= 100000 )) || { echo 'MIXED_RPS must be an integer in 21..100000' >&2; exit 2; }
 [[ "$LAB_HOST_PORT" =~ ^[0-9]+$ ]] && (( LAB_HOST_PORT >= 1024 && LAB_HOST_PORT <= 65535 )) || { echo 'invalid host port' >&2; exit 2; }
 ALL_CASES=(normal burst-fw burst-tb concurrent-local concurrent-redis scale-1 scale-2 scale-4 mixed-none mixed-local mixed-redis)
 if ((${#SELECTED[@]} == 0)); then SELECTED=("${ALL_CASES[@]}"); fi
@@ -90,9 +92,9 @@ for case_name in "${SELECTED[@]}"; do
       scale-1) MODE=redis; ALGORITHM=fixed-window; INSTANCES=1; PROFILE=mixed; RPS=100; LEGIT_RPS=20 ;;
       scale-2) MODE=redis; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=100; LEGIT_RPS=20 ;;
       scale-4) MODE=redis; ALGORITHM=fixed-window; INSTANCES=4; PROFILE=mixed; RPS=100; LEGIT_RPS=20 ;;
-      mixed-none) MODE=none; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=300; LEGIT_RPS=20 ;;
-      mixed-local) MODE=local; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=300; LEGIT_RPS=20 ;;
-      mixed-redis) MODE=redis; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=300; LEGIT_RPS=20 ;;
+      mixed-none) MODE=none; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=$MIXED_RPS; LEGIT_RPS=20 ;;
+      mixed-local) MODE=local; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=$MIXED_RPS; LEGIT_RPS=20 ;;
+      mixed-redis) MODE=redis; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=$MIXED_RPS; LEGIT_RPS=20 ;;
     esac
     case_dir="$LAB_OUTPUT/$case_name-repeat-$repeat"
     mkdir "$case_dir"
