@@ -1,0 +1,74 @@
+name: project3-rate-limiter
+
+x-api: &api
+  build: .
+  environment: &api-env
+    ROLE: api
+    MODE: ${MODE:-redis}
+    ALGORITHM: ${ALGORITHM:-fixed-window}
+    FAIL_POLICY: ${FAIL_POLICY:-closed}
+    NAMESPACE: ${NAMESPACE:-pilot}
+    LIMIT: ${LIMIT:-20}
+    WINDOW: ${WINDOW:-1s}
+    CAPACITY: ${CAPACITY:-20}
+    RATE: ${RATE:-20}
+    REDIS_ADDR: redis:6379
+    REDIS_TIMEOUT: ${REDIS_TIMEOUT:-100ms}
+    BACKEND_URL: http://backend:8080
+    BACKEND_TIMEOUT: ${BACKEND_TIMEOUT:-2s}
+  depends_on:
+    redis:
+      condition: service_healthy
+    backend:
+      condition: service_healthy
+  healthcheck:
+    test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/healthz"]
+    interval: 2s
+    timeout: 1s
+    retries: 20
+
+services:
+  redis:
+    image: redis:7.4.2-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports: ["127.0.0.1:16379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 1s
+      retries: 20
+  backend:
+    build: .
+    environment:
+      ROLE: backend
+      INSTANCE_ID: backend-1
+      BACKEND_CAPACITY: ${BACKEND_CAPACITY:-10}
+      BACKEND_SERVICE_TIME: ${BACKEND_SERVICE_TIME:-50ms}
+    ports: ["127.0.0.1:18083:8080"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 2s
+      timeout: 1s
+      retries: 20
+  api1:
+    <<: *api
+    environment:
+      <<: *api-env
+      INSTANCE_ID: api-1
+    ports: ["127.0.0.1:18081:8080"]
+  api2:
+    <<: *api
+    environment:
+      <<: *api-env
+      INSTANCE_ID: api-2
+    ports: ["127.0.0.1:18082:8080"]
+  nginx:
+    image: nginx:1.28.0-alpine
+    ports: ["127.0.0.1:8080:8080"]
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      api1:
+        condition: service_healthy
+      api2:
+        condition: service_healthy
