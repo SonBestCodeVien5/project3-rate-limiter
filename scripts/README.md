@@ -12,6 +12,17 @@ bash scripts/redis-outage.sh
 - `pilot-matrix.sh`: không limiter, local/Redis × Fixed Window/Token Bucket; mỗi case 5 giây, tổng 300 RPS, trong đó 20 RPS hợp lệ chia đều 5 client. Đây là hai luồng đều theo lịch, chưa phải kịch bản burst có pha bật/tắt.
 - `redis-outage.sh`: Redis shared, mặc định Fixed Window, lần lượt fail-open/fail-closed; mỗi workload 10 giây, tổng 100 RPS, 20 RPS hợp lệ. Yêu cầu pause khoảng giây 3, giữ khoảng 2 giây rồi unpause. Có thể chọn `ALGORITHM=token-bucket`. Thời gian thao tác Docker cộng vào khoảng ngắt; dùng timestamp yêu cầu/hoàn tất trong `outage-events.txt` khi phân pha, không giả định pause chính xác 2 giây.
 
+## Pilot đo lường ứng viên với 1/2/4 API
+
+```bash
+bash scripts/research-pilot.sh --case normal --case scale-1 --case scale-2 --case scale-4 --repetitions 2 --analyze
+# Hoặc bỏ --case để chạy cả 11 case đã chọn, mỗi case một lượt.
+```
+
+Runner dùng Compose project riêng `project3-research-lab` và mặc định Nginx tại `127.0.0.1:18080`. Có thể chọn `--host-port` và `--output` (folder mới). Nó từ chối project đã có container, giới hạn mỗi lệnh quan trọng bằng timeout, và dọn container của project do chính lượt chạy tạo. `render-topology.py` dựng upstream Nginx khớp chính xác 1, 2 hoặc 4 API từ `docker compose config --format json`; backend dùng chung không đổi capacity. Mỗi lượt có namespace mới, container mới, `policy.json` lấy từ environment đã resolve, cấu hình Compose, log, metrics, trace thô và dấu vết image/source. `--analyze` gọi bộ phân tích sau mỗi case; bỏ cờ này nếu chỉ muốn giữ dữ liệu thô.
+
+Các profile generator: `normal` chỉ có lưu lượng client hợp lệ; `burst` giữ tải hợp lệ đều và tăng tải client bất thường trong khoảng đã chỉ định; `concurrent` lên lịch nhiều request cùng key tại một mốc rồi ghi độ trễ gửi thực tế; `mixed` giữ hai luồng đều. Tham số và điều kiện loại lượt đo nằm tại [pilot protocol](../docs/experiments/PILOT_PROTOCOL.md). Đây vẫn là pilot ứng viên, chưa phải protocol nghiên cứu hoặc kết luận hiệu năng đã khóa.
+
 Hai script pilot nhận đường dẫn folder output ở đối số thứ nhất; mặc định dưới `artifacts/`. Mỗi case lưu cấu hình Compose đã resolve, HTTP metrics trước/sau của backend, metrics của API, log container, tài nguyên Redis và dữ liệu generator. Redis CPU là counter tích lũy cần lấy chênh lệch theo thời gian; không diễn giải trực tiếp thành % CPU. Outage chỉ lấy Redis INFO trước/sau để tránh client đo đạc bị kẹt khi Redis pause. Các thao tác INFO, snapshot, pause/unpause đều có timeout; cleanup luôn cố unpause trước khi dọn lab.
 
 ## Generator độc lập

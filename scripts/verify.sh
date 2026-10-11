@@ -8,6 +8,8 @@ go test -race ./...
 go build ./...
 for script in scripts/*.sh; do bash -n "$script"; done
 bash scripts/test-scripts.sh
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_topology.py
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_analyze.py
 if command -v docker >/dev/null && docker compose version >/dev/null 2>&1; then
   docker compose -f compose.yaml -p project3-lab config --quiet
 fi
