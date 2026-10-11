@@ -1,5 +1,41 @@
 <!doctype html>
-<html lang="vi"><meta charset="utf-8"><title>Project 3 Demo Console</title>
-<h1>Project 3 Demo Console</h1>
-<p>Controller API: <a href="/api/presets">presets</a> · <a href="/api/runs">runs</a></p>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project 3 · Demo Console</title>
+<style>
+:root{font:16px/1.5 system-ui,sans-serif;color:#17324a;background:#f3f6f8}*{box-sizing:border-box}body{margin:0}header{background:#123b53;color:white;padding:1.3rem max(1rem,calc((100vw - 1050px)/2))}header h1{margin:0;font-size:1.55rem}header p{margin:.3rem 0 0;color:#c9e4ec}main{max-width:1050px;margin:1.5rem auto;padding:0 1rem;display:grid;grid-template-columns:320px 1fr;gap:1rem}.card{background:white;border:1px solid #dbe3e8;border-radius:10px;padding:1.2rem;box-shadow:0 2px 7px #163b4b0a}h2{margin:0 0 1rem;font-size:1.2rem}h3{margin:1.3rem 0 .5rem;font-size:1rem}label{display:block;font-weight:600;margin:.8rem 0 .25rem}select,input,button{font:inherit;border-radius:6px}select,input{width:100%;padding:.55rem;border:1px solid #a9bcc8;background:#fff}button{border:0;background:#08768d;color:white;padding:.62rem .9rem;cursor:pointer;font-weight:600}button:disabled{opacity:.55;cursor:default}button.secondary{background:#9b3c31}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #efad35;outline-offset:2px}.hint{color:#506878;font-size:.88rem}.status{padding:.6rem .8rem;background:#eaf3f6;border-radius:6px}pre{overflow:auto;max-height:310px;background:#f5f8fa;border:1px solid #e4eaee;padding:.8rem;font-size:.82rem}ul{padding-left:1.2rem}li{margin:.25rem 0}.error{color:#a32424}.wide{grid-column:2}a{color:#066d85}@media(max-width:750px){main{display:block}.card{margin-bottom:1rem}.wide{grid-column:auto}}
+</style>
+<header><h1>Project 3 · Demo Console</h1><p>So sánh bảo vệ backend dưới traffic hỗn hợp · local demo trên máy này</p></header>
+<main>
+<section class="card"><h2>Cấu hình lượt chạy</h2><form id="form">
+<label for="preset">Preset</label><select id="preset"><option value="mixed-none">Không limiter</option><option value="mixed-local">State cục bộ</option><option value="mixed-redis">State Redis dùng chung</option></select>
+<label for="rps">Tổng tải (RPS)</label><input id="rps" type="number" min="21" max="1000" value="120" required>
+<label for="repetitions">Số lượt lặp</label><input id="repetitions" type="number" min="1" max="3" value="1" required>
+<p class="hint">5 client hợp lệ, tổng 20 RPS hợp lệ; 2 API instances; Fixed Window; backend capacity theo Compose. Các giá trị này là pilot, chưa phải protocol chính thức.</p>
+<p id="preview" class="status"></p><button id="run" type="submit">Chạy benchmark</button> <button id="cancel" class="secondary" type="button" disabled>Hủy run</button>
+</form><p id="message" role="status"></p></section>
+<section class="card"><h2>Trạng thái & kết quả</h2><p id="state" class="status">Chưa chọn run.</p><p class="hint">Live sample: counter tích lũy từ khi container khởi động; không phải delta hay kết quả cuối. Summary chỉ xuất hiện sau khi load generator drain.</p><h3>Cấu hình thực tế</h3><pre id="config">Chờ runner resolve Compose.</pre><h3>Metrics đang chạy</h3><pre id="metrics">Chưa có sample.</pre><h3>Summary theo lượt</h3><pre id="summary">Chưa có summary.</pre></section>
+<section class="card wide"><h2>Artifacts</h2><p class="hint">Tải dữ liệu thô, cấu hình và log để kiểm tra lại phép đo. Cấu hình thực tế nằm trong compose-resolved.json và policy.json của từng lượt.</p><ul id="artifacts"></ul><h3>Các run của Console</h3><ul id="history"></ul></section>
+<section class="card wide"><h2>Stack mặc định · quan sát và thử request</h2><p class="hint">Đọc từ cổng loopback của Compose mặc định. Counter tích lũy từ lúc container khởi động, độc lập với runner research. Bật stack bằng <code>docker compose up -d --build --wait</code> trước khi dùng.</p><button id="sample" type="button">Gửi một request mẫu</button><p id="sampleResult" role="status"></p><pre id="demo">Đang lấy snapshot…</pre></section>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+let current = null, activeExists = false;
+const terminal = new Set(['completed','failed','canceled','cleanup-error','interrupted']);
+function preview(){ $('preview').textContent = `${$('preset').selectedOptions[0].textContent} · ${$('rps').value} RPS · ${$('repetitions').value} lượt`; }
+for(const id of ['preset','rps','repetitions']) $(id).addEventListener('input', preview);
+preview();
+async function api(path, options){ const response=await fetch(path,options); const value=await response.json(); if(!response.ok) throw Error(value.error || `HTTP ${response.status}`); return value; }
+function link(list, label, href){const li=document.createElement('li'), a=document.createElement('a'); a.textContent=label; a.href=href; li.append(a); list.append(li);}
+async function refreshHistory(){ const runs=await api('/api/runs'); runs.sort((a,b)=>b.started_at.localeCompare(a.started_at)); activeExists=runs.some(r=>!terminal.has(r.state)); $('run').disabled=activeExists; $('history').replaceChildren(); for(const r of runs) { const li=document.createElement('li'), b=document.createElement('button'); b.type='button'; b.textContent=`${r.id} · ${r.request.case} · ${r.state}`; b.addEventListener('click',()=>{current=r.id;refresh();}); li.append(b); $('history').append(li); } if(!current && runs.length) current=runs[0].id; }
+async function refresh(){ if(!current) return; try { const data=await api(`/api/runs/${current}`), r=data.run; $('state').textContent=`${r.id} · ${r.request.case} · ${r.state} (${data.phase})${r.error ? ' · '+r.error : ''}`; $('state').classList.toggle('error',r.state==='failed'||r.state==='cleanup-error'); $('run').disabled=activeExists; $('cancel').disabled=terminal.has(r.state)||r.cancel_requested; $('config').textContent=data.resolved_policy?JSON.stringify({policy:data.resolved_policy,backend:data.resolved_backend},null,2):'Chờ runner resolve Compose.'; $('summary').textContent=Object.keys(data.summaries).length?JSON.stringify(data.summaries,null,2):'Chưa có summary.'; if(!terminal.has(r.state)) { const sample=await api(`/api/runs/${current}/metrics`); $('metrics').textContent=JSON.stringify(sample,null,2); } else $('metrics').textContent='Run đã kết thúc. Xem metrics before/after trong artifacts.'; const names=await api(`/api/runs/${current}/artifacts`); $('artifacts').replaceChildren(); names.sort(); for(const name of names) link($('artifacts'),name,`/api/runs/${current}/artifacts/${name.split('/').map(encodeURIComponent).join('/')}`); } catch(e) { $('message').textContent=e.message; } }
+async function refreshDemo(){try{$('demo').textContent=JSON.stringify(await api('/api/demo'),null,2);}catch(e){$('demo').textContent=e.message;}}
+$('sample').addEventListener('click',async()=>{try{$('sampleResult').textContent=JSON.stringify(await api('/api/demo/request',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}));await refreshDemo();}catch(e){$('sampleResult').textContent=e.message;}});
+$('form').addEventListener('submit',async e=>{e.preventDefault(); $('message').textContent=''; try { const run=await api('/api/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({case:$('preset').value,mixed_rps:Number($('rps').value),repetitions:Number($('repetitions').value)})}); current=run.id; await refreshHistory(); await refresh(); } catch(err){$('message').textContent=err.message;} });
+$('cancel').addEventListener('click',async()=>{ if(!current)return; try{await api(`/api/runs/${current}/cancel`,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});await refresh();}catch(err){$('message').textContent=err.message;} });
+refreshHistory().then(refresh).catch(e=>{$('message').textContent=e.message});
+refreshDemo();setInterval(refreshDemo,5000);
+setInterval(async()=>{if(current){await refresh();await refreshHistory();}},2500);
+</script>
 </html>
