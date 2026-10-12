@@ -102,6 +102,33 @@ func TestPostRequiresJSON(t *testing.T) {
 	}
 }
 
+func TestCustomConfigValidationAndEnvironment(t *testing.T) {
+	c := CustomConfig{Mode: "redis", Algorithm: "token-bucket", Profile: "burst", FailPolicy: "open", Instances: 4, RPS: 60, LegitimateRPS: 10, DurationSeconds: 6, Limit: 20, WindowMS: 1000, Capacity: 15, RefillRate: 12, BackendCapacity: 4, BackendServiceMS: 30, BurstStartSeconds: 2, BurstDurationSeconds: 2, BurstRPS: 100, ConcurrentAtSeconds: 2, ConcurrentCount: 100}
+	r := Request{Case: "custom", Repetitions: 1, Custom: &c}
+	if err := r.validate(); err != nil {
+		t.Fatal(err)
+	}
+	env := strings.Join(c.env(), "\n")
+	for _, want := range []string{"CUSTOM_MODE=redis", "CUSTOM_ALGORITHM=token-bucket", "CUSTOM_INSTANCES=4", "CUSTOM_CAPACITY=15", "CUSTOM_RATE=12", "CUSTOM_BACKEND_CAPACITY=4", "CUSTOM_BURST_RPS=100"} {
+		if !strings.Contains(env, want) {
+			t.Fatalf("missing %s in %s", want, env)
+		}
+	}
+	bad := c
+	bad.BurstDurationSeconds = 5
+	if err := (Request{Case: "custom", Repetitions: 1, Custom: &bad}).validate(); err == nil {
+		t.Fatal("accepted burst beyond duration")
+	}
+	bad = c
+	bad.Mode = "local"
+	if err := (Request{Case: "custom", Repetitions: 1, Custom: &bad}).validate(); err == nil {
+		t.Fatal("accepted fail-open without Redis")
+	}
+	if err := (Request{Case: "mixed-redis", Repetitions: 1, MixedRPS: 120, Custom: &c}).validate(); err == nil {
+		t.Fatal("accepted custom settings for baseline preset")
+	}
+}
+
 func TestRestartMarksUnfinishedRun(t *testing.T) {
 	root := t.TempDir()
 	c, err := New(root)

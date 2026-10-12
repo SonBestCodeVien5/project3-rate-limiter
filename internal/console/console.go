@@ -20,23 +20,115 @@ import (
 	"time"
 )
 
-var presets = map[string]string{"mixed-none": "Không limiter", "mixed-local": "State cục bộ", "mixed-redis": "State Redis dùng chung"}
+var presets = map[string]string{"mixed-none": "Không limiter", "mixed-local": "State cục bộ", "mixed-redis": "State Redis dùng chung", "custom": "Tùy chỉnh"}
 var runID = regexp.MustCompile(`^[0-9]{8}T[0-9]{6}-[0-9a-f]{12}$`)
 
 type Request struct {
-	Case        string `json:"case"`
-	Repetitions int    `json:"repetitions"`
-	MixedRPS    int    `json:"mixed_rps"`
+	Case        string        `json:"case"`
+	Repetitions int           `json:"repetitions"`
+	MixedRPS    int           `json:"mixed_rps"`
+	Custom      *CustomConfig `json:"custom,omitempty"`
+}
+
+type CustomConfig struct {
+	Mode                 string `json:"mode"`
+	Algorithm            string `json:"algorithm"`
+	Profile              string `json:"profile"`
+	FailPolicy           string `json:"fail_policy"`
+	Instances            int    `json:"instances"`
+	RPS                  int    `json:"rps"`
+	LegitimateRPS        int    `json:"legitimate_rps"`
+	DurationSeconds      int    `json:"duration_seconds"`
+	Limit                int    `json:"limit"`
+	WindowMS             int    `json:"window_ms"`
+	Capacity             int    `json:"capacity"`
+	RefillRate           int    `json:"refill_rate"`
+	BackendCapacity      int    `json:"backend_capacity"`
+	BackendServiceMS     int    `json:"backend_service_ms"`
+	BurstStartSeconds    int    `json:"burst_start_seconds"`
+	BurstDurationSeconds int    `json:"burst_duration_seconds"`
+	BurstRPS             int    `json:"burst_rps"`
+	ConcurrentAtSeconds  int    `json:"concurrent_at_seconds"`
+	ConcurrentCount      int    `json:"concurrent_count"`
+}
+
+func (c CustomConfig) validate() error {
+	if c.Mode != "none" && c.Mode != "local" && c.Mode != "redis" {
+		return errors.New("mode must be none, local or redis")
+	}
+	if c.Algorithm != "fixed-window" && c.Algorithm != "token-bucket" {
+		return errors.New("algorithm must be fixed-window or token-bucket")
+	}
+	if c.Instances != 1 && c.Instances != 2 && c.Instances != 4 {
+		return errors.New("instances must be 1, 2 or 4")
+	}
+	if c.Profile != "normal" && c.Profile != "mixed" && c.Profile != "burst" && c.Profile != "concurrent" {
+		return errors.New("profile must be normal, mixed, burst or concurrent")
+	}
+	if c.FailPolicy != "open" && c.FailPolicy != "closed" {
+		return errors.New("fail_policy must be open or closed")
+	}
+	for _, field := range []struct {
+		name             string
+		value, low, high int
+	}{
+		{"rps", c.RPS, 1, 1000}, {"legitimate_rps", c.LegitimateRPS, 0, 1000}, {"duration_seconds", c.DurationSeconds, 3, 30},
+		{"limit", c.Limit, 1, 1000}, {"window_ms", c.WindowMS, 100, 9999}, {"capacity", c.Capacity, 1, 1000}, {"refill_rate", c.RefillRate, 1, 1000},
+		{"backend_capacity", c.BackendCapacity, 1, 100}, {"backend_service_ms", c.BackendServiceMS, 0, 1000},
+		{"burst_start_seconds", c.BurstStartSeconds, 1, 29}, {"burst_duration_seconds", c.BurstDurationSeconds, 1, 29}, {"burst_rps", c.BurstRPS, 1, 1000},
+		{"concurrent_at_seconds", c.ConcurrentAtSeconds, 0, 29}, {"concurrent_count", c.ConcurrentCount, 1, 1000},
+	} {
+		if field.value < field.low || field.value > field.high {
+			return fmt.Errorf("%s must be %d..%d", field.name, field.low, field.high)
+		}
+	}
+	if c.LegitimateRPS > c.RPS {
+		return errors.New("legitimate_rps must not exceed rps")
+	}
+	if c.Mode == "none" && c.Algorithm != "fixed-window" {
+		return errors.New("algorithm is unused in none mode")
+	}
+	if c.Mode != "redis" && c.FailPolicy != "closed" {
+		return errors.New("fail-open requires Redis mode")
+	}
+	if c.Profile == "normal" && c.LegitimateRPS != c.RPS {
+		return errors.New("normal requires all traffic legitimate")
+	}
+	if c.Profile == "burst" && (c.BurstStartSeconds+c.BurstDurationSeconds > c.DurationSeconds || c.BurstRPS <= c.RPS-c.LegitimateRPS) {
+		return errors.New("burst interval or RPS is invalid")
+	}
+	if c.Profile == "concurrent" && (c.ConcurrentAtSeconds >= c.DurationSeconds || c.LegitimateRPS != 0) {
+		return errors.New("concurrent requires a batch within duration and zero legitimate RPS")
+	}
+	return nil
+}
+
+func (c CustomConfig) env() []string {
+	values := []struct {
+		name  string
+		value int
+	}{{"CUSTOM_INSTANCES", c.Instances}, {"CUSTOM_RPS", c.RPS}, {"CUSTOM_LEGIT_RPS", c.LegitimateRPS}, {"CUSTOM_DURATION", c.DurationSeconds}, {"CUSTOM_LIMIT", c.Limit}, {"CUSTOM_WINDOW_MS", c.WindowMS}, {"CUSTOM_CAPACITY", c.Capacity}, {"CUSTOM_RATE", c.RefillRate}, {"CUSTOM_BACKEND_CAPACITY", c.BackendCapacity}, {"CUSTOM_BACKEND_SERVICE_MS", c.BackendServiceMS}, {"CUSTOM_BURST_START", c.BurstStartSeconds}, {"CUSTOM_BURST_DURATION", c.BurstDurationSeconds}, {"CUSTOM_BURST_RPS", c.BurstRPS}, {"CUSTOM_CONCURRENT_AT", c.ConcurrentAtSeconds}, {"CUSTOM_CONCURRENT_COUNT", c.ConcurrentCount}}
+	env := []string{"CUSTOM_MODE=" + c.Mode, "CUSTOM_ALGORITHM=" + c.Algorithm, "CUSTOM_PROFILE=" + c.Profile, "CUSTOM_FAIL_POLICY=" + c.FailPolicy}
+	for _, value := range values {
+		env = append(env, value.name+"="+strconv.Itoa(value.value))
+	}
+	return env
 }
 
 func (r Request) validate() error {
 	if _, ok := presets[r.Case]; !ok {
-		return errors.New("case must be mixed-none, mixed-local or mixed-redis")
+		return errors.New("unknown case")
 	}
 	if r.Repetitions < 1 || r.Repetitions > 3 {
 		return errors.New("repetitions must be 1..3")
 	}
-	if r.MixedRPS < 21 || r.MixedRPS > 1000 {
+	if r.Case == "custom" {
+		if r.Custom == nil || r.MixedRPS != 0 {
+			return errors.New("custom case requires custom config and no mixed_rps")
+		}
+		return r.Custom.validate()
+	}
+	if r.Custom != nil || r.MixedRPS < 21 || r.MixedRPS > 1000 {
 		return errors.New("mixed_rps must be 21..1000")
 	}
 	return nil
@@ -246,6 +338,9 @@ func (c *Controller) start(w http.ResponseWriter, req *http.Request) {
 	cmd := exec.Command("bash", c.script, "--output", filepath.Join(dir, "result"), "--case", config.Case, "--repetitions", strconv.Itoa(config.Repetitions), "--analyze")
 	cmd.Dir, cmd.Stdout, cmd.Stderr = c.root, log, log
 	cmd.Env = append(os.Environ(), "MIXED_RPS="+strconv.Itoa(config.MixedRPS))
+	if config.Custom != nil {
+		cmd.Env = append(cmd.Env, config.Custom.env()...)
+	}
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	c.runs[id] = r
 	if err := cmd.Start(); err != nil {
@@ -450,7 +545,15 @@ func (c *Controller) metrics(w http.ResponseWriter, req *http.Request) {
 	ctx, cancel := context.WithTimeout(req.Context(), 5*time.Second)
 	defer cancel()
 	samples := map[string]any{}
-	for _, service := range []string{"api1", "api2", "backend"} {
+	instances := 2
+	if r.Request.Custom != nil {
+		instances = r.Request.Custom.Instances
+	}
+	services := []string{"backend"}
+	for i := 1; i <= instances; i++ {
+		services = append(services, fmt.Sprintf("api%d", i))
+	}
+	for _, service := range services {
 		cmd := exec.CommandContext(ctx, "docker", "compose", "--project-directory", c.root, "-f", caseDir, "-p", "project3-research-lab", "exec", "-T", service, "wget", "-q", "-O", "-", "http://127.0.0.1:8080/metrics")
 		data, err := cmd.Output()
 		if err == nil {
@@ -463,7 +566,7 @@ func (c *Controller) metrics(w http.ResponseWriter, req *http.Request) {
 	jsonResponse(w, 200, map[string]any{"sampled_at": time.Now().UTC(), "source": "Docker exec /metrics; cumulative counters since container start", "samples": samples})
 }
 
-var caseArtifacts = []string{"compose-resolved.json", "policy.json", "load/summary.json", "load/metadata.json", "load/requests.jsonl", "analysis.json", "analysis.md", "compose.log", "redis-resources.log", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "backend-before.json", "backend-after.json"}
+var caseArtifacts = []string{"compose-resolved.json", "policy.json", "load/summary.json", "load/metadata.json", "load/requests.jsonl", "analysis.json", "analysis.md", "compose.log", "redis-resources.log", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "api3-before.json", "api3-after.json", "api4-before.json", "api4-after.json", "backend-before.json", "backend-after.json"}
 
 func (c *Controller) artifactPaths(r *Run) map[string]string {
 	paths := map[string]string{}

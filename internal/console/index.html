@@ -12,6 +12,7 @@ main{max-width:1120px;margin:1.3rem auto;padding:0 1rem 2rem;display:grid;grid-t
 .card{min-width:0;background:white;border:1px solid #dce4e9;border-radius:12px;padding:1.25rem;box-shadow:0 2px 9px #18364a0a}
 h2{margin:0 0 .85rem;font-size:1.15rem}h3{margin:1.2rem 0 .6rem;font-size:.98rem}
 label{display:block;font-weight:650;margin:.85rem 0 .3rem}select,input,button{font:inherit;border-radius:7px}
+[hidden]{display:none!important}fieldset{border:1px solid #e0e8ed;border-radius:8px;margin:1rem 0;padding:.15rem .75rem .8rem;min-width:0}legend{font-weight:700;color:#36566b;padding:0 .3rem}
 select,input{width:100%;min-width:0;padding:.55rem .7rem;border:1px solid #bac9d3;background:white}
 button{border:0;background:#087c87;color:white;padding:.62rem .85rem;cursor:pointer;font-weight:700}
 button:hover:not(:disabled){background:#06656f}button:disabled{opacity:.55;cursor:default}button.secondary{background:#b7473b}
@@ -32,13 +33,33 @@ ul{padding-left:1.2rem;min-width:0}li{margin:.25rem 0;overflow-wrap:anywhere}
 #history button:hover{border-color:#70b5b7}.error{color:#a32424}.wide{grid-column:1/-1}a{color:#066d85}
 @media(max-width:760px){main{grid-template-columns:minmax(0,1fr)}.wide{grid-column:1}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
-<header><div class="hint">PROJECT 3 / LOCAL PILOT</div><h1>Demo Console</h1><p>So sánh bảo vệ backend dưới traffic hỗn hợp.</p></header>
+<header><div class="hint">PROJECT 3 / LOCAL PILOT</div><h1>Demo Console</h1><p>Quan sát rate limiting, concurrency và mức bảo vệ backend.</p></header>
 <main>
 <section class="card"><h2>Cấu hình lượt chạy</h2><form id="form">
-<label for="preset">Preset</label><select id="preset"><option value="mixed-none">Không limiter</option><option value="mixed-local">State cục bộ</option><option value="mixed-redis">State Redis dùng chung</option></select>
-<label for="rps">Tổng tải (RPS)</label><input id="rps" type="number" min="21" max="1000" value="120" required>
+<label for="preset">Preset</label><select id="preset"><option value="mixed-none">Không limiter</option><option value="mixed-local">State cục bộ</option><option value="mixed-redis">State Redis dùng chung</option><option value="custom">Tùy chỉnh</option></select>
+<div id="baseline"><label for="rps">Tổng tải (RPS)</label><input id="rps" type="number" min="21" max="1000" value="120" required><p class="hint">5 client hợp lệ, tổng 20 RPS hợp lệ; 2 API instances; Fixed Window. Các giá trị này là preset pilot.</p></div>
+<div id="customFields" hidden>
+<fieldset><legend>Workload & topology</legend>
+<label for="profile">Workload</label><select id="profile"><option value="mixed">Mixed</option><option value="normal">Normal</option><option value="burst">Burst</option><option value="concurrent">Concurrent batch</option></select>
+<label for="instances">API instances</label><select id="instances"><option>1</option><option selected>2</option><option>4</option></select>
+<label for="totalRps">Tổng RPS</label><input id="totalRps" type="number" min="1" max="1000" value="120">
+<div id="legitField"><label for="legitRps">RPS client hợp lệ</label><input id="legitRps" type="number" min="0" max="1000" value="20"></div>
+<label for="duration">Thời lượng (giây)</label><input id="duration" type="number" min="3" max="30" value="6">
+<p id="profileNote" class="hint"></p>
+<div id="burstFields" hidden><label for="burstStart">Burst bắt đầu (giây)</label><input id="burstStart" type="number" min="1" max="29" value="2"><label for="burstDuration">Burst kéo dài (giây)</label><input id="burstDuration" type="number" min="1" max="29" value="2"><label for="burstRps">RPS pha burst</label><input id="burstRps" type="number" min="1" max="1000" value="200"></div>
+<div id="concurrentFields" hidden><label for="concurrentAt">Batch tại giây</label><input id="concurrentAt" type="number" min="0" max="29" value="2"><label for="concurrentCount">Số request cùng lúc</label><input id="concurrentCount" type="number" min="1" max="1000" value="100"></div>
+</fieldset>
+<fieldset><legend>Limiter & policy</legend>
+<label for="mode">State mode</label><select id="mode"><option value="redis">Redis dùng chung</option><option value="local">Cục bộ</option><option value="none">Tắt limiter</option></select>
+<label for="algorithm">Thuật toán</label><select id="algorithm"><option value="fixed-window">Fixed Window</option><option value="token-bucket">Token Bucket</option></select>
+<div id="fixedFields"><label for="limit">Limit / window</label><input id="limit" type="number" min="1" max="1000" value="20"><label for="windowMs">Window (ms)</label><input id="windowMs" type="number" min="100" max="9999" value="1000"></div>
+<div id="tokenFields" hidden><label for="capacity">Bucket capacity</label><input id="capacity" type="number" min="1" max="1000" value="20"><label for="refillRate">Refill / giây</label><input id="refillRate" type="number" min="1" max="1000" value="20"></div>
+<div id="failField"><label for="failPolicy">Khi Redis lỗi</label><select id="failPolicy"><option value="closed">Fail closed</option><option value="open">Fail open</option></select></div>
+</fieldset>
+<fieldset><legend>Backend</legend><label for="backendCapacity">Capacity</label><input id="backendCapacity" type="number" min="1" max="100" value="10"><label for="backendService">Service time (ms)</label><input id="backendService" type="number" min="0" max="1000" value="50"></fieldset>
+<p class="hint">Giới hạn là biên an toàn cho demo. Cấu hình yêu cầu và Compose đã resolve được lưu theo Run ID.</p>
+</div>
 <label for="repetitions">Số lượt lặp</label><input id="repetitions" type="number" min="1" max="3" value="1" required>
-<p class="hint">5 client hợp lệ, tổng 20 RPS hợp lệ; 2 API instances; Fixed Window; backend capacity theo Compose. Các giá trị này là pilot, chưa phải protocol chính thức.</p>
 <p id="preview" class="status"></p><button id="run" type="submit">Chạy benchmark</button> <button id="cancel" class="secondary" type="button" disabled>Hủy run</button>
 </form><p id="message" role="status"></p><h3>Run gần đây</h3><ul id="history"></ul></section>
 <section class="card">
@@ -57,9 +78,12 @@ ul{padding-left:1.2rem;min-width:0}li{margin:.25rem 0;overflow-wrap:anywhere}
 const $ = id => document.getElementById(id);
 let current = null, activeExists = false;
 const terminal = new Set(['completed','failed','canceled','cleanup-error','interrupted']);
-function preview(){ $('preview').textContent = `${$('preset').selectedOptions[0].textContent} · ${$('rps').value} RPS · ${$('repetitions').value} lượt`; }
-for(const id of ['preset','rps','repetitions']) $(id).addEventListener('input', preview);
-preview();
+const val = id => Number($(id).value);
+function toggleGroup(id,show){const group=$(id);group.hidden=!show;for(const field of group.querySelectorAll('input,select'))field.disabled=!show;}
+function preview(){const custom=$('preset').value==='custom';$('preview').textContent=custom?`${$('profile').value} · ${$('mode').value} / ${$('algorithm').value} · ${$('instances').value} API · ${$('duration').value}s · ${$('repetitions').value} lượt`:`${$('preset').selectedOptions[0].textContent} · ${$('rps').value} RPS · ${$('repetitions').value} lượt`;}
+function syncForm(){const custom=$('preset').value==='custom';toggleGroup('baseline',!custom);toggleGroup('customFields',custom);if(custom){const profile=$('profile').value,mode=$('mode').value;if(mode==='none')$('algorithm').value='fixed-window';if(mode!=='redis')$('failPolicy').value='closed';toggleGroup('legitField',profile==='mixed'||profile==='burst');toggleGroup('burstFields',profile==='burst');toggleGroup('concurrentFields',profile==='concurrent');toggleGroup('fixedFields',$('algorithm').value==='fixed-window');toggleGroup('tokenFields',$('algorithm').value==='token-bucket');toggleGroup('failField',mode==='redis');$('algorithm').disabled=mode==='none';$('profileNote').textContent=profile==='normal'?'Toàn bộ RPS là traffic hợp lệ.':profile==='concurrent'?'RPS được lưu làm nhãn; workload thực tế là số request trong batch.':'RPS hợp lệ phải không vượt tổng RPS.';}preview();}
+for(const id of ['preset','rps','repetitions','profile','mode','algorithm','instances','duration','totalRps','legitRps'])$(id).addEventListener('input',syncForm);
+syncForm();
 async function api(path, options){ const response=await fetch(path,options); const value=await response.json(); if(!response.ok) throw Error(value.error || `HTTP ${response.status}`); return value; }
 function link(list, label, href){const li=document.createElement('li'), a=document.createElement('a'); a.textContent=label; a.href=href; li.append(a); list.append(li);}
 const fmt = value => typeof value==='number' ? new Intl.NumberFormat('vi-VN',{maximumFractionDigits:2}).format(value) : '—';
@@ -70,15 +94,15 @@ function renderResult(data){
   if(s){tile(fmt(s.sent),'Request đã gửi');tile(fmt(s.http_2xx),'HTTP 2xx','good');tile(fmt(s.http_429),'Từ chối 429','warn');tile(fmt(s.legitimate_goodput_per_second)+'/s','Goodput hợp lệ','good');tile(fmt(s.legitimate_success_latency?.p95_ms)+' ms','P95 client hợp lệ');tile(fmt(s.backend_confirmed_arrivals),'Backend arrivals xác nhận');$('resultNote').textContent=`Dropped ${fmt(s.generator_dropped)} · 5xx ${fmt(s.http_5xx)} · timeout ${fmt(s.timeouts)}. Arrivals là header xác nhận phía client; xem backend counters trong artifacts.`;}
   else $('resultNote').textContent='Chỉ số cuối lượt xuất hiện sau khi load generator drain.';
   $('config').replaceChildren();const p=data.resolved_policy,b=data.resolved_backend;
-  if(p){fact($('config'),'Mode',p.mode);fact($('config'),'Thuật toán',p.algorithm);fact($('config'),'Fail policy',p.fail_policy);fact($('config'),'Quota',`${p.limit} / ${p.window_ms} ms`);fact($('config'),'Backend capacity',b?.BACKEND_CAPACITY);fact($('config'),'Backend service time',b?.BACKEND_SERVICE_TIME);}
+  if(p){const c=data.run.request.custom;fact($('config'),'Workload',c?.profile||'mixed');fact($('config'),'API instances',c?.instances||2);fact($('config'),'Mode',p.mode);fact($('config'),'Thuật toán',p.algorithm);fact($('config'),'Fail policy',p.fail_policy);fact($('config'),'Quota',p.mode==='none'?'Không áp dụng':p.algorithm==='token-bucket'?`${p.capacity} tokens · ${p.rate_per_sec}/s`:`${p.limit} / ${p.window_ms} ms`);fact($('config'),'Backend capacity',b?.BACKEND_CAPACITY);fact($('config'),'Backend service time',b?.BACKEND_SERVICE_TIME);}
   else fact($('config'),'Trạng thái','Chờ runner resolve Compose');
 }
-function renderLive(sample){$('metrics').textContent=JSON.stringify(sample,null,2);$('live').replaceChildren();if(!sample.samples){fact($('live'),'Live sample',sample.status||'Chưa có snapshot');return;}for(const name of ['api1','api2','backend']){const s=sample.samples[name];fact($('live'),name,!s?'Chưa lấy được sample':name==='backend'?`Arrivals ${fmt(s.arrivals)} · overload ${fmt(s.overload)}`:`Requests ${fmt(s.requests)} · allow ${fmt(s.allowed)} · reject ${fmt(s.rejected)}`);}}
+function renderLive(sample){$('metrics').textContent=JSON.stringify(sample,null,2);$('live').replaceChildren();if(!sample.samples){fact($('live'),'Live sample',sample.status||'Chưa có snapshot');return;}for(const name of Object.keys(sample.samples).sort()){const s=sample.samples[name];fact($('live'),name,!s?'Chưa lấy được sample':name==='backend'?`Arrivals ${fmt(s.arrivals)} · overload ${fmt(s.overload)}`:`Requests ${fmt(s.requests)} · allow ${fmt(s.allowed)} · reject ${fmt(s.rejected)}`);}}
 async function refreshHistory(){ const runs=await api('/api/runs'); runs.sort((a,b)=>b.started_at.localeCompare(a.started_at)); activeExists=runs.some(r=>!terminal.has(r.state)); $('run').disabled=activeExists; $('history').replaceChildren(); for(const r of runs) { const li=document.createElement('li'), b=document.createElement('button'); b.type='button'; b.textContent=`${r.request.case} · ${r.state} · …${r.id.slice(-6)}`; b.addEventListener('click',()=>{current=r.id;refresh();}); li.append(b); $('history').append(li); } if(!current && runs.length) current=runs[0].id; }
 async function refresh(){ if(!current) return; try { const data=await api(`/api/runs/${current}`), r=data.run; $('state').textContent=`${r.id} · ${r.request.case} · ${r.state} (${data.phase})${r.error ? ' · '+r.error : ''}`; $('state').classList.toggle('error',r.state==='failed'||r.state==='cleanup-error'); $('run').disabled=activeExists; $('cancel').disabled=terminal.has(r.state)||r.cancel_requested; $('summary').textContent=Object.keys(data.summaries).length?JSON.stringify(data.summaries,null,2):'Chưa có summary.'; renderResult(data); if(!terminal.has(r.state)) renderLive(await api(`/api/runs/${current}/metrics`)); else renderLive({status:'Run đã kết thúc. Xem metrics before/after trong artifacts.'}); const names=await api(`/api/runs/${current}/artifacts`); $('artifacts').replaceChildren(); names.sort(); for(const name of names) link($('artifacts'),name,`/api/runs/${current}/artifacts/${name.split('/').map(encodeURIComponent).join('/')}`); } catch(e) { $('message').textContent=e.message; } }
 async function refreshDemo(){try{const data=await api('/api/demo');$('demo').textContent=JSON.stringify(data,null,2);$('demoCards').replaceChildren();for(const name of ['api1','api2','backend']){const s=data.samples[name];fact($('demoCards'),name,s?.error?'Không kết nối':name==='backend'?`Arrivals ${fmt(s.arrivals)} · overload ${fmt(s.overload)}`:`Requests ${fmt(s.requests)} · reject ${fmt(s.rejected)}`);}}catch(e){$('demo').textContent=e.message;}}
 $('sample').addEventListener('click',async()=>{try{$('sampleResult').textContent=JSON.stringify(await api('/api/demo/request',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}));await refreshDemo();}catch(e){$('sampleResult').textContent=e.message;}});
-$('form').addEventListener('submit',async e=>{e.preventDefault(); $('message').textContent=''; try { const run=await api('/api/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({case:$('preset').value,mixed_rps:Number($('rps').value),repetitions:Number($('repetitions').value)})}); current=run.id; await refreshHistory(); await refresh(); } catch(err){$('message').textContent=err.message;} });
+$('form').addEventListener('submit',async e=>{e.preventDefault();$('message').textContent='';const custom=$('preset').value==='custom',profile=$('profile').value;const config={case:$('preset').value,repetitions:val('repetitions'),mixed_rps:custom?0:val('rps')};if(custom)config.custom={profile,mode:$('mode').value,algorithm:$('algorithm').value,fail_policy:$('failPolicy').value,instances:val('instances'),rps:val('totalRps'),legitimate_rps:profile==='normal'?val('totalRps'):profile==='concurrent'?0:val('legitRps'),duration_seconds:val('duration'),limit:val('limit'),window_ms:val('windowMs'),capacity:val('capacity'),refill_rate:val('refillRate'),backend_capacity:val('backendCapacity'),backend_service_ms:val('backendService'),burst_start_seconds:val('burstStart'),burst_duration_seconds:val('burstDuration'),burst_rps:val('burstRps'),concurrent_at_seconds:val('concurrentAt'),concurrent_count:val('concurrentCount')};try{const run=await api('/api/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(config)});current=run.id;await refreshHistory();await refresh();}catch(err){$('message').textContent=err.message;}});
 $('cancel').addEventListener('click',async()=>{ if(!current)return; try{await api(`/api/runs/${current}/cancel`,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});await refresh();}catch(err){$('message').textContent=err.message;} });
 refreshHistory().then(refresh).catch(e=>{$('message').textContent=e.message});
 refreshDemo();setInterval(refreshDemo,5000);
