@@ -1,6 +1,6 @@
 # Demo Console: workflow triển khai và vận hành
 
-Console là giao diện local cho pilot mixed traffic, không thay đổi protocol hoặc phép đo của runner. Ba preset đầu tiên là `mixed-none`, `mixed-local`, `mixed-redis`; mỗi lần chỉ chọn một preset, `MIXED_RPS` 21..1000 và repetitions 1..3. Các giá trị còn lại do `research-pilot.sh` quyết định. Roadmap/Proposal chỉ yêu cầu các thí nghiệm rate limiting; Console là lựa chọn kỹ thuật để trình bày demo.
+Console là giao diện local cho pilot, không thay đổi protocol hoặc phép đo của runner. Ba preset cố định là `mixed-none`, `mixed-local`, `mixed-redis` (tổng RPS 21..1000); chế độ `custom` cho phép chọn workload, mode, thuật toán, topology và policy trong các giới hạn bên dưới. Mỗi run chọn một case, lặp 1..3 lượt. Roadmap/Proposal chỉ yêu cầu các thí nghiệm rate limiting; Console là lựa chọn kỹ thuật để trình bày demo.
 
 ## Workflow phát triển
 
@@ -26,9 +26,20 @@ MIXED_RPS=120 bash scripts/research-pilot.sh --case mixed-redis --repetitions 1 
 
 Console chỉ bind `127.0.0.1`. `/api/runs/{id}/metrics` poll `/metrics` trong container qua Docker exec khi run hoạt động; đó là counter tích lũy theo container, lấy mẫu theo thời điểm, không phải delta hay kết quả cuối. Polling có overhead; dùng artifact before/after và trace của runner để phân tích nghiên cứu. `summary.json` chỉ xuất hiện sau khi load generator drain; `analysis.json` là kết luận của analyzer, Console không tự suy diễn.
 
+Chế độ **Tùy chỉnh** hỗ trợ `normal`, `mixed`, `burst`, `concurrent`; 1/2/4 API; tắt limiter/local/Redis; Fixed Window hoặc Token Bucket; fail-open/closed khi dùng Redis. Có thể đặt tổng tải 1..1000 RPS, tải hợp lệ 0..1000 RPS (không vượt tổng), thời lượng 3..30 giây, quota 1..1000, window 100..9999 ms, bucket capacity/refill 1..1000, backend capacity 1..100 và service time 0..1000 ms. Burst có mốc bắt đầu, thời lượng và RPS riêng; concurrent có mốc và số request trong batch. `normal` dùng toàn bộ RPS làm tải hợp lệ. Với `concurrent`, số request batch quyết định tải thực tế; ô RPS chỉ là nhãn trong metadata. Trường không liên quan đến mode/profile được ẩn, nhưng request và `policy.json`/`compose-resolved.json` vẫn ghi đủ cấu hình để tái hiện. Đây là biên an toàn của demo, không phải tham số protocol nghiên cứu đã khóa.
+
+Ví dụ tái hiện một run tùy chỉnh qua CLI (các `CUSTOM_*` khác dùng mặc định trong [scripts/README.md](../scripts/README.md)):
+
+```bash
+CUSTOM_MODE=redis CUSTOM_ALGORITHM=token-bucket CUSTOM_PROFILE=burst \
+CUSTOM_INSTANCES=4 CUSTOM_RPS=60 CUSTOM_LEGIT_RPS=10 CUSTOM_DURATION=6 \
+CUSTOM_CAPACITY=15 CUSTOM_RATE=12 CUSTOM_BACKEND_CAPACITY=4 \
+CUSTOM_BURST_RPS=100 bash scripts/research-pilot.sh --case custom --analyze
+```
+
 Khi hủy hoặc dừng Console bằng SIGINT/SIGTERM, controller gửi SIGTERM tới process group, đợi runner cleanup rồi kiểm tra container của project. Nếu Console bị SIGKILL/restart bất ngờ, run dở được đánh dấu `interrupted`; kiểm tra `docker ps --filter label=com.docker.compose.project=project3-research-lab` và log trước khi chạy lại. Runner giữ khóa trong suốt tiến trình còn chạy. `cleanup-error` nghĩa là còn container hoặc không xác minh được cleanup; cần kiểm tra thủ công trước khi diễn tập tiếp.
 
-Phạm vi hiện tại không cho chỉnh quota, backend capacity, thuật toán hay fault injection từ UI; dùng CLI và artifact để thử các phép đo đó. Các biểu đồ, history database và truy cập LAN cũng chưa có.
+Phạm vi hiện tại chưa cho chỉnh fault injection từ UI. Các biểu đồ, history database và truy cập LAN cũng chưa có.
 
 ## Giao diện và hướng phát triển
 
