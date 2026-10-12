@@ -16,7 +16,8 @@ usage() {
 Usage: bash scripts/research-pilot.sh [--output NEW_DIR] [--repetitions 1..3]
        [--case NAME]... [--analyze] [--host-port 1024..65535]
 Cases: normal, burst-fw, burst-tb, concurrent-local, concurrent-redis,
-       scale-1, scale-2, scale-4, mixed-none, mixed-local, mixed-redis.
+       scale-1, scale-2, scale-4, mixed-none, mixed-local, mixed-redis, custom.
+Custom uses bounded CUSTOM_* environment variables; see scripts/README.md.
 EOF
 }
 while (($#)); do
@@ -36,15 +37,62 @@ while (($#)); do
   esac
 done
 [[ "$REPETITIONS" =~ ^[1-3]$ ]] || { echo 'repetitions must be 1..3' >&2; exit 2; }
-[[ "$MIXED_RPS" =~ ^[1-9][0-9]{0,5}$ ]] && (( MIXED_RPS > 20 && MIXED_RPS <= 100000 )) || { echo 'MIXED_RPS must be an integer in 21..100000' >&2; exit 2; }
 [[ "$LAB_HOST_PORT" =~ ^[0-9]+$ ]] && (( LAB_HOST_PORT >= 1024 && LAB_HOST_PORT <= 65535 )) || { echo 'invalid host port' >&2; exit 2; }
 ALL_CASES=(normal burst-fw burst-tb concurrent-local concurrent-redis scale-1 scale-2 scale-4 mixed-none mixed-local mixed-redis)
+ALLOWED_CASES=("${ALL_CASES[@]}" custom)
 if ((${#SELECTED[@]} == 0)); then SELECTED=("${ALL_CASES[@]}"); fi
 for requested in "${SELECTED[@]}"; do
   found=0
-  for allowed in "${ALL_CASES[@]}"; do [[ "$requested" == "$allowed" ]] && found=1; done
+  for allowed in "${ALLOWED_CASES[@]}"; do [[ "$requested" == "$allowed" ]] && found=1; done
   ((found)) || { echo "unknown case: $requested" >&2; exit 2; }
 done
+if [[ "${SELECTED[*]}" == *custom* ]] && ((${#SELECTED[@]} != 1)); then
+  echo 'custom must run alone' >&2; exit 2
+fi
+if [[ "${SELECTED[0]}" != custom ]]; then
+  [[ "$MIXED_RPS" =~ ^[1-9][0-9]{0,5}$ ]] && (( MIXED_RPS > 20 && MIXED_RPS <= 100000 )) || { echo 'MIXED_RPS must be an integer in 21..100000' >&2; exit 2; }
+fi
+if [[ "${SELECTED[0]}" == custom ]]; then
+  CUSTOM_MODE=${CUSTOM_MODE:-redis}
+  CUSTOM_ALGORITHM=${CUSTOM_ALGORITHM:-fixed-window}
+  CUSTOM_INSTANCES=${CUSTOM_INSTANCES:-2}
+  CUSTOM_PROFILE=${CUSTOM_PROFILE:-mixed}
+  CUSTOM_RPS=${CUSTOM_RPS:-120}
+  CUSTOM_LEGIT_RPS=${CUSTOM_LEGIT_RPS-20}
+  CUSTOM_DURATION=${CUSTOM_DURATION:-6}
+  CUSTOM_LIMIT=${CUSTOM_LIMIT:-20}
+  CUSTOM_WINDOW_MS=${CUSTOM_WINDOW_MS:-1000}
+  CUSTOM_CAPACITY=${CUSTOM_CAPACITY:-20}
+  CUSTOM_RATE=${CUSTOM_RATE:-20}
+  CUSTOM_BACKEND_CAPACITY=${CUSTOM_BACKEND_CAPACITY:-10}
+  CUSTOM_BACKEND_SERVICE_MS=${CUSTOM_BACKEND_SERVICE_MS-50}
+  CUSTOM_FAIL_POLICY=${CUSTOM_FAIL_POLICY:-closed}
+  CUSTOM_BURST_START=${CUSTOM_BURST_START:-2}
+  CUSTOM_BURST_DURATION=${CUSTOM_BURST_DURATION:-2}
+  CUSTOM_BURST_RPS=${CUSTOM_BURST_RPS:-200}
+  CUSTOM_CONCURRENT_AT=${CUSTOM_CONCURRENT_AT-2}
+  CUSTOM_CONCURRENT_COUNT=${CUSTOM_CONCURRENT_COUNT:-100}
+  valid_int() { [[ "$1" =~ ^(0|[1-9][0-9]{0,3})$ ]] && (( $1 >= $2 && $1 <= $3 )); }
+  [[ "$CUSTOM_MODE" == none || "$CUSTOM_MODE" == local || "$CUSTOM_MODE" == redis ]] || { echo 'invalid CUSTOM_MODE' >&2; exit 2; }
+  [[ "$CUSTOM_ALGORITHM" == fixed-window || "$CUSTOM_ALGORITHM" == token-bucket ]] || { echo 'invalid CUSTOM_ALGORITHM' >&2; exit 2; }
+  [[ "$CUSTOM_INSTANCES" == 1 || "$CUSTOM_INSTANCES" == 2 || "$CUSTOM_INSTANCES" == 4 ]] || { echo 'invalid CUSTOM_INSTANCES' >&2; exit 2; }
+  [[ "$CUSTOM_PROFILE" == normal || "$CUSTOM_PROFILE" == mixed || "$CUSTOM_PROFILE" == burst || "$CUSTOM_PROFILE" == concurrent ]] || { echo 'invalid CUSTOM_PROFILE' >&2; exit 2; }
+  [[ "$CUSTOM_FAIL_POLICY" == open || "$CUSTOM_FAIL_POLICY" == closed ]] || { echo 'invalid CUSTOM_FAIL_POLICY' >&2; exit 2; }
+  for spec in "CUSTOM_RPS 1 1000" "CUSTOM_LEGIT_RPS 0 1000" "CUSTOM_DURATION 3 30" "CUSTOM_LIMIT 1 1000" "CUSTOM_WINDOW_MS 100 9999" "CUSTOM_CAPACITY 1 1000" "CUSTOM_RATE 1 1000" "CUSTOM_BACKEND_CAPACITY 1 100" "CUSTOM_BACKEND_SERVICE_MS 0 1000" "CUSTOM_BURST_START 1 29" "CUSTOM_BURST_DURATION 1 29" "CUSTOM_BURST_RPS 1 1000" "CUSTOM_CONCURRENT_AT 0 29" "CUSTOM_CONCURRENT_COUNT 1 1000"; do
+    read -r name low high <<<"$spec"
+    valid_int "${!name}" "$low" "$high" || { echo "invalid $name ($low..$high)" >&2; exit 2; }
+  done
+  (( CUSTOM_LEGIT_RPS <= CUSTOM_RPS )) || { echo 'legitimate RPS exceeds total RPS' >&2; exit 2; }
+  [[ "$CUSTOM_MODE" != none || "$CUSTOM_ALGORITHM" == fixed-window ]] || { echo 'algorithm is unused in none mode' >&2; exit 2; }
+  [[ "$CUSTOM_FAIL_POLICY" == closed || "$CUSTOM_MODE" == redis ]] || { echo 'fail-open requires Redis mode' >&2; exit 2; }
+  if [[ "$CUSTOM_PROFILE" == normal ]]; then
+    (( CUSTOM_LEGIT_RPS == CUSTOM_RPS )) || { echo 'normal profile requires all traffic legitimate' >&2; exit 2; }
+  elif [[ "$CUSTOM_PROFILE" == burst ]]; then
+    (( CUSTOM_BURST_START + CUSTOM_BURST_DURATION <= CUSTOM_DURATION && CUSTOM_BURST_RPS > CUSTOM_RPS - CUSTOM_LEGIT_RPS )) || { echo 'invalid burst interval or RPS' >&2; exit 2; }
+  elif [[ "$CUSTOM_PROFILE" == concurrent ]]; then
+    (( CUSTOM_CONCURRENT_AT < CUSTOM_DURATION && CUSTOM_LEGIT_RPS == 0 )) || { echo 'concurrent profile requires a batch within duration and zero legitimate RPS' >&2; exit 2; }
+  fi
+fi
 declare -A seen_cases=()
 for requested in "${SELECTED[@]}"; do
   [[ -z "${seen_cases[$requested]:-}" ]] || { echo "duplicate case: $requested" >&2; exit 2; }
@@ -99,11 +147,25 @@ for case_name in "${SELECTED[@]}"; do
       mixed-none) MODE=none; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=$MIXED_RPS; LEGIT_RPS=20 ;;
       mixed-local) MODE=local; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=$MIXED_RPS; LEGIT_RPS=20 ;;
       mixed-redis) MODE=redis; ALGORITHM=fixed-window; INSTANCES=2; PROFILE=mixed; RPS=$MIXED_RPS; LEGIT_RPS=20 ;;
+      custom) MODE=$CUSTOM_MODE; ALGORITHM=$CUSTOM_ALGORITHM; INSTANCES=$CUSTOM_INSTANCES; PROFILE=$CUSTOM_PROFILE; RPS=$CUSTOM_RPS; LEGIT_RPS=$CUSTOM_LEGIT_RPS ;;
     esac
     case_dir="$LAB_OUTPUT/$case_name-repeat-$repeat"
     mkdir "$case_dir"
     export MODE ALGORITHM NAMESPACE="research-$(date -u +%Y%m%dT%H%M%S)-$$-$case_name-$repeat"
-    export FAIL_POLICY=closed
+    FAIL_POLICY=closed
+    DURATION=6
+    BURST_START=2; BURST_DURATION=2; BURST_RPS=100
+    CONCURRENT_AT=2; CONCURRENT_COUNT=100
+    if [[ "$case_name" == custom ]]; then
+      FAIL_POLICY=$CUSTOM_FAIL_POLICY
+      DURATION=$CUSTOM_DURATION
+      LIMIT=$CUSTOM_LIMIT WINDOW="${CUSTOM_WINDOW_MS}ms" CAPACITY=$CUSTOM_CAPACITY RATE=$CUSTOM_RATE
+      BACKEND_CAPACITY=$CUSTOM_BACKEND_CAPACITY BACKEND_SERVICE_TIME="${CUSTOM_BACKEND_SERVICE_MS}ms"
+      BURST_START=$CUSTOM_BURST_START BURST_DURATION=$CUSTOM_BURST_DURATION BURST_RPS=$CUSTOM_BURST_RPS
+      CONCURRENT_AT=$CUSTOM_CONCURRENT_AT CONCURRENT_COUNT=$CUSTOM_CONCURRENT_COUNT
+      export LIMIT WINDOW CAPACITY RATE BACKEND_CAPACITY BACKEND_SERVICE_TIME
+    fi
+    export FAIL_POLICY
     # Compose performs interpolation and default resolution before topology generation.
     timeout 15s docker compose --project-directory "$LAB_ROOT" -f "$LAB_ROOT/compose.yaml" -p "$LAB_PROJECT" config --format json >"$case_dir/base-resolved.json"
     timeout 10s python3 "$LAB_ROOT/scripts/render-topology.py" --base-config "$case_dir/base-resolved.json" --output "$case_dir/topology" --instances "$INSTANCES" --host-port "$LAB_HOST_PORT" --fresh-state
@@ -122,10 +184,10 @@ for case_name in "${SELECTED[@]}"; do
     done
     sleep 1
     lab_sample "$case_dir"
-    args=(-target "http://127.0.0.1:$LAB_HOST_PORT/work" -duration 6s -rps "$RPS" -legitimate-rps "$LEGIT_RPS" -legitimate-clients 5 -max-inflight 200 -timeout 2s -run-id "$case_name-repeat-$repeat" -out "$case_dir/load" -mode "$MODE" -algorithm "$ALGORITHM" -fail-policy "$FAIL_POLICY" -profile "$PROFILE")
-    if [[ "$PROFILE" == burst ]]; then args+=(-burst-start 2s -burst-duration 2s -burst-rps 100); fi
-    if [[ "$PROFILE" == concurrent ]]; then args+=(-concurrent-at 2s -concurrent-count 100); fi
-    timeout 20s "$LAB_OUTPUT/loadgen" "${args[@]}" >"$case_dir/loadgen.log" 2>&1
+    args=(-target "http://127.0.0.1:$LAB_HOST_PORT/work" -duration "${DURATION}s" -rps "$RPS" -legitimate-rps "$LEGIT_RPS" -legitimate-clients 5 -max-inflight 200 -timeout 2s -run-id "$case_name-repeat-$repeat" -out "$case_dir/load" -mode "$MODE" -algorithm "$ALGORITHM" -fail-policy "$FAIL_POLICY" -profile "$PROFILE")
+    if [[ "$PROFILE" == burst ]]; then args+=(-burst-start "${BURST_START}s" -burst-duration "${BURST_DURATION}s" -burst-rps "$BURST_RPS"); fi
+    if [[ "$PROFILE" == concurrent ]]; then args+=(-concurrent-at "${CONCURRENT_AT}s" -concurrent-count "$CONCURRENT_COUNT"); fi
+    timeout "$((DURATION + 15))s" "$LAB_OUTPUT/loadgen" "${args[@]}" >"$case_dir/loadgen.log" 2>&1
     lab_stop_sample
     compose_timeout 10s exec -T backend wget -q -O - http://127.0.0.1:8080/metrics >"$case_dir/backend-after.json"
     for ((api=1; api<=INSTANCES; api++)); do

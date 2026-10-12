@@ -32,5 +32,23 @@ if bash "$root/scripts/research-pilot.sh" --case mixed-redis --output "$tmp/shou
 fi
 [[ ! -e "$tmp/should-not-start" ]]
 grep -q 'research pilot already running' "$tmp/locked.log"
+if bash "$root/scripts/research-pilot.sh" --output "$tmp/default-locked" >"$tmp/default-locked.log" 2>&1; then
+  echo 'research pilot accepted a second default runner' >&2
+  exit 1
+fi
+[[ ! -e "$tmp/default-locked" ]]
+grep -q 'research pilot already running' "$tmp/default-locked.log"
+if MIXED_RPS=0 bash "$root/scripts/research-pilot.sh" --case custom --output "$tmp/custom-locked" >"$tmp/custom-locked.log" 2>&1; then
+  echo 'research pilot accepted a second custom runner' >&2
+  exit 1
+fi
+[[ ! -e "$tmp/custom-locked" ]]
+grep -q 'research pilot already running' "$tmp/custom-locked.log"
 flock -u 9
+if CUSTOM_RPS=1001 bash "$root/scripts/research-pilot.sh" --case custom --output "$tmp/invalid-custom" >"$tmp/invalid-custom.log" 2>&1; then
+  echo 'research pilot accepted invalid custom RPS' >&2
+  exit 1
+fi
+[[ ! -e "$tmp/invalid-custom" ]]
+grep -q 'invalid CUSTOM_RPS' "$tmp/invalid-custom.log"
 echo 'Script cleanup and runner lock tests passed'
