@@ -2,6 +2,8 @@
 
 The user explicitly stopped the session. Do not resume experiments until requested.
 
+The subsequent request authorized documentation only. Use [REMAINING_WORK_PLAN.md](../REMAINING_WORK_PLAN.md) for the complete known backlog, dependency gates, implementation details, ownership and English resumption prompts. Creating that plan does not resume experiment execution.
+
 ## Completed and preserved
 
 - Local Token Bucket refill rounding fix and exact Fraction oracle; historical evidence unchanged.
