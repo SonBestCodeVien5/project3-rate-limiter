@@ -34,7 +34,7 @@ func run(logger *slog.Logger) error {
 		case "local":
 			l, err = limiter.NewLocal(cfg.Policy)
 		case "redis":
-			client := redis.NewClient(&redis.Options{Addr: cfg.RedisAddr, MaxRetries: -1, ContextTimeoutEnabled: true, DialTimeout: cfg.RedisTimeout, ReadTimeout: cfg.RedisTimeout, WriteTimeout: cfg.RedisTimeout, PoolTimeout: cfg.RedisTimeout})
+			client := newRedisClient(cfg)
 			defer client.Close()
 			l, err = limiter.NewRedis(client, cfg.Policy, cfg.Namespace)
 		}
@@ -65,4 +65,9 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 	return nil
+}
+
+func newRedisClient(cfg server.Config) *redis.Client {
+	// Use the request context deadline; go-redis v9.17.0 socket timeouts use a wall-clock cache.
+	return redis.NewClient(&redis.Options{Addr: cfg.RedisAddr, MaxRetries: -1, ContextTimeoutEnabled: true, DialTimeout: cfg.RedisTimeout, ReadTimeout: -1, WriteTimeout: -1, PoolTimeout: cfg.RedisTimeout})
 }

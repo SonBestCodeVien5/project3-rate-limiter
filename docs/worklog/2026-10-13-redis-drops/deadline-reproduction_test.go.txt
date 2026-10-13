@@ -1,0 +1,19 @@
+package pool
+import ("context"; "testing"; "time")
+func TestProject3StaleCachedDeadline(t *testing.T) {
+ globalTimeCache.lock.Lock()
+ close(globalTimeCache.stop)
+ globalTimeCache.started = false
+ globalTimeCache.lock.Unlock()
+ time.Sleep(60*time.Millisecond)
+ previous := globalTimeCache.nowNs.Load()
+ defer func(){globalTimeCache.nowNs.Store(previous);startGlobalTimeCache()}()
+ globalTimeCache.nowNs.Store(time.Now().Add(-time.Second).UnixNano())
+ ctx,cancel:=context.WithTimeout(context.Background(),100*time.Millisecond);defer cancel()
+ want,_:=ctx.Deadline();cn:=&Conn{}
+ stale:=cn.deadline(ctx,100*time.Millisecond)
+ if !stale.Before(time.Now()){t.Fatalf("positive timeout deadline not expired: %v",stale)}
+ owned:=cn.deadline(ctx,0)
+ if owned!=want||!owned.After(time.Now()){t.Fatalf("context deadline not preserved: got %v want %v",owned,want)}
+ t.Logf("cached socket deadline expired by %v; context-owned deadline has %v remaining",time.Since(stale),time.Until(owned))
+}
