@@ -63,6 +63,18 @@ func TestRunLifecycleAndArtifacts(t *testing.T) {
 	if got := request(t, h, "GET", "/api/runs/"+run.ID+"/artifacts/request.json", ""); got.Code != 200 {
 		t.Fatalf("artifact: %d", got.Code)
 	}
+	for _, name := range []string{"images.json", "base-image-digests.txt", "topology/nginx.conf"} {
+		path := filepath.Join(c.runDir(run.ID), "result", "mixed-redis-repeat-1", name)
+		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte("evidence"), 0600); err != nil {
+			t.Fatal(err)
+		}
+		if got := request(t, h, "GET", "/api/runs/"+run.ID+"/artifacts/mixed-redis-repeat-1/"+name, ""); got.Code != 200 || got.Body.String() != "evidence" {
+			t.Fatalf("comparison artifact %s: %d", name, got.Code)
+		}
+	}
 	if got := request(t, h, "POST", "/api/runs/"+run.ID+"/cancel", `{}`); got.Code != 202 {
 		t.Fatalf("cancel: %d %s", got.Code, got.Body.String())
 	}

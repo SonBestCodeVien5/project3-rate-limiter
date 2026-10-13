@@ -574,7 +574,7 @@ func (c *Controller) metrics(w http.ResponseWriter, req *http.Request) {
 	jsonResponse(w, 200, map[string]any{"sampled_at": time.Now().UTC(), "source": "Docker exec /metrics; cumulative counters since container start", "samples": samples})
 }
 
-var caseArtifacts = []string{"compose-resolved.json", "policy.json", "load/summary.json", "load/metadata.json", "load/requests.jsonl", "analysis.json", "analysis.md", "compose.log", "redis-resources.log", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "api3-before.json", "api3-after.json", "api4-before.json", "api4-after.json", "backend-before.json", "backend-after.json"}
+var caseArtifacts = []string{"topology/nginx.conf", "images.json", "base-image-digests.txt", "compose-resolved.json", "policy.json", "load/summary.json", "load/metadata.json", "load/requests.jsonl", "analysis.json", "analysis.md", "compose.log", "redis-resources.log", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "api3-before.json", "api3-after.json", "api4-before.json", "api4-after.json", "backend-before.json", "backend-after.json"}
 
 func (c *Controller) artifactPaths(r *Run) map[string]string {
 	paths := map[string]string{}

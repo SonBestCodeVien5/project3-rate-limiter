@@ -34,3 +34,40 @@ test('counts every API and refuses to report a total with missing counters',()=>
   delete data.analyses['1'].counter_deltas.api2;
   ui.render(data);assert.equal(ui.text()[7],'Thiếu counters');assert.match(ui.nodes.get('resultNote').textContent,/limiter_errors before\/after/);
 });
+
+test('comparison refuses configuration differences and missing evidence',()=>{
+  const html=fs.readFileSync(__dirname+'/index.html','utf8'),context={};vm.createContext(context);
+  vm.runInContext(html.slice(html.indexOf('function stable('),html.indexOf('async function compareSaved')),context);
+  const evidence=comparisonFixtures();
+  context.evidence=evidence;assert.equal(vm.runInContext('comparisonProblems(evidence).length',context),0);
+  delete evidence[0].policy.capacity;assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/thiếu policy capacity/);evidence[0].policy.capacity=20;
+  evidence[0].summary.run_id='wrong';assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/run_id summary/);evidence[0].summary.run_id='custom-repeat-1';
+  evidence[1].metadata.config.legitimate_clients=6;assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/workload/);
+  evidence[1].metadata.config.legitimate_clients=5;evidence[2].images=[];assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/image identity/);
+  evidence[0].gitStatus=' M internal/limiter/local.go';assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/working tree/);
+  evidence[0].compose.services.api1.environment.MODE='redis';assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/Compose khác policy/);
+});
+
+function comparisonFixtures(){
+  return ['none','local','redis'].map(mode=>({metadata:{config:{run_id:'custom-repeat-1',profile:'mixed',duration_ns:3,rps:120,legitimate_rps:20,legitimate_clients:5,max_inflight:200,timeout_ns:2,max_schedule_lag_ns:1,mode_label:mode},go_version:'go',os:'linux',arch:'amd64',cpu_count:12,gomaxprocs:12,hostname:'host',git_revision:'abc',git_status_porcelain:'',workload_version:2},revision:'abc',gitStatus:'',caseRepeat:'custom-repeat-1',summary:{run_id:'custom-repeat-1'},policy:{mode,algorithm:'fixed-window',fail_policy:'closed',state_reset:true,limit:20,window_ms:1000,capacity:20,rate_per_sec:20,namespace:mode},compose:{services:{api1:{environment:{MODE:mode,ALGORITHM:'fixed-window',NAMESPACE:mode}},backend:{environment:{BACKEND_CAPACITY:'4',BACKEND_SERVICE_TIME:'50ms'}},nginx:{},redis:{}}},images:['api1','backend','nginx','redis'].map(name=>({ContainerName:'lab-'+name+'-1',ID:name,Platform:'linux/amd64'})),baseImages:'digest',nginx:'upstream api1;'}));
+}
+
+test('matched artifact selections render individual results and quality evidence',async()=>{
+  const evidence=comparisonFixtures(),nodes=new Map();
+  function element(){return {value:'',children:[],style:{},append(...items){this.children.push(...items);},replaceChildren(){this.children=[];}};}
+  for(const [i,id] of ['compareNone','compareLocal','compareRedis'].entries()){nodes.set(id,element());nodes.get(id).value=JSON.stringify(['saved-'+i,'custom',1]);evidence[i].summary={run_id:'custom-repeat-1',legitimate_sent:10,legitimate_successful:10,legitimate_goodput_per_second:3,legitimate_success_latency:{p95_ms:12,p99_ms:15},http_429:2,http_5xx:1,timeouts:0,transport_errors:1,generator_dropped:0};evidence[i].analysis={oracle:{status:'inconclusive'},counter_deltas:{api1:{limiter_errors:2},backend:{arrivals:10,overload:1}}};}
+  const context={Intl,document:{createElement:element,getElementById(id){if(!nodes.has(id))nodes.set(id,element());return nodes.get(id);}},fetch:async url=>{
+    const index=Number(url.match(/saved-(\d)/)[1]),e=evidence[index],name=url.split('/artifacts/')[1];
+    const files={'load/metadata.json':e.metadata,'policy.json':e.policy,'compose-resolved.json':e.compose,'images.json':e.images,'base-image-digests.txt':e.baseImages,'git-revision.txt':e.revision,'git-status.txt':e.gitStatus,'load/summary.json':e.summary,'analysis.json':e.analysis,'topology/nginx.conf':e.nginx};const value=files[name.replace('custom-repeat-1/','')];return {ok:value!==undefined,json:async()=>value,text:async()=>value};
+  }};
+  vm.createContext(context);const html=fs.readFileSync(__dirname+'/index.html','utf8');
+  vm.runInContext("const $=id=>document.getElementById(id);const fmt=v=>typeof v==='number'?String(v):'—';"+html.slice(html.indexOf('function stable('),html.indexOf("$('compare').addEventListener")),context);
+  await vm.runInContext('compareSaved()',context);
+  assert.match(nodes.get('compareStatus').textContent,/Cấu hình\/evidence khớp/);
+  const rows=nodes.get('comparison').children[0].children.map(row=>row.children.map(cell=>cell.textContent));
+  assert.equal(rows.find(row=>row[0]==='Run / lượt')[1],'saved-0 / custom-repeat-1');
+  assert.equal(rows.find(row=>row[0]==='P99 hợp lệ thành công (ms)')[3],'15');
+  assert.equal(rows.find(row=>row[0]==='Lỗi limiter · delta mọi API')[2],'2');
+  assert.equal(rows.find(row=>row[0]==='Oracle · phạm vi trace')[1],'Chưa đủ bằng chứng');
+  assert.equal(rows.find(row=>row[0]==='Lỗi truyền tải')[1],'1');
+});

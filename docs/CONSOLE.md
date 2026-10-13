@@ -53,11 +53,12 @@ Kiểm tra phần này bằng `go test ./internal/console` và `node internal/co
 
 Bản hiện tại đặt chỉ số cuối lượt thành các thẻ riêng (request đã gửi, 2xx, 429, goodput và p95 của client hợp lệ, backend arrivals xác nhận). Cấu hình thực tế, snapshot từng instance và artifact vẫn xem được; JSON thô nằm trong phần mở rộng để dòng dài không kéo giãn trang. Cách phân cấp thẻ chỉ số và phần xem chi tiết được tham khảo từ [Custom Dashboards của Langfuse](https://langfuse.com/docs/metrics/features/custom-dashboards); Console không dùng Langfuse hay dữ liệu LLM.
 
+Phần **So sánh các lượt đã lưu** chọn ba run complete/lượt riêng cho none/local/Redis, đọc trực tiếp metadata load generator, policy, Compose resolve, nginx config, revision/working tree và image IDs/digests qua artifact allowlist. Nó từ chối bảng khi thiếu evidence, working tree không sạch, mode thực tế khác ô chọn hoặc workload/key distribution (workload version và số client), policy, backend, topology, runtime hay image identity khác nhau. Mode và namespace là hai khác biệt được phép; fail policy/thuật toán vẫn phải khớp. Summary và metadata phải có cùng run_id của lượt được chọn; policy phải có đủ các trường thuật toán, fail policy và quota. Bảng ghi rõ Run ID/lượt, trạng thái oracle và lỗi limiter delta của đủ API; thiếu counters được ghi rõ. Bảng hiển thị goodput hợp lệ, p95/p99 của request hợp lệ thành công, 429/5xx/timeout/lỗi truyền tải, generator drops và backend arrivals/overload từ analyzer counter delta; không gộp percentile, xếp hạng hoặc tuyên bố mode thắng. Đây là lớp trình bày tùy chọn, không xác nhận protocol hay chất lượng trace; oracle và artifacts vẫn cần được kiểm tra. Run lịch sử có working tree bẩn sẽ bị từ chối dù khác biệt chỉ là tài liệu.
+
 Các mục sau là **đề xuất tùy chọn**, không phải yêu cầu Roadmap/Proposal hoặc tính năng đã triển khai:
 
 | Ưu tiên | Tính năng có thể thêm | Điều kiện trước khi làm |
 | --- | --- | --- |
-| 1 | So sánh ba run `mixed-none/local/redis` cạnh nhau theo goodput hợp lệ, p95/p99, 429/5xx và backend arrivals | Chỉ ghép run có cùng workload, backend config, số API và revision; hiển thị khác biệt cấu hình nếu không khớp. |
 | 2 | Biểu đồ nhỏ từ artifacts sau run: traffic hợp lệ/toàn tải, quyết định limiter và backend overload theo thời gian | Kiểm tra timestamp, đơn vị, dropped requests và tác động của xử lý dữ liệu; không gọi snapshot cuối là live. |
 | 3 | Thêm preset có tham số khóa cho normal/burst/concurrent/scale; các profile/topology này đã chọn được trong custom | Pilot và protocol phải xác định tổ hợp hợp lệ, giới hạn tải, phép so sánh và nhãn cấu hình thực tế. |
 | 4 | Hiện tiến trình runner và Redis CPU/memory sample rõ thời điểm lấy | Cần đo overhead polling/sampling trước khi dùng số liệu này trong báo cáo. |
