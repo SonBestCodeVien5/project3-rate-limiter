@@ -1,0 +1,22 @@
+{
+  "uname": {
+    "exit_code": 0,
+    "stdout": "Linux DESKTOP-8JO7U78 6.18.40.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Fri Jul 31 22:12:15 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+    "stderr": ""
+  },
+  "virtualization": {
+    "exit_code": 0,
+    "stdout": "wsl",
+    "stderr": ""
+  },
+  "time_sync": {
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Failed to connect to bus: Operation not permitted"
+  },
+  "clocksource": "tsc",
+  "available_clocksources": "tsc hyperv_clocksource_tsc_page hyperv_clocksource_msr acpi_pm",
+  "kernel": "6.18.40.1-microsoft-standard-WSL2",
+  "chronyc_available": false,
+  "ntpq_available": false
+}
