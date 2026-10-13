@@ -432,6 +432,7 @@ func (c *Controller) get(w http.ResponseWriter, req *http.Request) {
 	}
 	result["phase"] = phase
 	summaries := map[string]any{}
+	analyses := map[string]any{}
 	for i := 1; i <= r.Request.Repetitions; i++ {
 		if data, err := os.ReadFile(filepath.Join(c.runDir(r.ID), "result", fmt.Sprintf("%s-repeat-%d", r.Request.Case, i), "load", "summary.json")); err == nil {
 			var summary any
@@ -439,8 +440,15 @@ func (c *Controller) get(w http.ResponseWriter, req *http.Request) {
 				summaries[strconv.Itoa(i)] = summary
 			}
 		}
+		if data, err := os.ReadFile(filepath.Join(c.runDir(r.ID), "result", fmt.Sprintf("%s-repeat-%d", r.Request.Case, i), "analysis.json")); err == nil {
+			var analysis map[string]any
+			if json.Unmarshal(data, &analysis) == nil && analysis != nil {
+				analyses[strconv.Itoa(i)] = analysis
+			}
+		}
 	}
 	result["summaries"] = summaries
+	result["analyses"] = analyses
 	caseDir := filepath.Join(c.runDir(r.ID), "result", r.Request.Case+"-repeat-1")
 	if data, err := os.ReadFile(filepath.Join(caseDir, "policy.json")); err == nil {
 		var policy any

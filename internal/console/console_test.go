@@ -151,3 +151,38 @@ func TestRestartMarksUnfinishedRun(t *testing.T) {
 		t.Fatalf("restart state: %+v", got)
 	}
 }
+
+func TestResultsKeepRepetitionsSeparate(t *testing.T) {
+	c, err := New(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	r := &Run{ID: "20261011T120000-aabbccddeeff", State: "completed", Request: Request{Case: "mixed-redis", Repetitions: 3}}
+	c.runs[r.ID] = r
+	for name, body := range map[string]string{
+		"mixed-redis-repeat-1/load/summary.json": `{"sent":11}`,
+		"mixed-redis-repeat-2/load/summary.json": `{"sent":22}`,
+		"mixed-redis-repeat-1/analysis.json":     `{"oracle":{"status":"inconclusive"}}`,
+		"mixed-redis-repeat-2/analysis.json":     `{"oracle":{"status":"observed_violations"}}`,
+		"mixed-redis-repeat-3/analysis.json":     `broken json`,
+	} {
+		path := filepath.Join(c.runDir(r.ID), "result", name)
+		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(body), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	w := request(t, c.Handler(), "GET", "/api/runs/"+r.ID, "")
+	var got struct {
+		Summaries map[string]struct{ Sent int }
+		Analyses  map[string]struct{ Oracle struct{ Status string } }
+	}
+	if err := json.Unmarshal(w.Body.Bytes(), &got); err != nil {
+		t.Fatal(err)
+	}
+	if w.Code != 200 || len(got.Summaries) != 2 || got.Summaries["1"].Sent != 11 || got.Summaries["2"].Sent != 22 || len(got.Analyses) != 2 || got.Analyses["1"].Oracle.Status != "inconclusive" || got.Analyses["2"].Oracle.Status != "observed_violations" {
+		t.Fatalf("results: %s", w.Body.String())
+	}
+}

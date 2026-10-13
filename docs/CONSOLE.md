@@ -47,6 +47,10 @@ Phạm vi hiện tại chưa cho chỉnh fault injection từ UI. Các biểu đ
 
 ## Giao diện và hướng phát triển
 
+Bộ chọn **Lượt xem kết quả** hiển thị riêng từng lượt 1..3, giữ lượt đang chọn khi polling và ghi rõ lượt chưa có summary. Trạng thái oracle lấy trực tiếp từ `analysis.json` của lượt đó; thiếu hoặc lỗi JSON hiển thị chưa có analyzer, không suy diễn từ runner complete. Generator drops hiển thị riêng; lỗi limiter là tổng delta `limiter_errors` của đủ API trong analyzer counters, thiếu bất kỳ API nào hiển thị **Thiếu counters**. Goodput/p95 hợp lệ ghi **Không áp dụng** khi không có request hợp lệ (bao gồm concurrent); nếu đã gửi nhưng không có mẫu hợp lệ thành công thì p95 ghi **Không có mẫu thành công**.
+
+Kiểm tra phần này bằng `go test ./internal/console` và `node internal/console/index_test.js` (Node chỉ dùng cho test giao diện, không phải dependency runtime). Test API bao phủ summary/analyzer riêng từng lượt và JSON lỗi; test giao diện bao phủ đổi lượt, polling, thiếu evidence và concurrent.
+
 Bản hiện tại đặt chỉ số cuối lượt thành các thẻ riêng (request đã gửi, 2xx, 429, goodput và p95 của client hợp lệ, backend arrivals xác nhận). Cấu hình thực tế, snapshot từng instance và artifact vẫn xem được; JSON thô nằm trong phần mở rộng để dòng dài không kéo giãn trang. Cách phân cấp thẻ chỉ số và phần xem chi tiết được tham khảo từ [Custom Dashboards của Langfuse](https://langfuse.com/docs/metrics/features/custom-dashboards); Console không dùng Langfuse hay dữ liệu LLM.
 
 Các mục sau là **đề xuất tùy chọn**, không phải yêu cầu Roadmap/Proposal hoặc tính năng đã triển khai:

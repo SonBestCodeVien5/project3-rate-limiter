@@ -64,6 +64,8 @@ ul{padding-left:1.2rem;min-width:0}li{margin:.25rem 0;overflow-wrap:anywhere}
 </form><p id="message" role="status"></p><h3>Run gần đây</h3><ul id="history"></ul></section>
 <section class="card">
 <h2>Trạng thái & kết quả</h2><p id="state" class="status">Chưa chọn run.</p>
+<label for="resultRepeat">Lượt xem kết quả</label><select id="resultRepeat" disabled><option>Chưa có lượt</option></select>
+<p id="analysisStatus" class="status" role="status"></p>
 <div id="kpis" class="kpis" aria-label="Chỉ số chính"></div>
 <p id="resultNote" class="hint">Chỉ số cuối lượt xuất hiện sau khi load generator drain.</p>
 <h3>Cấu hình thực tế</h3><div id="config" class="facts"></div>
@@ -76,7 +78,7 @@ ul{padding-left:1.2rem;min-width:0}li{margin:.25rem 0;overflow-wrap:anywhere}
 </main>
 <script>
 const $ = id => document.getElementById(id);
-let current = null, activeExists = false;
+let current = null, activeExists = false, resultData = null;
 const terminal = new Set(['completed','failed','canceled','cleanup-error','interrupted']);
 const val = id => Number($(id).value);
 function toggleGroup(id,show){const group=$(id);group.hidden=!show;for(const field of group.querySelectorAll('input,select'))field.disabled=!show;}
@@ -90,13 +92,29 @@ const fmt = value => typeof value==='number' ? new Intl.NumberFormat('vi-VN',{ma
 function tile(value,label,kind=''){const item=document.createElement('div'),strong=document.createElement('strong'),caption=document.createElement('span');item.className='kpi '+kind;strong.textContent=value;caption.textContent=label;item.append(strong,caption);$('kpis').append(item);}
 function fact(target,label,value){const item=document.createElement('div'),name=document.createElement('small'),content=document.createElement('b');item.className='fact';name.textContent=label;content.textContent=value??'—';item.append(name,content);target.append(item);}
 function renderResult(data){
-  $('kpis').replaceChildren();const s=data.summaries['1'];
-  if(s){tile(fmt(s.sent),'Request đã gửi');tile(fmt(s.http_2xx),'HTTP 2xx','good');tile(fmt(s.http_429),'Từ chối 429','warn');tile(fmt(s.legitimate_goodput_per_second)+'/s','Goodput hợp lệ','good');tile(fmt(s.legitimate_success_latency?.p95_ms)+' ms','P95 client hợp lệ');tile(fmt(s.backend_confirmed_arrivals),'Backend arrivals xác nhận');$('resultNote').textContent=`Dropped ${fmt(s.generator_dropped)} · 5xx ${fmt(s.http_5xx)} · timeout ${fmt(s.timeouts)}. Arrivals là header xác nhận phía client; xem backend counters trong artifacts.`;}
-  else $('resultNote').textContent='Chỉ số cuối lượt xuất hiện sau khi load generator drain.';
+  const selector=$('resultRepeat'), previous=resultData?.run.id===data.run.id?selector.value:'1';resultData=data;
+  selector.replaceChildren();for(let i=1;i<=data.run.request.repetitions;i++){const option=document.createElement('option');option.value=String(i);option.textContent=`Lượt ${i}${data.summaries[String(i)]?' · có summary':' · chưa có summary'}`;selector.append(option);}selector.disabled=false;selector.value=previous;
+  if(!selector.value)selector.value='1';
+  $('kpis').replaceChildren();const s=data.summaries[selector.value],a=data.analyses?.[selector.value];
+  const statusLabels={not_applicable:'Không áp dụng',inconclusive:'Chưa đủ bằng chứng',inconclusive_with_observed_violations:'Chưa đủ bằng chứng; có vi phạm quan sát được',observed_violations:'Quan sát thấy vi phạm',no_violation_observed_within_trace:'Chưa quan sát thấy vi phạm trong trace'};
+  $('analysisStatus').textContent=a?`Analyzer: ${statusLabels[a.oracle?.status]||a.oracle?.status||'Thiếu trạng thái oracle'}. Chỉ phản ánh phạm vi trace; không kết luận nghiên cứu thành công.`:'Chưa có analysis.json hợp lệ cho lượt này; xem log và artifacts.';
+  if(s){
+    const noLegitimate=data.run.request.custom?.profile==='concurrent'||s.legitimate_sent===0;
+    tile(fmt(s.sent),'Request đã gửi');tile(fmt(s.http_2xx),'HTTP 2xx','good');tile(fmt(s.http_429),'Từ chối 429','warn');
+    tile(noLegitimate?'Không áp dụng':fmt(s.legitimate_goodput_per_second)+'/s','Goodput hợp lệ','good');
+    tile(noLegitimate?'Không áp dụng':s.legitimate_successful===0?'Không có mẫu thành công':fmt(s.legitimate_success_latency?.p95_ms)+' ms','P95 client hợp lệ thành công');
+    tile(fmt(s.backend_confirmed_arrivals),'Backend arrivals xác nhận');tile(fmt(s.generator_dropped),'Generator bỏ request','warn');
+    const instances=data.run.request.custom?.instances||2, counters=Array.from({length:instances},(_,i)=>a?.counter_deltas?.[`api${i+1}`]?.limiter_errors);
+    tile(counters.every(v=>typeof v==='number')?fmt(counters.reduce((sum,v)=>sum+v,0)):'Thiếu counters','Lỗi limiter · delta mọi API','warn');
+    const missing=[];if(!a)missing.push('analysis.json');if(counters.some(v=>typeof v!=='number'))missing.push('limiter_errors before/after của API');if(a?.evidence?.summary_counts_match_trace===false)missing.push('summary không khớp trace');if(a?.evidence?.trace_has_unknown_decisions)missing.push('trace có quyết định chưa biết');
+    $('resultNote').textContent=`5xx ${fmt(s.http_5xx)} · timeout ${fmt(s.timeouts)}. ${missing.length?'Bằng chứng thiếu/không đầy đủ: '+missing.join('; ')+'. ':''}${a?.oracle?.reason||a?.oracle?.coverage_note||''} Arrivals là header xác nhận phía client; xem backend counters trong artifacts.`;
+  }
+  else $('resultNote').textContent='Chưa có summary hợp lệ cho lượt này; chỉ số xuất hiện sau khi load generator drain.';
   $('config').replaceChildren();const p=data.resolved_policy,b=data.resolved_backend;
   if(p){const c=data.run.request.custom;fact($('config'),'Workload',c?.profile||'mixed');fact($('config'),'API instances',c?.instances||2);fact($('config'),'Mode',p.mode);fact($('config'),'Thuật toán',p.algorithm);fact($('config'),'Fail policy',p.fail_policy);fact($('config'),'Quota',p.mode==='none'?'Không áp dụng':p.algorithm==='token-bucket'?`${p.capacity} tokens · ${p.rate_per_sec}/s`:`${p.limit} / ${p.window_ms} ms`);fact($('config'),'Backend capacity',b?.BACKEND_CAPACITY);fact($('config'),'Backend service time',b?.BACKEND_SERVICE_TIME);}
   else fact($('config'),'Trạng thái','Chờ runner resolve Compose');
 }
+$('resultRepeat').addEventListener('change',()=>{if(resultData)renderResult(resultData);});
 function renderLive(sample){$('metrics').textContent=JSON.stringify(sample,null,2);$('live').replaceChildren();if(!sample.samples){fact($('live'),'Live sample',sample.status||'Chưa có snapshot');return;}for(const name of Object.keys(sample.samples).sort()){const s=sample.samples[name];fact($('live'),name,!s?'Chưa lấy được sample':name==='backend'?`Arrivals ${fmt(s.arrivals)} · overload ${fmt(s.overload)}`:`Requests ${fmt(s.requests)} · allow ${fmt(s.allowed)} · reject ${fmt(s.rejected)}`);}}
 async function refreshHistory(){ const runs=await api('/api/runs'); runs.sort((a,b)=>b.started_at.localeCompare(a.started_at)); activeExists=runs.some(r=>!terminal.has(r.state)); $('run').disabled=activeExists; $('history').replaceChildren(); for(const r of runs) { const li=document.createElement('li'), b=document.createElement('button'); b.type='button'; b.textContent=`${r.request.case} · ${r.state} · …${r.id.slice(-6)}`; b.addEventListener('click',()=>{current=r.id;refresh();}); li.append(b); $('history').append(li); } if(!current && runs.length) current=runs[0].id; }
 async function refresh(){ if(!current) return; try { const data=await api(`/api/runs/${current}`), r=data.run; $('state').textContent=`${r.id} · ${r.request.case} · ${r.state} (${data.phase})${r.error ? ' · '+r.error : ''}`; $('state').classList.toggle('error',r.state==='failed'||r.state==='cleanup-error'); $('run').disabled=activeExists; $('cancel').disabled=terminal.has(r.state)||r.cancel_requested; $('summary').textContent=Object.keys(data.summaries).length?JSON.stringify(data.summaries,null,2):'Chưa có summary.'; renderResult(data); if(!terminal.has(r.state)) renderLive(await api(`/api/runs/${current}/metrics`)); else renderLive({status:'Run đã kết thúc. Xem metrics before/after trong artifacts.'}); const names=await api(`/api/runs/${current}/artifacts`); $('artifacts').replaceChildren(); names.sort(); for(const name of names) link($('artifacts'),name,`/api/runs/${current}/artifacts/${name.split('/').map(encodeURIComponent).join('/')}`); } catch(e) { $('message').textContent=e.message; } }
