@@ -4,6 +4,7 @@
 import argparse
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
+from fractions import Fraction
 import json
 import math
 from pathlib import Path
@@ -276,15 +277,17 @@ def oracle(records, p, *, trace_complete=False, outage=False, run_canceled=False
             if key in uncertain or (key[0], "*") in uncertain or not p["state_reset"] or not trace_complete or outage or run_canceled:
                 results["inconclusive_groups"].append({"client_key": key[0], "instance": key[1], "reason": "unknown decision, initial state, incomplete trace, or outage"})
                 continue
-            tokens = float(p["capacity"])
+            # Replay decimal policy semantics exactly, independently of limiter rounding.
+            tokens = Fraction(p["capacity"])
+            rate = Fraction(str(p["rate_per_sec"]))
             previous = None
             by_ms = defaultdict(list)
             for row in ordered:
                 by_ms[millis(row["decision_at"])].append(row)
             for at, batch in sorted(by_ms.items()):
                 if previous is not None:
-                    tokens = min(p["capacity"], tokens + (at - previous) * p["rate_per_sec"] / 1000)
-                available = min(len(batch), max(0, math.floor(tokens + 1e-10)))
+                    tokens = min(p["capacity"], tokens + (at - previous) * rate / 1000)
+                available = min(len(batch), max(0, math.floor(tokens)))
                 actual = sum(r["limiter_decision"] == "allow" for r in batch)
                 if actual != available:
                     results["violations"].append({"client_key": key[0], "instance": key[1], "decision_at_ms": at,

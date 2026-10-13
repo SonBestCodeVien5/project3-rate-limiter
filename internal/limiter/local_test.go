@@ -110,6 +110,27 @@ func TestLocalCanceledContext(t *testing.T) {
 	}
 }
 
+func TestLocalTokenBucketRefillBoundary(t *testing.T) {
+	for _, rate := range []float64{20, 2.5} {
+		p := testPolicy(TokenBucket)
+		p.Capacity, p.Rate = 1, rate
+		l, _ := NewLocal(p)
+		// 3+29+18ms at 20/s previously accumulated 0.9999999999999999 tokens.
+		times := []int64{0, 3, 32, int64(1000 / rate)}
+		for i, ms := range times {
+			l.now = func() time.Time { return time.UnixMilli(ms) }
+			d, err := l.Allow(context.Background(), "a")
+			want := i == 0 || i == len(times)-1
+			if err != nil || d.Allowed != want || d.Remaining != 0 {
+				t.Fatalf("rate=%v at=%d: %+v %v want allowed=%v", rate, ms, d, err, want)
+			}
+			if !want && d.RetryAfter != time.Duration(int64(1000/rate)-ms)*time.Millisecond {
+				t.Fatalf("rate=%v at=%d retry=%v", rate, ms, d.RetryAfter)
+			}
+		}
+	}
+}
+
 func TestPolicyValidation(t *testing.T) {
 	mutations := []func(*Policy){
 		func(p *Policy) { p.Algorithm = "unknown" }, func(p *Policy) { p.Limit = 0 }, func(p *Policy) { p.Capacity = 0 },

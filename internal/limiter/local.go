@@ -10,7 +10,7 @@ import (
 type localState struct {
 	window  int64
 	count   int
-	tokens  float64
+	tokens  float64 // Milli-tokens avoid cumulative division rounding for integer rates.
 	at      int64
 	expires int64
 }
@@ -65,19 +65,20 @@ func (l *Local) Allow(ctx context.Context, key string) (Decision, error) {
 		d.Remaining = p.Limit - s.count
 	} else {
 		if !exists {
-			s = localState{tokens: float64(p.Capacity), at: now}
+			s = localState{tokens: float64(p.Capacity) * 1000, at: now}
 		}
 		// Never refill twice if the wall clock moves backwards.
 		effectiveNow := max(now, s.at)
-		s.tokens = math.Min(float64(p.Capacity), s.tokens+float64(effectiveNow-s.at)*p.Rate/1000)
+		// shortcut: Fractional rates retain float rounding; use exact units if their boundary traces mismatch.
+		s.tokens = math.Min(float64(p.Capacity)*1000, s.tokens+float64(effectiveNow-s.at)*p.Rate)
 		s.at = effectiveNow
-		d.Allowed = s.tokens >= 1
+		d.Allowed = s.tokens >= 1000
 		if d.Allowed {
-			s.tokens--
+			s.tokens -= 1000
 		} else {
-			d.RetryAfter = time.Duration(math.Ceil((1-s.tokens)*1000/p.Rate)+float64(effectiveNow-now)) * time.Millisecond
+			d.RetryAfter = time.Duration(math.Ceil((1000-s.tokens)/p.Rate)+float64(effectiveNow-now)) * time.Millisecond
 		}
-		d.Remaining = int(math.Floor(s.tokens))
+		d.Remaining = int(math.Floor(s.tokens / 1000))
 		s.expires = effectiveNow + int64(math.Ceil(float64(p.Capacity)*1000/p.Rate))
 	}
 	l.states[key] = s

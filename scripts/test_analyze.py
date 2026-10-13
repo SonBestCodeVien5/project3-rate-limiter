@@ -82,6 +82,18 @@ class AnalyzerTest(unittest.TestCase):
         result = analyze.oracle([row(1, 0, "reject")], policy(algorithm="token-bucket"), trace_complete=True)
         self.assertEqual(result["observed_global_accepted_envelope"][0]["status"], "no_observed_allows")
 
+    def test_token_bucket_exact_boundary_and_near_boundary(self):
+        p = policy(mode="local", algorithm="token-bucket", capacity=1, rate_per_sec=20)
+        rows = [row(0, 0), row(1, 3, "reject"), row(2, 32, "reject"), row(3, 50)]
+        self.assertFalse(analyze.oracle(rows, p, trace_complete=True)["violations"])
+        rows[-1] = row(3, 50, "reject")
+        self.assertTrue(analyze.oracle(rows, p, trace_complete=True)["violations"])
+        p["rate_per_sec"] = 999.99999995
+        early = analyze.oracle([row(0, 0), row(1, 1)], p, trace_complete=True)
+        self.assertEqual(early["violations"][-1]["expected_allows"], 0)
+        valid = analyze.oracle([row(0, 0), row(1, 1, "reject")], p, trace_complete=True)
+        self.assertFalse(valid["violations"])
+
     def test_all_generator_drops_cannot_pass_oracle(self):
         result = analyze.oracle([row(1, 0, sent=False)], policy(algorithm="token-bucket"), trace_complete=True)
         self.assertEqual(result["status"], "inconclusive")
