@@ -1,5 +1,7 @@
 # Trạng thái triển khai — 13/10/2026
 
+**Vòng tự động tiếp theo:** [calibration 14 lượt](worklog/2026-10-13-calibration/README.md) có 7.880 sent=scheduled / 0 drops và xác nhận runtime local TB sau sửa. [Deadline Redis](worklog/2026-10-13-redis-drops/README.md) đã tái hiện/sửa, giữ deadline 100 ms; sáu net.Pipe scenarios và Redis Lua/concurrency integration thật đạt. [Gate sau sửa](worklog/2026-10-13-postfix/README.md) dừng sau hai 30 s normal vì clock nhảy, dù 600/600 success / 0 Redis errors mỗi lượt. [Observer độc lập](worklog/2026-10-13-clock/README.md) xác nhận realtime nhảy khoảng 2,6 s trên WSL2. [Console comparison](worklog/2026-10-13-console-content/README.md) đạt trên dữ liệu thật, guard workload/layers và mobile; [biểu đồ/report pilot](worklog/2026-10-13-evaluation/README.md), [demo script](DEMO_SCRIPT.md) đã có. [Protocol chưa khóa](experiments/PROTOCOL_READINESS.md); benchmark chính thức/RQ1–RQ5 vẫn chưa hoàn tất. Các đoạn dưới giữ lịch sử các vòng trước.
+
 Theo yêu cầu tự động hóa, prototype kỹ thuật và vòng công cụ đo đã được triển khai sớm hơn lịch tuần đề xuất. Không đánh dấu thay người học hoặc biến smoke thành kết luận nghiên cứu.
 
 **Vòng hoàn thiện 13/10:** [điều tra Token Bucket](worklog/2026-10-13-token-bucket/README.md) xác nhận và sửa sai số float tại biên refill local, kèm regression; chưa pilot lại HTTP. Console đã thêm chọn lượt lặp, trạng thái oracle và lỗi limiter tổng mọi API. Có [protocol ứng viên](experiments/PROTOCOL_CANDIDATE.md) để xem xét, chưa duyệt/chưa khóa. Kết quả ma trận lịch sử bên dưới vẫn giữ nguyên; Redis timeouts, generator drops và benchmark chính thức còn mở.
@@ -19,14 +21,14 @@ Kiểm chứng vòng hoàn thiện: `bash scripts/verify.sh` đạt (vet, race t
 | Mixed traffic/outage runners | Đã triển khai | 5 case mixed smoke, 2 fail policies; kết quả thực chạy trong RETEST |
 | Scaling và analyzer | Đã triển khai/test | Render 1/2/4 API; replay/cận dưới quota theo trace, phân pha outage/recovery có điều kiện |
 | Console local và custom pilot | Đã triển khai và chạy tích hợp | [Console](CONSOLE.md), [84 lượt thực chạy](worklog/2026-10-12-console-matrix/README.md); 1/2/4 API, 4 profile, FW/TB và policy/backend cấu hình được |
-| Artifact/correctness của ma trận mới | Artifact đối chiếu đạt; correctness còn findings | 84 complete; 2 observed_violations, 40 inconclusive; 19 Redis errors, 5 drops; cần điều tra |
+| Artifact/correctness của ma trận mới | Giữ nguyên findings lịch sử; có sửa lỗi/pilot mới | TB float và Redis deadline đã xử lý; ma trận84 không viết lại. Clock host, generator scheduling và bộ đo chính thức còn mở |
 | RQ1–RQ5 chính thức | Chưa hoàn tất | Cần pilot khóa protocol, nhiều lượt lặp và phân tích độc lập |
 
 ## Việc tiếp theo sau vòng công cụ đo
 
 1. Hiệu chỉnh và khóa protocol: warm-up/cold-start, quota, tải, thời lượng, số lượt lặp và tiêu chí loại lượt lỗi. Burst theo pha đã có; burst sát biên server cần thiết kế và xác minh riêng.
 2. Ma trận tùy chỉnh 84 tổ hợp đã chạy ở topology 1/2/4; chọn các phép so sánh có kiểm soát và số lượt lặp cho RQ3. Một lượt 3 giây mỗi tổ hợp chưa chứng minh scalability.
-3. Điều tra hai `token_bucket_decision_mismatch` local Token Bucket và Redis I/O timeouts của ma trận mới. Dùng analyzer để kiểm tra các trace; hoàn thiện quota violation dưới fail-open khi state/response không xác định, độ đồng bộ clock và mức quan sát cần để xác nhận cửa sổ đầy đủ. Không đổi `inconclusive` thành pass khi thiếu evidence.
+3. LocalTB float và deadline Redis dùng cache thời gian cũ đã có sửa lỗi/test/evidence mới; tiếp theo ổn định clock môi trường và hiệu chỉnh generator/sampler khi cần. Hoàn thiện quota violation dưới fail-open khi state/response không xác định và mức quan sát cho cửa sổ đầy đủ. Không đổi `inconclusive` thành pass khi thiếu evidence.
 4. Chạy benchmark chính thức lặp đủ số lần, phân tích biến thiên và bottleneck, xuất biểu đồ/tables tái lập. Chọn tiêu chí recovery trước khi đo, không chọn sau khi thấy kết quả đẹp.
 5. Học lại theo commit/test, viết báo cáo/slide, diễn tập demo và tự giải thích; cập nhật ngày/rubric với giảng viên.
 

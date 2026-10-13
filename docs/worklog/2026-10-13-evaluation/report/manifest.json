@@ -1,0 +1,119 @@
+{
+  "clock_tolerance_ms": 5,
+  "cells": [
+    {
+      "id": "console-run/result",
+      "expected_repetitions": 2
+    },
+    {
+      "id": "mixed-local",
+      "expected_repetitions": 2
+    },
+    {
+      "id": "mixed-none",
+      "expected_repetitions": 2
+    },
+    {
+      "id": "mixed-redis",
+      "expected_repetitions": 2
+    },
+    {
+      "id": "normal-redis",
+      "expected_repetitions": 2
+    },
+    {
+      "id": "tb-burst1",
+      "expected_repetitions": 2
+    },
+    {
+      "id": "tb-mixed2",
+      "expected_repetitions": 2
+    }
+  ],
+  "runs": [
+    {
+      "group": "calibration",
+      "cell": "console-run/result",
+      "repetition": "1",
+      "path": "../../../artifacts/calibration-20261013/console-run/result/custom-repeat-1"
+    },
+    {
+      "group": "calibration",
+      "cell": "console-run/result",
+      "repetition": "2",
+      "path": "../../../artifacts/calibration-20261013/console-run/result/custom-repeat-2"
+    },
+    {
+      "group": "calibration",
+      "cell": "mixed-local",
+      "repetition": "1",
+      "path": "../../../artifacts/calibration-20261013/mixed-local/custom-repeat-1"
+    },
+    {
+      "group": "calibration",
+      "cell": "mixed-local",
+      "repetition": "2",
+      "path": "../../../artifacts/calibration-20261013/mixed-local/custom-repeat-2"
+    },
+    {
+      "group": "calibration",
+      "cell": "mixed-none",
+      "repetition": "1",
+      "path": "../../../artifacts/calibration-20261013/mixed-none/custom-repeat-1"
+    },
+    {
+      "group": "calibration",
+      "cell": "mixed-none",
+      "repetition": "2",
+      "path": "../../../artifacts/calibration-20261013/mixed-none/custom-repeat-2"
+    },
+    {
+      "group": "calibration",
+      "cell": "mixed-redis",
+      "repetition": "1",
+      "path": "../../../artifacts/calibration-20261013/mixed-redis/custom-repeat-1"
+    },
+    {
+      "group": "calibration",
+      "cell": "mixed-redis",
+      "repetition": "2",
+      "path": "../../../artifacts/calibration-20261013/mixed-redis/custom-repeat-2"
+    },
+    {
+      "group": "calibration",
+      "cell": "normal-redis",
+      "repetition": "1",
+      "path": "../../../artifacts/calibration-20261013/normal-redis/custom-repeat-1"
+    },
+    {
+      "group": "calibration",
+      "cell": "normal-redis",
+      "repetition": "2",
+      "path": "../../../artifacts/calibration-20261013/normal-redis/custom-repeat-2"
+    },
+    {
+      "group": "calibration",
+      "cell": "tb-burst1",
+      "repetition": "1",
+      "path": "../../../artifacts/calibration-20261013/tb-burst1/custom-repeat-1"
+    },
+    {
+      "group": "calibration",
+      "cell": "tb-burst1",
+      "repetition": "2",
+      "path": "../../../artifacts/calibration-20261013/tb-burst1/custom-repeat-2"
+    },
+    {
+      "group": "calibration",
+      "cell": "tb-mixed2",
+      "repetition": "1",
+      "path": "../../../artifacts/calibration-20261013/tb-mixed2/custom-repeat-1"
+    },
+    {
+      "group": "calibration",
+      "cell": "tb-mixed2",
+      "repetition": "2",
+      "path": "../../../artifacts/calibration-20261013/tb-mixed2/custom-repeat-2"
+    }
+  ]
+}

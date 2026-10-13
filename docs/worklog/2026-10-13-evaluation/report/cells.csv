@@ -1,0 +1,8 @@
+cell,runs,expected_repetitions,aggregation_status
+console-run/result,2,2,incompatible_config;invalid_run_evidence
+mixed-local,2,2,incompatible_config;invalid_run_evidence
+mixed-none,2,2,incompatible_config;invalid_run_evidence
+mixed-redis,2,2,incompatible_config;invalid_run_evidence
+normal-redis,2,2,incompatible_config;invalid_run_evidence
+tb-burst1,2,2,incompatible_config;invalid_run_evidence
+tb-mixed2,2,2,incompatible_config;invalid_run_evidence

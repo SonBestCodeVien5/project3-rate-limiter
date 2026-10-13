@@ -63,7 +63,7 @@ test('matched artifact selections render individual results and quality evidence
   vm.createContext(context);const html=fs.readFileSync(__dirname+'/index.html','utf8');
   vm.runInContext("const $=id=>document.getElementById(id);const fmt=v=>typeof v==='number'?String(v):'—';"+html.slice(html.indexOf('function stable('),html.indexOf("$('compare').addEventListener")),context);
   await vm.runInContext('compareSaved()',context);
-  assert.match(nodes.get('compareStatus').textContent,/Cấu hình\/evidence khớp/);
+  assert.match(nodes.get('compareStatus').textContent,/Cấu hình và nội dung image khớp/);
   const rows=nodes.get('comparison').children[0].children.map(row=>row.children.map(cell=>cell.textContent));
   assert.equal(rows.find(row=>row[0]==='Run / lượt')[1],'saved-0 / custom-repeat-1');
   assert.equal(rows.find(row=>row[0]==='P99 hợp lệ thành công (ms)')[3],'15');

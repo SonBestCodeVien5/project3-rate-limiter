@@ -1,5 +1,7 @@
 # Kế hoạch Demo Console cho Project 3
 
+**Ghi chú hiện trạng 13/10/2026:** nội dung dưới đây giữ bản đề xuất ngày11/10, không phải tiến độ triển khai hiện tại. Console đã có UI và kiểm chứng tích hợp; xem [CONSOLE](CONSOLE.md) và [IMPLEMENTATION_STATUS](IMPLEMENTATION_STATUS.md). Các phần mở rộng trong đề xuất vẫn không tự trở thành yêu cầu nghiên cứu.
+
 **Trạng thái:** đề xuất để tìm hiểu và lập kế hoạch; chưa phải quyết định triển khai hay thay đổi phạm vi đã được giảng viên duyệt.  
 **Cập nhật:** 11/10/2026  
 **Mục tiêu:** mô tả phương án tạo một trang web để cấu hình, kích hoạt, theo dõi và trình bày benchmark hiện có trong buổi demo.

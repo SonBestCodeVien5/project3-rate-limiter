@@ -264,7 +264,7 @@ def export(manifest_path, output):
                 lines.append(f"| {cell['cell']} | {key} | {cell[key + '_run_median']} | {cell[key + '_run_min']} | {cell[key + '_run_max']} |")
     lines += ['', '| Run / repetition | Tooling | Oracle | Flags |', '| --- | --- | --- | --- |']
     lines += [f"| {row['run_id']} / {row['repetition']} | {row['tooling_validity']} | {row['oracle_status']} | {row['quality_flags'] or 'none'} |" for row in rows]
-    lines += ['', 'Charts omitted: matplotlib is not installed; use runs.csv/cells.csv for plotting. No dependency was added.', '']
+    lines += ['', 'This exporter writes CSV/Markdown only. Use the separate offline plot-calibration.py for selected pilot charts; no runtime dependency was added.', '']
     (output / 'report.md').write_text('\n'.join(lines))
     (output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     return rows, aggregates

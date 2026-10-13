@@ -1,0 +1,87 @@
+[
+  {
+    "cell": "mixed-local/custom-repeat-1",
+    "mode": "local",
+    "legitimate_success_fraction": 0.7416666666666667,
+    "legitimate_sent": 120,
+    "backend_overload": 138,
+    "quality_flags": [
+      "dirty_working_tree",
+      "dirty_working_tree_unverified_content",
+      "http_5xx_observed"
+    ],
+    "oracle_status": "inconclusive"
+  },
+  {
+    "cell": "mixed-local/custom-repeat-2",
+    "mode": "local",
+    "legitimate_success_fraction": 0.6833333333333333,
+    "legitimate_sent": 120,
+    "backend_overload": 136,
+    "quality_flags": [
+      "dirty_working_tree",
+      "dirty_working_tree_unverified_content",
+      "http_5xx_observed"
+    ],
+    "oracle_status": "inconclusive"
+  },
+  {
+    "cell": "mixed-none/custom-repeat-1",
+    "mode": "none",
+    "legitimate_success_fraction": 0.4,
+    "legitimate_sent": 120,
+    "backend_overload": 314,
+    "quality_flags": [
+      "dirty_working_tree",
+      "dirty_working_tree_unverified_content",
+      "http_5xx_observed"
+    ],
+    "oracle_status": "not_applicable"
+  },
+  {
+    "cell": "mixed-none/custom-repeat-2",
+    "mode": "none",
+    "legitimate_success_fraction": 0.425,
+    "legitimate_sent": 120,
+    "backend_overload": 313,
+    "quality_flags": [
+      "dirty_working_tree",
+      "dirty_working_tree_unverified_content",
+      "http_5xx_observed"
+    ],
+    "oracle_status": "not_applicable"
+  },
+  {
+    "cell": "mixed-redis/custom-repeat-1",
+    "mode": "redis",
+    "legitimate_success_fraction": 0.875,
+    "legitimate_sent": 120,
+    "backend_overload": 69,
+    "quality_flags": [
+      "client_clock_discontinuity_suspected",
+      "clock_wall_monotonic_discontinuity",
+      "dirty_working_tree",
+      "dirty_working_tree_unverified_content",
+      "healthy_limiter_errors",
+      "http_5xx_observed",
+      "limiter_errors_observed",
+      "phase_fidelity:measurement/abusive",
+      "phase_fidelity:measurement/legitimate",
+      "phase_fidelity_unverified"
+    ],
+    "oracle_status": "inconclusive"
+  },
+  {
+    "cell": "mixed-redis/custom-repeat-2",
+    "mode": "redis",
+    "legitimate_success_fraction": 0.8666666666666667,
+    "legitimate_sent": 120,
+    "backend_overload": 68,
+    "quality_flags": [
+      "dirty_working_tree",
+      "dirty_working_tree_unverified_content",
+      "http_5xx_observed"
+    ],
+    "oracle_status": "inconclusive"
+  }
+]

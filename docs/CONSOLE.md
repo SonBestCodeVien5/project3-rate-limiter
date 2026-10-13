@@ -57,6 +57,8 @@ Phần **So sánh các lượt đã lưu** chọn ba run complete/lượt riêng
 
 Các mục sau là **đề xuất tùy chọn**, không phải yêu cầu Roadmap/Proposal hoặc tính năng đã triển khai:
 
+[Kiểm chứng image content ngày13/10](worklog/2026-10-13-console-content/README.md) đã chạy ba Console mode trên Docker thật: bảng được chấp nhận khi nội dung runtime khớp, guard từ chối thay workload/layer và bảng không gây overflow trang desktop/mobile. Một lượt vẫn có clock jump; đây là UI integration, không phải benchmark hoặc formal gate pass. UI nhắc kiểm tra clock/tải thực/oracle trước diễn giải.
+
 | Ưu tiên | Tính năng có thể thêm | Điều kiện trước khi làm |
 | --- | --- | --- |
 | 2 | Biểu đồ nhỏ từ artifacts sau run: traffic hợp lệ/toàn tải, quyết định limiter và backend overload theo thời gian | Kiểm tra timestamp, đơn vị, dropped requests và tác động của xử lý dữ liệu; không gọi snapshot cuối là live. |

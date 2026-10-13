@@ -1,0 +1,29 @@
+{
+  "source": "runs-for-plot.json",
+  "entries": [
+    {
+      "cell": "mixed-local/custom-repeat-1",
+      "mode": "local"
+    },
+    {
+      "cell": "mixed-local/custom-repeat-2",
+      "mode": "local"
+    },
+    {
+      "cell": "mixed-none/custom-repeat-1",
+      "mode": "none"
+    },
+    {
+      "cell": "mixed-none/custom-repeat-2",
+      "mode": "none"
+    },
+    {
+      "cell": "mixed-redis/custom-repeat-1",
+      "mode": "redis"
+    },
+    {
+      "cell": "mixed-redis/custom-repeat-2",
+      "mode": "redis"
+    }
+  ]
+}
