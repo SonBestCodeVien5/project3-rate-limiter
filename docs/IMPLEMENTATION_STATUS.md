@@ -2,6 +2,10 @@
 
 Theo yêu cầu tự động hóa, prototype kỹ thuật và vòng công cụ đo đã được triển khai sớm hơn lịch tuần đề xuất. Không đánh dấu thay người học hoặc biến smoke thành kết luận nghiên cứu.
 
+**Vòng hoàn thiện 13/10:** [điều tra Token Bucket](worklog/2026-10-13-token-bucket/README.md) xác nhận và sửa sai số float tại biên refill local, kèm regression; chưa pilot lại HTTP. Console đã thêm chọn lượt lặp, trạng thái oracle và lỗi limiter tổng mọi API. Có [protocol ứng viên](experiments/PROTOCOL_CANDIDATE.md) để xem xét, chưa duyệt/chưa khóa. Kết quả ma trận lịch sử bên dưới vẫn giữ nguyên; Redis timeouts, generator drops và benchmark chính thức còn mở.
+
+Kiểm chứng vòng hoàn thiện: `bash scripts/verify.sh` đạt (vet, race tests gồm HTTP localhost, build, runner/cleanup, 3 topology tests, 17 analyzer tests); `node internal/console/index_test.js` đạt 3 tests. Subagent kiểm tra giao diện desktop/mobile bằng fixture; không phải benchmark Docker mới. Checksum archive gốc không đổi.
+
 | Hạng mục | Trạng thái | Bằng chứng / việc tiếp theo |
 | --- | --- | --- |
 | Framing doanh nghiệp | Đã có từ trước | WEEK1_BUSINESS_CASE, nguồn Roadmap/Proposal |
