@@ -127,6 +127,13 @@ function fillComparisonSelectors(runs){
   }
 }
 function stable(value){if(value===undefined)return "null";if(Array.isArray(value))return JSON.stringify(value.map(v=>JSON.parse(stable(v))));if(value&&typeof value==='object')return JSON.stringify(Object.fromEntries(Object.keys(value).sort().map(k=>[k,JSON.parse(stable(value[k]))])));return JSON.stringify(value);}
+function imageIdentity(image,inspect,errors){
+  const exact={id:image.ID,platform:image.Platform};if(inspect===undefined||inspect===null)return exact;
+  if(!Array.isArray(inspect)){errors.push('image-inspect sai định dạng');return exact;}
+  const matches=inspect.filter(item=>item?.Id===image.ID),item=matches[0];
+  if(matches.length!==1||item?.RootFS?.Type!=='layers'||!Array.isArray(item.RootFS.Layers)||!item.RootFS.Layers.length||item.RootFS.Layers.some(layer=>typeof layer!=='string'||!/^sha256:[a-f0-9]{64}$/.test(layer))||!item.Config||typeof item.Config!=='object'||Array.isArray(item.Config)||!item.Os||!item.Architecture){errors.push('image-inspect thiếu hoặc không khớp ID '+image.ID);return exact;}
+  return {layers:item.RootFS.Layers,config:item.Config,os:item.Os,arch:item.Architecture,variant:item.Variant||'',platform:image.Platform};
+}
 function comparisonContext(e){
   const m=e.metadata,p=e.policy,c=e.compose,errors=[];
   if(!m?.config||!m.git_revision||!m.workload_version)errors.push('thiếu metadata workload/revision');
@@ -138,8 +145,8 @@ function comparisonContext(e){
   const services=c?.services,apis=Object.keys(services||{}).filter(k=>/^api[1-4]$/.test(k)).sort();
   if(!apis.length||!services?.backend?.environment||!services?.nginx||!services?.redis)errors.push('thiếu topology/backend');
   const environments={};for(const name of Object.keys(services||{}).sort()){const service=services[name];environments[name]={environment:{...service.environment},image:service.image,command:service.command,ports:service.ports};if(apis.includes(name)){const env=environments[name].environment;if(env.MODE!==p?.mode||env.ALGORITHM!==p?.algorithm)errors.push(`${name}: Compose khác policy`);delete env.MODE;delete env.NAMESPACE;}}
-  const images={};for(const image of e.images||[]){const match=image.ContainerName?.match(/-(api[1-4]|backend|redis|nginx)-1$/);if(match&&image.ID)images[match[1]]={id:image.ID,platform:image.Platform};}
-  if([...apis,'backend','redis','nginx'].some(name=>!images[name]?.id)||!e.baseImages.trim())errors.push('thiếu image identity');
+  const images={};for(const image of e.images||[]){const match=image.ContainerName?.match(/-(api[1-4]|backend|redis|nginx)-1$/);if(match&&image.ID)images[match[1]]=imageIdentity(image,e.imageInspect,errors);}
+  if([...apis,'backend','redis','nginx'].some(name=>!images[name])||!e.baseImages.trim())errors.push('thiếu image identity');
   for(const key of ['profile','duration_ns','rps','legitimate_rps','legitimate_clients','max_inflight','timeout_ns','max_schedule_lag_ns'])if(m?.config?.[key]===undefined)errors.push('thiếu workload '+key);
   for(const key of ['go_version','os','arch','cpu_count','gomaxprocs','hostname'])if(m?.[key]===undefined)errors.push('thiếu runtime '+key);
   if(!services?.backend?.environment?.BACKEND_CAPACITY||!services?.backend?.environment?.BACKEND_SERVICE_TIME)errors.push('thiếu backend settings');
@@ -159,8 +166,8 @@ async function compareSaved(){
   try{
     const evidence=await Promise.all(['compareNone','compareLocal','compareRedis'].map(async id=>{
       if(!$(id).value)throw Error('Cần chọn đủ ba run/lượt.');const [run,caseName,repeat]=JSON.parse($(id).value),prefix=`/api/runs/${encodeURIComponent(run)}/artifacts/`,dir=`${encodeURIComponent(caseName+'-repeat-'+repeat)}/`;
-      async function read(name,json=true){const response=await fetch(prefix+name);if(!response.ok)throw Error(`Thiếu artifact ${name} (${run})`);return json?response.json():response.text();}
-      const [metadata,policy,compose,images,baseImages,revision,gitStatus,summary,analysis,nginx]=await Promise.all([read(dir+'load/metadata.json'),read(dir+'policy.json'),read(dir+'compose-resolved.json'),read(dir+'images.json'),read(dir+'base-image-digests.txt',false),read('git-revision.txt',false),read('git-status.txt',false),read(dir+'load/summary.json'),read(dir+'analysis.json'),read(dir+'topology/nginx.conf',false)]);return {metadata,policy,compose,images,baseImages,revision,gitStatus,summary,analysis,nginx,run,repeat,caseRepeat:caseName+'-repeat-'+repeat};
+      async function read(name,json=true,optional=false){const response=await fetch(prefix+name);if(optional&&response.status===404)return null;if(!response.ok)throw Error(`Thiếu artifact ${name} (${run})`);return json?response.json():response.text();}
+      const [metadata,policy,compose,images,baseImages,revision,gitStatus,summary,analysis,nginx,imageInspect]=await Promise.all([read(dir+'load/metadata.json'),read(dir+'policy.json'),read(dir+'compose-resolved.json'),read(dir+'images.json'),read(dir+'base-image-digests.txt',false),read('git-revision.txt',false),read('git-status.txt',false),read(dir+'load/summary.json'),read(dir+'analysis.json'),read(dir+'topology/nginx.conf',false),read(dir+'image-inspect.json',true,true)]);return {metadata,policy,compose,images,baseImages,revision,gitStatus,summary,analysis,nginx,imageInspect,run,repeat,caseRepeat:caseName+'-repeat-'+repeat};
     }));
     const problems=comparisonProblems(evidence);if(problems.length){$('compareStatus').textContent='Từ chối so sánh: '+problems.join('; ');const detail=document.createElement('pre');detail.textContent=JSON.stringify(evidence.map(e=>comparisonContext(e)),null,2);$('comparison').append(detail);return;}
     const table=document.createElement('table');

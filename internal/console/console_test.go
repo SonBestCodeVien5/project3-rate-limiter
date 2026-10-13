@@ -63,7 +63,7 @@ func TestRunLifecycleAndArtifacts(t *testing.T) {
 	if got := request(t, h, "GET", "/api/runs/"+run.ID+"/artifacts/request.json", ""); got.Code != 200 {
 		t.Fatalf("artifact: %d", got.Code)
 	}
-	for _, name := range []string{"images.json", "base-image-digests.txt", "topology/nginx.conf"} {
+	for _, name := range []string{"images.json", "image-inspect.json", "base-image-digests.txt", "topology/nginx.conf"} {
 		path := filepath.Join(c.runDir(run.ID), "result", "mixed-redis-repeat-1", name)
 		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
 			t.Fatal(err)

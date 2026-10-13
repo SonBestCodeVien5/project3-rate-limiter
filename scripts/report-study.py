@@ -19,7 +19,7 @@ def numeric(value):
 def load_json(path, flags):
     try:
         value = json.loads(path.read_text())
-        if not isinstance(value, dict) and not (path.name == 'images.json' and isinstance(value, list)):
+        if not isinstance(value, dict) and not (path.name in ('images.json', 'image-inspect.json') and isinstance(value, list)):
             raise ValueError('expected object/array')
         return value
     except (OSError, ValueError) as error:
@@ -42,6 +42,23 @@ def timestamp(value):
     return date.timestamp()
 
 
+def image_identity(image, inspect, flags):
+    exact = {'id': image.get('ID'), 'platform': image.get('Platform')}
+    if not image.get('ID'):
+        flags.append('missing_image_identity')
+    if inspect is None:
+        return exact
+    matches = [item for item in inspect if isinstance(item, dict) and item.get('Id') == image.get('ID')] if isinstance(inspect, list) else []
+    item = matches[0] if len(matches) == 1 else {}
+    rootfs = item.get('RootFS', {})
+    layers = rootfs.get('Layers') if isinstance(rootfs, dict) else None
+    valid_layers = isinstance(layers, list) and bool(layers) and all(isinstance(layer, str) and len(layer) == 71 and layer.startswith('sha256:') and all(char in '0123456789abcdef' for char in layer[7:]) for layer in layers)
+    if not valid_layers or rootfs.get('Type') != 'layers' or not isinstance(item.get('Config'), dict) or not item.get('Os') or not item.get('Architecture'):
+        flags.append('image_inspect_invalid_or_unmatched:' + str(image.get('ID')))
+        return exact
+    return {'layers': layers, 'config': item['Config'], 'os': item['Os'], 'arch': item['Architecture'], 'variant': item.get('Variant', ''), 'platform': image.get('Platform')}
+
+
 def read_run(entry, base, clock_tolerance_ms):
     path = (base / entry['path']).resolve()
     invalid, warnings = [], []
@@ -51,6 +68,8 @@ def read_run(entry, base, clock_tolerance_ms):
     policy = load_json(path / 'policy.json', invalid)
     compose = load_json(path / 'compose-resolved.json', invalid)
     images = load_json(path / 'images.json', invalid)
+    inspect_path = path / 'image-inspect.json'
+    inspect = load_json(inspect_path, invalid) if inspect_path.exists() else None
     config = metadata.get('config', {})
     if not isinstance(config, dict):
         invalid.append('malformed_workload_config')
@@ -90,8 +109,8 @@ def read_run(entry, base, clock_tolerance_ms):
         for image in images:
             name = image.get('ContainerName', '').rsplit('-', 2)
             if len(name) == 3:
-                image_ids[name[1]] = [image.get('ID'), image.get('Platform')]
-    if any(not image_ids.get(name, [None])[0] for name in [*apis, 'backend', 'redis', 'nginx']):
+                image_ids[name[1]] = image_identity(image, inspect, invalid)
+    if any(not image_ids.get(name) for name in [*apis, 'backend', 'redis', 'nginx']):
         invalid.append('missing_image_identity')
     workload = {key: value for key, value in config.items() if key != 'run_id'}
     for key in ('profile', 'duration_ns', 'rps', 'legitimate_rps', 'legitimate_clients', 'max_inflight', 'timeout_ns', 'max_schedule_lag_ns'):
@@ -157,6 +176,10 @@ def read_run(entry, base, clock_tolerance_ms):
                     if not numeric(lag):
                         raise ValueError('missing monotonic schedule lag')
                     discrepancies.append(abs((timestamp(request['sent_at']) - timestamp(request['scheduled_at'])) * 1000 - lag))
+                    latency = request.get('latency_ms')
+                    if not numeric(latency):
+                        raise ValueError('missing monotonic request latency')
+                    discrepancies.append(abs((timestamp(request['end_at']) - timestamp(request['sent_at'])) * 1000 - latency))
         if sent != summary.get('sent') or scheduled != summary.get('scheduled') or scheduled - sent != summary.get('generator_dropped'):
             invalid.append('trace_counts_mismatch')
     except (OSError, ValueError, KeyError, TypeError):

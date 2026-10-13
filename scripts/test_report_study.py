@@ -36,7 +36,7 @@ class ReportTest(unittest.TestCase):
         (case / 'base-image-digests.txt').write_text('digests')
         (case / 'topology').mkdir()
         (case / 'topology/nginx.conf').write_text('upstream api1')
-        rows = [dict(request_id='1', sent_at='2026-10-13T00:00:00.001+00:00', scheduled_at='2026-10-13T00:00:00+00:00', schedule_lag_ms=1, limiter_decision='allow')]
+        rows = [dict(request_id='1', sent_at='2026-10-13T00:00:00.001+00:00', scheduled_at='2026-10-13T00:00:00+00:00', end_at='2026-10-13T00:00:00.002+00:00', latency_ms=1, schedule_lag_ms=1, limiter_decision='allow')]
         rows += [dict(request_id='drop-'+str(i)) for i in range(drops)]
         (case / 'load/requests.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in rows))
         return dict(path=str(case), cell='fw', group='RQ1', repetition=name)
@@ -77,6 +77,49 @@ class ReportTest(unittest.TestCase):
         entry = self.fixture('a')
         path = Path(entry['path'], 'load/requests.jsonl')
         row = json.loads(path.read_text()); row['sent_at'] = '2026-10-13T00:00:01+00:00'; path.write_text(json.dumps(row)+'\n')
+        result = report.read_run(entry, self.root, 5)
+        self.assertIn('client_clock_discontinuity_suspected', result['quality_flags'])
+        self.assertEqual(result['tooling_validity'], 'invalid')
+
+    def test_image_content_identity_requires_matching_recorded_ids(self):
+        entries = [self.fixture('image-a'), self.fixture('image-b')]
+        for index, entry in enumerate(entries):
+            case = Path(entry['path'])
+            image_path = case / 'images.json'
+            images = json.loads(image_path.read_text())
+            for image in images:
+                image['ID'] += str(index)
+            image_path.write_text(json.dumps(images))
+            inspect = [dict(Id=image['ID'], RootFS=dict(Type='layers', Layers=['sha256:'+'a'*64]), Config=dict(Env=['ROLE=app'], Entrypoint=['/app']), Os='linux', Architecture='amd64') for image in images]
+            (case / 'image-inspect.json').write_text(json.dumps(inspect))
+        def result():
+            rows = [report.read_run(entry, self.root, 5) for entry in entries]
+            return report.summarize(rows, [dict(id='fw', expected_repetitions=2)])[0]
+        self.assertEqual(result()['aggregation_status'], 'complete_same_config')
+        inspect_path = Path(entries[1]['path'], 'image-inspect.json')
+        inspect = json.loads(inspect_path.read_text())
+        inspect[0]['RootFS']['Layers'][0] = 'sha256:'+'b'*64
+        inspect_path.write_text(json.dumps(inspect))
+        self.assertIn('incompatible_config', result()['aggregation_status'])
+        inspect[0]['RootFS']['Layers'][0] = 'sha256:'+'a'*64
+        inspect[0]['Config']['Env'] = ['ROLE=other']
+        inspect_path.write_text(json.dumps(inspect))
+        self.assertIn('incompatible_config', result()['aggregation_status'])
+        inspect[0]['Config']['Env'] = ['ROLE=app']
+        inspect[0]['Id'] = 'forged'
+        inspect_path.write_text(json.dumps(inspect))
+        self.assertIn('invalid_run_evidence', result()['aggregation_status'])
+        for entry in entries:
+            Path(entry['path'], 'image-inspect.json').unlink()
+        self.assertIn('incompatible_config', result()['aggregation_status'])
+        inspect_path.write_text('malformed')
+        row = report.read_run(entries[1], self.root, 5)
+        self.assertIn('missing_or_malformed:image-inspect.json', row['quality_flags'])
+
+    def test_clock_jump_during_final_response_is_not_missed(self):
+        entry = self.fixture('drain')
+        path = Path(entry['path'], 'load/requests.jsonl')
+        row = json.loads(path.read_text()); row['end_at'] = '2026-10-13T00:00:01.002+00:00'; path.write_text(json.dumps(row)+'\n')
         result = report.read_run(entry, self.root, 5)
         self.assertIn('client_clock_discontinuity_suspected', result['quality_flags'])
         self.assertEqual(result['tooling_validity'], 'invalid')

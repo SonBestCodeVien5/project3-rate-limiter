@@ -58,7 +58,7 @@ test('matched artifact selections render individual results and quality evidence
   for(const [i,id] of ['compareNone','compareLocal','compareRedis'].entries()){nodes.set(id,element());nodes.get(id).value=JSON.stringify(['saved-'+i,'custom',1]);evidence[i].summary={run_id:'custom-repeat-1',legitimate_sent:10,legitimate_successful:10,legitimate_goodput_per_second:3,legitimate_success_latency:{p95_ms:12,p99_ms:15},http_429:2,http_5xx:1,timeouts:0,transport_errors:1,generator_dropped:0};evidence[i].analysis={oracle:{status:'inconclusive'},counter_deltas:{api1:{limiter_errors:2},backend:{arrivals:10,overload:1}}};}
   const context={Intl,document:{createElement:element,getElementById(id){if(!nodes.has(id))nodes.set(id,element());return nodes.get(id);}},fetch:async url=>{
     const index=Number(url.match(/saved-(\d)/)[1]),e=evidence[index],name=url.split('/artifacts/')[1];
-    const files={'load/metadata.json':e.metadata,'policy.json':e.policy,'compose-resolved.json':e.compose,'images.json':e.images,'base-image-digests.txt':e.baseImages,'git-revision.txt':e.revision,'git-status.txt':e.gitStatus,'load/summary.json':e.summary,'analysis.json':e.analysis,'topology/nginx.conf':e.nginx};const value=files[name.replace('custom-repeat-1/','')];return {ok:value!==undefined,json:async()=>value,text:async()=>value};
+    const files={'load/metadata.json':e.metadata,'policy.json':e.policy,'compose-resolved.json':e.compose,'images.json':e.images,'base-image-digests.txt':e.baseImages,'git-revision.txt':e.revision,'git-status.txt':e.gitStatus,'load/summary.json':e.summary,'analysis.json':e.analysis,'topology/nginx.conf':e.nginx};const value=files[name.replace('custom-repeat-1/','')];return {ok:value!==undefined,status:value===undefined?404:200,json:async()=>value,text:async()=>value};
   }};
   vm.createContext(context);const html=fs.readFileSync(__dirname+'/index.html','utf8');
   vm.runInContext("const $=id=>document.getElementById(id);const fmt=v=>typeof v==='number'?String(v):'—';"+html.slice(html.indexOf('function stable('),html.indexOf("$('compare').addEventListener")),context);
@@ -70,4 +70,20 @@ test('matched artifact selections render individual results and quality evidence
   assert.equal(rows.find(row=>row[0]==='Lỗi limiter · delta mọi API')[2],'2');
   assert.equal(rows.find(row=>row[0]==='Oracle · phạm vi trace')[1],'Chưa đủ bằng chứng');
   assert.equal(rows.find(row=>row[0]==='Lỗi truyền tải')[1],'1');
+});
+
+
+test('inspected image layers and full config identify matching content across IDs',()=>{
+  const html=fs.readFileSync(__dirname+'/index.html','utf8'),context={};vm.createContext(context);
+  vm.runInContext(html.slice(html.indexOf('function stable('),html.indexOf('async function compareSaved')),context);
+  const evidence=comparisonFixtures();
+  for(const [index,e] of evidence.entries()){
+    e.images.forEach(image=>{image.ID+=String(index);});
+    e.imageInspect=e.images.map(image=>({Id:image.ID,RootFS:{Type:'layers',Layers:['sha256:'+'a'.repeat(64)]},Config:{Env:['ROLE=app'],Entrypoint:['/app']},Os:'linux',Architecture:'amd64'}));
+  }
+  context.evidence=evidence;assert.equal(vm.runInContext('comparisonProblems(evidence).length',context),0);
+  evidence[1].imageInspect[0].RootFS.Layers[0]='sha256:'+'b'.repeat(64);assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/images/);
+  evidence[1].imageInspect[0].RootFS.Layers[0]='sha256:'+'a'.repeat(64);evidence[1].imageInspect[0].Config.Env=['ROLE=other'];assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/images/);
+  evidence[1].imageInspect[0].Config.Env=['ROLE=app'];evidence[1].imageInspect[0].Id='forged';assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/không khớp ID/);
+  evidence.forEach(e=>{delete e.imageInspect;});assert.match(vm.runInContext('comparisonProblems(evidence).join(";")',context),/images/);
 });

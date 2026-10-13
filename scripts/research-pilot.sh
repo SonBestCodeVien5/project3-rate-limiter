@@ -176,6 +176,15 @@ for case_name in "${SELECTED[@]}"; do
     compose_timeout 180s up -d --build --force-recreate --wait --wait-timeout 120 >"$case_dir/compose-up.log" 2>&1
     compose_timeout 10s ps >"$case_dir/compose-ps.txt"
     compose_timeout 10s images --format json >"$case_dir/images.json"
+    python3 - "$case_dir/images.json" "$case_dir/image-inspect.json" <<'PY'
+import json, pathlib, subprocess, sys
+images = json.loads(pathlib.Path(sys.argv[1]).read_text())
+ids = sorted({image['ID'] for image in images})
+assert ids, 'no running image identities recorded'
+data = subprocess.check_output(['docker', 'image', 'inspect', *ids], timeout=10)
+assert {image['Id'] for image in json.loads(data)} == set(ids), 'image inspection identity mismatch'
+pathlib.Path(sys.argv[2]).write_bytes(data)
+PY
     timeout 10s docker image inspect --format '{{json .RepoDigests}} {{.Id}}' redis:7.4.2-alpine nginx:1.28.0-alpine >"$case_dir/base-image-digests.txt"
     curl --max-time 5 --fail --silent --show-error "http://127.0.0.1:$LAB_HOST_PORT/healthz" >"$case_dir/health-before.json"
     compose_timeout 10s exec -T backend wget -q -O - http://127.0.0.1:8080/metrics >"$case_dir/backend-before.json"
