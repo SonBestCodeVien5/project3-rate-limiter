@@ -26,7 +26,7 @@ MIXED_RPS=120 bash scripts/research-pilot.sh --case mixed-redis --repetitions 1 
 
 Console chỉ bind `127.0.0.1`. `/api/runs/{id}/metrics` poll `/metrics` trong container qua Docker exec khi run hoạt động; đó là counter tích lũy theo container, lấy mẫu theo thời điểm, không phải delta hay kết quả cuối. Polling có overhead; dùng artifact before/after và trace của runner để phân tích nghiên cứu. `summary.json` chỉ xuất hiện sau khi load generator drain; `analysis.json` là kết luận của analyzer, Console không tự suy diễn.
 
-Chế độ **Tùy chỉnh** hỗ trợ `normal`, `mixed`, `burst`, `concurrent`; 1/2/4 API; tắt limiter/local/Redis; Fixed Window hoặc Token Bucket; fail-open/closed khi dùng Redis. Có thể đặt tổng tải 1..1000 RPS, tải hợp lệ 0..1000 RPS (không vượt tổng), thời lượng 3..30 giây, quota 1..1000, window 100..9999 ms, bucket capacity/refill 1..1000, backend capacity 1..100 và service time 0..1000 ms. Burst có mốc bắt đầu, thời lượng và RPS riêng; concurrent có mốc và số request trong batch. `normal` dùng toàn bộ RPS làm tải hợp lệ. Với `concurrent`, số request batch quyết định tải thực tế; ô RPS chỉ là nhãn trong metadata. Trường không liên quan đến mode/profile được ẩn, nhưng request và `policy.json`/`compose-resolved.json` vẫn ghi đủ cấu hình để tái hiện. Đây là biên an toàn của demo, không phải tham số protocol nghiên cứu đã khóa.
+Chế độ **Tùy chỉnh** hỗ trợ `normal`, `mixed`, `burst`, `concurrent`; 1/2/4 API; tắt limiter/local/Redis; Fixed Window hoặc Token Bucket; fail-open/closed khi dùng Redis. Có thể đặt tổng tải 1..1000 RPS, tải hợp lệ 0..1000 RPS (không vượt tổng), thời lượng 3..30 giây, quota 1..1000, window 100..9999 ms, bucket capacity/refill 1..1000, backend capacity 1..100 và service time 0..1000 ms. Burst có mốc bắt đầu, thời lượng và RPS riêng cho luồng bất thường; concurrent có mốc và số request trong batch. `normal` dùng toàn bộ RPS làm tải hợp lệ. Với `concurrent`, số request batch quyết định tải thực tế; ô RPS chỉ là nhãn trong metadata. Trường không liên quan đến mode/profile được ẩn, nhưng request và `policy.json`/`compose-resolved.json` vẫn ghi đủ cấu hình để tái hiện. Đây là biên an toàn của demo, không phải tham số protocol nghiên cứu đã khóa.
 
 Ví dụ tái hiện một run tùy chỉnh qua CLI (các `CUSTOM_*` khác dùng mặc định trong [scripts/README.md](../scripts/README.md)):
 
@@ -41,6 +41,10 @@ Khi hủy hoặc dừng Console bằng SIGINT/SIGTERM, controller gửi SIGTERM 
 
 Phạm vi hiện tại chưa cho chỉnh fault injection từ UI. Các biểu đồ, history database và truy cập LAN cũng chưa có.
 
+## Kết quả tích hợp thực chạy
+
+[Ma trận ngày 12/10/2026](worklog/2026-10-12-console-matrix/README.md) đã gửi 84 tổ hợp hợp lệ qua API Console: 4 profile × 7 tổ hợp mode/algorithm/fail policy × 3 topology. Mỗi cấu hình chạy một lượt 3 giây; 84 runner complete và artifact khớp, nhưng analyzer có 2 observed_violations/40 inconclusive, 19 Redis limiter errors và 5 generator drops. Playwright đã kiểm tra một lượt custom và overflow desktop/mobile ở vòng triển khai; không coi ma trận API là 84 lượt kiểm tra form. CSV bổ sung backend deltas và tổng counters của mọi API; archive giữ dữ liệu gốc để dẫn báo cáo.
+
 ## Giao diện và hướng phát triển
 
 Bản hiện tại đặt chỉ số cuối lượt thành các thẻ riêng (request đã gửi, 2xx, 429, goodput và p95 của client hợp lệ, backend arrivals xác nhận). Cấu hình thực tế, snapshot từng instance và artifact vẫn xem được; JSON thô nằm trong phần mở rộng để dòng dài không kéo giãn trang. Cách phân cấp thẻ chỉ số và phần xem chi tiết được tham khảo từ [Custom Dashboards của Langfuse](https://langfuse.com/docs/metrics/features/custom-dashboards); Console không dùng Langfuse hay dữ liệu LLM.
@@ -51,7 +55,7 @@ Các mục sau là **đề xuất tùy chọn**, không phải yêu cầu Roadma
 | --- | --- | --- |
 | 1 | So sánh ba run `mixed-none/local/redis` cạnh nhau theo goodput hợp lệ, p95/p99, 429/5xx và backend arrivals | Chỉ ghép run có cùng workload, backend config, số API và revision; hiển thị khác biệt cấu hình nếu không khớp. |
 | 2 | Biểu đồ nhỏ từ artifacts sau run: traffic hợp lệ/toàn tải, quyết định limiter và backend overload theo thời gian | Kiểm tra timestamp, đơn vị, dropped requests và tác động của xử lý dữ liệu; không gọi snapshot cuối là live. |
-| 3 | Mở thêm preset `normal`, `burst`, `concurrent`, `scale-1/2/4` với tham số được khóa theo từng preset | Pilot và protocol phải xác định tổ hợp hợp lệ, giới hạn tải, phép so sánh và nhãn cấu hình thực tế. |
+| 3 | Thêm preset có tham số khóa cho normal/burst/concurrent/scale; các profile/topology này đã chọn được trong custom | Pilot và protocol phải xác định tổ hợp hợp lệ, giới hạn tải, phép so sánh và nhãn cấu hình thực tế. |
 | 4 | Hiện tiến trình runner và Redis CPU/memory sample rõ thời điểm lấy | Cần đo overhead polling/sampling trước khi dùng số liệu này trong báo cáo. |
 | 5 | Trình diễn Redis outage có thời lượng cố định và cleanup được kiểm chứng | Chỉ sau khi fault injection CLI ổn định; không mở lệnh Docker hay thời lượng tùy ý từ trình duyệt. |
 | Sau cùng | Export gói artifact/báo cáo hoặc dashboard lưu lịch sử nhiều run | Chỉ thêm khi một buổi demo/đánh giá thật cần; không thay trace và analyzer hiện có. |

@@ -1,6 +1,8 @@
 # Đặc tả thí nghiệm Project 3 — baseline cập nhật
 
-**Trạng thái cập nhật 11/10/2026:** phạm vi đánh giá theo Roadmap/Proposal; [thiết kế prototype](../IMPLEMENTATION.md) đã chọn Go, middleware trước backend, local mutex/Redis Lua, policy và time semantics. Các mục **Mở** bên dưới là baseline thiết kế trước triển khai; xem thiết kế để biết phần đã chọn. Tham số tải, warm-up, số lần lặp, ngưỡng recovery và protocol chính thức vẫn cần khóa sau pilot. [Hồ sơ triển khai](../worklog/2026-10-11-bootstrap/README.md) phân biệt verification/smoke với dữ liệu nghiên cứu chính thức.
+**Trạng thái cập nhật 13/10/2026:** phạm vi đánh giá theo Roadmap/Proposal; [thiết kế prototype](../IMPLEMENTATION.md) đã chọn Go, middleware trước backend, local mutex/Redis Lua, policy và time semantics. Các mục **Mở** bên dưới là baseline thiết kế trước triển khai; xem thiết kế để biết phần đã chọn. Tham số tải, warm-up, số lần lặp, ngưỡng recovery và protocol chính thức vẫn cần khóa sau pilot. [Hồ sơ triển khai](../worklog/2026-10-11-bootstrap/README.md) phân biệt verification/smoke với dữ liệu nghiên cứu chính thức.
+
+Đã có [Console tùy chỉnh](../CONSOLE.md) và [ma trận 84 lượt thực chạy](../worklog/2026-10-12-console-matrix/README.md) ngày 12/10: một lượt 3 giây cho mỗi tổ hợp, không gây outage chủ động. Artifact nhất quán, nhưng có oracle findings, lỗi Redis và generator drops; chưa dùng bộ này như benchmark chính thức. Ma trận rộng phục vụ kiểm tra cấu hình; nghiên cứu vẫn chọn phép so sánh phù hợp từng RQ.
 
 **Nguồn:** [Roadmap](../context/sources/00_Project3_Roadmap.md) → [Proposal](../context/sources/01_Project3_Proposal.md) → [Research Context](../context/sources/10_Supplementary_Research_Context.md).  
 
@@ -50,7 +52,7 @@
 - **Token Bucket:** đối chiếu quyết định với oracle cùng `B`, `r`, trạng thái ban đầu và quy tắc thời gian. Việc nhận hơn `Q` request trong một cửa sổ Fixed Window có thể hợp lệ đối với Token Bucket; báo cáo quyết định sai và burst được nhận, không gọi đó là overshoot.
 - **Latency:** p50/p95/p99 end-to-end, tách client hợp lệ/bất thường và allow/reject/error. Với backend protection, báo cáo riêng p95/p99 của request hợp lệ thành công.
 - **Throughput:** offered load, completed/allowed/rejected/error requests mỗi giây. `Legitimate goodput` là số request của client hợp lệ được backend xử lý thành công mỗi giây; không tính 429 là goodput.
-- **Backend protection:** ghi số request đến backend, legitimate goodput, timeout và 5xx. Tách 429 do limiter từ chối khỏi lỗi dịch vụ.
+- **Backend protection:** nguồn số đo là delta metrics trước/sau tại backend: arrivals (đã nhận), success (xử lý hoàn thành), overload (đã nhận nhưng hết slot admission, trả 503), canceled (context hủy sau admission). Đối chiếu legitimate goodput và HTTP 429/timeout/5xx phía client; 5xx có thể do fail-closed hoặc transport backend nên không dùng thay overload. Xem [định nghĩa và số đo thực](../worklog/2026-10-12-console-matrix/README.md).
 - **Redis outage:** availability của client hợp lệ = số request hợp lệ thành công / số request hợp lệ đã gửi trong khoảng lỗi; báo cáo quota violation theo policy và thời gian từ lúc Redis trở lại đến khi quyết định/latency ổn định theo cửa sổ quan sát chốt ở pilot. Fail-open có thể chủ động vượt quota; phân loại đây là trade-off của policy, không tự động gọi là race condition.
 - **Resource:** Redis CPU/memory; ghi network overhead hoặc bottleneck API/load generator nếu đo được đáng tin cậy.
 
@@ -62,6 +64,7 @@ Prototype đã chọn client key, policy/time semantics, vị trí limiter, Redi
 
 1. Analyzer độc lập đã có kiểm tra trace FW/TB và phân pha outage/recovery; xem [hợp đồng phân tích](ANALYSIS.md). Còn phải xác định mức quan sát cho cửa sổ đầy đủ và quota violation khi fail-open có quyết định không rõ; không coi kết quả inconclusive là pass.
 2. Dùng pilot để chốt ngưỡng backend, mức tải, warm-up, số lần lặp, số API instance, cửa sổ Redis outage và cách đo tài nguyên.
-3. Kiểm chứng generator đạt offered load ở các mức đã chọn, rồi khóa protocol trước các lượt đo chính thức.
+3. Điều tra oracle mismatch ở hai lượt local Token Bucket và Redis I/O timeouts được giữ trong ma trận 84 lượt; không đổi observed_violations/inconclusive thành pass.
+4. Kiểm chứng generator đạt offered load ở các mức đã chọn, rồi khóa protocol trước các lượt đo chính thức.
 
 Kết quả mong muốn là dữ liệu tái chạy được để trả lời RQ1–RQ5 và giải thích trade-off correctness–performance–backend protection–availability; chưa đặt trước kết luận thuật toán hay fail policy nào tốt hơn. Redis Cluster, dashboard, tier/endpoint policy management và gateway đầy đủ nằm ngoài lõi.

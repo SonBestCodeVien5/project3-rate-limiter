@@ -4,6 +4,8 @@ Prototype nghiên cứu quota phân tán cho API nhiều instance: Fixed Window/
 
 Bắt đầu với [Project Brief](docs/context/PROJECT_BRIEF.md) và [thứ tự nguồn](docs/context/SOURCE_INDEX.md). Google Drive là nguồn yêu cầu; [thiết kế triển khai](docs/IMPLEMENTATION.md) ghi lựa chọn kỹ thuật. [Roadmap](docs/PROJECT_ROADMAP.md) là lịch đề xuất; [đặc tả thí nghiệm](docs/experiments/EXPERIMENT_SPEC.md) chưa khóa protocol đo chính thức.
 
+[Demo Console local](docs/CONSOLE.md) đã triển khai với cấu hình custom và metrics/artifacts. [Ma trận 84 lượt thực chạy](docs/worklog/2026-10-12-console-matrix/README.md) giữ raw archive, checksum và bảng đối chiếu số đo để tham chiếu báo cáo pilot.
+
 ## Chạy prototype
 
 Cần Go 1.26.1 trở lên, Docker Compose, Bash, curl và GNU `timeout` cho runner.

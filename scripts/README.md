@@ -1,6 +1,6 @@
 # Chạy kiểm tra và pilot
 
-Các giá trị tải ở đây là lựa chọn kỹ thuật để smoke/pilot, chưa phải protocol được khóa hoặc kết luận RQ1–RQ5. Cần Go, Docker Compose, `curl` và GNU `timeout`; `research-pilot.sh` cần thêm `flock` để khóa một runner trong cùng checkout. Các script Docker dùng cố định project `project3-lab`, từ chối chạy nếu project này đã có container, và dọn container do lượt chạy tạo ra khi thoát. Không dùng `FLUSHDB`.
+Các giá trị tải ở đây là lựa chọn kỹ thuật để smoke/pilot, chưa phải protocol được khóa hoặc kết luận RQ1–RQ5. Cần Go, Docker Compose, `curl` và GNU `timeout`; `research-pilot.sh` cần thêm `flock` để khóa một runner trong cùng checkout. `pilot-matrix.sh` và `redis-outage.sh` dùng project `project3-lab`; `research-pilot.sh` dùng `project3-research-lab`. Mỗi runner từ chối nếu project của nó đã có container và dọn container do lượt chạy tạo ra khi thoát. Không dùng `FLUSHDB`.
 
 ```bash
 bash scripts/verify.sh
@@ -26,6 +26,10 @@ Các profile generator: `normal` chỉ có lưu lượng client hợp lệ; `bur
 `--case custom` chạy riêng một case và đọc các biến `CUSTOM_*`; bỏ `--case` vẫn chạy 11 case chuẩn. Mặc định custom: `MODE=redis`, `ALGORITHM=fixed-window`, `INSTANCES=2`, `PROFILE=mixed`, `RPS=120`, `LEGIT_RPS=20`, `DURATION=6`, `LIMIT=20`, `WINDOW_MS=1000`, `CAPACITY=20`, `RATE=20`, `BACKEND_CAPACITY=10`, `BACKEND_SERVICE_MS=50`, `FAIL_POLICY=closed`, `BURST_START=2`, `BURST_DURATION=2`, `BURST_RPS=200`, `CONCURRENT_AT=2`, `CONCURRENT_COUNT=100` (mọi tên có tiền tố `CUSTOM_`). Giới hạn và điều kiện phối hợp tương ứng với [Console](../docs/CONSOLE.md). Runner kiểm tra trước khi tạo output; request và cấu hình Compose đã resolve nằm trong artifacts. `normal` yêu cầu `CUSTOM_LEGIT_RPS=CUSTOM_RPS`; `concurrent` yêu cầu `CUSTOM_LEGIT_RPS=0` và batch count quyết định tải thực. Chỉ dùng các giá trị này cho pilot/demo; không so sánh các run khác workload hoặc policy như cùng một thí nghiệm.
 
 Hai script pilot nhận đường dẫn folder output ở đối số thứ nhất; mặc định dưới `artifacts/`. Mỗi case lưu cấu hình Compose đã resolve, HTTP metrics trước/sau của backend, metrics của API, log container, tài nguyên Redis và dữ liệu generator. Redis CPU là counter tích lũy cần lấy chênh lệch theo thời gian; không diễn giải trực tiếp thành % CPU. Outage chỉ lấy Redis INFO trước/sau để tránh client đo đạc bị kẹt khi Redis pause. Các thao tác INFO, snapshot, pause/unpause đều có timeout; cleanup luôn cố unpause trước khi dọn lab.
+
+## Bằng chứng pilot Console
+
+[84 tổ hợp custom thực chạy ngày 12/10](../docs/worklog/2026-10-12-console-matrix/README.md) có CSV/JSON, raw archive và manifest SHA256 trong Git. Các cột backend_* là delta snapshot; api_* là tổng delta của mọi API. Giữ nhãn drops/Redis errors/oracle findings khi dẫn số liệu. Lượt 3 giây này kiểm tra ma trận cấu hình, chưa khóa protocol nghiên cứu.
 
 ## Generator độc lập
 

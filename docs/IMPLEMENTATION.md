@@ -40,6 +40,8 @@ Local nhiều instance cố ý không đảm bảo quota chung; đó là đối 
 
 Backend có semaphore không chờ và service time cấu hình. Arrival được đếm trước admission; overload trả 503. Counter phía backend là nguồn đúng cho arrivals; header phía client chỉ xác nhận arrivals khi nhận được phản hồi. HTTP transport error có thể xảy ra sau khi backend nhận request.
 
+Định nghĩa và đối chiếu số đo backend/HTTP theo từng lượt được lưu trong [hồ sơ ma trận Console](worklog/2026-10-12-console-matrix/README.md). Bộ đo mới có 16.684 backend arrivals, 15.929 success, 755 overload; 762 phản hồi HTTP 5xx gồm overload và 7 fail-closed. Đây là số đo pilot ngày 12/10, không phải quy tắc tổng quát cho mọi loại lỗi.
+
 Clock wall time vẫn có thể nhảy (đặc biệt FW). Môi trường thí nghiệm cần đồng hồ ổn định; local sweep O(số key), JSON/logging, goroutine scheduling và chung một host có thể ảnh hưởng latency. Không suy kết quả thành production readiness.
 
 ## Các phép kiểm chứng

@@ -2,6 +2,8 @@
 
 Đây là pilot kỹ thuật để chọn giao thức nghiên cứu về sau, chưa phải thí nghiệm đã khóa hay kết luận cho RQ1–RQ5. [Roadmap](../context/sources/00_Project3_Roadmap.md) và [Proposal](../context/sources/01_Project3_Proposal.md) xác định các phép so sánh thuật toán, state cục bộ/chung, số API instance, quyết định dưới tải concurrent, mức bảo vệ backend và Redis outage có giới hạn. Các con số bên dưới là mặc định để thử nghiệm; có thể điều chỉnh sau khi kiểm tra load generator có đạt tải đề ra và backend có quá tải như dự kiến. [Đặc tả thí nghiệm](EXPERIMENT_SPEC.md) vẫn là baseline rộng hơn.
 
+**Cập nhật hồ sơ 13/10/2026:** ngoài ma trận CLI 11 case dưới đây, [ma trận Console 84 tổ hợp](../worklog/2026-10-12-console-matrix/README.md) đã thực chạy ngày 12/10 với cấu hình custom, 3 giây/lượt, backend capacity10. Hai bộ có workload/thời lượng khác nhau; dùng request/policy/Compose resolved của mỗi Run ID làm bằng chứng cấu hình. Bộ custom không thay thế protocol chính thức và vẫn có các lượt cần điều tra.
+
 ## Ma trận ứng viên
 
 `research-pilot.sh` dùng Compose project riêng `project3-research-lab`, một backend dùng chung (`BACKEND_CAPACITY=10`, `BACKEND_SERVICE_TIME=50ms` nếu môi trường không ghi đè) và Nginx chỉ lắng nghe trên loopback. Mỗi case gửi tải trong 6 giây, mặc định một lượt và tối đa ba lượt. Từng lượt tạo container mới và namespace riêng. Sau khi health check đạt, runner chờ 1 giây để ổn định startup; nó không gửi `/work` trong khoảng này, nên không có warm-up tiêu thụ quota. Policy mặc định lấy từ Compose đã resolve: `LIMIT=20`, `WINDOW=1s`, `CAPACITY=20`, `RATE=20`. Runner luôn chọn `FAIL_POLICY=closed` cho ma trận này và lưu policy thực tế tại `policy.json`.
@@ -21,6 +23,10 @@ Ba case scaling giữ nguyên một container backend và capacity của nó, ch
 Chạy một tập con bằng `bash scripts/research-pilot.sh --case normal --case scale-1 --case scale-2 --case scale-4 --repetitions 2 --analyze`; bỏ `--case` để chạy cả 11 case. `--output` phải trỏ đến folder chưa tồn tại. Có thể bỏ `--analyze` để chỉ thu dữ liệu thô. Runner từ chối project đã có container, dọn container do lượt chạy tạo khi hoàn tất hoặc lỗi, và giữ lại file đã ghi. Các lệnh build, Compose, HTTP và generator đều có timeout. Renderer 1/2/4 đọc `docker compose config --format json`; nhãn CLI của workload không được xem là bằng chứng cấu hình server. Nginx upstream và health dependencies chứa đúng số API đã chọn, kể cả trường hợp chỉ có một API.
 
 Mỗi case lưu Compose gốc đã resolve, Compose sau render, Nginx, policy, ba file generator `metadata.json`/`requests.jsonl`/`summary.json`, metrics trước/sau của từng API và backend, mẫu Redis INFO, log container và image ID/digest. Folder gốc lưu Git revision/status cùng phiên bản Docker/Compose. Image build cục bộ có thể không có repository digest; khi đó cần xem image ID cùng revision nguồn và trạng thái thay đổi của cây làm việc. `policy.json.state_reset=true` dựa trên container mới và namespace riêng do runner tạo; thao tác render độc lập mặc định ghi `false`.
+
+## Nguồn bằng chứng cho metric backend
+
+Dùng delta `backend-after.json - backend-before.json` cho arrivals/success/overload/canceled. Arrivals đếm trước admission; overload là request đã đến backend nhưng hết slot xử lý đồng thời và trả 503. HTTP 429 từ limiter không tới backend; HTTP 5xx phía generator cần đối chiếu backend delta và tổng fail_closed/backend_errors của mọi API, không mặc định là overload. Header arrival chỉ xác nhận khi client nhận phản hồi. [Worklog 84 lượt](../worklog/2026-10-12-console-matrix/README.md) lưu CSV/JSON, raw archive và SHA256, đo được 755 overload trong 762 phản hồi 5xx; 7 còn lại là fail-closed.
 
 ## Điều kiện dùng kết quả và quyết định tiếp theo
 
