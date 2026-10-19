@@ -123,6 +123,8 @@ exec {REAL_PYTHON} \"$@\"
             for case in (healthy, outage):
                 for artifact in ("compose-resolved.json", "image-inspect.json", "backend-before.json", "backend-after.json", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "load/metadata.json", "load/requests.jsonl"):
                     self.assertTrue((case / artifact).is_file(), f"missing {case / artifact}")
+            for artifact in ("git-revision.txt", "git-status.txt"):
+                self.assertTrue((out / policy / artifact).is_file(), f"missing case-parent provenance: {policy}/{artifact}")
             expected = {"pause_requested", "pause_completed", "unpause_requested", "unpause_completed"}
             events = [line.split()[-1] for line in (outage / "outage-events.txt").read_text().splitlines()
                       if line.strip() and line.split()[-1] in expected]

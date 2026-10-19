@@ -37,6 +37,7 @@ for policy in open closed; do
   for phase in healthy outage; do
     CASE_DIR="$OUT/$policy/$phase"; mkdir -p "$CASE_DIR"
     export MODE=redis ALGORITHM="$algo" FAIL_POLICY="$policy" NAMESPACE="outage-$$-$policy-$phase" LIMIT="$limit" WINDOW="$window" CAPACITY="$capacity" RATE="$rate" BACKEND_CAPACITY="$backend" BACKEND_SERVICE_TIME="$service"
+    cp "$OUT/git-revision.txt" "$OUT/git-status.txt" "$OUT/$policy/"
     timeout 15s docker compose --project-directory "$LAB_ROOT" -f "$LAB_ROOT/compose.yaml" -p "$PROJECT" config --format json >"$CASE_DIR/base-resolved.json"
     python3 "$LAB_ROOT/scripts/render-topology.py" --base-config "$CASE_DIR/base-resolved.json" --output "$CASE_DIR/topology" --instances 2 --host-port "$PORT" --fresh-state
     cp "$CASE_DIR/topology/policy.json" "$CASE_DIR/policy.json"
