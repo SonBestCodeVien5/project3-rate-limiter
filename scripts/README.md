@@ -10,7 +10,7 @@ bash scripts/redis-outage.sh
 
 - `verify.sh`: kiểm tra định dạng, vet, race tests, build, cú pháp shell, test cleanup và cấu hình Compose nếu có Docker. Test HTTP cần quyền mở socket localhost. Test Redis thực theo quy ước biến môi trường của package limiter; cần xem kết quả skipped để biết integration nào chưa chạy.
 - `pilot-matrix.sh`: không limiter, local/Redis × Fixed Window/Token Bucket; mỗi case 5 giây, tổng 300 RPS, trong đó 20 RPS hợp lệ chia đều 5 client. Đây là hai luồng đều theo lịch, chưa phải kịch bản burst có pha bật/tắt.
-- `redis-outage.sh`: Redis shared, mặc định Fixed Window, lần lượt fail-open/fail-closed; mỗi workload 10 giây, tổng 100 RPS, 20 RPS hợp lệ. Yêu cầu pause khoảng giây 3, giữ khoảng 2 giây rồi unpause. Có thể chọn `ALGORITHM=token-bucket`. Thời gian thao tác Docker cộng vào khoảng ngắt; dùng timestamp yêu cầu/hoàn tất trong `outage-events.txt` khi phân pha, không giả định pause chính xác 2 giây.
+- `redis-outage.sh [OUTPUT]`: mỗi fail policy chạy baseline Redis khỏe rồi một lượt cùng cấu hình có Redis pause; mặc định 25 giây, 100/20 total/legitimate RPS, pause từ giây 4 trong 2 giây. Healthy legitimate p95 × 1.5 được ghi trước outage và dùng làm ngưỡng recovery 1s/5 samples/3 windows. `OUTAGE_DURATION`, `OUTAGE_RPS`, `OUTAGE_LEGIT_RPS`, `OUTAGE_PAUSE_AT`, `OUTAGE_PAUSE_FOR`, `OUTAGE_HOST_PORT` và cấu hình Compose `LIMIT`, `WINDOW`, `CAPACITY`, `RATE`, `BACKEND_CAPACITY`, `BACKEND_SERVICE_TIME` cho phép hiệu chỉnh; đầu ra phải là đường dẫn mới. Chạy analyzer riêng cho mỗi outage; `first success` không phải recovery. Quota thiếu state/response vẫn unknown hoặc lower-bound.
 
 ## Pilot đo lường ứng viên với 1/2/4 API
 
