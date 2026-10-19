@@ -23,6 +23,24 @@ for status in 0 9; do
   expected=$'unpause redis\ndown --remove-orphans'
   [[ "$(cat "$tmp/cleanup-$status.log")" == "$expected" ]]
 done
+mkdir -p "$tmp/sample"
+bash -c '
+  source "$1/scripts/lab-common.sh"
+  TEST_DIR=$2
+  compose_timeout() {
+    case "$*" in
+      *"INFO cpu") printf "# CPU\\nused_cpu_sys:1\\n"; touch "$TEST_DIR/started"; sleep .2 ;;
+      *"INFO memory") printf "# Memory\\nused_memory:1\\n" ;;
+      *"INFO stats") printf "# Stats\\ntotal_net_input_bytes:1\\ntotal_net_output_bytes:2\\n" ;;
+    esac
+  }
+  lab_sample "$TEST_DIR"
+  while [[ ! -e "$TEST_DIR/started" ]]; do sleep .01; done
+  lab_stop_sample
+  grep -q "used_memory:1" "$TEST_DIR/redis-resources.log"
+  grep -q "total_net_input_bytes:1" "$TEST_DIR/redis-resources.log"
+  grep -q "total_net_output_bytes:2" "$TEST_DIR/redis-resources.log"
+' _ "$root" "$tmp/sample"
 mkdir -p "$root/artifacts"
 exec 9>"$root/artifacts/.research-pilot.lock"
 flock -n 9

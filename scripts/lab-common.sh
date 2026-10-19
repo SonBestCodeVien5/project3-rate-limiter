@@ -56,13 +56,17 @@ lab_snapshot() {
 lab_sample() {
   local case_dir=$1
   # No Redis INFO during pause: a blocked redis-cli would obscure outage timing.
-  while true; do
-    date -u +%Y-%m-%dT%H:%M:%S.%NZ
-    compose_timeout 5s exec -T redis redis-cli INFO cpu
-    compose_timeout 5s exec -T redis redis-cli INFO memory
-    compose_timeout 5s exec -T redis redis-cli INFO stats
-    sleep 1
-  done >"$case_dir/redis-resources.log" 2>&1 &
+  (
+    local stop=0
+    trap 'stop=1' TERM
+    while [[ "$stop" == 0 ]]; do
+      date -u +%Y-%m-%dT%H:%M:%S.%NZ
+      compose_timeout 5s exec -T redis redis-cli INFO cpu
+      compose_timeout 5s exec -T redis redis-cli INFO memory
+      compose_timeout 5s exec -T redis redis-cli INFO stats
+      [[ "$stop" == 1 ]] || sleep 1
+    done
+  ) >"$case_dir/redis-resources.log" 2>&1 &
   LAB_SAMPLE_PID=$!
 }
 lab_stop_sample() {
