@@ -1,3 +1,5 @@
+> **Current protocol:** this file is the preserved historical draft. The promoted, locked T08 plan is [Project 3 formal study protocol v1](protocol-v1/protocol.md), with its complete planned run manifest at [manifest.json](protocol-v1/manifest.json). The lock does not authorize T09 execution.
+
 # Protocol candidate — T08 draft v1
 
 **Status: DRAFT ONLY.** This is a concrete proposal for review, not a locked protocol and not authorization to run T09. T05 scaling calibration and T07 healthy/outage calibration are still pending. Do not fill their values from pilot results. Promote this draft only after the root integrates completed T05/T07 handoffs and records the resulting fixed values and code revision. Project requirements come from [Roadmap](../context/sources/00_Project3_Roadmap.md) and [Proposal](../context/sources/01_Project3_Proposal.md); the matrix and thresholds below are engineering recommendations, not a grading rubric.
