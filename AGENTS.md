@@ -19,3 +19,9 @@ Worker handoff (English; root replies to the user in Vietnamese): task IDs; chan
 ## Minimal reading and routing
 
 Do not scan the whole repository by default. Start from brief and task routing; open only relevant files. Mandatory source reading remains above. Useful routes: [code and implementation choices](docs/IMPLEMENTATION.md), [experiments](docs/experiments/PROTOCOL_READINESS.md), [runners](scripts/), [demo](docs/DEMO_SCRIPT.md), [remaining task IDs](docs/REMAINING_WORK_PLAN.md). Preserve dated worklogs and archival evidence.
+
+## Commit discipline
+
+Use one independently reviewable feature or fix per commit, together with its directly related tests and documentation. Split independent changes even when they touch the same file. Commit measurement evidence separately from code changes, and commit progress/checkpoint updates separately from both.
+
+Inspect the staged diff before every commit and stage explicit files or hunks; do not bundle the whole worktree. At the requested stopping point, update the checkpoint and leave the worktree clean without deleting user changes or ignored raw artifacts. Preserve recorded measurement revisions and evidence when reorganizing commits.
