@@ -28,7 +28,7 @@ class ReportTest(unittest.TestCase):
         write('load/summary.json', summary)
         write('policy.json', policy)
         write('load/metadata.json', dict(config=dict(run_id='case-repeat-1', mode_label='redis', algorithm_label='fixed-window', fail_policy_label='closed', profile='mixed', duration_ns=1000, rps=1, legitimate_rps=1, legitimate_clients=5, max_inflight=200, timeout_ns=100, max_schedule_lag_ns=10), workload_version=2, git_revision='abc', git_status_porcelain='', go_version='go', os='linux', arch='amd64', cpu_count=12, gomaxprocs=12, hostname='host'))
-        write('analysis.json', dict(run_id='case-repeat-1', policy=policy, oracle=dict(status='inconclusive'), evidence=dict(summary_counts_match_trace=True, trace_has_unknown_decisions=False), counter_deltas=dict(api1=dict(limiter_errors=0), backend=dict(arrivals=1, overload=0))))
+        write('analysis.json', dict(run_id='case-repeat-1', policy=policy, oracle=dict(status='inconclusive'), evidence=dict(summary_counts_match_trace=True, trace_has_unknown_decisions=False), counter_deltas=dict(api1=dict(limiter_errors=0), backend=dict(arrivals=1, overload=0)), redis_resources=None))
         write('compose-resolved.json', dict(services=dict(api1=dict(environment=dict(MODE='redis', ALGORITHM='fixed-window', NAMESPACE=name)), backend=dict(environment=dict(BACKEND_CAPACITY='4', BACKEND_SERVICE_TIME='50ms')), nginx={}, redis={})))
         write('images.json', [dict(ContainerName='lab-'+key+'-1', ID=key, Platform='amd64') for key in ('api1', 'backend', 'nginx', 'redis')])
         (case.parent / 'git-revision.txt').write_text('abc')
@@ -48,6 +48,21 @@ class ReportTest(unittest.TestCase):
         self.assertEqual(result['legitimate_p95_ms_run_median'], 20)
         self.assertNotIn('pooled_p95', result)
         self.assertEqual(result['aggregation_status'], 'complete_same_config')
+
+    def test_absent_redis_resource_sample_is_usable(self):
+        entry = self.fixture('no-redis-sampler')
+        manifest = self.root / 'manifest.json'
+        manifest.write_text(json.dumps(dict(clock_tolerance_ms=5, cells=[dict(id='fw', expected_repetitions=1)], runs=[entry])))
+        rows, _ = report.export(manifest, self.root / 'output')
+        self.assertEqual(rows[0]['tooling_validity'], 'usable')
+        self.assertIsNone(rows[0]['redis_average_cpu_cores'])
+        analysis_path = Path(entry['path'], 'analysis.json')
+        analysis = json.loads(analysis_path.read_text())
+        analysis['redis_resources'] = []
+        analysis_path.write_text(json.dumps(analysis))
+        malformed = report.read_run(entry, self.root, 5)
+        self.assertEqual(malformed['tooling_validity'], 'invalid')
+        self.assertIn('malformed_redis_resources', malformed['quality_flags'])
 
     def test_missing_evidence_and_invalid_rows_retained(self):
         entries = [self.fixture('a'), self.fixture('b', drops=1)]

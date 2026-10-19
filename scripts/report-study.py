@@ -145,8 +145,14 @@ def read_run(entry, base, clock_tolerance_ms):
     row['limiter_errors'] = sum(errors) if errors and all(numeric(value) for value in errors) else None
     if row['limiter_errors'] is None:
         invalid.append('missing_api_counters')
+    redis_resources = analysis.get('redis_resources')
+    if redis_resources is None:
+        redis_resources = {}
+    elif not isinstance(redis_resources, dict):
+        invalid.append('malformed_redis_resources')
+        redis_resources = {}
     for key in ('average_cpu_cores', 'memory_bytes_first', 'memory_bytes_last'):
-        row['redis_' + key] = analysis.get('redis_resources', {}).get(key)
+        row['redis_' + key] = redis_resources.get(key)
     evidence = analysis.get('evidence', {})
     if evidence.get('summary_counts_match_trace') is not True:
         invalid.append('analyzer_trace_counts_unverified')
