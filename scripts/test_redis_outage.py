@@ -109,6 +109,8 @@ exec {REAL_PYTHON} \"$@\"
                 detail += f"\n{artifact}: {artifact.read_text(errors='replace')}"
         self.assertEqual(run.returncode, 0, run.stdout + "\n" + run.stderr + "\n" + detail)
         commands = self.log.read_text()
+        timeout_commands = [line for line in commands.splitlines() if line.startswith("timeout ")]
+        self.assertEqual(sum(line.startswith("timeout 180s docker compose ") and " up " in line for line in timeout_commands), 4)
         for policy in ("open", "closed"):
             healthy, outage = out / policy / "healthy", out / policy / "outage"
             hp, op = json.loads((healthy / "policy.json").read_text()), json.loads((outage / "policy.json").read_text())

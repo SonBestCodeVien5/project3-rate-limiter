@@ -1,0 +1,272 @@
+{
+  "name": "project3-outage-108732",
+  "networks": {
+    "default": {
+      "name": "project3-outage-108732_default",
+      "ipam": {}
+    }
+  },
+  "services": {
+    "api1": {
+      "build": {
+        "context": "/tmp/project3-t07-outage-aa16cb0",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "backend": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "redis": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "ALGORITHM": "fixed-window",
+        "BACKEND_TIMEOUT": "2s",
+        "BACKEND_URL": "http://backend:8080",
+        "CAPACITY": "20",
+        "FAIL_POLICY": "open",
+        "INSTANCE_ID": "api-1",
+        "LIMIT": "20",
+        "MODE": "redis",
+        "NAMESPACE": "outage-108732-open-healthy",
+        "RATE": "20",
+        "REDIS_ADDR": "redis:6379",
+        "REDIS_TIMEOUT": "100ms",
+        "ROLE": "api",
+        "WINDOW": "1s"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-q",
+          "--spider",
+          "http://127.0.0.1:8080/healthz"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "18081",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "api2": {
+      "build": {
+        "context": "/tmp/project3-t07-outage-aa16cb0",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "backend": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "redis": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "ALGORITHM": "fixed-window",
+        "BACKEND_TIMEOUT": "2s",
+        "BACKEND_URL": "http://backend:8080",
+        "CAPACITY": "20",
+        "FAIL_POLICY": "open",
+        "INSTANCE_ID": "api-2",
+        "LIMIT": "20",
+        "MODE": "redis",
+        "NAMESPACE": "outage-108732-open-healthy",
+        "RATE": "20",
+        "REDIS_ADDR": "redis:6379",
+        "REDIS_TIMEOUT": "100ms",
+        "ROLE": "api",
+        "WINDOW": "1s"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-q",
+          "--spider",
+          "http://127.0.0.1:8080/healthz"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "18082",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "backend": {
+      "build": {
+        "context": "/tmp/project3-t07-outage-aa16cb0",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "BACKEND_CAPACITY": "4",
+        "BACKEND_SERVICE_TIME": "50ms",
+        "INSTANCE_ID": "backend-1",
+        "ROLE": "backend"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-q",
+          "--spider",
+          "http://127.0.0.1:8080/healthz"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "18083",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "nginx": {
+      "command": null,
+      "depends_on": {
+        "api1": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "api2": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "image": "nginx:1.28.0-alpine",
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "8080",
+          "protocol": "tcp"
+        }
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/tmp/project3-t07-outage-aa16cb0/deploy/nginx.conf",
+          "target": "/etc/nginx/nginx.conf",
+          "read_only": true,
+          "bind": {}
+        }
+      ]
+    },
+    "redis": {
+      "command": [
+        "redis-server",
+        "--save",
+        "",
+        "--appendonly",
+        "no"
+      ],
+      "entrypoint": null,
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "redis-cli",
+          "ping"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "image": "redis:7.4.2-alpine",
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 6379,
+          "published": "16379",
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "x-api": {
+    "build": ".",
+    "depends_on": {
+      "backend": {
+        "condition": "service_healthy"
+      },
+      "redis": {
+        "condition": "service_healthy"
+      }
+    },
+    "environment": {
+      "ALGORITHM": "fixed-window",
+      "BACKEND_TIMEOUT": "2s",
+      "BACKEND_URL": "http://backend:8080",
+      "CAPACITY": "20",
+      "FAIL_POLICY": "open",
+      "LIMIT": "20",
+      "MODE": "redis",
+      "NAMESPACE": "outage-108732-open-healthy",
+      "RATE": "20",
+      "REDIS_ADDR": "redis:6379",
+      "REDIS_TIMEOUT": "100ms",
+      "ROLE": "api",
+      "WINDOW": "1s"
+    },
+    "healthcheck": {
+      "interval": "2s",
+      "retries": 20,
+      "test": [
+        "CMD",
+        "wget",
+        "-q",
+        "--spider",
+        "http://127.0.0.1:8080/healthz"
+      ],
+      "timeout": "1s"
+    }
+  }
+}

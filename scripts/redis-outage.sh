@@ -41,7 +41,7 @@ for policy in open closed; do
     python3 "$LAB_ROOT/scripts/render-topology.py" --base-config "$CASE_DIR/base-resolved.json" --output "$CASE_DIR/topology" --instances 2 --host-port "$PORT" --fresh-state
     cp "$CASE_DIR/topology/policy.json" "$CASE_DIR/policy.json"
     compose 15s config --format json >"$CASE_DIR/compose-resolved.json"
-    compose 10s up -d --build --force-recreate --wait --wait-timeout 120 >"$CASE_DIR/compose-up.log" 2>&1
+    compose 180s up -d --build --force-recreate --wait --wait-timeout 120 >"$CASE_DIR/compose-up.log" 2>&1
     OWNED=1
     compose 10s ps >"$CASE_DIR/compose-ps.txt"
     compose 10s images --format json >"$CASE_DIR/images.json"

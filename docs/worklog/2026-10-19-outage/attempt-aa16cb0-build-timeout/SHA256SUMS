@@ -1,0 +1,12 @@
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/SHA256SUMS
+62c1b7403155d000293a9195c176b8a32ea1927fb436b3794e7d4e05ebaf1bb3  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/observer/metadata.json
+7ec58a3add9e8ccf10be485a24973c1c1f0a0d798ec797268d690022b603c526  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/observer/samples.jsonl
+b429802615d0b64cbd6837ede3fab003a9d273d2c93f3d9fac78c38aa31a058a  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/observer/summary.json
+e5d8ee75736b89821cab7092a32c4cf074fb778fbf344c51cf640f7e7957dda3  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/open/healthy/base-resolved.json
+704547a85988d2ea2a8c9ea3ffa28ad1c3ad991797948b5773e2c9f2eb3edd52  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/open/healthy/compose-resolved.json
+56cf67988229f3ac22f9f7a9883c9268e41ab0373058454964c83ca14045d857  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/open/healthy/compose-up.log
+d14289241dd217472a932f0c050876cba86d93d5525928ede8266195865ad0c3  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/open/healthy/policy.json
+ac74052f07f38bf7f89b07ebae0f555cc5131915cc32789cd8054346a45d10ab  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/open/healthy/topology/compose.json
+b0691ebc19e168becf308d89383e57d68f94f1d049a0e251d55d84f351558a43  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/open/healthy/topology/nginx.conf
+d14289241dd217472a932f0c050876cba86d93d5525928ede8266195865ad0c3  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/open/healthy/topology/policy.json
+7e4d091f5d2f3ea717b1da2957b920afe93fa3de8d16699e0b02646c6ea63e4e  docs/worklog/2026-10-19-outage/attempt-aa16cb0-build-timeout/preflight.txt

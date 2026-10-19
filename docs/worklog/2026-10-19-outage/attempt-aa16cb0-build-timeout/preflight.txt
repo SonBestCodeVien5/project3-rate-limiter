@@ -1,0 +1,9 @@
+revision=aa16cb0e372b4e1d3520b58514c479842e41df2f
+checkout=clean detached clone
+config=OUTAGE_DURATION=30 OUTAGE_RPS=100 OUTAGE_LEGIT_RPS=20 OUTAGE_PAUSE_AT=4 OUTAGE_PAUSE_FOR=2 OUTAGE_HOST_PORT=18107 LIMIT=20 WINDOW=1s CAPACITY=20 RATE=20 BACKEND_CAPACITY=4 BACKEND_SERVICE_TIME=50ms
+clock_observer=90.000239598 monotonic seconds, 90.000241090 wall seconds, 1792 samples, zero >5ms steps
+built_loadgen_sha256=a3f4fa6e2c878708ade00ba1bea6cd5da286c3f21f460fbef6dc9978c536904d
+runner_sha256=081f8a6240985bac4a423d76627524c093104576771d4f61f58399a79694802a
+analyzer_sha256=866d2b9dcfea41587ff75bf87cee240990c240f7a121916a6e972ae4061b1dfe
+renderer_sha256=5d41a0b72eafde58f6d320ed3a57b9475353f953bcafb0d2c7dd7f8322afa6cc
+outcome=compose up was killed by outer 10s timeout during cold image build; no load started; docker ps -a showed no containers left
