@@ -32,7 +32,6 @@ if [[ $1 == */loadgen ]]; then
     if [[ -s "$(dirname "$(dirname "$dir")")/recovery-p95-threshold-ms.txt" ]]; then echo threshold-present >"$(dirname "$dir")/threshold-at-load-start.txt"; else echo threshold-missing >"$(dirname "$dir")/threshold-at-load-start.txt"; fi
   fi
   printf '{"config":{"duration_ns":25000000000}}\\n' >"$dir/metadata.json"
-printf '{"scheduled":5,"sent":5,"generator_dropped":0,"canceled":false,"run_id":"open-healthy"}\\n' >"$dir/summary.json"
   printf '{"scheduled":5,"sent":5,"generator_dropped":0,"canceled":false,"run_id":"open-healthy"}\\n' >"$dir/summary.json"
   for i in 1 2 3 4 5; do printf '{"client_class":"legitimate","sent_at":"2026-10-19T00:00:00Z","status":200,"latency_ms":10}\\n' >>"$dir/requests.jsonl"; done
   exit 0
@@ -50,6 +49,7 @@ if [[ $dir == */outage/load ]]; then
   if [[ -s "$(dirname "$(dirname "$dir")")/recovery-p95-threshold-ms.txt" ]]; then echo threshold-present >"$(dirname "$dir")/threshold-at-load-start.txt"; else echo threshold-missing >"$(dirname "$dir")/threshold-at-load-start.txt"; fi
 fi
 printf '{"config":{"duration_ns":25000000000}}\\n' >"$dir/metadata.json"
+printf '{"scheduled":5,"sent":5,"generator_dropped":0,"canceled":false,"run_id":"open-healthy"}\\n' >"$dir/summary.json"
 for i in 1 2 3 4 5; do printf '{"client_class":"legitimate","sent_at":"2026-10-19T00:00:00Z","status":200,"latency_ms":10}\\n' >>"$dir/requests.jsonl"; done
 LOAD
 chmod +x "$out"
@@ -121,7 +121,7 @@ exec {REAL_PYTHON} \"$@\"
                              {k: op[k] for k in ("mode", "algorithm", "fail_policy", "limit", "window_ms", "capacity", "rate_per_sec")})
             self.assertNotEqual(hp["namespace"], op["namespace"])
             for case in (healthy, outage):
-                for artifact in ("compose-resolved.json", "image-inspect.json", "backend-before.json", "backend-after.json", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "load/metadata.json", "load/requests.jsonl"):
+                for artifact in ("compose-resolved.json", "image-inspect.json", "backend-before.json", "backend-after.json", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "load/metadata.json", "load/requests.jsonl", "analyzer.log"):
                     self.assertTrue((case / artifact).is_file(), f"missing {case / artifact}")
             for artifact in ("git-revision.txt", "git-status.txt"):
                 self.assertTrue((out / policy / artifact).is_file(), f"missing case-parent provenance: {policy}/{artifact}")
@@ -136,6 +136,9 @@ exec {REAL_PYTHON} \"$@\"
         docker_commands = [line for line in commands.splitlines() if line.startswith("docker ")]
         self.assertEqual(sum(" pause redis" in line for line in docker_commands), 2)
         self.assertEqual(sum(" unpause redis" in line for line in docker_commands), 2)
+        analyses = [line for line in commands.splitlines() if line.startswith("analyze ")]
+        self.assertEqual(len(analyses), 4)
+        self.assertTrue(all(f"{phase}" in line for line, phase in zip(analyses, ("healthy", "outage", "healthy", "outage"))))
         again = self._run(out)
         self.assertNotEqual(again.returncode, 0)
         self.assertIn("Output already exists", again.stderr)
@@ -149,7 +152,6 @@ exec {REAL_PYTHON} \"$@\"
         self.assertIn("unpause redis", commands)
         self.assertIn("down --remove-orphans", commands)
 
-
     def test_partial_up_failure_removes_owned_project(self):
         out = self.root / "partial-up"
         run = self._run(out, MOCK_FAIL_UP="1")
@@ -161,7 +163,6 @@ exec {REAL_PYTHON} \"$@\"
         down = next(line for line in compose_commands if " down --remove-orphans" in line)
         project = up.split(" -p ", 1)[1].split()[0]
         self.assertIn(f"-p {project}", down)
-
 
     def test_unhealthy_healthy_baseline_stops_before_outage(self):
         out = self.root / "bad-baseline"

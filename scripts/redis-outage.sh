@@ -107,9 +107,11 @@ v.sort(); p95=v[math.ceil(.95*len(v))-1]; print(max(1,1.5*p95))
 PY
       )
       printf '%s\n' "$threshold" >"$OUT/$policy/recovery-p95-threshold-ms.txt"
+      timeout 20s python3 "$LAB_ROOT/scripts/analyze.py" "$CASE_DIR" >"$CASE_DIR/analyzer.log" 2>&1
+    else
+      threshold=$(cat "$OUT/$policy/recovery-p95-threshold-ms.txt")
+      timeout 20s python3 "$LAB_ROOT/scripts/analyze.py" "$CASE_DIR" --recovery-p95-ms "$threshold" --recovery-window-ms 1000 --recovery-min-samples 5 --recovery-consecutive 3 >"$CASE_DIR/analyzer.log" 2>&1
     fi
   done
-  threshold=$(cat "$OUT/$policy/recovery-p95-threshold-ms.txt")
-  timeout 20s python3 "$LAB_ROOT/scripts/analyze.py" "$OUT/$policy/outage" --recovery-p95-ms "$threshold" --recovery-window-ms 1000 --recovery-min-samples 5 --recovery-consecutive 3 >"$OUT/$policy/outage/analyzer.log" 2>&1
 done
 echo "Outage artifacts: $OUT"
