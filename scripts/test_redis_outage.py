@@ -66,6 +66,7 @@ JSON
     images) echo '[{"ID":"sha256:mock"}]';;
     ps) exit 0;;
     exec) printf '{}\\n';;
+    up) if [[ ${MOCK_FAIL_UP:-0} == 1 ]]; then echo partial-created >>"$MOCK_LOG"; exit 1; fi; exit 0;;
     pause) if [[ ${MOCK_FAIL_PAUSE:-0} == 1 ]]; then exit 1; fi; exit 0;;
     *) exit 0;;
   esac
@@ -143,6 +144,19 @@ exec {REAL_PYTHON} \"$@\"
         self.assertIn("pause redis", commands)
         self.assertIn("unpause redis", commands)
         self.assertIn("down --remove-orphans", commands)
+
+
+    def test_partial_up_failure_removes_owned_project(self):
+        out = self.root / "partial-up"
+        run = self._run(out, MOCK_FAIL_UP="1")
+        self.assertNotEqual(run.returncode, 0)
+        commands = self.log.read_text()
+        self.assertIn("partial-created", commands)
+        compose_commands = [line for line in commands.splitlines() if line.startswith("docker compose")]
+        up = next(line for line in compose_commands if " up " in line)
+        down = next(line for line in compose_commands if " down --remove-orphans" in line)
+        project = up.split(" -p ", 1)[1].split()[0]
+        self.assertIn(f"-p {project}", down)
 
 
 if __name__ == "__main__":
