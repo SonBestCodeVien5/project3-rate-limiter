@@ -1,8 +1,10 @@
 # Công việc còn lại và kế hoạch tiếp tục Project 3
 
-**Cập nhật 13/10/2026. Chỉ lập kế hoạch; chưa tiếp tục chạy thí nghiệm.** Đây là danh sách công việc còn lại theo phạm vi hiện biết, gồm nghiên cứu, code phục vụ phép đo, tài liệu, demo và việc người học cần làm. Ngày nộp/bảo vệ, rubric và phản hồi tiếp theo của giảng viên chưa xác định đầy đủ, nên có thể phát sinh điều chỉnh. Không dùng số lượng checkbox để suy phần trăm hoàn thành.
+**Kế hoạch gốc 13/10/2026; cập nhật trạng thái 19/10/2026.** Người dùng đã cho phép tiếp tục phần kỹ thuật/tài liệu, bắt đầu T01–T02; việc học do người dùng thực hiện với GPT. Các dependency/quality gate vẫn giữ nguyên, chưa chạy benchmark chính thức. Đây là danh sách công việc còn lại theo phạm vi hiện biết, gồm nghiên cứu, code phục vụ phép đo, tài liệu, demo và việc người học cần làm. Ngày nộp/bảo vệ, rubric và phản hồi tiếp theo của giảng viên chưa xác định đầy đủ, nên có thể phát sinh điều chỉnh. Không dùng số lượng checkbox để suy phần trăm hoàn thành.
 
 Nguồn yêu cầu: [Roadmap](context/sources/00_Project3_Roadmap.md) > [Proposal](context/sources/01_Project3_Proposal.md). Các tham số, ma trận và cách điều phối dưới đây là lựa chọn kỹ thuật/đề xuất, chưa phải protocol đã khóa hoặc yêu cầu được giảng viên duyệt. [Checkpoint](context/SESSION_CHECKPOINT.md) ghi phần đã xong; [readiness](experiments/PROTOCOL_READINESS.md) ghi điều kiện chưa đạt.
+
+**Kết quả tiếp tục ngày 19/10:** T01 vẫn chưa đạt (ba bước nhảy realtime khoảng 2,93–2,96 giây trong 90 giây); không chạy T03. T02 đã chuẩn bị helper portable và qua bốn self-check, chưa kiểm chứng live gate. T11 có [bản nháp báo cáo](REPORT_DRAFT.md); T12 đã chuẩn bị saved-run demo, chưa phải bộ nộp cuối. Xem [checkpoint](context/SESSION_CHECKPOINT.md) cho evidence, checks và điều kiện tiếp theo.
 
 ## 1. Những phần đã xong, không cần làm lại
 

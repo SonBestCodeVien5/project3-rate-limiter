@@ -2,6 +2,8 @@
 
 **Chưa khóa protocol, chưa chạy benchmark chính thức.** Người dùng đã cho phép tự động tiếp tục sau pilot, nhưng điều kiện đo chưa đạt. Đây là kết luận về môi trường thí nghiệm, không thay yêu cầu Roadmap/Proposal hoặc lịch do giảng viên duyệt. [Protocol ứng viên](PROTOCOL_CANDIDATE.md) vẫn là bản đề xuất.
 
+**Cập nhật 19/10/2026:** đã tiếp tục kiểm tra chỉ đọc; [observer mới](../worklog/2026-10-19-clock/README.md) vẫn ghi nhận ba bước nhảy realtime khoảng 2,93–2,96 giây trong 90 giây. T01 chưa đạt, không chạy T03. [Helper portable](MEASUREMENT_GATE.md) đã có và qua self-check, chưa được xác nhận bằng live gate. Các điều kiện bên dưới vẫn giữ nguyên.
+
 ## Điều đã kiểm chứng
 
 - [Calibration HTTP](../worklog/2026-10-13-calibration/README.md): 14 lượt, 7.880 sent=scheduled, 0 drops; bốn local Token Bucket trace không có violation quan sát được. Các lượt clock không ổn vẫn được giữ và đánh dấu.

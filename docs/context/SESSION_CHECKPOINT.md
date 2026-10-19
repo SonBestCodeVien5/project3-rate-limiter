@@ -1,6 +1,22 @@
-# Session checkpoint — 2026-10-13
+# Session checkpoint
 
-The user explicitly stopped the session. Do not resume experiments until requested.
+## Resumption — 2026-10-19
+
+The user authorized technical/document work to resume and will handle learning with GPT. H01 remains learner-owned; H02 still requires the learner to confirm the deadline/rubric.
+
+- **T01 not passed:** fresh 90.037 s monotonic observation on revision `32194714c979a03cdeee6ac0b88953481cbcd0d6` recorded 1,796 samples and three realtime steps of +2,961.301/+2,947.073/+2,931.132 ms. WSL2/tsc; adjustment actor unknown. Raw evidence and checksum manifest: `artifacts/clock-20261019-0248-32194714/`; [worklog](../worklog/2026-10-19-clock/README.md). No clock/NTP/clocksource settings changed.
+- Read-only Windows diagnostics initially hit a sandbox interop restriction; a bounded sandbox-escalated query reached Windows. W32Time was not started at query time and the targeted event filter found no matching records; neither result identifies the adjustment actor or authorizes a service change. `windows-escalated-retry.txt` preserves results; all nine final manifest entries verified. Observer raw evidence was not modified.
+- **T02 preparation complete:** portable observer, quality checker and sequential normal/mixed gate in `scripts/observe-clock.py`, `scripts/check-gate-quality.py`, `scripts/run-measurement-gate.sh`. Four focused self-checks passed, plus shell syntax/Python compilation/diff checks; no Docker or live gate validation. [Usage](../experiments/MEASUREMENT_GATE.md). Run from a clean fixed revision after integration, using fresh output paths.
+- **T11 partial:** [report draft](../REPORT_DRAFT.md) covers substantiated background/design/methodology and explicitly leaves final analysis, references and instructor format pending.
+- **T12 partial:** saved none/local/Redis Console folders are present at their original IDs; source/destination hashes and IDs matched, local clock flag preserved. The referenced historical manifest was absent, so direct source/destination hashes were used. [Demo handoff](../worklog/2026-10-19-demo/README.md). No live UI/build or clean-checkout validation this session; final package awaits T09–T10.
+
+**Next gate:** the user confirmed only this Windows/WSL machine is available. Continue read-only diagnosis on this machine, including distinguishing Windows host clock changes from WSL guest clock changes, then pass the same observer before T03. Do not run T03 or the formal benchmark in the currently failing environment; T03–T08 dependencies remain mandatory. Historical test results below were not rerun. No push performed.
+
+The user requested committing this session's changes. The gate requires a clean fixed revision before any live load. Do not treat the archived observer revision as the revision of the new helpers.
+
+## Previous checkpoint — 2026-10-13
+
+The user explicitly stopped the session at this checkpoint; the resumption above supersedes that pause.
 
 The subsequent request authorized documentation only. Use [REMAINING_WORK_PLAN.md](../REMAINING_WORK_PLAN.md) for the complete known backlog, dependency gates, implementation details, ownership and English resumption prompts. Creating that plan does not resume experiment execution.
 
