@@ -1,14 +1,46 @@
 # Session checkpoint
 
-## Technical continuation — 2026-10-19
+## Paused after T05 — 2026-10-19
 
-The user explicitly resumed the T tasks and authorized parallel workers. They subsequently set a provisional planning target of mid-December 2026; this is not a confirmed instructor deadline, and the rubric remains unknown. The earlier pause below is superseded for this continuation; experiment dependencies and quality gates still apply.
+**Latest instruction:** finish T05, commit the existing work and full progress, then stop. T07 is deferred to another session. Do not dispatch another experiment, lock T08 or run T09 until the user resumes. The provisional planning target is **mid-December 2026**; the official submission/defense date and rubric remain unknown. This section supersedes earlier active-continuation and through-T07 boundaries.
 
-T06 is complete at commit `3e938a2`: focused real Redis race checks covered shared FW/TB quota, near-exhausted FW/TB quota, and the deliberately forced non-atomic control. The near-exhausted tests admitted exactly 2 of 16 requests after consuming 8 of 10 units. FW boundary crossing is reported as inconclusive rather than a quota failure. Commands, output, source checksum and limitations are in the [T06 worklog](../worklog/2026-10-19-atomicity/README.md). The dedicated test Redis container was removed.
+| Task | Current evidence / next gate |
+| --- | --- |
+| T01–T03 | Previously passed current-session clock stability and bounded normal/mixed pilot gate; UTC accuracy and restart/resume durability remain unverified. |
+| T04 | Complete bounded calibration: ten cells × one 30-second run, 10,800 scheduled=sent, zero drops/quality flags. FW oracle remains inconclusive; TB had no observed trace violations. [Worklog](../worklog/2026-10-19-calibration-next/README.md), evidence commit `9804dad`. |
+| T05 | Complete bounded calibration: 27 cells × one 10-second run, 43,200 valid sent, zero drops/flags in selected valid cells. One same-config replacement passed; original one-drop attempt and three interruptions are preserved. Backend-bounded near 190 successful requests/s at offered 250 RPS; no API-scaling/mode-win claim. [Worklog](../worklog/2026-10-19-calibration-next/T05-README.md), commit `34e72ba`. |
+| T06 | Complete focused Redis evidence: shared FW/TB quota, near-exhausted 8/10 then 16 concurrent requests with exactly 2 allowed, and forced non-atomic control. FW boundary crossing yields inconclusive. No natural race-frequency or HTTP-performance inference. [Worklog](../worklog/2026-10-19-atomicity/README.md), commit `3e938a2`. |
+| T07 | Incomplete. Preliminary capacity-4 healthy/outage batch preserved; stable recovery inconclusive because baseline overload persisted, and recorded status had an untracked observer directory. Cleanup/schema/healthy-gate fixes passed four mocked tests; capacity-10 live calibration and actual exporter smoke remain pending. [Worklog](../worklog/2026-10-19-outage/README.md), prepared code through `d3beb48`, evidence commit `30b6199` (separate feature commits). |
+| T08–T10 | Protocol unlocked, no formal benchmark or final analysis. Draft at [protocol-v1-draft](../experiments/protocol-v1-draft/manifest.json), commit `8f3ac27`, has planned cells but incomplete planned run/order/source/threshold integration. Network counters have 20 offline analyzer tests, no live validation; [worklog](../worklog/2026-10-19-network/README.md), commit `c8e339a`. |
+| T11–T13 | Report groundwork/reference update and saved-demo preparation only; final report/figures/slides/package await formal data. H01 remains learner-owned; H02 still needs official date/rubric. |
 
-T04 completed ten normal/burst cells, one 30-second calibration run each, in a clean clone pinned to `26b5decb835dbb136eb2d45b361920a414434f6b`. All 10,800 scheduled requests were sent, with zero drops or quality flags and no Redis limiter errors. Phase/class fidelity, counters and clock residuals passed. TB had no observed trace violations; FW remains inconclusive at partial windows. See the [T04 worklog](../worklog/2026-10-19-calibration-next/README.md). Its fresh 90-second observer recorded zero steps above 5 ms. This is calibration, not a formal comparative result.
+### Revision, preservation and checks
 
-T07 runner/schema preparation and two mocked lifecycle checks passed, integrated at `50fd2ad`; live outage calibration is now dispatched with the sole workload baton. See the [T07 worklog](../worklog/2026-10-19-outage/README.md). T05 is queued after that handoff. No T08 protocol lock or T09 formal benchmark has occurred. This entry records an active continuation, not a final cleanup checkpoint.
+T04/T05 measured clean detached `26b5decb835dbb136eb2d45b361920a414434f6b`; all 31 T05 attempt directories recorded that revision and empty status. T05 archive SHA-256: `22e571604c9e0db22cb77e21b30875962e1cb2c1893e5e2463935da07b5396dc`; all 1,042 original file hashes verified, with 31 identical generated binaries represented by one canonical binary plus a path/hash map. T04 archive SHA-256: `14559dc48602b4e301765ee7651766b173a31db0f4fd13744caf8f81efc21288`. All invalid/interrupted raw outputs are retained; the temporary checker syntax/signal-handling failures and delayed validation are recorded in the T05 package.
+
+T06 used source `26b5dec` plus the preserved test patch; the tested source checksum and real Redis `-race` command/output are in its worklog. T07 preliminary live revision was `9bf560378d4bf93305c146bed67dfbd84bbe4250` with the raw dirty status preserved; archive SHA-256 `b209d10074e72c7da9aa8f54d5eb86c8e5e53f9d9b92ed460d4da174ab2a6844`. A prior cold-build timeout attempt is separately archived. It is not a clean-checkout recovery pass.
+
+Commit preference: one feature/fix per commit; measurement evidence and progress checkpoints are separate. The bundled T07 commit was split into cleanup (`caa6fa7`), healthy gate (`68a2a31`), unique IDs (`b22626e`), case provenance (`d74e053`), healthy analysis (`7f003ac`), verification integration (`d3beb48`) and evidence (`30b6199`). Each intermediate code stage passed focused mocked tests and shell syntax; the resulting committed tree was byte-identical to the original snapshot before this progress update. Measurement revisions and raw files were unchanged.
+
+Focused checks: T04/T05 quality and archive inventories passed; real Redis atomicity race checks passed; four outage mocks plus shell syntax passed; 20 analyzer tests passed offline. Full verification, network live validation, final outage recovery and exporter smoke were not run after the prepared fixes. No application runtime code changed. No push.
+
+Workers confirmed no session-owned runner/loadgen/sampler process or container remains. The measurement clone `/tmp/project3-calibration-26b5dec` is retained clean, but durable evidence is in the tracked worklogs; it is not a prerequisite for the next session. Historical outage preparation clones may remain under `/tmp`; no live process depends on them. No unrelated services or clock configuration were changed in this continuation.
+
+### Next package, only after user resumption
+
+Resume **T07**, using a fresh clean checkout at the then-current fixed revision. Keep observer output outside the checkout (or ignored); repeat the 90-second observer if continuity/restart/resume is uncertain. Build and inspect before load. The planned isolation configuration is 2 APIs, Redis FW Q20/W1s, five legitimate keys, 100 total/20 legitimate RPS, backend capacity10/service50ms, 30 seconds, pause at 4s for 2s. Healthy and outage cases must match; the healthy gate stops before outage on errors/overload. Recovery remains 1.5 × healthy legitimate-success p95 chosen before its outage, 1s windows/min5/3 consecutive clean windows. First success is separate; unknown quota and partial FW remain inconclusive.
+
+After explicit resumption, an example invocation from that clean checkout is:
+
+```bash
+ALGORITHM=fixed-window LIMIT=20 WINDOW=1s CAPACITY=20 RATE=20 \
+BACKEND_CAPACITY=10 BACKEND_SERVICE_TIME=50ms OUTAGE_HOST_PORT=18107 \
+OUTAGE_DURATION=30 OUTAGE_RPS=100 OUTAGE_LEGIT_RPS=20 \
+OUTAGE_PAUSE_AT=4 OUTAGE_PAUSE_FOR=2 \
+bash scripts/redis-outage.sh artifacts/t07-recovery-NEW
+```
+
+Use a genuinely new output path; do not run this command during the pause. After load/cleanup, test the four case schemas with a small `report-study.py` smoke manifest (four distinct cells, one repetition each). Only then revisit T08: live-validate network sampling, complete manifest/order/source revision, and lock the recovery threshold before formal data. The draft and network preparation do not authorize T09.
 
 ## T02 live validation and bounded T03 gate — 2026-10-19
 
