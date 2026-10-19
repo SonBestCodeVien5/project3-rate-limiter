@@ -1,12 +1,34 @@
 # Session checkpoint
 
-## T07 explicitly resumed — 2026-10-19
+## T07 complete; paused before T08 — 2026-10-19
 
-The user explicitly requested completing T07 in this session, including its controlled Redis outage/recovery calibration and exporter validation, and asked to persist the one-feature/fix-per-commit rule in AGENTS.md (commit `7201e19`). This supersedes the T05 stop boundary below for T07 only. Use the recorded capacity-10 configuration and unchanged quality/recovery gates; preserve every attempt. Do not lock T08 or run T09. Root integrates feature fixes, evidence and progress as separate commits, updates this checkpoint, and stops after T07.
+The user explicitly resumed T07 in this session. Its bounded recovery calibration and actual exporter validation are complete; stop after this package. Do not dispatch T08/network live validation or T09 until the user resumes. This section supersedes the historical T05 stop boundary below. Provisional hand-in target remains mid-December 2026; official date/rubric remain unknown.
 
-## Paused after T05 — 2026-10-19
+### Result and provenance
 
-**Latest instruction:** finish T05, commit the existing work and full progress, then stop. T07 is deferred to another session. Do not dispatch another experiment, lock T08 or run T09 until the user resumes. The provisional planning target is **mid-December 2026**; the official submission/defense date and rubric remain unknown. This section supersedes earlier active-continuation and through-T07 boundaries.
+T07 measured at clean detached revision `09b1249a08adf441062f8f6918b771b5cb8852e8`: two APIs, Redis FW Q20/W1s, B20/r20, five legitimate keys, 100 total/20 legitimate RPS, 30s per case, backend capacity10/service50ms, pause requested at 4s for 2s, inflight200/request timeout2s. Matched healthy/outage cases ran for open and closed. The fresh 90s observer collected 1,792 samples with zero >5ms steps. Both healthy gates passed with 600/600 legitimate successes, zero drops/transport/timeouts/limiter errors/backend overload.
+
+All four cases sent 3,000/3,000 scheduled requests, zero drops; counters, trace/summary, images and class fidelity reconciled. Maximum class p95 lag was 1.382ms; scheduling/response clock residuals were 0.00161/0.00342ms. Recovery thresholds were fixed before each outage from its healthy p95: open 81.9048105ms, closed 82.577208ms. Stable recovery was observed at 4,000ms for both, using 1s/min5/3 consecutive clean windows; this is the window criterion, not first success. First legitimate success was 76.3ms open and 154.1ms closed. During the Redis-paused phase legitimate availability was 100% open and 0% closed; after unpause it was 100%/99.8%. Expected fallback/backend 5xx are outcomes, not generator faults. FW correctness remains inconclusive; these are single-run calibration observations, not formal RQ conclusions.
+
+The first exporter smoke exposed nullable `redis_resources` handling. A separate fix plus actual-export regression passed seven tests (`5e5282b`); the final smoke marked all four unchanged raw cases usable. Exporter revision: `5e5282ba2eb5b01c71256e2502382c0cacc9522e`, script SHA-256 `7f65921cbb1705f23d8643dad63f874ca74707848907b969be21d6cf5f5d157b`. Measurement revision remains `09b1249`; no workload was repeated for this offline fix. The failed and intermediate smoke outputs are preserved separately.
+
+[T07 recovery worklog](../worklog/2026-10-19-outage-recovery/README.md) links the summary, scoped checker, commands and self-contained archive. All 137 archived files verified; checker passed against extracted evidence. Archive SHA-256: `f350f395cb325f80d55be4ccc8d499b0fa06961f0b8950738c909a706cf6655f`. Checker commit `9b5ec28`; evidence commit `41d03a3`. The earlier capacity4 batch and dirty observer status remain unchanged historical evidence, not a recovery pass.
+
+### Status, checks and next gate
+
+T01–T03 current-session/pilot gates, T04/T05 bounded calibration, T06 focused atomicity evidence and T07 bounded recovery calibration are complete within their recorded limits. T08 is unlocked: network collection has only offline tests; planned runs/order/source revision/threshold integration remain incomplete. T09/T10 formal data/analysis are pending. T11 report groundwork and T12 demo preparation remain partial; T13 final slides/package and learner-owned H01/H02 remain pending.
+
+Commit discipline is now in [AGENTS.md](../../AGENTS.md), commit `7201e19`: one feature/fix with directly related tests per commit, evidence separate, progress separate, inspect staged scope, clean final worktree without deleting user/raw data. This continuation kept instruction, exporter fix, checker and evidence commits separate.
+
+Focused checks: actual four-case quality checker and exporter smoke passed; seven exporter tests passed; prior four runner mocks/shell syntax passed. Full verification, network live validation and formal benchmark were not run. UTC accuracy and clock restart/resume durability remain unverified. The outage runner has no Redis resource sampler, so those metrics remain unavailable rather than zero.
+
+Worker confirmed no owned containers/load processes or port18107 listener; the measurement clone remains clean at `/tmp/project3-t07-09b1249`. Raw scratch was `/tmp/project3-t07-recovery-09b1249`; durable evidence is tracked, so neither temporary path is needed to resume. No unrelated services or clock settings changed; no push.
+
+**Next package only on resumption:** T08 prerequisites: repeat clock observer if continuity is uncertain, live-validate the prepared network sampler, finish explicit manifest/order/source/retry/recovery rules and lock thresholds before any formal data. Do not rerun T07 merely because its postprocessing revision differs, or call the current draft a locked protocol. T09 follows only after T08 is locked.
+
+## Historical checkpoint: paused after T05 — 2026-10-19
+
+**Instruction at that checkpoint:** finish T05, commit the existing work and full progress, then stop. T07 is deferred to another session. Do not dispatch another experiment, lock T08 or run T09 until the user resumes. The provisional planning target is **mid-December 2026**; the official submission/defense date and rubric remain unknown. This section supersedes earlier active-continuation and through-T07 boundaries.
 
 | Task | Current evidence / next gate |
 | --- | --- |

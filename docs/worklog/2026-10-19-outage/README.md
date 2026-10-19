@@ -1,6 +1,6 @@
 # T07 Redis outage calibration — 2026-10-19
 
-**Paused, T07 incomplete:** the user requested finishing T05 and committing, then deferring T07 to another session. The capacity-10 follow-up and actual exporter smoke check have not run. Prepared fixes below passed focused mocks only.
+**Historical preliminary checkpoint:** the user initially stopped after T05. The capacity-10 follow-up and actual exporter smoke have since completed; see the [T07 recovery worklog](../2026-10-19-outage-recovery/README.md). The capacity-4 results and recorded status below remain unchanged historical evidence.
 
 ## Result
 

@@ -1,8 +1,8 @@
 # Điều kiện chuyển sang đo chính thức — 13/10/2026
 
-**Chưa khóa protocol, chưa chạy benchmark chính thức. Phiên đã dừng sau T05 theo yêu cầu người dùng; T07 để phiên sau.** Không tự động tiếp tục thí nghiệm trước khi người dùng yêu cầu. Đây là kết luận về môi trường thí nghiệm, không thay yêu cầu Roadmap/Proposal hoặc lịch do giảng viên duyệt. [Protocol ứng viên](PROTOCOL_CANDIDATE.md) vẫn là bản đề xuất.
+**Chưa khóa protocol, chưa chạy benchmark chính thức. T07 đã hoàn tất bounded calibration; phiên dừng trước T08.** Không tự động tiếp tục thí nghiệm trước khi người dùng yêu cầu. Đây là kết luận về môi trường thí nghiệm, không thay yêu cầu Roadmap/Proposal hoặc lịch do giảng viên duyệt. [Protocol ứng viên](PROTOCOL_CANDIDATE.md) vẫn là bản đề xuất.
 
-**Cập nhật 19/10/2026:** T01 ổn định trong phiên hiện tại. Observer mới không ghi nhận step >5 ms; sau đó bounded gate T03 hoàn tất cả sáu lượt normal/mixed, không có quality flag hay generator drop. Xem [T02/T03 worklog](../worklog/2026-10-19-measurement-gate/README.md). Oracle Fixed Window vẫn inconclusive do window chỉ quan sát một phần. T04 normal/burst và T05 scaling calibration đã hoàn tất, T06 tests atomicity đã đạt; T07 recovery calibration còn thiếu. Gate/calibration không khóa protocol hoặc thay benchmark chính thức.
+**Cập nhật 19/10/2026:** T01 ổn định trong phiên hiện tại. Observer mới không ghi nhận step >5 ms; sau đó bounded gate T03 hoàn tất cả sáu lượt normal/mixed, không có quality flag hay generator drop. Xem [T02/T03 worklog](../worklog/2026-10-19-measurement-gate/README.md). Oracle Fixed Window vẫn inconclusive do window chỉ quan sát một phần. T04 normal/burst và T05 scaling calibration đã hoàn tất, T06 tests atomicity đã đạt; T07 capacity10 recovery calibration và exporter smoke cũng đã hoàn tất. Gate/calibration không khóa protocol hoặc thay benchmark chính thức.
 
 ## Điều đã kiểm chứng
 
@@ -22,7 +22,7 @@
 | Burst/refill và biên FW | **T04 calibration đạt:** 10 normal/burst cells, mỗi cell 1 lượt 30 giây, zero drop/quality flag; [evidence](../worklog/2026-10-19-calibration-next/README.md). FW vẫn inconclusive ở partial windows; không có đồng bộ sát biên, nên không kết luận burst tại biên hoặc hiệu năng chính thức từ một lượt. |
 | Scaling1/2/4 và tải dưới/gần/trên ngưỡng | **T05 calibration đạt:** 27 valid cells, 43.200 sent; một drop được thay cùng cấu hình và ba interruptions được giữ. 0 429/limiter errors trong valid runs, quota headroom; backend giới hạn khoảng 190 success/s ở 250 RPS. [Evidence](../worklog/2026-10-19-calibration-next/T05-README.md); không kết luận API scaling hoặc mode thắng từ các lượt đơn. |
 | Concurrent gần cạn / atomicity control | **T06 hoàn tất:** tests Redis thật shared quota và gần cạn cho FW/TB đạt; đối chứng non-atomic ép race. [Evidence](../worklog/2026-10-19-atomicity/README.md) ghi harness, checksum và giới hạn; không suy tần suất race tự nhiên hoặc hiệu năng HTTP. |
-| Outage/recovery | **T07 chưa đạt:** preliminary capacity4 baseline overload, recovery inconclusive và recorded dirty observer status. Fix cleanup/schema/healthy gate đạt 4 mocked tests; còn live matched capacity10 cases + exporter smoke. [Evidence và bước tiếp](../worklog/2026-10-19-outage/README.md). First success không thay stable recovery. |
+| Outage/recovery | **T07 calibration đạt:** 4 clean-revision capacity10 cases × 30s, zero drops, healthy gates đạt, stable recovery 4s theo 1s/min5/3 windows; exporter smoke 4/4 usable với null-resource fix riêng. [Evidence](../worklog/2026-10-19-outage-recovery/README.md). FW correctness vẫn inconclusive; first success riêng; một lượt mỗi policy/phase không thay benchmark chính thức. |
 | Network counters | [Chuẩn bị](../worklog/2026-10-19-network/README.md) qua 20 tests offline; chưa live-validate. Tổng byte gồm sampler/admin, không phải limiter bytes/request hay wire overhead. |
 | Protocol/manifest khóa | Chưa thực hiện vì các điều kiện trên. Chốt Q/W/B/r, tải, cold-start/warm-up, repetitions, validity/exclusion, thứ tự chạy và recovery sau calibration hợp lệ. |
 
@@ -31,7 +31,7 @@ Clock jump không chỉ ảnh hưởng deadline Redis: server dùng wall time ch
 ## Thứ tự tiếp tục
 
 1. Giữ nguyên giới hạn clock và chạy lại observer trước phép đo live nếu không rõ tính liên tục của phiên; không sửa timestamp để che step.
-2. Chỉ sau khi người dùng tiếp tục: hoàn tất T07 capacity10 recovery + exporter smoke, rồi live-validate network counters; giữ mọi lượt lỗi cùng quality flag.
+2. Chỉ sau khi người dùng tiếp tục: live-validate network counters đã chuẩn bị; giữ mọi lượt lỗi cùng quality flag. T04–T07 đã đạt các đầu ra calibration/test có giới hạn, không chạy lại nếu chưa có finding mới.
 3. Khóa protocol có version và manifest **trước** benchmark chính thức.
 4. Chạy manifest tuần tự, giữ raw/config/counter/image/checksum và lượt lỗi; sau đó tạo bảng/hình tái lập và kết luận RQ có giới hạn rõ.
 
