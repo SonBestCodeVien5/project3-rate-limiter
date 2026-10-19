@@ -60,6 +60,7 @@ lab_sample() {
     date -u +%Y-%m-%dT%H:%M:%S.%NZ
     compose_timeout 5s exec -T redis redis-cli INFO cpu
     compose_timeout 5s exec -T redis redis-cli INFO memory
+    compose_timeout 5s exec -T redis redis-cli INFO stats
     sleep 1
   done >"$case_dir/redis-resources.log" 2>&1 &
   LAB_SAMPLE_PID=$!

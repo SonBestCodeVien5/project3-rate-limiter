@@ -32,6 +32,36 @@ def row(index, ms, decision="allow", instance="api1", klass="legitimate", sent=T
 
 
 class AnalyzerTest(unittest.TestCase):
+    def test_redis_network_counter_deltas_and_resets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "redis-resources.log"
+            path.write_text("2026-10-11T00:00:00Z\ntotal_net_input_bytes:100\ntotal_net_output_bytes:500\n"
+                            "2026-10-11T00:00:02Z\ntotal_net_input_bytes:160\ntotal_net_output_bytes:450\n")
+            result = analyze.redis_resources(path)
+            self.assertEqual(result["network_input_bytes_delta"], 60)
+            self.assertEqual(result["network_input_bytes_per_second"], 30)
+            self.assertIsNone(result["network_output_bytes_delta"])
+
+    def test_redis_network_intermediate_reset_invalidates_delta(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "redis-resources.log"
+            path.write_text("2026-10-11T00:00:00Z\ntotal_net_input_bytes:100\n"
+                            "2026-10-11T00:00:01Z\ntotal_net_input_bytes:10\n"
+                            "2026-10-11T00:00:02Z\ntotal_net_input_bytes:200\n")
+            result = analyze.redis_resources(path)
+            self.assertEqual(result["network_input_status"], "inconclusive")
+            self.assertIsNone(result["network_input_bytes_delta"])
+            self.assertIsNone(result["network_input_bytes_per_second"])
+
+    def test_redis_network_missing_sample_is_incomplete(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "redis-resources.log"
+            path.write_text("2026-10-11T00:00:00Z\ntotal_net_input_bytes:100\n"
+                            "2026-10-11T00:00:01Z\n")
+            result = analyze.redis_resources(path)
+            self.assertEqual(result["network_input_status"], "incomplete")
+            self.assertIsNone(result["network_input_bytes_delta"])
+
     def test_fixed_window_definite_overshoot_even_partial(self):
         result = analyze.oracle([row(i, 100 + i) for i in range(3)], policy())
         self.assertEqual(result["violations"][0]["observed_overshoot_lower_bound"], 1)

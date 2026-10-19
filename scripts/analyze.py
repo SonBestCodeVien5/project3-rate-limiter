@@ -344,7 +344,7 @@ def redis_resources(path):
             current = {"at": line.strip()}
             timestamp(line.strip())
         elif current is not None:
-            match = re.match(r"^(used_cpu_sys|used_cpu_user|used_memory|used_memory_rss):([\d.]+)$", line)
+            match = re.match(r"^(used_cpu_sys|used_cpu_user|used_memory|used_memory_rss|total_net_input_bytes|total_net_output_bytes):([\d.]+)$", line)
             if match:
                 current[match[1]] = float(match[2])
     if current:
@@ -360,6 +360,23 @@ def redis_resources(path):
         cpu = last["used_cpu_sys"] + last["used_cpu_user"] - first["used_cpu_sys"] - first["used_cpu_user"]
         result["cpu_seconds_delta"] = cpu
         result["average_cpu_cores"] = cpu / elapsed if cpu >= 0 else None
+    for key, label in (("total_net_input_bytes", "input"), ("total_net_output_bytes", "output")):
+        available = [s[key] for s in snapshots if key in s]
+        if len(available) != len(snapshots):
+            result[f"network_{label}_status"] = "incomplete"
+            result[f"network_{label}_reason"] = "counter missing from one or more Redis resource samples"
+            result[f"network_{label}_bytes_delta"] = None
+            result[f"network_{label}_bytes_per_second"] = None
+        elif any(b < a for a, b in zip(available, available[1:])):
+            result[f"network_{label}_status"] = "inconclusive"
+            result[f"network_{label}_reason"] = "counter decreased between samples, indicating reset or discontinuity"
+            result[f"network_{label}_bytes_delta"] = None
+            result[f"network_{label}_bytes_per_second"] = None
+        elif len(available) >= 2:
+            delta = last[key] - first[key]
+            result[f"network_{label}_status"] = "observed"
+            result[f"network_{label}_bytes_delta"] = delta if delta >= 0 else None
+            result[f"network_{label}_bytes_per_second"] = delta / elapsed if delta >= 0 and elapsed > 0 else None
     return result
 
 
