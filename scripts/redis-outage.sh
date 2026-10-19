@@ -56,7 +56,8 @@ PY
     timeout 10s docker image inspect --format '{{json .RepoDigests}} {{.Id}}' redis:7.4.2-alpine nginx:1.28.0-alpine >"$CASE_DIR/base-image-digests.txt"
     for service_name in backend api1 api2; do compose 10s exec -T "$service_name" wget -q -O - http://127.0.0.1:8080/metrics >"$CASE_DIR/$service_name-before.json"; done
     if [[ $phase == healthy ]]; then load_duration=$duration; else load_duration=$duration; fi
-    args=(-target "http://127.0.0.1:$PORT/work" -duration "${load_duration}s" -rps "$rps" -legitimate-rps "$legit" -legitimate-clients 5 -max-inflight 200 -timeout 2s -run-id "$policy-$phase" -out "$CASE_DIR/load" -mode redis -algorithm "$algo" -fail-policy "$policy")
+    run_id="t07-$(date -u +%Y%m%dT%H%M%S)-$$-$policy-$phase"
+    args=(-target "http://127.0.0.1:$PORT/work" -duration "${load_duration}s" -rps "$rps" -legitimate-rps "$legit" -legitimate-clients 5 -max-inflight 200 -timeout 2s -run-id "$run_id" -out "$CASE_DIR/load" -mode redis -algorithm "$algo" -fail-policy "$policy")
     timeout "$((duration + 20))s" "$OUT/loadgen" "${args[@]}" >"$CASE_DIR/loadgen.log" 2>&1 & LOAD_PID=$!
     for attempt in {1..200}; do [[ -f "$CASE_DIR/load/metadata.json" ]] && break; kill -0 "$LOAD_PID" 2>/dev/null || { wait "$LOAD_PID"; LOAD_PID=; exit 1; }; sleep .05; done
     [[ -f "$CASE_DIR/load/metadata.json" ]] || { echo 'Loadgen did not start' >&2; exit 1; }
