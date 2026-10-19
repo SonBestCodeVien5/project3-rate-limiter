@@ -1,0 +1,66 @@
+[
+    {
+        "Id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+        "RepoTags": [
+            "redis:7.4.2-alpine"
+        ],
+        "RepoDigests": [
+            "redis@sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-01-06T16:14:31Z",
+        "Config": {
+            "ExposedPorts": {
+                "6379/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.17",
+                "REDIS_VERSION=7.4.2",
+                "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-7.4.2.tar.gz",
+                "REDIS_DOWNLOAD_SHA=4ddebbf09061cbb589011786febdb34f29767dd7f89dbe712d2b68e808af6a1f"
+            ],
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "Cmd": [
+                "redis-server"
+            ],
+            "Volumes": {
+                "/data": {}
+            },
+            "WorkingDir": "/data"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 17238094,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:08000c18d16dadf9553d747a58cf44023423a9ab010aab96cf263d2216b8b350",
+                "sha256:8e7fb94f38271eff7a7a7bdcc35bfe44bdafd6a3b8fb1440f08c1e118d16bde3",
+                "sha256:4364ea111b97ea1d2e09c0f8e560e024b48836eb31797e01fc2a1b258eee6e05",
+                "sha256:234600d36ef67257422e96836175d7442a3457bea0e5d8142e8c38f931101e75",
+                "sha256:def9013b2f988109b6afe46c1c6a4c7f71fb8c5e8839ef867e28ed58fa26dcc0",
+                "sha256:9854cb3a240e484a0f1013d5a3dce703dda3d38d964b7608964c27fd033b8fdd",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:a2d2f15d144d6d5beb84d80a7da0af41862298dfb3d9e7b4d7d73de55b9449f1"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-11T02:35:57.48941643Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+            "size": 10245
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/library/redis"
+                }
+            ]
+        }
+    }
+]

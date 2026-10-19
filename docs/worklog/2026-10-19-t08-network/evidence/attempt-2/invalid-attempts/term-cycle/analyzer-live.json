@@ -1,0 +1,17 @@
+{
+  "status": "observed",
+  "samples": 2,
+  "elapsed_seconds": 3.243436813354492,
+  "memory_bytes_first": 1034104.0,
+  "memory_bytes_last": 1034104.0,
+  "rss_bytes_first": 8921088.0,
+  "rss_bytes_last": 8921088.0,
+  "cpu_seconds_delta": 0.022041000000000005,
+  "average_cpu_cores": 0.0067955694124357926,
+  "network_input_status": "observed",
+  "network_input_bytes_delta": 102.0,
+  "network_input_bytes_per_second": 31.44812304652469,
+  "network_output_status": "observed",
+  "network_output_bytes_delta": 3387.0,
+  "network_output_bytes_per_second": 1044.2626741037168
+}

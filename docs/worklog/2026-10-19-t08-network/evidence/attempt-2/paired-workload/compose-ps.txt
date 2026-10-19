@@ -1,0 +1,6 @@
+NAME                                IMAGE                             COMMAND                  SERVICE   CREATED         STATUS                   PORTS
+project3-t08-validation-api1-1      project3-t08-validation-api1      "/server"                api1      7 seconds ago   Up 4 seconds (healthy)   127.0.0.1:18081->8080/tcp
+project3-t08-validation-api2-1      project3-t08-validation-api2      "/server"                api2      7 seconds ago   Up 4 seconds (healthy)   127.0.0.1:18082->8080/tcp
+project3-t08-validation-backend-1   project3-t08-validation-backend   "/server"                backend   7 seconds ago   Up 6 seconds (healthy)   127.0.0.1:18083->8080/tcp
+project3-t08-validation-nginx-1     nginx:1.28.0-alpine               "/docker-entrypoint.…"   nginx     7 seconds ago   Up 1 second              80/tcp, 127.0.0.1:8080->8080/tcp
+project3-t08-validation-redis-1     redis:7.4.2-alpine                "docker-entrypoint.s…"   redis     7 seconds ago   Up 6 seconds (healthy)   127.0.0.1:16379->6379/tcp

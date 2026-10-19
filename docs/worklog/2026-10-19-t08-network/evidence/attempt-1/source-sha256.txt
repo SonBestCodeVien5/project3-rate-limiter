@@ -1,0 +1,3 @@
+d5616f37e62348225004f5d7a547a395095159be390911b3b1a6fe83970c96c2  /tmp/project3-t08-fixed/scripts/lab-common.sh
+90af35de26834f3ae82885f75032a62b4158ddf925ef2bba79af098c93983dca  /tmp/project3-t08-fixed/scripts/analyze.py
+7031ecb5b0d3e92718467e6e269446420aee4b8d076ef60e8886aa4d7a7cc954  /tmp/project3-t08-fixed/scripts/test_analyze.py

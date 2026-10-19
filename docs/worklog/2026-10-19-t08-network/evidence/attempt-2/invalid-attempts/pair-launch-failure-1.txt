@@ -1,0 +1,1 @@
+Initial paired-run launcher failed before sourcing the runner or starting a workload: outer shell quoting split the embedded completion message, producing a bad source path. No load, API request, or resource cleanup action occurred.

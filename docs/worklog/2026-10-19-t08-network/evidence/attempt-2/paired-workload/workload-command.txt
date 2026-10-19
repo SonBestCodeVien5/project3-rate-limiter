@@ -1,0 +1,3 @@
+Sampler off:
+/tmp/project3-t08-loadgen-b -target http://127.0.0.1:8080/work -duration 10s -rps 20 -legitimate-rps 20 -legitimate-clients 5 -max-inflight 100 -timeout 2s -run-id t08-sampler-off -out <OUT>/load-off -mode redis -algorithm fixed-window -fail-policy closed -profile normal
+Sampler on: same flags with run-id t08-sampler-on and out <OUT>/load-on

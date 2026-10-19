@@ -1,0 +1,10 @@
+measurement_revision=b090d2b7391db873a0a2bbe602321ed1f5a55691
+checkout=/tmp/project3-t08-fixed-b
+checkout_git_status=clean
+observer=continuous from the fresh 90s observer in attempt-1; same uninterrupted active session, so it was not repeated solely for the source fix
+compose_project=project3-t08-validation
+redis_image=redis:7.4.2-alpine
+redis_engine=29.3.1
+compose=5.1.1
+load_generator=/tmp/project3-t08-loadgen-b
+loadgen_sha256=96b17a9cff820a2d247edb46020c64a3a9fe7742551e3ce665b6005f4654d806
