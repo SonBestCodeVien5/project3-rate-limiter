@@ -1,0 +1,279 @@
+{
+  "revision": "09b1249a08adf441062f8f6918b771b5cb8852e8",
+  "config": {
+    "algorithm": "fixed-window",
+    "Q": 20,
+    "W_ms": 1000,
+    "B": 20,
+    "r": 20,
+    "api_instances": 2,
+    "legitimate_keys": 5,
+    "total_rps": 100,
+    "legitimate_rps": 20,
+    "duration_seconds": 30,
+    "backend_capacity": 10,
+    "backend_service_time": "50ms",
+    "pause_at_seconds": 4,
+    "pause_for_seconds": 2,
+    "recovery_threshold": "1.5x healthy legitimate-success p95",
+    "recovery_window_ms": 1000,
+    "recovery_min_samples": 5,
+    "recovery_consecutive": 3
+  },
+  "policies": [
+    {
+      "policy": "open",
+      "cases": {
+        "healthy": {
+          "run_id": "t07-20261019T124613-6293-open-healthy",
+          "scheduled": 3000,
+          "sent": 3000,
+          "drops": 0,
+          "http_2xx": 1200,
+          "http_429": 1800,
+          "http_5xx": 0,
+          "legitimate_sent": 600,
+          "legitimate_successful": 600,
+          "fidelity": {
+            "legitimate": {
+              "target_rps": 20,
+              "actual_wall_phase_rps": 20.0,
+              "p95_schedule_lag_ms": 1.304361
+            },
+            "abusive": {
+              "target_rps": 80,
+              "actual_wall_phase_rps": 80.0,
+              "p95_schedule_lag_ms": 1.242892
+            }
+          },
+          "max_schedule_clock_residual_ms": 0.0011247926025390598,
+          "max_latency_clock_residual_ms": 0.003419091918945405,
+          "backend": {
+            "arrivals": 1200,
+            "success": 1200,
+            "overload": 0,
+            "canceled": 0
+          },
+          "api_limiter_errors": 0,
+          "oracle_status": "inconclusive"
+        },
+        "outage": {
+          "run_id": "t07-20261019T124704-6293-open-outage",
+          "scheduled": 3000,
+          "sent": 3000,
+          "drops": 0,
+          "http_2xx": 1393,
+          "http_429": 1600,
+          "http_5xx": 7,
+          "legitimate_sent": 600,
+          "legitimate_successful": 600,
+          "fidelity": {
+            "legitimate": {
+              "target_rps": 20,
+              "actual_wall_phase_rps": 20.0,
+              "p95_schedule_lag_ms": 1.313508
+            },
+            "abusive": {
+              "target_rps": 80,
+              "actual_wall_phase_rps": 80.0,
+              "p95_schedule_lag_ms": 1.24222
+            }
+          },
+          "max_schedule_clock_residual_ms": 0.001606654052734413,
+          "max_latency_clock_residual_ms": 0.0014703840332046525,
+          "backend": {
+            "arrivals": 1400,
+            "success": 1393,
+            "overload": 7,
+            "canceled": 0
+          },
+          "api_limiter_errors": 254,
+          "oracle_status": "inconclusive",
+          "recovery_threshold_ms": 81.9048105,
+          "recovery": {
+            "first_legitimate_success_after_unpause_ms": 76.3089656829834,
+            "stable_recovery_ms": 4000,
+            "status": "observed"
+          },
+          "availability_by_send_phase": {
+            "after": 1.0,
+            "before": 1.0,
+            "outage": 1.0,
+            "pausing": 1.0,
+            "unpausing": 1.0
+          },
+          "events_utc": {
+            "pause_completed": "2026-10-19T12:47:09.274774+00:00",
+            "pause_requested": "2026-10-19T12:47:08.779535+00:00",
+            "unpause_completed": "2026-10-19T12:47:11.867752+00:00",
+            "unpause_requested": "2026-10-19T12:47:11.280230+00:00"
+          },
+          "full_post_unpause_windows": 22
+        }
+      }
+    },
+    {
+      "policy": "closed",
+      "cases": {
+        "healthy": {
+          "run_id": "t07-20261019T124754-6293-closed-healthy",
+          "scheduled": 3000,
+          "sent": 3000,
+          "drops": 0,
+          "http_2xx": 1220,
+          "http_429": 1780,
+          "http_5xx": 0,
+          "legitimate_sent": 600,
+          "legitimate_successful": 600,
+          "fidelity": {
+            "legitimate": {
+              "target_rps": 20,
+              "actual_wall_phase_rps": 20.0,
+              "p95_schedule_lag_ms": 1.332932
+            },
+            "abusive": {
+              "target_rps": 80,
+              "actual_wall_phase_rps": 80.0,
+              "p95_schedule_lag_ms": 1.274195
+            }
+          },
+          "max_schedule_clock_residual_ms": 0.0009581745605469205,
+          "max_latency_clock_residual_ms": 0.0010711380615262556,
+          "backend": {
+            "arrivals": 1220,
+            "success": 1220,
+            "overload": 0,
+            "canceled": 0
+          },
+          "api_limiter_errors": 0,
+          "oracle_status": "inconclusive"
+        },
+        "outage": {
+          "run_id": "t07-20261019T124848-6293-closed-outage",
+          "scheduled": 3000,
+          "sent": 3000,
+          "drops": 0,
+          "http_2xx": 1117,
+          "http_429": 1595,
+          "http_5xx": 288,
+          "legitimate_sent": 600,
+          "legitimate_successful": 542,
+          "fidelity": {
+            "legitimate": {
+              "target_rps": 20,
+              "actual_wall_phase_rps": 20.0,
+              "p95_schedule_lag_ms": 1.381907
+            },
+            "abusive": {
+              "target_rps": 80,
+              "actual_wall_phase_rps": 80.0,
+              "p95_schedule_lag_ms": 1.248977
+            }
+          },
+          "max_schedule_clock_residual_ms": 0.001227100097656253,
+          "max_latency_clock_residual_ms": 0.0011339187011714102,
+          "backend": {
+            "arrivals": 1122,
+            "success": 1117,
+            "overload": 5,
+            "canceled": 0
+          },
+          "api_limiter_errors": 283,
+          "oracle_status": "inconclusive",
+          "recovery_threshold_ms": 82.577208,
+          "recovery": {
+            "first_legitimate_success_after_unpause_ms": 154.1309356689453,
+            "stable_recovery_ms": 4000,
+            "status": "observed"
+          },
+          "availability_by_send_phase": {
+            "after": 0.9977324263038548,
+            "before": 1.0,
+            "outage": 0.0,
+            "pausing": 0.9047619047619048,
+            "unpausing": 0.11764705882352941
+          },
+          "events_utc": {
+            "pause_completed": "2026-10-19T12:48:53.687744+00:00",
+            "pause_requested": "2026-10-19T12:48:52.667478+00:00",
+            "unpause_completed": "2026-10-19T12:48:56.532105+00:00",
+            "unpause_requested": "2026-10-19T12:48:55.695933+00:00"
+          },
+          "full_post_unpause_windows": 22
+        }
+      }
+    }
+  ],
+  "observer_preload": {
+    "samples": 1792,
+    "elapsed_monotonic_seconds": 90.00018539,
+    "elapsed_wall_seconds": 90.000185867,
+    "clock_steps_above_5ms": [],
+    "max_read_span_us": 123.876,
+    "threshold_ms": 5
+  },
+  "post_run_cleanup": {
+    "compose_project": "project3-outage-6293",
+    "containers_remaining": 0,
+    "host_port_18107_listener": false,
+    "load_process_remaining": false,
+    "measurement_clone": "/tmp/project3-t07-09b1249",
+    "clone_revision": "09b1249a08adf441062f8f6918b771b5cb8852e8",
+    "clone_git_status": "clean"
+  },
+  "report_study_smoke": {
+    "manifest": "artifacts/t07-recovery-09b1249/smoke-manifest.json",
+    "rows": [
+      {
+        "cell": "open-healthy",
+        "run_id": "t07-20261019T124613-6293-open-healthy",
+        "tooling_validity": "usable",
+        "oracle_status": "inconclusive",
+        "quality_flags": "",
+        "stable_recovery_ms": "",
+        "recovery_status": "not_applicable"
+      },
+      {
+        "cell": "open-outage",
+        "run_id": "t07-20261019T124704-6293-open-outage",
+        "tooling_validity": "usable",
+        "oracle_status": "inconclusive",
+        "quality_flags": "http_5xx_observed;limiter_errors_observed",
+        "stable_recovery_ms": "4000",
+        "recovery_status": "observed"
+      },
+      {
+        "cell": "closed-healthy",
+        "run_id": "t07-20261019T124754-6293-closed-healthy",
+        "tooling_validity": "usable",
+        "oracle_status": "inconclusive",
+        "quality_flags": "",
+        "stable_recovery_ms": "",
+        "recovery_status": "not_applicable"
+      },
+      {
+        "cell": "closed-outage",
+        "run_id": "t07-20261019T124848-6293-closed-outage",
+        "tooling_validity": "usable",
+        "oracle_status": "inconclusive",
+        "quality_flags": "http_5xx_observed;limiter_errors_observed",
+        "stable_recovery_ms": "4000",
+        "recovery_status": "observed"
+      }
+    ],
+    "all_tooling_usable": true,
+    "exporter_revision": "5e5282ba2eb5b01c71256e2502382c0cacc9522e",
+    "exporter_script_sha256": "7f65921cbb1705f23d8643dad63f874ca74707848907b969be21d6cf5f5d157b",
+    "command": "python3 scripts/report-study.py /tmp/project3-t07-recovery-09b1249/smoke-manifest.json --output /tmp/project3-t07-recovery-09b1249/report-study-smoke-final"
+  },
+  "pre_fix_exporter_failure": {
+    "attempt_output": "artifacts/t07-recovery-09b1249/report-study-smoke/",
+    "finding": "report-study.py read_run dereferenced null analysis.redis_resources; smoke rows invalid with malformed_evidence:AttributeError",
+    "fixed_revision": "5e5282ba2eb5b01c71256e2502382c0cacc9522e"
+  },
+  "preliminary_dirty_observer_batch": {
+    "preserved_separately": "../2026-10-19-outage/t07-outage-live-9bf5603.tar.gz",
+    "limitation": "recorded git-status includes untracked clock-observer-pre-outage/; not modified"
+  },
+  "loadgen_binary_sha256": "ebe669fc43e841900b35b46b20d1097b1a3aec6059f67efecdfbf701619def5d"
+}

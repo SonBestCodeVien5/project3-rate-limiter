@@ -1,0 +1,11 @@
+Measurement build and runtime checks:
+- Clean detached checkout at 09b1249a08adf441062f8f6918b771b5cb8852e8; `git status --porcelain` empty before measurement and remained clean.
+- `go build -o /tmp/project3-t07-loadgen-09b1249 ./cmd/loadgen` passed; executable SHA-256 is recorded in `artifacts/t07-recovery-09b1249/run-config.json`.
+- Fresh 90-second observer: 1,792 samples, zero wall/monotonic steps above 5ms.
+- Four actual live runs completed; runner health gates passed before both matching Redis-pause cases.
+- `python3 check_t07.py <raw-run-root> /tmp/t07-summary.json` passed counter, fidelity, latency-lag, clock-residual, transition, recovery, image, and matched-config assertions for all cases.
+- Actual `scripts/report-study.py` smoke, after exporter commit 5e5282ba2eb5b01c71256e2502382c0cacc9522e, returned four `tooling_validity=usable` rows. Outage fallback/5xx appear as warnings, not invalidity.
+- `PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_report_study.py`: 7 tests passed after exporter fix.
+- T07 preparation checks: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_redis_outage.py`: 4 tests passed; `bash -n scripts/redis-outage.sh` and `git diff --check` passed before measurement.
+- Read-only cleanup check after run: no containers, process, or listener on port 18107; detached measurement checkout remains clean.
+- The full project verification suite was not rerun. The generic healthy-only quality checker was not applied to outage cases because it treats outage limiter errors as healthy Redis errors; the T07 checker explicitly accepts intended fail-open/fail-closed behavior while validating all data-quality invariants.
