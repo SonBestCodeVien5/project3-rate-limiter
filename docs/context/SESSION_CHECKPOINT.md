@@ -1,8 +1,18 @@
 # Session checkpoint
 
-## Resumption — 2026-10-19
+## T01 remediation result — 2026-10-19
 
-**Current stop boundary:** the user requested stopping after the clock test and committing because the session was too long. The 90 s isolation below is complete, timesyncd was restored active, and no persistent remediation or post-fix T01 pass occurred. Work is paused; do not run further diagnosis, source changes or experiments until the user resumes. Earlier technical authorization remains historical scope, not permission to continue past this explicit stop.
+The user explicitly resumed T01, authorized the narrow single-controller change and requested stopping after validation/checkpoint evidence. At revision `f12170c06e27ee3740ce103136f286bd7f4aba7d`, native Ubuntu WSL `systemd-timesyncd` was active+enabled and was persistently disabled with `systemctl disable --now systemd-timesyncd`; final state is inactive+disabled. Before-state and effective unit/drop-in are preserved as `state-before.txt` inside the [tracked evidence archive](../worklog/2026-10-19-clock-remediation/evidence.tar.gz); its SHA256 is `28f85cd984b317384748baba7cbf2518e84d17dd3c418643080e140d374b2655`. Exact rollback: `systemctl enable --now systemd-timesyncd`. The packaged WSL drop-in says timesyncd provides host-resume synchronization; restart/resume was not tested.
+
+After settling, WSL system Chrony selected `#* PHC0`, stratum 1, reach 377, leap Normal, remaining correction 1 ns, root dispersion 2.65 ms, estimated source error ±2.614 ms. `scripts/observe-clock.py` ran 90.0002 seconds/1,789 samples with zero >5 ms adjacent wall-minus-monotonic steps; elapsed wall/monotonic ratio was 0.9999999805. Concurrent MONOTONIC/RAW endpoint ratio was 0.9999998935. **T01 current-session stability passes.** It does not establish absolute UTC accuracy, startup/resume durability, or long-term stability.
+
+Windows service state was left unchanged: W32Time Stopped/Manual. Read-only packet-info stripcharts to time.windows.com and time.cloudflare.com independently reported Windows UTC about 4.05 s behind both endpoints (RTT about 29–39 ms). This is a separate UTC accuracy risk, not evidence of the WSL step mechanism; no Windows startup or clock settings changed. The WSL system Chrony source list showed only PHC0 even though `/etc/chrony.conf` lists `server time.windows.com`, so external UTC anchoring remains unverified. No T03 or benchmark ran. The optional `/usr/bin/adjtimex` final read was unavailable because that binary is absent.
+
+Tracked raw evidence archive and checksums: [evidence.tar.gz](../worklog/2026-10-19-clock-remediation/evidence.tar.gz), [SHA256SUMS](../worklog/2026-10-19-clock-remediation/SHA256SUMS); archive SHA256 `029f1468cbde768fd6e395852a78c3e29bdfa5758db5a255bd6840a561890832`. Human-readable handoff: [T01 worklog](../worklog/2026-10-19-clock-remediation/README.md). T02 live gate validation remains pending; do not proceed to T03 until its gate is satisfied. The package is ready for root to commit; after that commit, work remains paused until the user requests resumption.
+
+## Historical state before the authorized T01 remediation — 2026-10-19
+
+The following entries preserve the checkpoint as it stood before the user authorized the remediation recorded above. At that time, the 90 s isolation had completed, timesyncd was restored active, and there was no persistent remediation or post-fix T01 pass. The current stop boundary and resulting T01 status are recorded above.
 
 Latest evidence and restart prerequisites: [clock-source handoff](../worklog/2026-10-19-clock-fix-resume/README.md), with verified archive/checksum manifest. That handoff distinguishes direct writer attribution from inferred WSL namespace identity.
 

@@ -4,7 +4,7 @@
 
 Nguồn yêu cầu: [Roadmap](context/sources/00_Project3_Roadmap.md) > [Proposal](context/sources/01_Project3_Proposal.md). Các tham số, ma trận và cách điều phối dưới đây là lựa chọn kỹ thuật/đề xuất, chưa phải protocol đã khóa hoặc yêu cầu được giảng viên duyệt. [Checkpoint](context/SESSION_CHECKPOINT.md) ghi phần đã xong; [readiness](experiments/PROTOCOL_READINESS.md) ghi điều kiện chưa đạt.
 
-**Kết quả tiếp tục ngày 19/10:** T01 vẫn chưa đạt (ba bước nhảy realtime khoảng 2,93–2,96 giây trong 90 giây); không chạy T03. T02 đã chuẩn bị helper portable và qua bốn self-check, chưa kiểm chứng live gate. T11 có [bản nháp báo cáo](REPORT_DRAFT.md); T12 đã chuẩn bị saved-run demo, chưa phải bộ nộp cuối. Xem [checkpoint](context/SESSION_CHECKPOINT.md) cho evidence, checks và điều kiện tiếp theo.
+**Cập nhật T01 ngày 19/10:** remediation đã dừng/bỏ khởi động Ubuntu WSL `systemd-timesyncd` sau xác nhận cạnh tranh writer; post-change observer 90 giây không có step >5 ms, nên current-session stability gate đạt. UTC accuracy (~4.05 giây sai lệch host so với hai NTP endpoint) và resume/restart durability chưa xác minh; W32Time Manual/Stopped được giữ nguyên. T02 đã chuẩn bị helper portable và qua bốn self-check, chưa kiểm chứng live gate; không chạy T03. T11 có [bản nháp báo cáo](REPORT_DRAFT.md); T12 đã chuẩn bị saved-run demo, chưa phải bộ nộp cuối. Xem [T01 worklog](worklog/2026-10-19-clock-remediation/README.md) và [checkpoint](context/SESSION_CHECKPOINT.md).
 
 ## 1. Những phần đã xong, không cần làm lại
 
@@ -20,7 +20,7 @@ Nguồn yêu cầu: [Roadmap](context/sources/00_Project3_Roadmap.md) > [Proposa
 
 | ID | Công việc còn lại | Phụ thuộc | Đầu ra / điều kiện hoàn thành |
 | --- | --- | --- | --- |
-| T01 | Xác định môi trường có clock ổn định; chẩn đoán read-only hoặc chuyển máy/môi trường đo | Không | Observer mới và thông tin môi trường; không còn step trong cửa sổ quan sát, tiếp tục kiểm tra mọi run. Không tự đổi clock/NTP/clocksource khi chưa xác định tác nhân/phạm vi được phép. |
+| T01 | Xác định môi trường có clock ổn định; chẩn đoán read-only hoặc chuyển máy/môi trường đo | Không | **Đạt ổn định trong phiên hiện tại:** observer 90 giây sau remediation không ghi nhận step >5 ms. Độ chính xác UTC tuyệt đối (Windows lệch khoảng 4,05 giây) và độ bền sau restart/resume chưa xác minh; vẫn phải live-validate T02 trước T03. Evidence: [T01 worklog](worklog/2026-10-19-clock-remediation/README.md). |
 | T02 | Chuẩn bị observer/gate tái chạy được, không phụ thuộc `/tmp` phiên cũ | Không, có thể chuẩn bị trước T01 | Output mới, timeout hữu hạn, quality checks và stop rule; chỉ sửa helper nhỏ cần thiết, không thêm framework. |
 | T03 | Chạy lại gate normal/mixed sau sửa, kiểm chứng generator/clock/healthy Redis | T01–T02 | Theo PRESET: normal Redis FW rồi mixed Redis FW, tối đa 3 lượt mỗi nhóm × 30 giây; mọi lượt/quality flags được giữ; dừng khi cùng blocker xuất hiện hai lượt. |
 | T04 | Hiệu chỉnh phép so normal/burst FW/TB × local/Redis và baseline none | T03 | Cùng policy rate, workload/key/backend/topology; xác minh burst phase, sample count và clock; không gọi B=Q,r=Q/W là burst semantics tương đương. |
