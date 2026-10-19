@@ -76,55 +76,22 @@ Khung báo cáo và phần nền có thể viết khi clock chưa ổn. Chương
 
 H01 gồm tính tay FW/TB/burst/refill, quota local N instances, Lua atomic/race,429 vs5xx/timeout, offered vs sent/completed/goodput, p95 mẫu thành công, clock/replay và recovery. H02 là việc người học xác nhận lịch/rubric; AI có thể ghi lại thông tin được cung cấp, không thay việc hiểu hoặc liên hệ giảng viên.
 
-## 4. Điều phối để giảm đọc lại và tiêu hao token
+## 4. Điều phối
 
-Ưu tiên một phiên làm một gate/gói có đầu ra, không mở toàn bộ backlog. Preferences đã chọn: subagent `gpt-6.1-sol`, reasoning `low`, `fork_turns=none`; tối đa3 subagent và root. Chỉ dùng số agent thực sự có việc độc lập.
+Theo workflow chuẩn tại [AGENTS.md](../AGENTS.md): root điều phối và sau báo cáo cuối phân công gói sẵn sàng tiếp theo theo dependency/gate; Luna low nhận context tối thiểu, worker không tự spawn; chờ completion, không polling. Tối đa ba workers độc lập theo slot thực tế. Worker làm implementation và checks; root xử lý conflict cụ thể, không lặp việc đã xong. Handoff nội bộ bằng English, gồm IDs, files/results, checks/failures/skips, limits/next prerequisite; root trả lời user bằng Vietnamese. Measurement thêm revision/config/checksum.
 
-| Đợt | Việc chạy đồng thời hợp lý | Điều kiện chuyển tiếp |
-| --- | --- | --- |
-| A | Một agent clock/gate; optional một agent portability helper và một agent khung tài liệu. Helper/code phải xong và commit trước load dùng nó. | T01–T03 đạt; nếu clock fail thì chỉ tiếp tục tài liệu/demo độc lập. |
-| B | Một agent độc quyền Docker/calibration; một agent offline thiết kế protocol; một agent chuẩn bị parser/report từ fixture. | T04–T07 đủ evidence, root review/test rồi T08. |
-| C | Một agent thực thi manifest tuần tự, root đợi output theo gói. Không worker/test/build/plot CPU nặng cùng host khi đang đo. | T09 đủ hoặc group dừng theo stop rule đã khóa. |
-| D | Phân tích/RQ, báo cáo và slide/demo có thể chia file riêng song song sau freeze dữ liệu. | Root tích hợp và kiểm chứng T10–T13. |
+Khi cần agent-facing prompt, điền gói và ownership theo mẫu:
 
-Không chạy hai workload Docker song song dù khác port/project: cùng host vẫn nhiễu. Ngay từ đầu dùng **detached checkout sạch tại commit cố định** cho worker live; mọi chỉnh sửa docs/UI ở workspace chính không đổi revision/dirty state của case. Build và ghi image inspect trước load; không cài plotting tooling, compile suite hoặc poll browser trong lượt dùng đo overhead. CLI measurement và UI integration có nhãn riêng.
-
-Root chỉ đọc brief/source bắt buộc và docs đúng gói, không quét lại toàn repo/archives1148 files mỗi phiên. Worker có file ownership rõ; không commit/chạm file của worker khác, không tự spawn tiếp. Root đợi output cuối, không polling agent/progress thường xuyên. Chỉ message bổ sung khi cần điều phối dependency, blocker hoặc người dùng dừng. Chuẩn bị plan/script trong `artifacts/` hoặc `/tmp`, sau đo mới copy worklog vào repo; metadata không được sửa để trông sạch.
-
-Một output worker đủ dùng gồm: task IDs, commit chạy, exact commands/config, result paths, quality/skip/failure counts, tests, artifact checksum và blockers/next prerequisite. Không gửi raw traces/base64/full logs vào chat; mở đúng finding/run khi cần. Khi tests đạt, root không lặp full suite trừ khi có code mới/failure/concern mới. Archive/checksum tạo và verify một lần theo batch, sau đó tham chiếu manifest.
-
-### Prompt khởi động phiên mới (agent-facing, English)
+Với đo live, worker dùng detached checkout sạch tại revision cố định; thay đổi docs/UI trong workspace chính không được làm bẩn checkout hoặc đổi revision đo. Build và lưu image inspect trước khi load. Không chạy test/build/plot nặng, cài tooling hay poll browser trong lúc đo overhead. Gắn nhãn riêng cho CLI measurement và UI integration. Lưu plan/script trong `artifacts/` hoặc `/tmp`, chỉ ghi worklog vào repo sau phép đo. Không chạy workload Docker đồng thời. Giữ metadata thực tế nguyên vẹn. Worker không commit hoặc chạm file ngoài ownership. Không lặp full checks nếu không có thay đổi mới, failure hay concern cụ thể. Archive/checksum một lần mỗi batch rồi tham chiếu manifest.
 
 ```text
-Resume only the requested task IDs from docs/REMAINING_WORK_PLAN.md.
-Read docs/context/PROJECT_BRIEF.md first, SOURCE_INDEX and Roadmap next,
-then SESSION_CHECKPOINT and only the relevant task notes. Follow AGENTS.md
-and Ponytail full. Do not reconstruct completed work or restart the84-run matrix.
-Report the selected IDs, current prerequisite and intended output before work.
-Use gpt-6.1-sol/low with fork_turns=none only for independent subtasks;
-maximum3 workers, exclusive live Docker ownership, pinned clean measurement checkout.
-Wait for final outputs; do not monitor agents except necessary dependency/stop handling.
-Preserve raw evidence and failed runs. Never mark completed/inconclusive as pass.
-If clock gate fails twice, stop that measurement group and complete only independent work.
-Review and test affected changes, commit coherent verified parts, and leave a clean worktree.
-Do not change host time settings or contact others without applicable authorization.
-Reading the plan alone does not resume experiments. An explicit user resume request authorizes
-the selected scoped tasks; do not ask again for already authorized reversible steps.
-```
-
-### Prompt giao một worker (điền ownership/gói, English)
-
-```text
-Task IDs: <IDs>. Scope/owned files: <exact paths>. Measurement commit: <SHA if live>.
-Read PROJECT_BRIEF first, SOURCE_INDEX/Roadmap, then <relevant notes only>.
-Reuse existing implementation; modify only confirmed gaps required by the task.
-Do not spawn agents, commit, edit other ownership areas or run competing Docker/load/tests.
-If live: use the pinned clean checkout, bounded sequential commands and new output folders;
-write repo worklogs only after measurements finish. Preserve configuration/revision/image
-content and all quality flags; do not silently replace invalid runs.
-Deliver final concise Vietnamese output with IDs, exact commands/config, paths/checksums,
-checks performed, failed/skipped cases, limits and next prerequisite. No intermediate updates
-unless coordination or the user's stop request requires action.
+Task IDs: <IDs>. Owned paths: <exact paths>.
+Read docs/context/PROJECT_BRIEF.md, then <minimum task-relevant notes>; follow AGENTS.md.
+Inspect relevant code before changes. Implement only the scoped requirement. Do not spawn agents,
+commit, or edit outside ownership. Perform necessary focused checks. For measurements preserve
+revision, config, raw artifacts, quality flags and checksums; use a new output path and retain
+invalid runs. Return a concise English handoff: IDs, changed files/result paths, checks and
+failures/skips, limits and next prerequisite. Include revision/config/artifact checksums for measurements.
 ```
 
 ## 5. Lệnh tham chiếu cho phiên sau — không chạy trong phiên lập kế hoạch
@@ -163,4 +130,4 @@ Checkpoint cuối phiên chỉ cần cập nhật: IDs done/pending, next gate/b
 
 Người dùng yêu cầu dừng/quota ít: ngừng phát việc mới, dừng process do phiên sở hữu và cleanup đúng project, giữ partial artifacts, commit phần đã kiểm chứng hoặc ghi rõ phần chưa kiểm chứng. Không xóa file có sẵn để làm status đẹp. Worktree phụ chỉ dọn sau khi evidence đã lưu; push chỉ khi được yêu cầu.
 
-**Điểm bắt đầu khi có quota:** T02 chuẩn bị portability nhỏ và T01 môi trường clock; T03 chỉ sau đó. Không tự chạy T09 hoặc tinh chỉnh UI mở rộng khi T01–T08 chưa đạt. Toàn bộ todo ở bảng là phạm vi hiện biết, không cam kết thời lượng/chi phí token hoặc rubric chưa được cung cấp.
+**Điểm bắt đầu khi được yêu cầu tiếp tục:** T01 xác định môi trường clock và T02 chuẩn bị portability; T03 chỉ sau cả hai. Không tự chạy T09 hoặc tinh chỉnh UI mở rộng khi T01–T08 chưa đạt. Toàn bộ todo ở bảng là phạm vi hiện biết, không cam kết thời lượng/chi phí token hoặc rubric chưa được cung cấp.
