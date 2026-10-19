@@ -1,5 +1,9 @@
 # Session checkpoint
 
+## T07 explicitly resumed — 2026-10-19
+
+The user explicitly requested completing T07 in this session, including its controlled Redis outage/recovery calibration and exporter validation, and asked to persist the one-feature/fix-per-commit rule in AGENTS.md (commit `7201e19`). This supersedes the T05 stop boundary below for T07 only. Use the recorded capacity-10 configuration and unchanged quality/recovery gates; preserve every attempt. Do not lock T08 or run T09. Root integrates feature fixes, evidence and progress as separate commits, updates this checkpoint, and stops after T07.
+
 ## Paused after T05 — 2026-10-19
 
 **Latest instruction:** finish T05, commit the existing work and full progress, then stop. T07 is deferred to another session. Do not dispatch another experiment, lock T08 or run T09 until the user resumes. The provisional planning target is **mid-December 2026**; the official submission/defense date and rubric remain unknown. This section supersedes earlier active-continuation and through-T07 boundaries.
