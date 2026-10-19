@@ -19,7 +19,7 @@
 | --- | --- |
 | Clock ổn trong môi trường đo | Ổn định trong phiên hiện tại: observer mới 90 giây không có step >5 ms; trace residual ở từng lượt cũng đạt. Độ chính xác UTC tuyệt đối và độ bền sau restart/resume chưa xác minh; chạy lại observer nếu không rõ tính liên tục của phiên. |
 | Gate normal/mixed30s,3 lượt | **Pilot gate có giới hạn đã đạt:** 3 normal + 3 mixed, không quality flag/drop. Oracle FW inconclusive; chưa chứng minh correctness. |
-| Burst/refill và biên FW | Local TB đã có pilot; cần phép so FW/TB/local/Redis đủ lượt và thiết kế riêng nếu kết luận burst sát biên. |
+| Burst/refill và biên FW | **T04 calibration đạt:** 10 normal/burst cells, mỗi cell 1 lượt 30 giây, zero drop/quality flag; [evidence](../worklog/2026-10-19-calibration-next/README.md). FW vẫn inconclusive ở partial windows; không có đồng bộ sát biên, nên không kết luận burst tại biên hoặc hiệu năng chính thức từ một lượt. |
 | Scaling1/2/4 và tải dưới/gần/trên ngưỡng | Chưa hiệu chỉnh sweep. Cần quota headroom, generator ổn và xác định bottleneck; không dùng tăng429 để chứng minh throughput scaling. |
 | Concurrent gần cạn / atomicity control | **T06 hoàn tất:** tests Redis thật shared quota và gần cạn cho FW/TB đạt; đối chứng non-atomic ép race. [Evidence](../worklog/2026-10-19-atomicity/README.md) ghi harness, checksum và giới hạn; không suy tần suất race tự nhiên hoặc hiệu năng HTTP. |
 | Outage/recovery | Chưa hiệu chỉnh trong vòng này. Chọn thời lượng, baseline khỏe và threshold recovery trước đo; không lấy first success thay stable recovery. |

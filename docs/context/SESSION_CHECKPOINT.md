@@ -6,7 +6,9 @@ The user explicitly resumed the T tasks and authorized parallel workers. They su
 
 T06 is complete at commit `3e938a2`: focused real Redis race checks covered shared FW/TB quota, near-exhausted FW/TB quota, and the deliberately forced non-atomic control. The near-exhausted tests admitted exactly 2 of 16 requests after consuming 8 of 10 units. FW boundary crossing is reported as inconclusive rather than a quota failure. Commands, output, source checksum and limitations are in the [T06 worklog](../worklog/2026-10-19-atomicity/README.md). The dedicated test Redis container was removed.
 
-T07 runner/schema preparation and two mocked lifecycle checks passed, integrated at `50fd2ad`; live outage calibration remains pending. See the [T07 worklog](../worklog/2026-10-19-outage/README.md). T04 is running sequentially in a separate clean clone pinned to `26b5decb835dbb136eb2d45b361920a414434f6b`; its fresh 90-second observer recorded zero steps above 5 ms. T05 is queued after its handoff. No T08 protocol lock or T09 formal benchmark has occurred. This entry records an active continuation, not a final cleanup checkpoint.
+T04 completed ten normal/burst cells, one 30-second calibration run each, in a clean clone pinned to `26b5decb835dbb136eb2d45b361920a414434f6b`. All 10,800 scheduled requests were sent, with zero drops or quality flags and no Redis limiter errors. Phase/class fidelity, counters and clock residuals passed. TB had no observed trace violations; FW remains inconclusive at partial windows. See the [T04 worklog](../worklog/2026-10-19-calibration-next/README.md). Its fresh 90-second observer recorded zero steps above 5 ms. This is calibration, not a formal comparative result.
+
+T07 runner/schema preparation and two mocked lifecycle checks passed, integrated at `50fd2ad`; live outage calibration is now dispatched with the sole workload baton. See the [T07 worklog](../worklog/2026-10-19-outage/README.md). T05 is queued after that handoff. No T08 protocol lock or T09 formal benchmark has occurred. This entry records an active continuation, not a final cleanup checkpoint.
 
 ## T02 live validation and bounded T03 gate — 2026-10-19
 

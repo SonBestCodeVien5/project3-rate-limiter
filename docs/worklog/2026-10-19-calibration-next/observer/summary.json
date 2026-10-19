@@ -1,0 +1,23 @@
+{
+  "samples": 1788,
+  "elapsed_monotonic_seconds": 90.000105494,
+  "elapsed_wall_seconds": 90.000107428,
+  "clock_steps_above_5ms": [],
+  "max_read_span_us": 159.755,
+  "threshold_ms": 5,
+  "duration_seconds": 90.0,
+  "clock_info": {
+    "time": {
+      "implementation": "clock_gettime(CLOCK_REALTIME)",
+      "monotonic": false,
+      "adjustable": true,
+      "resolution": 1e-09
+    },
+    "monotonic": {
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "adjustable": false,
+      "resolution": 1e-09
+    }
+  }
+}

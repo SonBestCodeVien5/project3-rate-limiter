@@ -1,0 +1,31 @@
+{
+  "task_id": "T04",
+  "revision": "26b5decb835dbb136eb2d45b361920a414434f6b",
+  "archive": {
+    "path": "T04-evidence.tar.gz",
+    "bytes": 50996409,
+    "sha256": "14559dc48602b4e301765ee7651766b173a31db0f4fd13744caf8f81efc21288",
+    "contains": [
+      "raw runs and resolved configs",
+      "T04-manifest.json",
+      "T04-results.csv",
+      "T04-results.json",
+      "t04-quality-check.py",
+      "per-cell t04-quality.json and runtime image inspection"
+    ]
+  },
+  "archive_inventory_path": "T04-artifact-SHA256SUMS.json",
+  "observer": {
+    "path": "observer/",
+    "files": {
+      "observer/metadata.json": "c712e9d6c5650710c141593f649ec997fbcc8f10c733f789d7cc69d1b97984f4",
+      "observer/samples.jsonl": "fa5a5965f97780ac58e9720350b5581385a418dec5996d06a34036127eb01fe4",
+      "observer/summary.json": "45d92de9c55ac0dc27c4300a3bf512effdf512cff06d73c9ded8ec76186c7c76"
+    },
+    "samples": 1788,
+    "duration_seconds": 90.0,
+    "monotonic_elapsed_seconds": 90.000105494,
+    "wall_elapsed_seconds": 90.000107428,
+    "steps_over_5ms": 0
+  }
+}
