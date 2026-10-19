@@ -1,6 +1,24 @@
 # Session checkpoint
 
-## T07 complete; paused before T08 — 2026-10-19
+## T08 complete; paused before T09 — 2026-10-19
+
+The user explicitly resumed T08 and authorized bounded Docker/live sampler calibration, then authorized locking a versioned protocol. T08 is complete within that scope. **Stop here: T09 formal benchmark has not been authorized or run.** No final RQ conclusion follows from calibration evidence. T01–T07 gates were not rerun.
+
+### T08 result and provenance
+
+The initial sampler lifecycle attempt used clean detached source `d6163e7` (full revision and exact attempts in the T08 worklog). It is retained as invalid: TERM during an INFO cycle could leave a partial final snapshot, making the counter delta unsuitable. The focused signal-deferred stop fix and lifecycle test were committed as `b090d2b7391db873a0a2bbe602321ed1f5a55691`; affected validation then passed on a fresh clean detached checkout at that revision. Invalid launcher/no-sampler attempts remain archived and excluded; no thresholds were changed.
+
+The valid bounded pair verified sampler TERM completion, input/output byte deltas and units, monotonic samples, and a live analyzer result. Matched sampler-off/on API traffic preserved scheduled/sent/request/backend counts and HTTP outcomes. This is one paired sample, not a calibrated overhead correction: total Redis traffic includes INFO/admin/health-check/workload traffic and cannot be reported as limiter-only bytes/request. Sampling cadence was slower than its nominal sleep because sampling uses sequential Compose execs. No incremental CPU or latency attribution is claimed. See the [T08 stage-1 worklog](../worklog/2026-10-19-t08-network/README.md) and retained raw attempts/checksums.
+
+Protocol v1 is locked in [protocol.md](../experiments/protocol-v1/protocol.md) with [manifest.json](../experiments/protocol-v1/manifest.json); both bind measurement source revision `b090d2b7391db873a0a2bbe602321ed1f5a55691`. SHA-256: protocol `04c5ae7c63d48e3994c830f2f48ced60900cdd0c2cbd9aaaa3a55cfec422f240`; manifest `e832786792677906e1835cc6fe20b2efb3bde495ecdbdf65cbe195973650d98a`. The locked manifest declares 46 cells / 138 planned slots and explicitly keeps execution unauthorized. Protocol commit `157770f`; evidence commit `2d333c9`; focused sampler fix/test commit `b090d2b`.
+
+Checks actually performed: fresh 90-second observer passed with zero >5ms steps; 20 analyzer tests and seven focused exporter tests passed; focused sampler lifecycle test, live TERM/counter validation, matched bounded API sampler-off/on pair, live analyzer completion, protocol manifest self-check and focused protocol/runner checks passed. No full check suite was run. The Redis 7.4.2 and NGINX image identities, host/runtime details, command/config, cleanup, limitations and artifact hashes are in the worklog. The owned Docker project had no containers/network before or after; no unrelated service or clock setting changed. Clean detached measurement checkout `/tmp/project3-t08-fixed-b` and load-generator binary `/tmp/project3-t08-loadgen-b` were retained; no push. Historical T04 FW oracle remains inconclusive; T05 scaling remains backend-bounded; T06 is recorded invariant/test evidence rather than an HTTP race-frequency claim; T07 recovery was stable at 4s under its calibrated window rule. UTC accuracy and restart/resume durability remain unverified. T08 does not settle these limits or establish final RQ results.
+
+### Status and next gate
+
+T01–T08 are complete within recorded limits. T09/T10 formal data and analysis remain pending, and T09 requires an explicit user resumption. On a future resumed measurement session, take a fresh observer run before load if session continuity is uncertain; then follow the locked manifest sequentially. Do not dispatch T09 from this checkpoint alone.
+
+## Historical checkpoint: T07 complete; paused before T08 — 2026-10-19
 
 The user explicitly resumed T07 in this session. Its bounded recovery calibration and actual exporter validation are complete; stop after this package. Do not dispatch T08/network live validation or T09 until the user resumes. This section supersedes the historical T05 stop boundary below. Provisional hand-in target remains mid-December 2026; official date/rubric remain unknown.
 
