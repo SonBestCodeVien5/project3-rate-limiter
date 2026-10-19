@@ -2,7 +2,7 @@
 
 ## Technical continuation — 2026-10-19
 
-The user explicitly resumed the T tasks and authorized parallel workers. The earlier pause below is superseded for this continuation; experiment dependencies and quality gates still apply.
+The user explicitly resumed the T tasks and authorized parallel workers. They subsequently set a provisional planning target of mid-December 2026; this is not a confirmed instructor deadline, and the rubric remains unknown. The earlier pause below is superseded for this continuation; experiment dependencies and quality gates still apply.
 
 T06 is complete at commit `3e938a2`: focused real Redis race checks covered shared FW/TB quota, near-exhausted FW/TB quota, and the deliberately forced non-atomic control. The near-exhausted tests admitted exactly 2 of 16 requests after consuming 8 of 10 units. FW boundary crossing is reported as inconclusive rather than a quota failure. Commands, output, source checksum and limitations are in the [T06 worklog](../worklog/2026-10-19-atomicity/README.md). The dedicated test Redis container was removed.
 

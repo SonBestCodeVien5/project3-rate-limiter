@@ -10,7 +10,7 @@ Console local và cấu hình tùy chỉnh đã có; [ma trận Console 84 lư�
 
 **Tiến độ cập nhật ngày 13/10/2026:** 🟢 phần triển khai có bằng chứng đạt; 🟡 có một phần, còn điều kiện chưa đạt; ⚪ chưa thực hiện đầu ra chính. Dấu 🟢 code/test không xác nhận người học đã nắm kiến thức. Đây là các mốc công việc, không phải các tuần cần chờ tuần tự sau khi có tự động hóa.
 
-**Thông tin mới từ bạn:** giảng viên đồng ý hướng đề tài và yêu cầu đề cương thể hiện rõ góc nhìn doanh nghiệp cùng vấn đề thực tế. Sản phẩm nộp gồm báo cáo, mã nguồn, slide và demo. Hạn được báo **dự kiến trong 2–3 tuần cuối tháng 12/2026**; chưa có ngày chính xác hoặc rubric chấm điểm chi tiết. Nếu mốc chính thức đến sớm hơn lịch 11 tuần, cần rút ngắn giai đoạn chuẩn bị, không cắt phần đo và bảo vệ.
+**Thông tin mới từ bạn:** giảng viên đồng ý hướng đề tài và yêu cầu đề cương thể hiện rõ góc nhìn doanh nghiệp cùng vấn đề thực tế. Sản phẩm nộp gồm báo cáo, mã nguồn, slide và demo. Ngày 19/10, người dùng chọn mốc lập kế hoạch tạm **giữa tháng 12/2026**, thay cho ước lượng trước đó 2–3 tuần cuối tháng 12; đây chưa phải lịch chính thức. Chưa có ngày chính xác hoặc rubric chấm điểm chi tiết. Nếu mốc chính thức đến sớm hơn lịch 11 tuần, cần rút ngắn giai đoạn chuẩn bị, không cắt phần đo và bảo vệ.
 
 ## Đích cuối cùng
 
