@@ -2,7 +2,7 @@
 
 **Chưa khóa protocol, chưa chạy benchmark chính thức.** Người dùng đã cho phép tự động tiếp tục sau pilot, nhưng điều kiện đo chưa đạt. Đây là kết luận về môi trường thí nghiệm, không thay yêu cầu Roadmap/Proposal hoặc lịch do giảng viên duyệt. [Protocol ứng viên](PROTOCOL_CANDIDATE.md) vẫn là bản đề xuất.
 
-**Cập nhật 19/10/2026:** đã tiếp tục kiểm tra chỉ đọc; [observer mới](../worklog/2026-10-19-clock/README.md) vẫn ghi nhận ba bước nhảy realtime khoảng 2,93–2,96 giây trong 90 giây. T01 chưa đạt, không chạy T03. [Helper portable](MEASUREMENT_GATE.md) đã có và qua self-check, chưa được xác nhận bằng live gate. Các điều kiện bên dưới vẫn giữ nguyên.
+**Cập nhật 19/10/2026:** T01 ổn định trong phiên hiện tại. Observer mới không ghi nhận step >5 ms; sau đó bounded gate T03 hoàn tất cả sáu lượt normal/mixed, không có quality flag hay generator drop. Xem [T02/T03 worklog](../worklog/2026-10-19-measurement-gate/README.md). Oracle Fixed Window vẫn inconclusive do window chỉ quan sát một phần. Gate này không khóa protocol và không phải benchmark chính thức; T04–T08 vẫn còn.
 
 ## Điều đã kiểm chứng
 
@@ -17,8 +17,8 @@
 
 | Điều kiện | Trạng thái / cách hoàn tất |
 | --- | --- |
-| Clock ổn trong môi trường đo | Không đạt. Dùng máy/môi trường có clock ổn định, kiểm tra wall–monotonic độc lập và trên mọi trace. Không sửa timestamp để che bước nhảy. |
-| Gate normal/mixed30s,3 lượt | Chưa đạt; chỉ hai normal được chạy trước dừng. Lặp đầy đủ sau xử lý môi trường, giữ tất cả lượt lỗi và tiêu chí đã đặt. |
+| Clock ổn trong môi trường đo | Ổn định trong phiên hiện tại: observer mới 90 giây không có step >5 ms; trace residual ở từng lượt cũng đạt. Độ chính xác UTC tuyệt đối và độ bền sau restart/resume chưa xác minh; chạy lại observer nếu không rõ tính liên tục của phiên. |
+| Gate normal/mixed30s,3 lượt | **Pilot gate có giới hạn đã đạt:** 3 normal + 3 mixed, không quality flag/drop. Oracle FW inconclusive; chưa chứng minh correctness. |
 | Burst/refill và biên FW | Local TB đã có pilot; cần phép so FW/TB/local/Redis đủ lượt và thiết kế riêng nếu kết luận burst sát biên. |
 | Scaling1/2/4 và tải dưới/gần/trên ngưỡng | Chưa hiệu chỉnh sweep. Cần quota headroom, generator ổn và xác định bottleneck; không dùng tăng429 để chứng minh throughput scaling. |
 | Concurrent gần cạn / atomicity control | Có tests Redis thật và đối chứng non-atomic; phải ghi rõ harness, bất biến và giới hạn trước chọn bằng chứng RQ4 cuối. |
@@ -29,9 +29,9 @@ Clock jump không chỉ ảnh hưởng deadline Redis: server dùng wall time ch
 
 ## Thứ tự tiếp tục
 
-1. Xác định và ổn định clock môi trường đo hoặc chuyển sang môi trường ổn định; không thay thiết lập host trong vòng tự động hiện tại vì tác nhân chưa xác định.
-2. Chạy lại gate với revision sạch, fresh state, cùng tải/timeout và tiêu chí; phát hiện clock discontinuity cả khi gửi và response drain.
-3. Hiệu chỉnh các nhóm còn thiếu cho RQ1–RQ5, rồi lưu protocol version/manifest **trước** bộ chính thức.
-4. Chạy tuần tự đủ lượt, giữ raw/config/counters/images/checksums và mọi lượt bị loại; xuất bảng/biểu đồ tái lập, viết kết luận theo từng RQ với giới hạn.
+1. Giữ nguyên giới hạn clock và chạy lại observer trước phép đo live nếu không rõ tính liên tục của phiên; không sửa timestamp để che step.
+2. Hiệu chỉnh các nhóm T04–T07 còn lại cho RQ1–RQ5 và lưu mọi lượt lỗi cùng quality flag.
+3. Khóa protocol có version và manifest **trước** benchmark chính thức.
+4. Chạy manifest tuần tự, giữ raw/config/counter/image/checksum và lượt lỗi; sau đó tạo bảng/hình tái lập và kết luận RQ có giới hạn rõ.
 
 UI so sánh, CSV và [biểu đồ pilot](../worklog/2026-10-13-evaluation/README.md) có thể hoàn thiện độc lập. Chúng là công cụ trình bày và kiểm tra evidence, không thay điều kiện đo hoặc chứng minh correctness/scalability production.
