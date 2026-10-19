@@ -1,5 +1,13 @@
 # Session checkpoint
 
+## Technical continuation — 2026-10-19
+
+The user explicitly resumed the T tasks and authorized parallel workers. The earlier pause below is superseded for this continuation; experiment dependencies and quality gates still apply.
+
+T06 is complete at commit `3e938a2`: focused real Redis race checks covered shared FW/TB quota, near-exhausted FW/TB quota, and the deliberately forced non-atomic control. The near-exhausted tests admitted exactly 2 of 16 requests after consuming 8 of 10 units. FW boundary crossing is reported as inconclusive rather than a quota failure. Commands, output, source checksum and limitations are in the [T06 worklog](../worklog/2026-10-19-atomicity/README.md). The dedicated test Redis container was removed.
+
+T07 runner/schema preparation and two mocked lifecycle checks passed, integrated at `50fd2ad`; live outage calibration remains pending. See the [T07 worklog](../worklog/2026-10-19-outage/README.md). T04 is running sequentially in a separate clean clone pinned to `26b5decb835dbb136eb2d45b361920a414434f6b`; its fresh 90-second observer recorded zero steps above 5 ms. T05 is queued after its handoff. No T08 protocol lock or T09 formal benchmark has occurred. This entry records an active continuation, not a final cleanup checkpoint.
+
 ## T02 live validation and bounded T03 gate — 2026-10-19
 
 T02 observer/runner/checker lifecycle validation and the authorized T03 pilot gate completed at clean revision `7cd27cd7274079e60e853178afdf8d968a83066a`. A fresh 90 s observer before load recorded 1,790 samples and zero >5 ms wall/monotonic steps. The gate then completed three normal and three mixed Redis Fixed Window runs; all six had zero quality flags and zero generator drops. Full configuration, per-run traces, counters, image inspection, observer samples, and checksums are in the [gate worklog](../worklog/2026-10-19-measurement-gate/README.md) and linked archive. All Fixed Window oracle results were inconclusive due to partial windows, so this is not a correctness pass or formal benchmark.

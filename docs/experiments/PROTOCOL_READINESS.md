@@ -21,7 +21,7 @@
 | Gate normal/mixed30s,3 lượt | **Pilot gate có giới hạn đã đạt:** 3 normal + 3 mixed, không quality flag/drop. Oracle FW inconclusive; chưa chứng minh correctness. |
 | Burst/refill và biên FW | Local TB đã có pilot; cần phép so FW/TB/local/Redis đủ lượt và thiết kế riêng nếu kết luận burst sát biên. |
 | Scaling1/2/4 và tải dưới/gần/trên ngưỡng | Chưa hiệu chỉnh sweep. Cần quota headroom, generator ổn và xác định bottleneck; không dùng tăng429 để chứng minh throughput scaling. |
-| Concurrent gần cạn / atomicity control | Có tests Redis thật và đối chứng non-atomic; phải ghi rõ harness, bất biến và giới hạn trước chọn bằng chứng RQ4 cuối. |
+| Concurrent gần cạn / atomicity control | **T06 hoàn tất:** tests Redis thật shared quota và gần cạn cho FW/TB đạt; đối chứng non-atomic ép race. [Evidence](../worklog/2026-10-19-atomicity/README.md) ghi harness, checksum và giới hạn; không suy tần suất race tự nhiên hoặc hiệu năng HTTP. |
 | Outage/recovery | Chưa hiệu chỉnh trong vòng này. Chọn thời lượng, baseline khỏe và threshold recovery trước đo; không lấy first success thay stable recovery. |
 | Protocol/manifest khóa | Chưa thực hiện vì các điều kiện trên. Chốt Q/W/B/r, tải, cold-start/warm-up, repetitions, validity/exclusion, thứ tự chạy và recovery sau calibration hợp lệ. |
 

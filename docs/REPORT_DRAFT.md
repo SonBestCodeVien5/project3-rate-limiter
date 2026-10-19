@@ -50,13 +50,13 @@ Phân biệt các nhóm số đo khi viết kết quả:
 
 ## 5. Tình trạng evidence và đánh giá hiện tại
 
-Prototype và pilot tooling đã tồn tại, nhưng chưa có protocol chính thức được khóa và chưa có kết luận cuối cho RQ1–RQ5. Calibration HTTP có 14 lượt; sau sửa deadline Redis, gate dừng ở hai lượt normal vì observer ghi nhận discontinuity của đồng hồ realtime khoảng 2,6 giây. Vì clock ảnh hưởng timestamp, quota và replay, các lượt này không đủ điều kiện để thay benchmark chính thức. Lịch sử pilot 84 cấu hình cũng có mismatch oracle, kết quả inconclusive, limiter errors và generator drops; chúng phải được trình bày là quan sát pilot có giới hạn, không phải kết quả cuối. Chi tiết và artifact nằm trong [readiness](experiments/PROTOCOL_READINESS.md), [checkpoint](context/SESSION_CHECKPOINT.md), [calibration](worklog/2026-10-13-calibration/README.md), [gate sau sửa](worklog/2026-10-13-postfix/README.md) và [pilot ma trận](worklog/2026-10-12-console-matrix/README.md).
+Prototype và pilot tooling đã tồn tại, nhưng protocol chính thức chưa khóa và chưa có kết luận cuối cho RQ1–RQ5. Gate T01–T03 mới đạt ổn định trong phiên đo hiện tại và chất lượng sáu lượt pilot normal/mixed; độ chính xác UTC tuyệt đối và độ bền sau resume/restart chưa xác minh. Các lượt pilot cũ gồm calibration dừng vì discontinuity đồng hồ và ma trận 84 cấu hình có mismatch oracle, kết quả inconclusive, limiter errors hoặc generator drops; chúng không thay benchmark chính thức. T04 đang hiệu chỉnh; T05/T07 và các bước sau còn chờ. Evidence hiện có cho T06 là phép kiểm tra Redis thật: với quota gần cạn, đúng hai đơn vị còn lại được chấp nhận trong cả Fixed Window và Token Bucket. Non-atomic control chủ động đồng bộ 16 readers để buộc lost update, tạo overshoot 15 khi quota là 1; đây là minh họa race có điều kiện, không đo tần suất tự nhiên. T06 không đo HTTP performance hay Redis throughput. Xem [T01–T03 gate](worklog/2026-10-19-measurement-gate/README.md), [T06 atomicity](worklog/2026-10-19-atomicity/README.md), [readiness](experiments/PROTOCOL_READINESS.md), [checkpoint](context/SESSION_CHECKPOINT.md) và các [pilot cũ](worklog/2026-10-13-calibration/README.md).
 
 **Kết quả chính thức:** `[Chưa có — điền sau T09/T10, kèm bảng/hình, run IDs, revision, manifest và giới hạn tương ứng.]`
 
 **Trả lời RQ1–RQ5:** `[Để trống đến khi có protocol được khóa, dữ liệu hợp lệ và phân tích T10. Không suy câu trả lời từ smoke test hoặc pilot.]`
 
-**Hạn chế cần bàn luận:** môi trường đo hiện có clock realtime không ổn định; dữ liệu pilot có lượt bị gắn cờ; backend là mô phỏng; phép đo cùng host có thể chịu ảnh hưởng từ scheduler, generator, logging và tài nguyên dùng chung. Không ngoại suy kết quả sang doanh thu, production readiness hay hệ thống phân tán lớn hơn.
+**Hạn chế cần bàn luận:** gate clock mới chỉ chứng minh ổn định trong phiên quan sát, chưa xác minh UTC tuyệt đối hoặc restart/resume. Các Fixed Window oracle ở gate T03 là inconclusive do chỉ quan sát cửa sổ một phần. Kiểm tra atomicity ép race bằng barrier nên không ước lượng tần suất race trong tải tự nhiên. Backend là mô phỏng; phép đo cùng host có thể chịu ảnh hưởng từ scheduler, generator, logging và tài nguyên dùng chung. Không ngoại suy kết quả sang doanh thu, production readiness hay hệ thống phân tán lớn hơn.
 
 ## 6. Kết luận tạm thời và hướng phát triển
 
@@ -73,4 +73,9 @@ Sau khi môi trường clock đạt gate và protocol được khóa, phần ti�
 
 ## Tài liệu tham khảo
 
-`[Bổ sung nguồn học thuật/kỹ thuật đã đọc và dùng trực tiếp; hiện chưa thêm trích dẫn ngoài các tài liệu dự án để tránh tạo nguồn không kiểm chứng.]`
+Các khái niệm rate limiting và lý do chọn các biến đo cần gắn với nguồn học thuật sau khi người viết đã đọc và xác định đúng ấn phẩm. Tài liệu Redis dưới đây chỉ hỗ trợ các tuyên bố triển khai về atomic scripting và thời gian server; không thay thế nguồn học thuật hoặc kết quả thí nghiệm.
+
+1. Redis, “Scripting with Lua.” Tài liệu chính thức mô tả việc thực thi script là atomic và blocking trên Redis. Dùng để dẫn giải lựa chọn gộp quyết định quota vào một script; không phải bằng chứng thực nghiệm của dự án. https://redis.io/docs/latest/develop/programmability/eval-intro/
+2. Redis, “TIME.” Đặc tả chính thức về timestamp giây và microsecond do Redis trả về; dùng cho mô tả nguồn thời gian shared-state. https://redis.io/docs/latest/commands/time/
+
+Danh mục này còn sơ bộ; bổ sung nguồn thuật toán/queueing chỉ khi phần tổng quan thực sự dùng các khẳng định cần trích dẫn, và hoàn thiện định dạng theo rubric khi được cung cấp.
