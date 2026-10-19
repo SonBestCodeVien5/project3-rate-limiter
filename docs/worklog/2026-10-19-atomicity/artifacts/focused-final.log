@@ -1,0 +1,17 @@
+=== RUN   TestRedisConcurrentSharedQuota
+=== RUN   TestRedisConcurrentSharedQuota/fixed-window
+=== RUN   TestRedisConcurrentSharedQuota/token-bucket
+--- PASS: TestRedisConcurrentSharedQuota (0.22s)
+    --- PASS: TestRedisConcurrentSharedQuota/fixed-window (0.17s)
+    --- PASS: TestRedisConcurrentSharedQuota/token-bucket (0.05s)
+=== RUN   TestRedisConcurrentNearExhaustedQuota
+=== RUN   TestRedisConcurrentNearExhaustedQuota/fixed-window
+=== RUN   TestRedisConcurrentNearExhaustedQuota/token-bucket
+--- PASS: TestRedisConcurrentNearExhaustedQuota (0.03s)
+    --- PASS: TestRedisConcurrentNearExhaustedQuota/fixed-window (0.02s)
+    --- PASS: TestRedisConcurrentNearExhaustedQuota/token-bucket (0.02s)
+=== RUN   TestRedisNonAtomicControlDemonstratesOvershoot
+    redis_test.go:272: non-atomic controlled interleaving: 16 admitted for quota=1; stored counter=1; overshoot=15
+--- PASS: TestRedisNonAtomicControlDemonstratesOvershoot (0.01s)
+PASS
+ok  	project3/ratelimiter/internal/limiter	1.301s

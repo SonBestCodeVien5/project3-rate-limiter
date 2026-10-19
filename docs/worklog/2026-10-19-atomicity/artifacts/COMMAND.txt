@@ -1,0 +1,1 @@
+GOCACHE=/tmp/p3-go-cache REDIS_TEST_ADDR=127.0.0.1:16380 go test -race ./internal/limiter -run '^TestRedis(ConcurrentNearExhaustedQuota|ConcurrentSharedQuota|NonAtomicControlDemonstratesOvershoot)$' -count=1 -v

@@ -93,6 +93,62 @@ func TestRedisConcurrentSharedQuota(t *testing.T) {
 	}
 }
 
+func TestRedisConcurrentNearExhaustedQuota(t *testing.T) {
+	for _, algorithm := range []string{FixedWindow, TokenBucket} {
+		t.Run(algorithm, func(t *testing.T) {
+			c, namespace := realRedis(t)
+			p := testPolicy(algorithm)
+			p.Limit, p.Capacity, p.Rate, p.Window = 10, 10, 0.001, time.Minute
+			l, _ := NewRedis(c, p, namespace)
+			preconsumeWindow := int64(-1)
+			for range 8 {
+				d, err := l.Allow(context.Background(), "same")
+				if err != nil || !d.Allowed {
+					t.Fatalf("preconsume: %+v %v", d, err)
+				}
+				if algorithm == FixedWindow {
+					preconsumeWindow = d.At.UnixMilli() / p.Window.Milliseconds()
+				}
+			}
+			start := make(chan struct{})
+			var wg sync.WaitGroup
+			var mu sync.Mutex
+			allowed := 0
+			var decisions []Decision
+			for range 16 {
+				wg.Go(func() {
+					<-start
+					d, err := l.Allow(context.Background(), "same")
+					if err != nil {
+						t.Error(err)
+						return
+					}
+					if d.Allowed {
+						mu.Lock()
+						allowed++
+						mu.Unlock()
+					}
+					mu.Lock()
+					decisions = append(decisions, d)
+					mu.Unlock()
+				})
+			}
+			close(start)
+			wg.Wait()
+			if algorithm == FixedWindow {
+				for _, d := range decisions {
+					if got := d.At.UnixMilli() / p.Window.Milliseconds(); got != preconsumeWindow {
+						t.Skipf("Redis decision crossed fixed-window boundary (preconsume=%d concurrent=%d); quota assertion is inconclusive", preconsumeWindow, got)
+					}
+				}
+			}
+			if allowed != 2 {
+				t.Fatalf("allowed after preconsuming 8/10: %d want 2", allowed)
+			}
+		})
+	}
+}
+
 func TestRedisRefillExpiryAndPolicyIsolation(t *testing.T) {
 	c, namespace := realRedis(t)
 	p := testPolicy(TokenBucket)
