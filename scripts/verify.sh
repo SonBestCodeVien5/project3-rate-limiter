@@ -9,6 +9,7 @@ go build ./...
 for script in scripts/*.sh; do bash -n "$script"; done
 bash scripts/test-scripts.sh
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_topology.py
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_redis_outage.py
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_analyze.py
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_report_study.py
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_plot_calibration.py
