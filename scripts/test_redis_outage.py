@@ -32,6 +32,8 @@ if [[ $1 == */loadgen ]]; then
     if [[ -s "$(dirname "$(dirname "$dir")")/recovery-p95-threshold-ms.txt" ]]; then echo threshold-present >"$(dirname "$dir")/threshold-at-load-start.txt"; else echo threshold-missing >"$(dirname "$dir")/threshold-at-load-start.txt"; fi
   fi
   printf '{"config":{"duration_ns":25000000000}}\\n' >"$dir/metadata.json"
+printf '{"scheduled":5,"sent":5,"generator_dropped":0,"canceled":false,"run_id":"open-healthy"}\\n' >"$dir/summary.json"
+  printf '{"scheduled":5,"sent":5,"generator_dropped":0,"canceled":false,"run_id":"open-healthy"}\\n' >"$dir/summary.json"
   for i in 1 2 3 4 5; do printf '{"client_class":"legitimate","sent_at":"2026-10-19T00:00:00Z","status":200,"latency_ms":10}\\n' >>"$dir/requests.jsonl"; done
   exit 0
 fi
@@ -65,7 +67,7 @@ JSON
       ;;
     images) echo '[{"ID":"sha256:mock"}]';;
     ps) exit 0;;
-    exec) printf '{}\\n';;
+    exec) n=0; [[ ! -f "$MOCK_LOG.count" ]] || n=$(cat "$MOCK_LOG.count"); n=$((n+1)); echo "$n" >"$MOCK_LOG.count"; if [[ ${MOCK_BACKEND_OVERLOAD:-0} == 1 && $* == *backend* ]] && (( n == 4 )); then printf '{"overload":1,"limiter_errors":0}\\n'; else printf '{"overload":0,"limiter_errors":0}\\n'; fi;;
     up) if [[ ${MOCK_FAIL_UP:-0} == 1 ]]; then echo partial-created >>"$MOCK_LOG"; exit 1; fi; exit 0;;
     pause) if [[ ${MOCK_FAIL_PAUSE:-0} == 1 ]]; then exit 1; fi; exit 0;;
     *) exit 0;;
@@ -157,6 +159,15 @@ exec {REAL_PYTHON} \"$@\"
         down = next(line for line in compose_commands if " down --remove-orphans" in line)
         project = up.split(" -p ", 1)[1].split()[0]
         self.assertIn(f"-p {project}", down)
+
+
+    def test_unhealthy_healthy_baseline_stops_before_outage(self):
+        out = self.root / "bad-baseline"
+        run = self._run(out, MOCK_BACKEND_OVERLOAD="1")
+        self.assertNotEqual(run.returncode, 0)
+        self.assertIn("healthy baseline gate failed", run.stderr)
+        self.assertTrue((out / "open/healthy/load/metadata.json").is_file())
+        self.assertFalse((out / "open/outage").exists())
 
 
 if __name__ == "__main__":

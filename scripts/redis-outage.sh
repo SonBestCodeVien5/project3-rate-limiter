@@ -76,6 +76,27 @@ PY
     compose 10s logs --no-color >"$CASE_DIR/compose.log"
     compose 30s down --remove-orphans >"$CASE_DIR/compose-down.log"; OWNED=0
     if [[ $phase == healthy ]]; then
+      python3 - "$CASE_DIR" <<'PY'
+import json, sys
+from pathlib import Path
+case=Path(sys.argv[1])
+summary=json.loads((case/'load/summary.json').read_text())
+rows=[json.loads(line) for line in (case/'load/requests.jsonl').read_text().splitlines() if line]
+legit=[r for r in rows if r.get('client_class')=='legitimate' and r.get('sent_at')]
+legit_ok=[r for r in legit if not r.get('error') and not r.get('timeout') and 200 <= (r.get('status') or 0) < 300]
+transport=sum(bool(r.get('error')) or bool(r.get('timeout')) for r in rows if r.get('sent_at'))
+limiter=sum(bool(r.get('limiter_error')) for r in rows if r.get('sent_at'))
+backend=json.loads((case/'backend-before.json').read_text())
+after=json.loads((case/'backend-after.json').read_text())
+api=[]
+for name in ('api1','api2'):
+    before=json.loads((case/f'{name}-before.json').read_text())
+    end=json.loads((case/f'{name}-after.json').read_text())
+    api.append(end['limiter_errors']-before['limiter_errors'])
+overload=after['overload']-backend['overload']
+if len(legit) != len(legit_ok) or summary.get('generator_dropped') != 0 or transport or limiter or any(api) or overload:
+    raise SystemExit('healthy baseline gate failed: require all legitimate successes and zero generator drops, transport/limiter errors, and backend overload')
+PY
       threshold=$(python3 - "$CASE_DIR/load/requests.jsonl" <<'PY'
 import json, math, pathlib, sys
 v=[x['latency_ms'] for x in map(json.loads,pathlib.Path(sys.argv[1]).open()) if x.get('client_class')=='legitimate' and x.get('sent_at') and 200 <= (x.get('status') or 0) < 300]
