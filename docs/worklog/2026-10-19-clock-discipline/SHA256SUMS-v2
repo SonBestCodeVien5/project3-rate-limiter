@@ -1,0 +1,9 @@
+667cdfe4f1773b457202f81e0bb2b43ac178b3acb278a337512fc5162565945f  artifacts/clock-discipline-20261019-0312-60f7dd6/tick-analysis.json
+80688998ba66409077905a0ff29f6f21eb0ce33e0d03d982f4d62b9a7549d97f  artifacts/clock-discipline-20261019-0312-60f7dd6/tick-diagnostics.txt
+0d5b1c206589eca64d3e3d13b7f74dfcc9806ad7a194af350dbf60833e4625d7  artifacts/clock-discipline-20261019-0312-60f7dd6/timex_query.c
+b52d892e8abf12ba6ade9fae0e53d889fb181627908dc7ca32626275cada14c3  artifacts/clock-discipline-20261019-0312-60f7dd6/timex_query
+609e52c051b1779fc6aa539891d2455979594e1897f9ccb9b8f8f3bb4ecff780  docs/worklog/2026-10-19-clock-discipline/README.md
+818b0055349e6d9fbe79b59c8045d5a350367c4e3955c8e53e70baff3ae081d5  docs/worklog/2026-10-19-clock-discipline/FOLLOWUP.md
+5eb41c439252f0c4d6749823ef92dca2f5af48a798ea18aefaf7d4bd0751d29f  docs/worklog/2026-10-19-clock-discipline/SHA256SUMS
+24fc30cab67424ad4c36c5ce604ab77941580b0686534911345cdf7c54732a72  docs/worklog/2026-10-19-clock-discipline/evidence.tar.gz
+214ffacdaf8e16dc0bb2a3e2aade88bbbe8965bad4ccbafbe53d2093c09c47e8  docs/worklog/2026-10-19-clock-discipline/ARCHIVE-SHA256SUMS
