@@ -1,0 +1,3465 @@
+{
+  "counter_deltas": {
+    "api1": {
+      "allowed": 557,
+      "arrivals": 0,
+      "backend_attempts": 557,
+      "backend_confirmed_arrivals": 557,
+      "backend_errors": 121,
+      "canceled": 0,
+      "fail_closed": 116,
+      "fail_open": 0,
+      "limiter_errors": 116,
+      "overload": 0,
+      "rejected": 827,
+      "requests": 1500,
+      "success": 0
+    },
+    "api2": {
+      "allowed": 588,
+      "arrivals": 0,
+      "backend_attempts": 588,
+      "backend_confirmed_arrivals": 588,
+      "backend_errors": 131,
+      "canceled": 0,
+      "fail_closed": 115,
+      "fail_open": 0,
+      "limiter_errors": 115,
+      "overload": 0,
+      "rejected": 797,
+      "requests": 1500,
+      "success": 0
+    },
+    "backend": {
+      "allowed": 0,
+      "arrivals": 1145,
+      "backend_attempts": 0,
+      "backend_confirmed_arrivals": 0,
+      "backend_errors": 0,
+      "canceled": 0,
+      "fail_closed": 0,
+      "fail_open": 0,
+      "limiter_errors": 0,
+      "overload": 252,
+      "rejected": 0,
+      "requests": 0,
+      "success": 893
+    }
+  },
+  "distributions": {
+    "abusive/reject_429": {
+      "count": 1624,
+      "latency_ms": {
+        "p50": 2.026403,
+        "p95": 2.614684,
+        "p99": 2.840265
+      }
+    },
+    "abusive/server_5xx": {
+      "count": 379,
+      "latency_ms": {
+        "p50": 12.21817,
+        "p95": 102.637496,
+        "p99": 102.921266
+      }
+    },
+    "abusive/success": {
+      "count": 397,
+      "latency_ms": {
+        "p50": 53.217815,
+        "p95": 54.216848,
+        "p99": 58.621437
+      }
+    },
+    "legitimate/server_5xx": {
+      "count": 104,
+      "latency_ms": {
+        "p50": 2.954455,
+        "p95": 102.664086,
+        "p99": 102.896118
+      }
+    },
+    "legitimate/success": {
+      "count": 496,
+      "latency_ms": {
+        "p50": 53.074817,
+        "p95": 54.230474,
+        "p99": 55.283213
+      }
+    }
+  },
+  "evidence": {
+    "decisions": {
+      "allow": 1145,
+      "fail-closed": 231,
+      "reject": 1624
+    },
+    "generator_drops": 0,
+    "policy_source": "case/policy.json; runner-recorded server configuration",
+    "requests": 3000,
+    "run_canceled": false,
+    "sent": 3000,
+    "summary_counts_match_trace": true,
+    "trace_has_unknown_decisions": false
+  },
+  "oracle": {
+    "algorithm": "fixed-window",
+    "coverage_note": "Observed counts are lower bounds. FW windows remain partial even when fresh-state trace decisions can be checked; unknown requests, fallback, outage, canceled runs, and absent state reset prevent a complete correctness claim. Equal-ms TB decisions compare aggregate allow counts.",
+    "inconclusive_groups": [
+      {
+        "allowed_observed": 18,
+        "client_key": "abusive-0001",
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "reason": "initial state, missing decision, incomplete trace, outage, or canceled run",
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      }
+    ],
+    "observed_global_accepted_envelope": [
+      {
+        "allowed_observed": 15,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 18,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 18,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 2,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 3,
+        "client_key": "legitimate-0001",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 2,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 3,
+        "client_key": "legitimate-0002",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 2,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 3,
+        "client_key": "legitimate-0003",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 2,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 3,
+        "client_key": "legitimate-0004",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "shared_quota_overshoot_lower_bound": 0,
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      }
+    ],
+    "scope": "shared",
+    "status": "inconclusive",
+    "trace_decision_checks": [
+      {
+        "allowed_observed": 15,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 15,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 18,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 18,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 18,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 37,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 80,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 20,
+        "client_key": "abusive-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 65,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 2,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 2,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 3,
+        "client_key": "legitimate-0002",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 3,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 2,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 2,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 3,
+        "client_key": "legitimate-0001",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 3,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 2,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 2,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 3,
+        "client_key": "legitimate-0003",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 3,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401728000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 2,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 2,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 3,
+        "client_key": "legitimate-0004",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 3,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401729000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401730000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401731000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401732000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401733000
+      },
+      {
+        "allowed_observed": 1,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 1,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401735000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401736000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401737000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401738000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401739000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401740000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401741000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401742000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401743000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401744000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401745000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401746000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401747000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401748000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401749000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401750000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401751000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401752000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401753000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401754000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401755000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401756000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401757000
+      },
+      {
+        "allowed_observed": 4,
+        "client_key": "legitimate-0005",
+        "expected_allows_from_fresh_state": null,
+        "instance": "shared",
+        "observed_overshoot_lower_bound": 0,
+        "observed_requests": 4,
+        "status": "inconclusive",
+        "window_complete": false,
+        "window_start_ms": 1792401758000
+      }
+    ],
+    "uncertain_keys": 6,
+    "violations": []
+  },
+  "outage": {
+    "events_utc": {
+      "pause_completed": "2026-10-19T09:22:13.259128+00:00",
+      "pause_requested": "2026-10-19T09:22:12.858701+00:00",
+      "unpause_completed": "2026-10-19T09:22:15.644570+00:00",
+      "unpause_requested": "2026-10-19T09:22:15.264027+00:00"
+    },
+    "fallback_decisions_by_decision_phase": {
+      "outage": 193,
+      "unpausing": 38
+    },
+    "phase_basis": "sent_at; transition phases kept separate",
+    "phases": {
+      "after": {
+        "fallback_decisions": 0,
+        "legitimate_availability": 0.9006479481641468,
+        "legitimate_sent": 463,
+        "legitimate_success": 417,
+        "sent": 2316
+      },
+      "before": {
+        "fallback_decisions": 0,
+        "legitimate_availability": 0.9012345679012346,
+        "legitimate_sent": 81,
+        "legitimate_success": 73,
+        "sent": 405
+      },
+      "outage": {
+        "fallback_decisions": 200,
+        "legitimate_availability": 0.0,
+        "legitimate_sent": 40,
+        "legitimate_success": 0,
+        "sent": 200
+      },
+      "pausing": {
+        "fallback_decisions": 3,
+        "legitimate_availability": 0.625,
+        "legitimate_sent": 8,
+        "legitimate_success": 5,
+        "sent": 40
+      },
+      "unpausing": {
+        "fallback_decisions": 28,
+        "legitimate_availability": 0.125,
+        "legitimate_sent": 8,
+        "legitimate_success": 1,
+        "sent": 39
+      }
+    },
+    "recovery": {
+      "first_legitimate_success_after_unpause_ms": 125.61488151550293,
+      "reason": "insufficient consecutive full clean windows",
+      "stable_recovery_ms": null,
+      "status": "inconclusive"
+    }
+  },
+  "phase_distributions": {
+    "measurement": {
+      "abusive/reject_429": {
+        "count": 1624,
+        "latency_ms": {
+          "p50": 2.026403,
+          "p95": 2.614684,
+          "p99": 2.840265
+        }
+      },
+      "abusive/server_5xx": {
+        "count": 379,
+        "latency_ms": {
+          "p50": 12.21817,
+          "p95": 102.637496,
+          "p99": 102.921266
+        }
+      },
+      "abusive/success": {
+        "count": 397,
+        "latency_ms": {
+          "p50": 53.217815,
+          "p95": 54.216848,
+          "p99": 58.621437
+        }
+      },
+      "legitimate/server_5xx": {
+        "count": 104,
+        "latency_ms": {
+          "p50": 2.954455,
+          "p95": 102.664086,
+          "p99": 102.896118
+        }
+      },
+      "legitimate/success": {
+        "count": 496,
+        "latency_ms": {
+          "p50": 53.074817,
+          "p95": 54.230474,
+          "p99": 55.283213
+        }
+      }
+    }
+  },
+  "policy": {
+    "algorithm": "fixed-window",
+    "capacity": 20,
+    "fail_policy": "closed",
+    "limit": 20,
+    "mode": "redis",
+    "namespace": "outage-112105-closed-outage",
+    "rate_per_sec": 20.0,
+    "schema_version": 1,
+    "state_reset": true,
+    "window_ms": 1000
+  },
+  "redis_resources": null,
+  "run_id": "closed-outage",
+  "schema_version": 1
+}

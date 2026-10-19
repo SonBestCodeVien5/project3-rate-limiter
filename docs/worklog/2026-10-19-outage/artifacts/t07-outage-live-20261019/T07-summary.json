@@ -1,0 +1,572 @@
+{
+  "revision": "9bf560378d4bf93305c146bed67dfbd84bbe4250",
+  "git_status": "?? clock-observer-pre-outage/\n",
+  "outage_settings": {
+    "algorithm": "fixed-window",
+    "duration_seconds": 30,
+    "total_rps": 100,
+    "legitimate_rps": 20,
+    "legitimate_clients": 5,
+    "max_inflight": 200,
+    "request_timeout_seconds": 2,
+    "pause_at_seconds": 4,
+    "pause_for_seconds": 2,
+    "api_instances": 2,
+    "limit": 20,
+    "window_ms": 1000,
+    "backend_capacity": 4,
+    "backend_service_ms": 50,
+    "recovery_window_ms": 1000,
+    "recovery_min_samples": 5,
+    "recovery_consecutive": 3,
+    "recovery_threshold_rule": "1.5 x single healthy calibration run legitimate successful-request p95, fixed before outage"
+  },
+  "cases": {
+    "open": {
+      "healthy": {
+        "policy": {
+          "schema_version": 1,
+          "mode": "redis",
+          "algorithm": "fixed-window",
+          "fail_policy": "open",
+          "namespace": "outage-112105-open-healthy",
+          "limit": 20,
+          "window_ms": 1000,
+          "capacity": 20,
+          "rate_per_sec": 20.0,
+          "state_reset": true
+        },
+        "load_config": {
+          "target": "http://127.0.0.1:18107/work",
+          "run_id": "open-healthy",
+          "profile": "mixed",
+          "duration_ns": 30000000000,
+          "rps": 100,
+          "legitimate_rps": 20,
+          "legitimate_clients": 5,
+          "max_inflight": 200,
+          "timeout_ns": 2000000000,
+          "max_schedule_lag_ns": 100000000,
+          "burst_start_ns": 0,
+          "burst_duration_ns": 0,
+          "burst_rps": 0,
+          "concurrent_at_ns": 0,
+          "concurrent_count": 0,
+          "mode_label": "redis",
+          "algorithm_label": "fixed-window",
+          "fail_policy_label": "open"
+        },
+        "load_summary": {
+          "scheduled": 3000,
+          "generator_dropped": 0,
+          "sent": 3000,
+          "http_2xx": 956,
+          "http_429": 1787,
+          "http_5xx": 257,
+          "transport_errors": 0,
+          "timeouts": 0,
+          "legitimate_sent": 600,
+          "legitimate_successful": 538,
+          "sent_per_second": 99.86460611357866,
+          "legitimate_goodput_per_second": 17.90905269636844,
+          "sent_latency": {
+            "p50_ms": 2.504436,
+            "p95_ms": 53.867795,
+            "p99_ms": 54.379102
+          },
+          "legitimate_success_latency": {
+            "p50_ms": 53.239503,
+            "p95_ms": 54.158067,
+            "p99_ms": 54.495043
+          },
+          "schedule_lag": {
+            "p50_ms": 0.792575,
+            "p95_ms": 1.240556,
+            "p99_ms": 1.401108
+          },
+          "decisions": {
+            "allow": 1213,
+            "reject": 1787
+          }
+        },
+        "clock_quality": {
+          "max_schedule_residual_ms": 0.10176150830078123,
+          "max_response_latency_residual_ms": 0.10142351989746112
+        },
+        "api_counter_deltas": [
+          {
+            "requests": 1500,
+            "allowed": 609,
+            "rejected": 891,
+            "fail_open": 0,
+            "fail_closed": 0,
+            "limiter_errors": 0,
+            "backend_attempts": 609,
+            "backend_confirmed_arrivals": 609,
+            "backend_errors": 139
+          },
+          {
+            "requests": 1500,
+            "allowed": 604,
+            "rejected": 896,
+            "fail_open": 0,
+            "fail_closed": 0,
+            "limiter_errors": 0,
+            "backend_attempts": 604,
+            "backend_confirmed_arrivals": 604,
+            "backend_errors": 118
+          }
+        ],
+        "backend_counter_delta": {
+          "arrivals": 1213,
+          "success": 956,
+          "overload": 257,
+          "backend_errors": 0
+        },
+        "reconciled": {
+          "request_count": true,
+          "decisions": true,
+          "api_backend_attempts_to_backend_arrivals": true,
+          "api_backend_confirmed_to_backend_arrivals": true,
+          "backend_outcomes_to_arrivals": true
+        },
+        "runtime_image_ids": [
+          "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+          "sha256:15bb9c03fadc5681db56d253802a7db24a2fd2a268ce964241d4e53cf8437d2f",
+          "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+          "sha256:b63684a24a0b9bfc194b8a2e96fe11a9c42f050ab4d37fe01cdc3d7da48cb11f",
+          "sha256:ca7d9f24f1655ad95d9cd900392aad3e8e7963223235d8d71f001be4ab06f316"
+        ],
+        "images_inspected_before_load": true
+      },
+      "outage": {
+        "policy": {
+          "schema_version": 1,
+          "mode": "redis",
+          "algorithm": "fixed-window",
+          "fail_policy": "open",
+          "namespace": "outage-112105-open-outage",
+          "limit": 20,
+          "window_ms": 1000,
+          "capacity": 20,
+          "rate_per_sec": 20.0,
+          "state_reset": true
+        },
+        "load_config": {
+          "target": "http://127.0.0.1:18107/work",
+          "run_id": "open-outage",
+          "profile": "mixed",
+          "duration_ns": 30000000000,
+          "rps": 100,
+          "legitimate_rps": 20,
+          "legitimate_clients": 5,
+          "max_inflight": 200,
+          "timeout_ns": 2000000000,
+          "max_schedule_lag_ns": 100000000,
+          "burst_start_ns": 0,
+          "burst_duration_ns": 0,
+          "burst_rps": 0,
+          "concurrent_at_ns": 0,
+          "concurrent_count": 0,
+          "mode_label": "redis",
+          "algorithm_label": "fixed-window",
+          "fail_policy_label": "open"
+        },
+        "load_summary": {
+          "scheduled": 3000,
+          "generator_dropped": 0,
+          "sent": 3000,
+          "http_2xx": 1032,
+          "http_429": 1624,
+          "http_5xx": 344,
+          "transport_errors": 0,
+          "timeouts": 0,
+          "legitimate_sent": 600,
+          "legitimate_successful": 496,
+          "sent_per_second": 99.98259394356879,
+          "legitimate_goodput_per_second": 16.530455532003373,
+          "sent_latency": {
+            "p50_ms": 2.550704,
+            "p95_ms": 138.2013,
+            "p99_ms": 153.50321
+          },
+          "legitimate_success_latency": {
+            "p50_ms": 53.2567,
+            "p95_ms": 54.98187,
+            "p99_ms": 153.301996
+          },
+          "schedule_lag": {
+            "p50_ms": 0.789466,
+            "p95_ms": 1.253333,
+            "p99_ms": 1.37835
+          },
+          "decisions": {
+            "allow": 1146,
+            "fail-open": 230,
+            "reject": 1624
+          }
+        },
+        "clock_quality": {
+          "max_schedule_residual_ms": 0.0007368013916015936,
+          "max_response_latency_residual_ms": 0.0011502423095701708
+        },
+        "api_counter_deltas": [
+          {
+            "requests": 1500,
+            "allowed": 544,
+            "rejected": 841,
+            "fail_open": 115,
+            "fail_closed": 0,
+            "limiter_errors": 115,
+            "backend_attempts": 659,
+            "backend_confirmed_arrivals": 659,
+            "backend_errors": 169
+          },
+          {
+            "requests": 1500,
+            "allowed": 602,
+            "rejected": 783,
+            "fail_open": 115,
+            "fail_closed": 0,
+            "limiter_errors": 115,
+            "backend_attempts": 717,
+            "backend_confirmed_arrivals": 717,
+            "backend_errors": 175
+          }
+        ],
+        "backend_counter_delta": {
+          "arrivals": 1376,
+          "success": 1032,
+          "overload": 344,
+          "backend_errors": 0
+        },
+        "reconciled": {
+          "request_count": true,
+          "decisions": true,
+          "api_backend_attempts_to_backend_arrivals": true,
+          "api_backend_confirmed_to_backend_arrivals": true,
+          "backend_outcomes_to_arrivals": true
+        },
+        "runtime_image_ids": [
+          "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+          "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+          "sha256:5e3401bc16fb4a6dce352d7a24d212fabd47b5910c0c8c8a981e301edb3bf940",
+          "sha256:8c3cd1b6ef8c927b89e8e30c5f5133dd59b09b3abc1f09ebf3baffdd95fee491",
+          "sha256:ee4f82a0afa11abe0c1eca591cd70d73273a2eb7610e7c7f4240590d22f5f1b9"
+        ],
+        "images_inspected_before_load": true
+      },
+      "healthy_derived_recovery_p95_ms": 81.2371005,
+      "analysis": {
+        "recovery": {
+          "first_legitimate_success_after_unpause_ms": 57.68299102783203,
+          "reason": "insufficient consecutive full clean windows",
+          "stable_recovery_ms": null,
+          "status": "inconclusive"
+        },
+        "phase_legitimate_availability": {
+          "after": 0.8660907127429806,
+          "before": 0.8271604938271605,
+          "outage": 0.45,
+          "pausing": 0.7777777777777778,
+          "unpausing": 0.42857142857142855
+        },
+        "fallback_decisions_by_decision_phase": {
+          "outage": 193,
+          "unpausing": 37
+        }
+      },
+      "events": [
+        {
+          "at": "2026-10-19T09:20:38.781908721Z",
+          "event": "pause_requested"
+        },
+        {
+          "at": "2026-10-19T09:20:39.193844311Z",
+          "event": "pause_completed"
+        },
+        {
+          "at": "2026-10-19T09:20:41.198202055Z",
+          "event": "unpause_requested"
+        },
+        {
+          "at": "2026-10-19T09:20:41.589445888Z",
+          "event": "unpause_completed"
+        }
+      ]
+    },
+    "closed": {
+      "healthy": {
+        "policy": {
+          "schema_version": 1,
+          "mode": "redis",
+          "algorithm": "fixed-window",
+          "fail_policy": "closed",
+          "namespace": "outage-112105-closed-healthy",
+          "limit": 20,
+          "window_ms": 1000,
+          "capacity": 20,
+          "rate_per_sec": 20.0,
+          "state_reset": true
+        },
+        "load_config": {
+          "target": "http://127.0.0.1:18107/work",
+          "run_id": "closed-healthy",
+          "profile": "mixed",
+          "duration_ns": 30000000000,
+          "rps": 100,
+          "legitimate_rps": 20,
+          "legitimate_clients": 5,
+          "max_inflight": 200,
+          "timeout_ns": 2000000000,
+          "max_schedule_lag_ns": 100000000,
+          "burst_start_ns": 0,
+          "burst_duration_ns": 0,
+          "burst_rps": 0,
+          "concurrent_at_ns": 0,
+          "concurrent_count": 0,
+          "mode_label": "redis",
+          "algorithm_label": "fixed-window",
+          "fail_policy_label": "closed"
+        },
+        "load_summary": {
+          "scheduled": 3000,
+          "generator_dropped": 0,
+          "sent": 3000,
+          "http_2xx": 960,
+          "http_429": 1780,
+          "http_5xx": 260,
+          "transport_errors": 0,
+          "timeouts": 0,
+          "legitimate_sent": 600,
+          "legitimate_successful": 533,
+          "sent_per_second": 99.98622691057456,
+          "legitimate_goodput_per_second": 17.76421964777875,
+          "sent_latency": {
+            "p50_ms": 2.38101,
+            "p95_ms": 53.687488,
+            "p99_ms": 54.279201
+          },
+          "legitimate_success_latency": {
+            "p50_ms": 53.117266,
+            "p95_ms": 53.982665,
+            "p99_ms": 54.454536
+          },
+          "schedule_lag": {
+            "p50_ms": 0.783583,
+            "p95_ms": 1.271148,
+            "p99_ms": 1.409707
+          },
+          "decisions": {
+            "allow": 1220,
+            "reject": 1780
+          }
+        },
+        "clock_quality": {
+          "max_schedule_residual_ms": 0.024613904296875044,
+          "max_response_latency_residual_ms": 0.024412602294921815
+        },
+        "api_counter_deltas": [
+          {
+            "requests": 1500,
+            "allowed": 631,
+            "rejected": 869,
+            "fail_open": 0,
+            "fail_closed": 0,
+            "limiter_errors": 0,
+            "backend_attempts": 631,
+            "backend_confirmed_arrivals": 631,
+            "backend_errors": 139
+          },
+          {
+            "requests": 1500,
+            "allowed": 589,
+            "rejected": 911,
+            "fail_open": 0,
+            "fail_closed": 0,
+            "limiter_errors": 0,
+            "backend_attempts": 589,
+            "backend_confirmed_arrivals": 589,
+            "backend_errors": 121
+          }
+        ],
+        "backend_counter_delta": {
+          "arrivals": 1220,
+          "success": 960,
+          "overload": 260,
+          "backend_errors": 0
+        },
+        "reconciled": {
+          "request_count": true,
+          "decisions": true,
+          "api_backend_attempts_to_backend_arrivals": true,
+          "api_backend_confirmed_to_backend_arrivals": true,
+          "backend_outcomes_to_arrivals": true
+        },
+        "runtime_image_ids": [
+          "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+          "sha256:1df7d64b4beb2dda4f6f174fc60de3afec3e2780f16ea63d9e9bc8f2e841f4e8",
+          "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+          "sha256:4f6090c83068cdb70ad7e286700066323f9ca8c6da6ede08f2b5682c5a52a1d2",
+          "sha256:b9dd19fcabf64ce99926f7fa407420015a8fde1897e430ccd3707d9e72b37fb2"
+        ],
+        "images_inspected_before_load": true
+      },
+      "outage": {
+        "policy": {
+          "schema_version": 1,
+          "mode": "redis",
+          "algorithm": "fixed-window",
+          "fail_policy": "closed",
+          "namespace": "outage-112105-closed-outage",
+          "limit": 20,
+          "window_ms": 1000,
+          "capacity": 20,
+          "rate_per_sec": 20.0,
+          "state_reset": true
+        },
+        "load_config": {
+          "target": "http://127.0.0.1:18107/work",
+          "run_id": "closed-outage",
+          "profile": "mixed",
+          "duration_ns": 30000000000,
+          "rps": 100,
+          "legitimate_rps": 20,
+          "legitimate_clients": 5,
+          "max_inflight": 200,
+          "timeout_ns": 2000000000,
+          "max_schedule_lag_ns": 100000000,
+          "burst_start_ns": 0,
+          "burst_duration_ns": 0,
+          "burst_rps": 0,
+          "concurrent_at_ns": 0,
+          "concurrent_count": 0,
+          "mode_label": "redis",
+          "algorithm_label": "fixed-window",
+          "fail_policy_label": "closed"
+        },
+        "load_summary": {
+          "scheduled": 3000,
+          "generator_dropped": 0,
+          "sent": 3000,
+          "http_2xx": 893,
+          "http_429": 1624,
+          "http_5xx": 483,
+          "transport_errors": 0,
+          "timeouts": 0,
+          "legitimate_sent": 600,
+          "legitimate_successful": 496,
+          "sent_per_second": 99.9852996746467,
+          "legitimate_goodput_per_second": 16.53090287954159,
+          "sent_latency": {
+            "p50_ms": 2.418052,
+            "p95_ms": 101.92242,
+            "p99_ms": 102.604101
+          },
+          "legitimate_success_latency": {
+            "p50_ms": 53.074817,
+            "p95_ms": 54.230474,
+            "p99_ms": 55.283213
+          },
+          "schedule_lag": {
+            "p50_ms": 0.768993,
+            "p95_ms": 1.236921,
+            "p99_ms": 1.36106
+          },
+          "decisions": {
+            "allow": 1145,
+            "fail-closed": 231,
+            "reject": 1624
+          }
+        },
+        "clock_quality": {
+          "max_schedule_residual_ms": 0.000714169555664057,
+          "max_response_latency_residual_ms": 0.0010957711181660557
+        },
+        "api_counter_deltas": [
+          {
+            "requests": 1500,
+            "allowed": 557,
+            "rejected": 827,
+            "fail_open": 0,
+            "fail_closed": 116,
+            "limiter_errors": 116,
+            "backend_attempts": 557,
+            "backend_confirmed_arrivals": 557,
+            "backend_errors": 121
+          },
+          {
+            "requests": 1500,
+            "allowed": 588,
+            "rejected": 797,
+            "fail_open": 0,
+            "fail_closed": 115,
+            "limiter_errors": 115,
+            "backend_attempts": 588,
+            "backend_confirmed_arrivals": 588,
+            "backend_errors": 131
+          }
+        ],
+        "backend_counter_delta": {
+          "arrivals": 1145,
+          "success": 893,
+          "overload": 252,
+          "backend_errors": 0
+        },
+        "reconciled": {
+          "request_count": true,
+          "decisions": true,
+          "api_backend_attempts_to_backend_arrivals": true,
+          "api_backend_confirmed_to_backend_arrivals": true,
+          "backend_outcomes_to_arrivals": true
+        },
+        "runtime_image_ids": [
+          "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+          "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+          "sha256:64cb8f01a5c4c708e78d7227a9f8c32ab279c633e3ee1007e5b22504f2dfa0f7",
+          "sha256:7f567dca54a129e768cd926888150504dcc8c464f5168009e9ea2329b2f16932",
+          "sha256:df66d0e5374c640eb7d170918646442a0233095aead50e02b35f88cef16a87f3"
+        ],
+        "images_inspected_before_load": true
+      },
+      "healthy_derived_recovery_p95_ms": 80.9739975,
+      "analysis": {
+        "recovery": {
+          "first_legitimate_success_after_unpause_ms": 125.61488151550293,
+          "reason": "insufficient consecutive full clean windows",
+          "stable_recovery_ms": null,
+          "status": "inconclusive"
+        },
+        "phase_legitimate_availability": {
+          "after": 0.9006479481641468,
+          "before": 0.9012345679012346,
+          "outage": 0.0,
+          "pausing": 0.625,
+          "unpausing": 0.125
+        },
+        "fallback_decisions_by_decision_phase": {
+          "outage": 193,
+          "unpausing": 38
+        }
+      },
+      "events": [
+        {
+          "at": "2026-10-19T09:22:12.858701559Z",
+          "event": "pause_requested"
+        },
+        {
+          "at": "2026-10-19T09:22:13.259128696Z",
+          "event": "pause_completed"
+        },
+        {
+          "at": "2026-10-19T09:22:15.264027302Z",
+          "event": "unpause_requested"
+        },
+        {
+          "at": "2026-10-19T09:22:15.644570536Z",
+          "event": "unpause_completed"
+        }
+      ]
+    }
+  }
+}

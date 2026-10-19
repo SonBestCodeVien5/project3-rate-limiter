@@ -1,0 +1,1 @@
+{"algorithm":"fixed-window","allowed":0,"arrivals":1376,"backend_attempts":0,"backend_confirmed_arrivals":0,"backend_errors":0,"canceled":0,"fail_closed":0,"fail_open":0,"instance_id":"backend-1","limiter_errors":0,"mode":"local","overload":344,"rejected":0,"requests":0,"role":"backend","success":1032}

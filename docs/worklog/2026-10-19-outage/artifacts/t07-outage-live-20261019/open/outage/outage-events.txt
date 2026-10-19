@@ -1,0 +1,6 @@
+2026-10-19T09:20:38.781908721Z pause_requested
+ Container project3-outage-112105-redis-1 Paused 
+2026-10-19T09:20:39.193844311Z pause_completed
+2026-10-19T09:20:41.198202055Z unpause_requested
+ Container project3-outage-112105-redis-1 Unpaused 
+2026-10-19T09:20:41.589445888Z unpause_completed

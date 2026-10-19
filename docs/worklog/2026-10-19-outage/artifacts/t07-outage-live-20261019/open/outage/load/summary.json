@@ -1,0 +1,61 @@
+{
+  "run_id": "open-outage",
+  "started_at": "2026-10-19T16:20:34.741566437+07:00",
+  "ended_at": "2026-10-19T16:21:04.746789153+07:00",
+  "elapsed_seconds_including_drain": 30.005222726,
+  "scheduled": 3000,
+  "generator_dropped": 0,
+  "sent": 3000,
+  "http_completed": 3000,
+  "http_2xx": 1032,
+  "http_429": 1624,
+  "http_5xx": 344,
+  "transport_errors": 0,
+  "timeouts": 0,
+  "backend_confirmed_arrivals": 1376,
+  "legitimate_sent": 600,
+  "legitimate_successful": 496,
+  "legitimate_goodput_per_second": 16.530455532003373,
+  "sent_per_second": 99.98259394356879,
+  "completed_per_second": 99.98259394356879,
+  "sent_latency": {
+    "p50_ms": 2.550704,
+    "p95_ms": 138.2013,
+    "p99_ms": 153.50321
+  },
+  "legitimate_success_latency": {
+    "p50_ms": 53.2567,
+    "p95_ms": 54.98187,
+    "p99_ms": 153.301996
+  },
+  "schedule_lag": {
+    "p50_ms": 0.789466,
+    "p95_ms": 1.253333,
+    "p99_ms": 1.37835
+  },
+  "latency_by_decision": {
+    "allow": {
+      "p50_ms": 53.033937,
+      "p95_ms": 54.191007,
+      "p99_ms": 54.98187
+    },
+    "fail-open": {
+      "p50_ms": 152.687435,
+      "p95_ms": 154.008134,
+      "p99_ms": 154.809091
+    },
+    "reject": {
+      "p50_ms": 2.122198,
+      "p95_ms": 2.709012,
+      "p99_ms": 2.966929
+    }
+  },
+  "decisions": {
+    "allow": 1146,
+    "fail-open": 230,
+    "reject": 1624
+  },
+  "drop_reasons": {},
+  "canceled": false,
+  "notes": "Pilot observations only; rates use elapsed time including final drain. Zero percentile with no samples means unavailable. Transport errors include response-body errors; timeouts are a subset. HTTP status counts may overlap body-read errors. Backend arrivals are confirmed response headers, not authoritative backend counters. No quota oracle or overshoot inference. Mode/algorithm/policy are user-supplied labels, not server verification."
+}

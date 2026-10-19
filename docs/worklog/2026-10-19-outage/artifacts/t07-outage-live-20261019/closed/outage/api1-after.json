@@ -1,0 +1,1 @@
+{"algorithm":"fixed-window","allowed":557,"arrivals":0,"backend_attempts":557,"backend_confirmed_arrivals":557,"backend_errors":121,"canceled":0,"fail_closed":116,"fail_open":0,"instance_id":"api-1","limiter_errors":116,"mode":"redis","overload":0,"rejected":827,"requests":1500,"role":"api","success":0}

@@ -1,0 +1,167 @@
+ Image project3-outage-112105-api2 Building 
+ Image project3-outage-112105-backend Building 
+ Image project3-outage-112105-api1 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.45kB done
+#1 DONE 0.0s
+
+#2 [api1 internal] load build definition from Dockerfile
+#2 transferring dockerfile: 368B done
+#2 DONE 0.0s
+
+#3 [api2 internal] load metadata for docker.io/library/golang:1.26.1-alpine
+#3 DONE 1.2s
+
+#4 [api2 internal] load metadata for docker.io/library/alpine:3.23
+#4 DONE 1.2s
+
+#5 [api2 internal] load .dockerignore
+#5 transferring context: 91B done
+#5 DONE 0.0s
+
+#6 [api1 build 1/7] FROM docker.io/library/golang:1.26.1-alpine@sha256:2389ebfa5b7f43eeafbd6be0c3700cc46690ef842ad962f6c5bd6be49ed82039
+#6 resolve docker.io/library/golang:1.26.1-alpine@sha256:2389ebfa5b7f43eeafbd6be0c3700cc46690ef842ad962f6c5bd6be49ed82039 0.0s done
+#6 DONE 0.1s
+
+#7 [backend stage-1 1/3] FROM docker.io/library/alpine:3.23@sha256:85fe1e81d6758c208f3e1eed4338a1997e19d4be002d4dd32d3100c9a8c010a0
+#7 resolve docker.io/library/alpine:3.23@sha256:85fe1e81d6758c208f3e1eed4338a1997e19d4be002d4dd32d3100c9a8c010a0 0.0s done
+#7 DONE 0.1s
+
+#8 [api2 internal] load build context
+#8 transferring context: 1.19kB done
+#8 DONE 0.0s
+
+#9 [api2 build 5/7] COPY cmd/server ./cmd/server
+#9 CACHED
+
+#10 [api2 build 3/7] COPY go.mod go.sum ./
+#10 CACHED
+
+#11 [api2 stage-1 2/3] RUN adduser -D -u 10001 app
+#11 CACHED
+
+#12 [api2 build 4/7] RUN go mod download
+#12 CACHED
+
+#13 [api2 build 6/7] COPY internal ./internal
+#13 CACHED
+
+#14 [api2 build 7/7] RUN CGO_ENABLED=0 go build -trimpath -o /server ./cmd/server
+#14 CACHED
+
+#15 [api2 build 2/7] WORKDIR /src
+#15 CACHED
+
+#16 [api2 stage-1 3/3] COPY --from=build /server /server
+#16 CACHED
+
+#13 [api1 build 6/7] COPY internal ./internal
+#13 CACHED
+
+#11 [api1 stage-1 2/3] RUN adduser -D -u 10001 app
+#11 CACHED
+
+#15 [api1 build 2/7] WORKDIR /src
+#15 CACHED
+
+#10 [api1 build 3/7] COPY go.mod go.sum ./
+#10 CACHED
+
+#12 [api1 build 4/7] RUN go mod download
+#12 CACHED
+
+#14 [api1 build 7/7] RUN CGO_ENABLED=0 go build -trimpath -o /server ./cmd/server
+#14 CACHED
+
+#9 [api1 build 5/7] COPY cmd/server ./cmd/server
+#9 CACHED
+
+#16 [backend stage-1 3/3] COPY --from=build /server /server
+#16 CACHED
+
+#17 [api2] exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:77d79d94350956c174691b3d37eab2922a7775158c1022fb71cb798f0cf03847 done
+#17 exporting config sha256:5f48c0612be4d56ca810a1dd937ed8cecef6df43f8820ea34ba1b18013853603 done
+#17 exporting attestation manifest sha256:f8c68015f389d14274b32e7a0a22c71ecdcd572671357cb29921a3081eb59c18 0.1s done
+#17 exporting manifest list sha256:5e3401bc16fb4a6dce352d7a24d212fabd47b5910c0c8c8a981e301edb3bf940
+#17 exporting manifest list sha256:5e3401bc16fb4a6dce352d7a24d212fabd47b5910c0c8c8a981e301edb3bf940 0.1s done
+#17 naming to docker.io/library/project3-outage-112105-api2:latest 0.0s done
+#17 unpacking to docker.io/library/project3-outage-112105-api2:latest 0.0s done
+#17 DONE 0.3s
+
+#18 [api1] exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:2b5f4ae8a30e65d84352f810ffa1dfbb25bf85baf1b5ae62e59823a9436d5247 done
+#18 exporting config sha256:0372d317e2da47b1e3df7f7d5834ccb27fe80876bd78997a18143521b0a01162 done
+#18 exporting attestation manifest sha256:4f134b23665edd303a83aa5277855ea38640da48ca821b413812088c6ea80736 0.1s done
+#18 exporting manifest list sha256:ee4f82a0afa11abe0c1eca591cd70d73273a2eb7610e7c7f4240590d22f5f1b9 0.1s done
+#18 naming to docker.io/library/project3-outage-112105-api1:latest 0.0s done
+#18 unpacking to docker.io/library/project3-outage-112105-api1:latest 0.0s done
+#18 DONE 0.3s
+
+#19 [backend] exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:f58687f3e3a347e3c7ccc34e2c89a98b30d30c039efb93d657254c9307b863ff done
+#19 exporting config sha256:82c226148d7e1f5579314d7bda198bb31aa5197b263dddf4b34c3272bfbdc703 done
+#19 exporting attestation manifest sha256:31b5991a16d18142b318ccb8fb7996bf1442569646497398549d0b5af9e07347 0.1s done
+#19 exporting manifest list sha256:8c3cd1b6ef8c927b89e8e30c5f5133dd59b09b3abc1f09ebf3baffdd95fee491 0.1s done
+#19 naming to docker.io/library/project3-outage-112105-backend:latest 0.0s done
+#19 unpacking to docker.io/library/project3-outage-112105-backend:latest 0.0s done
+#19 DONE 0.3s
+
+#20 [api2] resolving provenance for metadata file
+#20 DONE 0.1s
+
+#21 [api1] resolving provenance for metadata file
+#21 DONE 0.1s
+
+#22 [backend] resolving provenance for metadata file
+#22 DONE 0.0s
+ Image project3-outage-112105-backend Built 
+ Image project3-outage-112105-api2 Built 
+ Image project3-outage-112105-api1 Built 
+ Network project3-outage-112105_default Creating 
+ Network project3-outage-112105_default Created 
+ Container project3-outage-112105-redis-1 Creating 
+ Container project3-outage-112105-backend-1 Creating 
+ Container project3-outage-112105-backend-1 Created 
+ Container project3-outage-112105-redis-1 Created 
+ Container project3-outage-112105-api2-1 Creating 
+ Container project3-outage-112105-api1-1 Creating 
+ Container project3-outage-112105-api2-1 Created 
+ Container project3-outage-112105-api1-1 Created 
+ Container project3-outage-112105-nginx-1 Creating 
+ Container project3-outage-112105-nginx-1 Created 
+ Container project3-outage-112105-redis-1 Starting 
+ Container project3-outage-112105-backend-1 Starting 
+ Container project3-outage-112105-backend-1 Started 
+ Container project3-outage-112105-redis-1 Started 
+ Container project3-outage-112105-backend-1 Waiting 
+ Container project3-outage-112105-redis-1 Waiting 
+ Container project3-outage-112105-backend-1 Waiting 
+ Container project3-outage-112105-redis-1 Waiting 
+ Container project3-outage-112105-redis-1 Healthy 
+ Container project3-outage-112105-redis-1 Healthy 
+ Container project3-outage-112105-backend-1 Healthy 
+ Container project3-outage-112105-api2-1 Starting 
+ Container project3-outage-112105-backend-1 Healthy 
+ Container project3-outage-112105-api1-1 Starting 
+ Container project3-outage-112105-api1-1 Started 
+ Container project3-outage-112105-api2-1 Started 
+ Container project3-outage-112105-api2-1 Waiting 
+ Container project3-outage-112105-api1-1 Waiting 
+ Container project3-outage-112105-api1-1 Healthy 
+ Container project3-outage-112105-api2-1 Healthy 
+ Container project3-outage-112105-nginx-1 Starting 
+ Container project3-outage-112105-nginx-1 Started 
+ Container project3-outage-112105-api2-1 Waiting 
+ Container project3-outage-112105-backend-1 Waiting 
+ Container project3-outage-112105-nginx-1 Waiting 
+ Container project3-outage-112105-redis-1 Waiting 
+ Container project3-outage-112105-api1-1 Waiting 
+ Container project3-outage-112105-api2-1 Healthy 
+ Container project3-outage-112105-nginx-1 Healthy 
+ Container project3-outage-112105-redis-1 Healthy 
+ Container project3-outage-112105-backend-1 Healthy 
+ Container project3-outage-112105-api1-1 Healthy 

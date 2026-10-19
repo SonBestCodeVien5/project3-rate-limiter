@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "mode": "redis",
+  "algorithm": "fixed-window",
+  "fail_policy": "closed",
+  "namespace": "outage-112105-closed-healthy",
+  "limit": 20,
+  "window_ms": 1000,
+  "capacity": 20,
+  "rate_per_sec": 20.0,
+  "state_reset": true
+}

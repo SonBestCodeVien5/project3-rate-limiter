@@ -1,0 +1,302 @@
+[
+    {
+        "Id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+        "RepoTags": [
+            "redis:7.4.2-alpine"
+        ],
+        "RepoDigests": [
+            "redis@sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-01-06T16:14:31Z",
+        "Config": {
+            "ExposedPorts": {
+                "6379/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.17",
+                "REDIS_VERSION=7.4.2",
+                "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-7.4.2.tar.gz",
+                "REDIS_DOWNLOAD_SHA=4ddebbf09061cbb589011786febdb34f29767dd7f89dbe712d2b68e808af6a1f"
+            ],
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "Cmd": [
+                "redis-server"
+            ],
+            "Volumes": {
+                "/data": {}
+            },
+            "WorkingDir": "/data"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 17238094,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:08000c18d16dadf9553d747a58cf44023423a9ab010aab96cf263d2216b8b350",
+                "sha256:8e7fb94f38271eff7a7a7bdcc35bfe44bdafd6a3b8fb1440f08c1e118d16bde3",
+                "sha256:4364ea111b97ea1d2e09c0f8e560e024b48836eb31797e01fc2a1b258eee6e05",
+                "sha256:234600d36ef67257422e96836175d7442a3457bea0e5d8142e8c38f931101e75",
+                "sha256:def9013b2f988109b6afe46c1c6a4c7f71fb8c5e8839ef867e28ed58fa26dcc0",
+                "sha256:9854cb3a240e484a0f1013d5a3dce703dda3d38d964b7608964c27fd033b8fdd",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:a2d2f15d144d6d5beb84d80a7da0af41862298dfb3d9e7b4d7d73de55b9449f1"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-11T02:35:57.48941643Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+            "size": 10245
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/library/redis"
+                }
+            ]
+        }
+    },
+    {
+        "Id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+        "RepoTags": [
+            "nginx:1.28.0-alpine"
+        ],
+        "RepoDigests": [
+            "nginx@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-04-23T18:00:49Z",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.28.0",
+                "PKG_RELEASE=1",
+                "DYNPKG_RELEASE=1",
+                "NJS_VERSION=0.8.10",
+                "NJS_RELEASE=1"
+            ],
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "WorkingDir": "/",
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGQUIT"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 21015643,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:922ec217407c0fd31cb18b46090bf62e439fb53ecd01f09406d62e25a906e09b",
+                "sha256:412e147b334cddb83eedf352f7f2ea40844abceb3614a5d9c9726d076e5c3b6f",
+                "sha256:570a1c87f279a67fc5509cf76c4b57cf722c8de9f9cdaa214c787d0fb0e1e7a5",
+                "sha256:34034c5235653389adbf8982e9fc868561e62e5d88c58c878331ed89abfd1a6f",
+                "sha256:7d9abb9ab3b7a473c37818aee5eb0f4637716ef9d8b28989ebab09d29f987246",
+                "sha256:5f23a9cf34f1103f7564dfb3f036e877efedde5372cb2190285418008372fdde",
+                "sha256:a231a657395e32fc50a9dd243cbf8476a246468d0faf68dacfd9a9a1befbb456",
+                "sha256:90ec271303985395afe0c2966824bb392d291365e94b87df2c4582c30b0bc18a"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-11T02:35:59.057686575Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+            "size": 10317
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/library/nginx"
+                }
+            ]
+        }
+    },
+    {
+        "Id": "sha256:5e3401bc16fb4a6dce352d7a24d212fabd47b5910c0c8c8a981e301edb3bf940",
+        "RepoTags": [
+            "project3-outage-112105-api2:latest"
+        ],
+        "RepoDigests": [
+            "project3-outage-112105-api2@sha256:5e3401bc16fb4a6dce352d7a24d212fabd47b5910c0c8c8a981e301edb3bf940"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-13T09:08:20.727344964+07:00",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Entrypoint": [
+                "/server"
+            ],
+            "WorkingDir": "/",
+            "Labels": {
+                "com.docker.compose.project": "project3-outage-112105",
+                "com.docker.compose.service": "api2",
+                "com.docker.compose.version": "5.1.1"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 9778204,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:e63b02c2b5c761df2cb95e657d744f27d95da4e051235a13c80b88cd68eab188",
+                "sha256:12f161f80f1c70b3aa61fe6d297ea774ff4e13535fb4e58301f51855fcd6a21c",
+                "sha256:f8574c48b14796403920715d48a779d9aa8130307ef5fa1bdc6a2eae671a7e78"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-19T09:20:24.457718351Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:5e3401bc16fb4a6dce352d7a24d212fabd47b5910c0c8c8a981e301edb3bf940",
+            "size": 855
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "94qimx59wool9dm4s4ux34rdx",
+                    "CreatedAt": "2026-10-19T16:20:24.474523404+07:00"
+                }
+            ]
+        }
+    },
+    {
+        "Id": "sha256:8c3cd1b6ef8c927b89e8e30c5f5133dd59b09b3abc1f09ebf3baffdd95fee491",
+        "RepoTags": [
+            "project3-outage-112105-backend:latest"
+        ],
+        "RepoDigests": [
+            "project3-outage-112105-backend@sha256:8c3cd1b6ef8c927b89e8e30c5f5133dd59b09b3abc1f09ebf3baffdd95fee491"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-13T09:08:20.727344964+07:00",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Entrypoint": [
+                "/server"
+            ],
+            "WorkingDir": "/",
+            "Labels": {
+                "com.docker.compose.project": "project3-outage-112105",
+                "com.docker.compose.service": "backend",
+                "com.docker.compose.version": "5.1.1"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 9778207,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:e63b02c2b5c761df2cb95e657d744f27d95da4e051235a13c80b88cd68eab188",
+                "sha256:12f161f80f1c70b3aa61fe6d297ea774ff4e13535fb4e58301f51855fcd6a21c",
+                "sha256:f8574c48b14796403920715d48a779d9aa8130307ef5fa1bdc6a2eae671a7e78"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-19T09:20:24.464837797Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:8c3cd1b6ef8c927b89e8e30c5f5133dd59b09b3abc1f09ebf3baffdd95fee491",
+            "size": 855
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "zd97pabcbafsbctlapmoqjki4",
+                    "CreatedAt": "2026-10-19T16:20:24.490304577+07:00"
+                }
+            ]
+        }
+    },
+    {
+        "Id": "sha256:ee4f82a0afa11abe0c1eca591cd70d73273a2eb7610e7c7f4240590d22f5f1b9",
+        "RepoTags": [
+            "project3-outage-112105-api1:latest"
+        ],
+        "RepoDigests": [
+            "project3-outage-112105-api1@sha256:ee4f82a0afa11abe0c1eca591cd70d73273a2eb7610e7c7f4240590d22f5f1b9"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-13T09:08:20.727344964+07:00",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Entrypoint": [
+                "/server"
+            ],
+            "WorkingDir": "/",
+            "Labels": {
+                "com.docker.compose.project": "project3-outage-112105",
+                "com.docker.compose.service": "api1",
+                "com.docker.compose.version": "5.1.1"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 9778204,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:e63b02c2b5c761df2cb95e657d744f27d95da4e051235a13c80b88cd68eab188",
+                "sha256:12f161f80f1c70b3aa61fe6d297ea774ff4e13535fb4e58301f51855fcd6a21c",
+                "sha256:f8574c48b14796403920715d48a779d9aa8130307ef5fa1bdc6a2eae671a7e78"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-19T09:20:24.460907613Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:ee4f82a0afa11abe0c1eca591cd70d73273a2eb7610e7c7f4240590d22f5f1b9",
+            "size": 855
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "mvdk3y29kbbnnkqz8zy09avkn",
+                    "CreatedAt": "2026-10-19T16:20:24.484811593+07:00"
+                }
+            ]
+        }
+    }
+]
