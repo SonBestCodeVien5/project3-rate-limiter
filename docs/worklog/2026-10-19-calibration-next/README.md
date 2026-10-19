@@ -22,4 +22,4 @@ The observer recorded 1,788 samples over 90.000105494 monotonic seconds and 90.0
 
 ## Next prerequisite
 
-T04 is complete. Hand the evidence to root before any T05 load. T05 remains separately gated; its proposed 27-cell matrix is not authorized by this T04 baton.
+T04 is complete. T05’s 27-cell scaling calibration is recorded in [T05-README.md](T05-README.md), with checksummed evidence in [T05-evidence.tar.gz](T05-evidence.tar.gz). T07 outage/recovery calibration is the next prerequisite; T08 and T09 remain unstarted.

@@ -1,0 +1,197 @@
+{
+  "canonical_binaries": [
+    {
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    }
+  ],
+  "original_paths": [
+    {
+      "source_path": "t05-initial/local-fw-api1-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-initial/local-fw-api2-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-initial/none-fw-api1-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-initial/none-fw-api2-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-initial/redis-fw-api1-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/local-fw-api1-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/local-fw-api1-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/local-fw-api2-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/local-fw-api2-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/local-fw-api4-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/none-fw-api1-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/none-fw-api2-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/none-fw-api4-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/none-fw-api4-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/redis-fw-api1-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/redis-fw-api2-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/redis-fw-api2-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-resumed/redis-fw-api4-rps50/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/local-fw-api1-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/local-fw-api2-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/local-fw-api4-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/local-fw-api4-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/none-fw-api1-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/none-fw-api2-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/none-fw-api4-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/none-fw-api4-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/redis-fw-api1-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/redis-fw-api2-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/redis-fw-api4-rps180/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-final/redis-fw-api4-rps250/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    },
+    {
+      "source_path": "t05-repeat/none-fw-api4-rps250-repeat2/loadgen",
+      "archive_path": "binaries/loadgen-ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "sha256": "ade45216f40de1e4f308bb2b814307c42013eee6d271bc2000671199a5de47d3",
+      "bytes": 9151827
+    }
+  ]
+}

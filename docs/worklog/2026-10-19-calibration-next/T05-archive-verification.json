@@ -1,0 +1,12 @@
+{
+  "archive_members": 1020,
+  "source_files": 1042,
+  "canonical_loadgen_binaries": 1,
+  "valid_cells": 27,
+  "all_source_hashes_verified": true,
+  "attempt_directories": 31,
+  "all_attempts_pinned_clean": {
+    "revision": "26b5decb835dbb136eb2d45b361920a414434f6b",
+    "git_status_empty": true
+  }
+}
