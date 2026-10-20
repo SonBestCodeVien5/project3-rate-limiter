@@ -229,12 +229,21 @@ def _check(manifest_path, planned_run_id, run_dir):
         events_file = run_dir / "outage-events.txt"
         if planned["cell"].endswith("outage"):
             try:
-                events = [line.split() for line in events_file.read_text().splitlines() if line.strip()]
-                names = [e[-1] for e in events]
                 required = ["pause_requested", "pause_completed", "unpause_requested", "unpause_completed"]
-                times = [stamp(e[0]) for e in events]
-                if names != required or times != sorted(times): fail("outage_event_order")
-            except (OSError, ValueError, IndexError):
+                events = {}
+                for line in events_file.read_text().splitlines():
+                    match = re.match(r"^(\S+) (pause_requested|pause_completed|unpause_requested|unpause_completed)$", line)
+                    if match:
+                        name = match[2]
+                        if name in events:
+                            raise ValueError("duplicate outage event")
+                        events[name] = stamp(match[1])
+                    elif any(name in line.split() for name in required):
+                        raise ValueError("malformed outage event")
+                times = [events[name] for name in required]
+                if list(events) != required or times != sorted(times):
+                    fail("outage_event_order")
+            except (OSError, ValueError, IndexError, KeyError):
                 fail("outage_event_order")
         if planned["cell"].endswith("outage") and not analysis.get("outage"):
             fail("outage_analysis_missing")

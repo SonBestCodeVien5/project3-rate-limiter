@@ -143,6 +143,20 @@ class StudyQualityTest(unittest.TestCase):
         manifest, case=self.fixture(True); (case/"outage-events.txt").write_text("bad\n")
         self.assertIn("outage_event_order",checker.check(manifest,"planned",case)["reasons"])
 
+    def test_interleaved_compose_output_is_ignored_but_event_order_remains_strict(self):
+        manifest, case = self.fixture(True)
+        event_file = case/"outage-events.txt"
+        event_file.write_text(event_file.read_text().replace("\n", "\n Container redis-1 Paused \n", 1))
+        result = checker.check(manifest, "planned", case)
+        self.assertNotIn("outage_event_order", result["reasons"])
+        event_file.write_text(event_file.read_text() + "2026-10-20T00:00:05Z pause_completed\n")
+        self.assertIn("outage_event_order", checker.check(manifest, "planned", case)["reasons"])
+        manifest, case = self.fixture(True)
+        lines = (case/"outage-events.txt").read_text().splitlines()
+        lines[0], lines[1] = lines[1], lines[0]
+        (case/"outage-events.txt").write_text("\n".join(lines)+"\n")
+        self.assertIn("outage_event_order", checker.check(manifest, "planned", case)["reasons"])
+
     def test_resolved_compose_pinned_image_tag_mismatch_stops_sequence(self):
         manifest, case = self.fixture()
         compose = json.loads((case/"compose-resolved.json").read_text())
