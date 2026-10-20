@@ -56,7 +56,11 @@ def image_identity(image, inspect, flags):
     if not valid_layers or rootfs.get('Type') != 'layers' or not isinstance(item.get('Config'), dict) or not item.get('Os') or not item.get('Architecture'):
         flags.append('image_inspect_invalid_or_unmatched:' + str(image.get('ID')))
         return exact
-    return {'layers': layers, 'config': item['Config'], 'os': item['Os'], 'arch': item['Architecture'], 'variant': item.get('Variant', ''), 'platform': image.get('Platform')}
+    config = dict(item['Config'])
+    labels = config.get('Labels')
+    if isinstance(labels, dict) and 'com.docker.compose.project' in labels:
+        config['Labels'] = {key: value for key, value in labels.items() if key != 'com.docker.compose.project'}
+    return {'layers': layers, 'config': config, 'os': item['Os'], 'arch': item['Architecture'], 'variant': item.get('Variant', ''), 'platform': image.get('Platform')}
 
 
 def read_run(entry, base, clock_tolerance_ms):

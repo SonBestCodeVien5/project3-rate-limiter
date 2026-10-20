@@ -131,6 +131,36 @@ class ReportTest(unittest.TestCase):
         row = report.read_run(entries[1], self.root, 5)
         self.assertIn('missing_or_malformed:image-inspect.json', row['quality_flags'])
 
+    def test_image_fingerprint_ignores_only_compose_project_label(self):
+        entries = [self.fixture('image-project-a'), self.fixture('image-project-b')]
+        for index, entry in enumerate(entries):
+            case = Path(entry['path'])
+            images = json.loads((case / 'images.json').read_text())
+            inspect = [dict(Id=image['ID'], RootFS=dict(Type='layers', Layers=['sha256:'+'a'*64]),
+                            Config=dict(Env=['ROLE=app'], Cmd=['serve'], Labels={
+                                'com.docker.compose.project': f'project-{index}', 'custom': 'same'}),
+                            Os='linux', Architecture='amd64') for image in images]
+            (case / 'image-inspect.json').write_text(json.dumps(inspect))
+        rows = [report.read_run(entry, self.root, 5) for entry in entries]
+        self.assertEqual(rows[0]['fingerprint'], rows[1]['fingerprint'])
+
+        for key, value in (('Env', ['ROLE=other']), ('Cmd', ['other']), ('Labels', {'custom': 'other'})):
+            inspect_path = Path(entries[1]['path'], 'image-inspect.json')
+            inspect = json.loads(inspect_path.read_text())
+            inspect[0]['Config'][key] = value
+            inspect_path.write_text(json.dumps(inspect))
+            self.assertNotEqual(report.read_run(entries[0], self.root, 5)['fingerprint'],
+                                report.read_run(entries[1], self.root, 5)['fingerprint'])
+            inspect[0]['Config'][key] = (['ROLE=app'] if key == 'Env' else ['serve'] if key == 'Cmd'
+                                         else {'com.docker.compose.project': 'project-1', 'custom': 'same'})
+            inspect_path.write_text(json.dumps(inspect))
+        inspect_path = Path(entries[1]['path'], 'image-inspect.json')
+        inspect = json.loads(inspect_path.read_text())
+        inspect[0]['RootFS']['Layers'] = ['sha256:'+'b'*64]
+        inspect_path.write_text(json.dumps(inspect))
+        self.assertNotEqual(report.read_run(entries[0], self.root, 5)['fingerprint'],
+                            report.read_run(entries[1], self.root, 5)['fingerprint'])
+
     def test_clock_jump_during_final_response_is_not_missed(self):
         entry = self.fixture('drain')
         path = Path(entry['path'], 'load/requests.jsonl')
