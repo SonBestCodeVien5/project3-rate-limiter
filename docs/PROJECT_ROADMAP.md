@@ -1,6 +1,8 @@
 # Lộ trình Project 3: từ bắt đầu đến bảo vệ
 
-**Trạng thái mới nhất 19/10/2026:** T01–T03 gate, T04/T05 calibration, T06 atomicity evidence và T07 bounded recovery calibration/exporter smoke đã đạt trong giới hạn đã ghi; protocol chưa khóa/benchmark chưa chạy. Phiên dừng sau T07; lần tiếp theo bắt đầu T08 prerequisites sau khi được yêu cầu. [Checkpoint](context/SESSION_CHECKPOINT.md) và [remaining work](REMAINING_WORK_PLAN.md) supersede các status lịch sử bên dưới. Mốc nộp tạm: giữa tháng 12/2026.
+**Tình trạng hiện tại (20/10/2026):** T09 đã hoàn tất đo: 138/138 vị trí chạy dự kiến dùng được, 46/46 cấu hình đã tổng hợp; checksum và archive đã bàn giao. T10 chưa bắt đầu; chưa có phân tích hay kết luận RQ1–RQ5. Không được chạy thêm tải; dừng trước T10. Mốc nộp tạm là giữa tháng 12/2026. Các đoạn bên dưới là kế hoạch/lịch sử, không phản ánh trạng thái thực thi mới nhất. Xem [kế hoạch phần việc còn lại](REMAINING_WORK_PLAN.md) và [checkpoint](context/SESSION_CHECKPOINT.md).
+
+**Lưu ý:** Đây là lịch đề xuất để thảo luận, không phải lịch chính thức đã được duyệt.
 
 **Vòng hoàn thiện mới ngày 13/10:** [calibration 14 lượt](worklog/2026-10-13-calibration/README.md) kiểm chứng local TB sau sửa và cấu hình normal/mixed; [deadline Redis](worklog/2026-10-13-redis-drops/README.md) đã sửa/test. [Gate 30 s](worklog/2026-10-13-postfix/README.md) thất bại do clock host nhảy; [observer độc lập](worklog/2026-10-13-clock/README.md) xác nhận bước nhảy realtime khoảng 2,6 s. UI so sánh dữ liệu thật và [report/biểu đồ pilot](worklog/2026-10-13-evaluation/README.md) đã có, nhưng [protocol/readiness](experiments/PROTOCOL_READINESS.md) chưa đủ để khóa/chạy benchmark chính thức. Ưu tiên tiếp theo là ổn định môi trường và hoàn tất calibration; không tăng tính năng để thay bằng chứng RQ1–RQ5.
 
@@ -14,11 +16,11 @@ Console local và cấu hình tùy chỉnh đã có; [ma trận Console 84 lư�
 
 **Thông tin mới từ bạn:** giảng viên đồng ý hướng đề tài và yêu cầu đề cương thể hiện rõ góc nhìn doanh nghiệp cùng vấn đề thực tế. Sản phẩm nộp gồm báo cáo, mã nguồn, slide và demo. Ngày 19/10, người dùng chọn mốc lập kế hoạch tạm **giữa tháng 12/2026**, thay cho ước lượng trước đó 2–3 tuần cuối tháng 12; đây chưa phải lịch chính thức. Chưa có ngày chính xác hoặc rubric chấm điểm chi tiết. Nếu mốc chính thức đến sớm hơn lịch 11 tuần, cần rút ngắn giai đoạn chuẩn bị, không cắt phần đo và bảo vệ.
 
-## Đích cuối cùng
+## Mục tiêu cuối cùng
 
 Project cần giải thích được chuỗi: **traffic bất thường → nguy cơ quá tải backend nhiều instance → nhu cầu quota chung → limiter dùng Redis → client hợp lệ còn được phục vụ thế nào → thí nghiệm → kết quả và trade-off**. Sản phẩm để bảo vệ gồm prototype chạy được, mã/cấu hình tạo lại thí nghiệm, dữ liệu và biểu đồ, báo cáo, slide và khả năng giải thích các quyết định. Đây là nền tảng nghiên cứu, không phải API Gateway production.
 
-**Baseline từ tài liệu nguồn đã cập nhật:** API instances, load balancer, Redis shared state, Fixed Window, Token Bucket, tải bình thường/burst/concurrent, so sánh local và shared state, scaling, correctness/overshoot, latency, throughput, Redis CPU/memory, quyết định quota atomic, workload hỗn hợp chứng minh mức bảo vệ backend/client hợp lệ và Redis outage ngắn có kiểm soát. **Phần có thể cắt nếu thiếu thời gian:** Sliding Window, dashboard, monitoring nâng cao, policy theo tier/endpoint, nhiều mức tải phụ và các chức năng gateway. Không cắt bằng chứng cho RQ1–RQ5.
+**Baseline theo tài liệu nguồn đã cập nhật:** nhiều API instance, load balancer, Redis shared state, Fixed Window, Token Bucket, tải bình thường/burst/concurrent, so sánh local và shared state, scaling, correctness/overshoot, latency, throughput, Redis CPU/memory, quyết định quota atomic, workload hỗn hợp để đánh giá bảo vệ backend/client hợp lệ và Redis outage ngắn có kiểm soát. **Phần có thể bỏ nếu thiếu thời gian:** Sliding Window, dashboard, monitoring nâng cao, policy theo tier/endpoint, nhiều mức tải phụ và chức năng gateway. Không bỏ bằng chứng cho RQ1–RQ5.
 
 ## Lộ trình 11 tuần đề xuất
 
