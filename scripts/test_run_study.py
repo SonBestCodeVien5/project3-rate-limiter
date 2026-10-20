@@ -1,6 +1,7 @@
 """Mocked coordinator lifecycle tests; no Docker or load is started."""
 import importlib.util
 import json
+import hashlib
 from pathlib import Path
 import tempfile
 import unittest
@@ -317,6 +318,208 @@ class CoordinatorTest(unittest.TestCase):
         self.assertEqual(len(calls), 1)
         self.assertAlmostEqual(finished[0]['boottime_minus_monotonic_delta_ms'], 6.0)
         self.assertIn('guest_suspend_detected', finished[0]['setup_error'])
+
+    def legacy_import_fixture(self, root, attempts):
+        measurement = root / 'measurement-029'
+        measurement.mkdir()
+        source_manifest_path = root / 'source-v11.json'
+        planned = manifest(root, standard_cells=0)
+        planned['runs'] = planned['runs'][:2]
+        planned['cells'] = planned['cells'][:2]
+        # Only the first outage invocation is needed in these focused import tests.
+        source_manifest_path.write_text(json.dumps(planned))
+        source_manifest_hash = hashlib.sha256(source_manifest_path.read_bytes()).hexdigest()
+        ledger = root / 'legacy-attempts.jsonl'
+        rows = []
+        invocation = planned['runs'][0]['invocation_id']
+        pair = planned['runs'][:2]
+        for attempt, accepted in attempts:
+            run_root = root / f'raw.attempt-{attempt}'
+            checksums, accepted_paths = {}, {}
+            for entry in pair:
+                output_root = Path(entry['output_path'])
+                suffix = Path(entry['result_path']).relative_to(output_root)
+                case_path = run_root / suffix
+                case_path.mkdir(parents=True, exist_ok=True)
+                (case_path / 'raw-marker').write_text(f'{attempt}:{entry["cell"]}')
+                if accepted:
+                    run_id = entry['planned_run_id']
+                    accepted_paths[run_id] = str(case_path)
+                    checksums[run_id] = mod.tree_checksums(case_path)
+            rows.append({'event': 'attempt_finished', 'invocation_id': invocation,
+                         'planned_run_ids': [entry['planned_run_id'] for entry in pair],
+                         'retry_budget_key': 'outage:open', 'attempt': attempt,
+                         'run_path': str(run_root), 'source_revision': 'abc',
+                         'config': [entry['config'] for entry in pair],
+                         'manifest_sha256': source_manifest_hash,
+                         'environment': pair[0]['environment'], 'accepted': accepted,
+                         'accepted_result_paths': accepted_paths, 'evidence_checksums': checksums,
+                         'checks': {entry['planned_run_id']: {'valid': accepted, 'reasons': []} for entry in pair}})
+        ledger.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        source_hash = source_manifest_hash
+        ledger_hash = hashlib.sha256(ledger.read_bytes()).hexdigest()
+        continuation = {'source_manifest_path': source_manifest_path.name,
+                        'source_manifest_sha256': source_hash,
+                        'source_ledger_path': str(ledger), 'source_ledger_sha256': ledger_hash}
+        current = dict(planned, protocol_id='project3-formal-v1.2', status='draft', execution_authorized=False,
+                       continuation=continuation)
+        current_path = root / 'v12-manifest.json'
+        current_path.write_text(json.dumps(current))
+        return measurement, source_manifest_path, ledger, current, current_path, pair
+
+    def test_import_selects_earliest_valid_outage_pair_and_preserves_sources(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            measurement, source_manifest, ledger, current, current_path, pair = self.legacy_import_fixture(
+                root, [(1, False), (2, True), (3, True)])
+            before = (mod.sha256(source_manifest), mod.sha256(ledger))
+            output = root / 'imported'
+            def check(_manifest, entry, run_dir, _checker, _measurement, quality_path):
+                quality_path.parent.mkdir(parents=True, exist_ok=True)
+                attempt = int(run_dir.parents[1].name.rsplit('-', 1)[1])
+                valid = attempt > 1
+                quality_path.write_text(json.dumps({'valid': valid, 'stop_sequence': not valid,
+                                                    'reasons': [] if valid else ['clock_residual'],
+                                                    'config_fingerprint': 'cfg', 'image_fingerprint': 'img'}))
+                return json.loads(quality_path.read_text())
+            with patch.object(mod, 'checker_call', side_effect=check):
+                result = mod.import_legacy(current, current_path, output, measurement,
+                                           Path(__file__), 'coord-sha')
+            self.assertEqual(set(result['accepted']), {entry['planned_run_id'] for entry in pair})
+            self.assertTrue(all('.attempt-2' in path for path in result['accepted'].values()))
+            self.assertEqual(before, (mod.sha256(source_manifest), mod.sha256(ledger)))
+            audit = [json.loads(line) for line in (output / 'import-attempts.jsonl').read_text().splitlines()]
+            self.assertEqual([row['new_decision']['selected'] for row in audit], [False, True, False])
+            self.assertEqual(audit[1]['old_decision']['accepted'], True)
+
+    def test_import_rejects_source_checksum_or_ledger_checksum_mismatch(self):
+        for target in ('source_manifest_sha256', 'source_ledger_sha256'):
+            with self.subTest(target=target), tempfile.TemporaryDirectory() as td:
+                root = Path(td)
+                measurement, _source, _ledger, current, current_path, _pair = self.legacy_import_fixture(root, [])
+                current['continuation'][target] = '0' * 64
+                with self.assertRaisesRegex(ValueError, 'checksum mismatch'):
+                    mod.import_legacy(current, current_path, root / 'out', measurement, Path(__file__))
+
+    def test_import_rejects_config_environment_and_revision_drift(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            measurement, _source, ledger, current, current_path, _pair = self.legacy_import_fixture(root, [(1, False)])
+            row = json.loads(ledger.read_text().splitlines()[0])
+            row['environment'] = {'OUTAGE': 'closed'}
+            ledger.write_text(json.dumps(row) + '\n')
+            current['continuation']['source_ledger_sha256'] = mod.sha256(ledger)
+            with self.assertRaisesRegex(ValueError, 'environment drift'):
+                mod.import_legacy(current, current_path, root / 'out1', measurement, Path(__file__))
+
+    def test_import_historical_clock_drop_stays_invalid_but_does_not_stop(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            measurement, _source, _ledger, current, current_path, pair = self.legacy_import_fixture(root, [(1, False)])
+            output = root / 'out'
+            def check(_manifest, entry, run_dir, _checker, _measurement, quality_path):
+                quality_path.parent.mkdir(parents=True, exist_ok=True)
+                decision = {'valid': False, 'stop_sequence': True, 'reasons': ['generator_drops'],
+                            'config_fingerprint': 'cfg', 'image_fingerprint': 'img'}
+                quality_path.write_text(json.dumps(decision))
+                return decision
+            with patch.object(mod, 'checker_call', side_effect=check):
+                result = mod.import_legacy(current, current_path, output, measurement, Path(__file__))
+            self.assertFalse(result['accepted'])
+            audit = json.loads((output / 'import-attempts.jsonl').read_text())
+            self.assertFalse(audit['new_decision']['selected'])
+            self.assertIn('generator_drops', audit['new_decision']['checks'][pair[0]['planned_run_id']]['reasons'])
+
+    def test_import_actual_checker_image_or_revision_drift_is_fatal(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            measurement, _source, _ledger, current, current_path, pair = self.legacy_import_fixture(root, [(1, False)])
+            def check(*args):
+                return {'valid': False, 'stop_sequence': True,
+                        'reasons': ['pinned_compose_image_mismatch:redis'],
+                        'config_fingerprint': 'cfg', 'image_fingerprint': 'img'}
+            with patch.object(mod, 'checker_call', side_effect=check):
+                with self.assertRaisesRegex(ValueError, 'actual config/image/revision drift'):
+                    mod.import_legacy(current, current_path, root / 'out', measurement, Path(__file__))
+
+    def test_import_rejects_same_cell_fingerprint_drift(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            measurement, source_manifest, ledger, current, current_path, pair = self.legacy_import_fixture(root, [(1, False)])
+            # Add a second invocation in the same cell to verify normalized import fingerprints.
+            data = json.loads(source_manifest.read_text())
+            extra = dict(data['runs'][0], planned_run_id='extra', repetition='2', invocation_id='extra-inv')
+            data['runs'].append(extra)
+            data['cells'][0]['expected_repetitions'] = 2
+            source_manifest.write_text(json.dumps(data))
+            current['runs'].append(extra)
+            current['cells'][0]['expected_repetitions'] = 2
+            current['continuation']['source_manifest_sha256'] = mod.sha256(source_manifest)
+            existing = json.loads(ledger.read_text().splitlines()[0])
+            existing['manifest_sha256'] = mod.sha256(source_manifest)
+            existing['accepted'] = True
+            for entry in pair:
+                case_path = root / 'raw-existing' / entry['config']['policy']['fail_policy'] / entry['cell'].rsplit('-', 1)[-1]
+                case_path.mkdir(parents=True, exist_ok=True)
+                (case_path / 'raw-marker').write_text('old')
+                existing['accepted_result_paths'][entry['planned_run_id']] = str(case_path)
+                existing['evidence_checksums'][entry['planned_run_id']] = mod.tree_checksums(case_path)
+            row = dict(existing)
+            row['planned_run_ids'] = [extra['planned_run_id']]
+            row['invocation_id'] = extra['invocation_id']
+            row['attempt'] = 1
+            row['config'] = [extra['config']]
+            row['environment'] = extra['environment']
+            row['run_path'] = str(root / 'raw-extra')
+            row['accepted'] = False
+            row['accepted_result_paths'] = {}
+            row['evidence_checksums'] = {}
+            row['checks'] = {}
+            (root / 'raw-extra/custom-repeat-1').mkdir(parents=True)
+            ledger.write_text(json.dumps(existing) + '\n' + json.dumps(row) + '\n')
+            current['continuation']['source_ledger_sha256'] = mod.sha256(ledger)
+            current_path.write_text(json.dumps(current))
+            def check(_manifest, entry, run_dir, _checker, _measurement, quality_path):
+                quality_path.parent.mkdir(parents=True, exist_ok=True)
+                fingerprint = 'one' if entry['planned_run_id'] == pair[0]['planned_run_id'] else 'two'
+                decision = {'valid': True, 'stop_sequence': False, 'reasons': [],
+                            'config_fingerprint': fingerprint, 'image_fingerprint': 'img'}
+                quality_path.write_text(json.dumps(decision))
+                return decision
+            with patch.object(mod, 'checker_call', side_effect=check):
+                result = mod.import_legacy(current, current_path, root / 'out', measurement, Path(__file__))
+            self.assertIn(pair[0]['planned_run_id'], result['accepted'])
+            self.assertNotIn('extra', result['accepted'])
+
+    def test_external_measurement_root_and_checker_are_used_for_execution(self):
+        tmp, root, _checkout, planned, out, _args = self.setup_case()
+        self.addCleanup(tmp.cleanup)
+        measurement, checker = root / 'pinned-029', root / 'checker.py'
+        measurement.mkdir(); checker.write_text('# mocked checker')
+        data = json.loads(planned.read_text())
+        data['runs'] = data['runs'][:1]
+        data['cells'] = data['cells'][:1]
+        planned.write_text(json.dumps(data))
+        args = type('Args', (), {'manifest': planned, 'output': out, 'resume': False,
+                                 'measurement_root': measurement, 'checker': checker})
+        seen = []
+        def fake_run(command, **kwargs):
+            seen.append((command, kwargs.get('cwd')))
+            if command[0] == 'runner':
+                Path(command[2]).mkdir(parents=True, exist_ok=True)
+                return type('Result', (), {'returncode': 0})()
+            target = Path(command[command.index('--output') + 1])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps({'valid': True, 'stop_sequence': False, 'reasons': [],
+                                          'config_fingerprint': 'cfg', 'image_fingerprint': 'img'}))
+            return type('Result', (), {'returncode': 0})()
+        with patch.object(mod, 'preflight', return_value={'containers': set(), 'summary': {}}) as preflight, \
+             patch.object(mod, 'check_cleanup'), patch.object(mod.subprocess, 'run', side_effect=fake_run):
+            self.assertEqual(mod.run(args), 0)
+        preflight.assert_called_once_with(json.loads(planned.read_text()), planned.resolve(), unittest.mock.ANY, measurement.resolve())
+        self.assertEqual(seen[0][1], measurement.resolve())
+        self.assertIn(str(checker), seen[1][0])
+        self.assertEqual(seen[1][1], measurement.resolve())
 
 
 if __name__ == '__main__':
