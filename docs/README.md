@@ -15,7 +15,7 @@
 
 | Nhu cầu | Tài liệu nên đọc | Dùng để làm gì |
 | --- | --- | --- |
-| Hiểu hệ thống và thuật toán | [Thiết kế triển khai](IMPLEMENTATION.md) | Đường đi yêu cầu, quy tắc quota, thời gian, tính nguyên tử và giới hạn |
+| Hiểu hệ thống và thuật toán | [Thiết kế triển khai](IMPLEMENTATION.md) | Đường đi yêu cầu, quy tắc quota, thời gian, tính atomic và giới hạn |
 | Hiểu phương pháp thí nghiệm | [Đặc tả](experiments/EXPERIMENT_SPEC.md) → [điều kiện đo hiện tại](experiments/PROTOCOL_READINESS.md) | Phân biệt yêu cầu, thiết kế ban đầu và quy trình đã khóa |
 | Hiểu số liệu có nghĩa gì | [Quy tắc phân tích](experiments/ANALYSIS.md) → [xuất số liệu báo cáo](experiments/REPORTING.md) | Cách kiểm chứng quota, mẫu số, tổng hợp lượt lặp và giới hạn diễn giải |
 | Viết báo cáo | [Bản nháp báo cáo](REPORT_DRAFT.md) và bảng bên dưới | Viết phần đã có căn cứ; để kết luận chờ T10 |
@@ -37,27 +37,30 @@ Viết theo mạch: vấn đề doanh nghiệp → khó khăn → tác động �
 
 ## Thuật ngữ dùng thống nhất
 
-Tên Fixed Window (FW), Token Bucket (TB), Redis, API, HTTP và Console giữ nguyên. Các từ sau được giải thích bằng tiếng Việt khi xuất hiện trong văn bản; tên trường trong dữ liệu vẫn giữ nguyên.
+Tên Fixed Window (FW), Token Bucket (TB), Redis, API, HTTP và Console giữ nguyên. Bảng dưới đây giải thích nghĩa để người đọc thống nhất cách hiểu; đây không phải quy tắc bắt buộc dịch mọi lần xuất hiện. Giữ các thuật ngữ kỹ thuật tiếng Anh quen thuộc khi câu văn tự nhiên; tên trường trong dữ liệu vẫn giữ nguyên. Dùng các cách nói tiếng Việt tự nhiên như độ trễ, thông lượng, bộ nhớ, bộ đếm, bằng chứng, cấu hình, lượt chạy và yêu cầu kỹ thuật.
 
 | Thuật ngữ | Cách hiểu trong tài liệu |
 | --- | --- |
-| rate limiter, quota | Bộ giới hạn lưu lượng; hạn mức yêu cầu được chấp nhận |
+| rate limiter, quota | Cơ chế giới hạn lưu lượng; hạn mức yêu cầu được chấp nhận |
 | client, request, backend | Bên gửi yêu cầu; yêu cầu; thành phần xử lý phía sau bộ giới hạn |
 | API instance | Một tiến trình API đang chạy; nhiều instance có thể nằm trên cùng một máy |
 | local/shared state | Trạng thái cục bộ ở từng API / trạng thái dùng chung qua Redis |
-| atomicity | Tính nguyên tử của thao tác đọc–quyết định–ghi |
+| atomic/atomicity, non-atomic | Tính nguyên tử của thao tác đọc–quyết định–ghi; non-atomic là thao tác không có bảo đảm này |
 | policy | Bộ quy tắc và tham số áp dụng cho quyết định quota |
-| workload, burst | Mẫu tải; đợt yêu cầu dồn dập trong thời gian ngắn |
-| baseline, pilot, calibration | Mốc đối chứng hoặc phạm vi tối thiểu tùy ngữ cảnh; lượt thử sơ bộ; hiệu chỉnh phép đo |
-| cell, run, slot | Một cấu hình thí nghiệm; một lượt thực chạy; một vị trí lượt đo dự kiến trong kế hoạch |
+| workload, burst, concurrent, scaling | Mẫu tải; đợt yêu cầu dồn dập trong thời gian ngắn; đồng thời; mở rộng quy mô |
+| baseline, pilot, calibration, benchmark, offered load | Mốc đối chứng hoặc phạm vi tối thiểu tùy ngữ cảnh; lượt thử sơ bộ; hiệu chỉnh phép đo; phép đo để đánh giá hoặc so sánh; tải được đưa vào hệ thống |
+| cell, run, measurement slot | Một cấu hình thí nghiệm; một lượt chạy thực tế; một vị trí lượt đo dự kiến trong kế hoạch |
+| worker slot | Suất dành cho một agent làm việc đồng thời; không phải vị trí lượt đo |
 | goodput | Tốc độ yêu cầu hợp lệ được phục vụ thành công, theo mẫu số/thời gian đã định |
 | latency, throughput, p95/p99 | Độ trễ; thông lượng; phân vị 95/99 của độ trễ trong tập mẫu đã xác định |
-| oracle, inconclusive | Bộ quy tắc kiểm chứng tính đúng; chưa đủ bằng chứng kết luận, không phải đạt |
+| oracle, inconclusive, observed_violations | Bộ quy tắc kiểm chứng tính đúng; chưa đủ bằng chứng kết luận, không phải đạt; số vi phạm quan sát được |
 | overshoot | Số yêu cầu được chấp nhận vượt hạn mức; có thể chỉ đo được cận dưới |
 | fail-open / fail-closed | Cho đi tiếp / từ chối khi không kiểm tra được quota do lỗi Redis |
-| outage, recovery | Khoảng gián đoạn Redis; phục hồi theo tiêu chí đã khóa, khác với thành công đầu tiên |
-| artifact, manifest, revision | Tệp bằng chứng; danh sách/cấu hình phép đo; phiên bản mã nguồn Git |
-| trace | Dấu vết từng yêu cầu và quyết định, dùng để kiểm tra lại số đo |
+| outage, first success, stable recovery | Khoảng gián đoạn Redis; thành công đầu tiên sau gián đoạn; phục hồi ổn định theo tiêu chí đã khóa |
+| runner, analyzer, exporter | Công cụ chạy lượt đo; công cụ phân tích; công cụ xuất dữ liệu |
+| artifact, manifest, trace | Tệp bằng chứng; danh sách/cấu hình phép đo; dấu vết từng yêu cầu và quyết định để kiểm tra lại số đo |
+| revision, working tree, fingerprint | Phiên bản mã nguồn Git; trạng thái tệp trong thư mục làm việc Git; dấu nhận dạng dùng đối chiếu dữ liệu hoặc cấu hình |
+| pain point, bottleneck | Khó khăn nghiệp vụ; điểm nghẽn kỹ thuật làm hạn chế xử lý |
 
 ## Chỉ tra khi cần
 
