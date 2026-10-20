@@ -150,8 +150,12 @@ def _check(manifest_path, planned_run_id, run_dir):
                 if service not in services or not isinstance(layers, list) or not isinstance(item.get("Config"), dict):
                     fail("image_inspect_invalid_or_unmatched")
                     continue
+                image_config = dict(item["Config"])
+                labels = image_config.get("Labels")
+                if isinstance(labels, dict) and "com.docker.compose.project" in labels:
+                    image_config["Labels"] = {key: value for key, value in labels.items() if key != "com.docker.compose.project"}
                 stable_images.append(dict(service=service, tag=image.get("Tag"), platform=image.get("Platform"),
-                                          rootfs=layers, config=item["Config"]))
+                                          rootfs=layers, config=image_config))
             image_fingerprint = hashlib.sha256(json.dumps(sorted(stable_images, key=lambda i:i["service"]), sort_keys=True).encode()).hexdigest()
 
     # Retained trace, IDs, drops and analyzer reconciliation.

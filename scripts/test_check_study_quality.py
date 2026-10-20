@@ -72,7 +72,7 @@ class StudyQualityTest(unittest.TestCase):
         for n in ("api1", "api2", "backend", "redis", "nginx"):
             image_id = "id-"+n
             image_rows.append(dict(ContainerName="project-run-"+n+"-1", ID=image_id, Platform="linux/amd64", Tag=tags.get(n,"latest")))
-            inspect_rows.append(dict(Id=image_id, RootFS=dict(Layers=["sha256:"+"a"*64]), Config=dict(Env=["X=1"])))
+            inspect_rows.append(dict(Id=image_id, RootFS=dict(Layers=["sha256:"+"a"*64]), Config=dict(Env=["X=1"], Cmd=["serve"], Labels={"com.docker.compose.project":"project-123", "com.docker.compose.service":n, "custom-label":"kept"})))
         (case / "images.json").write_text(json.dumps(image_rows))
         (case / "image-inspect.json").write_text(json.dumps(inspect_rows))
         (case / "base-image-digests.txt").write_text(REDIS+"\n"+NGINX+"\n")
@@ -223,6 +223,30 @@ class StudyQualityTest(unittest.TestCase):
         self.assertFalse(fatal["valid"])
         self.assertTrue(fatal["stop_sequence"])
         self.assertTrue(fatal["reasons"][0].startswith("fatal_artifact:"))
+
+    def test_image_fingerprint_ignores_only_compose_project_label_without_mutation(self):
+        manifest, case = self.fixture()
+        inspect_path = case/"image-inspect.json"
+        original_bytes = inspect_path.read_bytes()
+        original = json.loads(original_bytes)
+        baseline = checker.check(manifest, "planned", case)["image_fingerprint"]
+        self.assertEqual(inspect_path.read_bytes(), original_bytes)
+
+        project_changed = json.loads(json.dumps(original))
+        for item in project_changed:
+            item["Config"]["Labels"]["com.docker.compose.project"] = "project-different"
+        inspect_path.write_text(json.dumps(project_changed))
+        self.assertEqual(checker.check(manifest, "planned", case)["image_fingerprint"], baseline)
+        self.assertEqual(json.loads(inspect_path.read_text()), project_changed)
+
+        variants = []
+        changed = json.loads(json.dumps(original)); changed[0]["RootFS"]["Layers"] = ["sha256:"+"b"*64]; variants.append(changed)
+        changed = json.loads(json.dumps(original)); changed[0]["Config"]["Env"] = ["X=changed"]; variants.append(changed)
+        changed = json.loads(json.dumps(original)); changed[0]["Config"]["Cmd"] = ["changed"]; variants.append(changed)
+        changed = json.loads(json.dumps(original)); changed[0]["Config"]["Labels"]["custom-label"] = "changed"; variants.append(changed)
+        for changed in variants:
+            inspect_path.write_text(json.dumps(changed))
+            self.assertNotEqual(checker.check(manifest, "planned", case)["image_fingerprint"], baseline)
 
     def test_missing_and_malformed_artifacts_and_drop_reconciliation(self):
         manifest,case=self.fixture(); (case/"analysis.json").unlink()
