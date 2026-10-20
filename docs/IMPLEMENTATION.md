@@ -2,7 +2,7 @@
 
 Đây là thiết kế kỹ thuật của lượt triển khai được ủy quyền ngày 11/10/2026. Phạm vi nguồn vẫn theo [SOURCE_INDEX](context/SOURCE_INDEX.md); tham số dưới đây chỉ là mặc định pilot.
 
-**Trạng thái hiện tại (20/10/2026):** T09 hoàn tất; protocol v1.2 cùng phụ lục một vị trí lượt dự kiến v1.3 đã được thực thi. T10 chưa bắt đầu, chưa có kết luận RQ và không được chạy thêm tải. Xem [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md).
+**Trạng thái hiện tại (20/10/2026):** T09 hoàn tất; protocol v1.2 cùng phụ lục một slot dự kiến v1.3 đã được thực thi. T10 chưa bắt đầu, chưa có kết luận RQ và không được chạy thêm tải. Xem [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md).
 
 ```mermaid
 flowchart LR
@@ -15,7 +15,7 @@ flowchart LR
     B --> C
 ```
 
-Roadmap vẽ lớp traffic control trước backend, Proposal gắn limiter vào API. Prototype chọn middleware ở đầu API, trước xử lý backend dùng chung. Local mode giữ map riêng từng tiến trình; Redis mode chia sẻ trạng thái. Backend là mẫu tải mô phỏng để giữ năng lực cố định khi thay số API instance.
+Roadmap vẽ lớp traffic control trước backend, Proposal gắn limiter vào API. Prototype chọn middleware ở đầu API, trước xử lý backend dùng chung. Mỗi API instance ở local mode có local state riêng; Redis mode dùng shared state. Backend là workload mô phỏng để giữ năng lực cố định khi thay số API instance.
 
 ## Policy
 
@@ -26,7 +26,7 @@ Roadmap vẽ lớp traffic control trước backend, Proposal gắn limiter vào
 | Fixed Window | Cửa sổ epoch `[kW,(k+1)W)`; allow khi count < Q; reject không tăng count; reset ở biên |
 | Token Bucket | Ban đầu đầy B; refill liên tục r/s, tối đa B; allow nếu tokens ≥ 1; reject không tiêu token |
 | Precision | Milisecond; Redis TIME cho shared, wall clock tiến trình cho local; TB không refill lặp khi clock lùi |
-| tính nguyên tử | Mutex bao trọn local decision; Lua bao trọn shared read/decide/write |
+| atomicity | Mutex bao trọn local decision; Lua bao trọn shared read/decide/write |
 | TTL | FW hết hạn ở biên cửa sổ; TB không hết hạn sớm hơn thời gian refill đầy; local sweep cơ hội khi có request |
 | Namespace | Redis key gồm namespace lượt chạy, fingerprint policy và hash client; không FLUSHDB |
 | Quota exhausted | 429, Retry-After làm tròn lên giây |
@@ -36,9 +36,9 @@ Mặc định `Q=20,W=1s,B=20,r=20/s` cho cùng tốc độ dài hạn, không �
 
 ## Tính đúng và giới hạn
 
-Local nhiều instance cố ý không đảm bảo quota chung; đó là đối chứng RQ2/RQ3. Redis Lua giữ quyết định nguyên tử; script chạy trên Redis và có tính blocking theo [tài liệu Redis](https://redis.io/docs/latest/develop/programmability/eval-intro/). Thời gian shared lấy từ [Redis TIME](https://redis.io/docs/latest/commands/time/). Redis client tắt retry tự động để không lặp thao tác quota sau mất phản hồi; timeout vẫn có thể là kết quả không xác định (script đã chạy nhưng reply bị mất). Fail-open trong tình huống đó không chứng minh quota đúng.
+Local nhiều instance cố ý không đảm bảo quota chung; đó là đối chứng RQ2/RQ3. Redis Lua bảo đảm thao tác atomic; script chạy trên Redis và có tính blocking theo [tài liệu Redis](https://redis.io/docs/latest/develop/programmability/eval-intro/). Thời gian shared lấy từ [Redis TIME](https://redis.io/docs/latest/commands/time/). Redis client tắt retry tự động để không lặp thao tác quota sau mất phản hồi; timeout vẫn có thể là kết quả không xác định (script đã chạy nhưng reply bị mất). Fail-open trong tình huống đó không chứng minh quota đúng.
 
-Đối chứng không nguyên tử chỉ ở integration test, dùng barrier buộc các goroutine đọc cùng counter cũ. Nó minh họa lost update một cách tái lập, không đo tần suất race tự nhiên hay hiệu năng bản không nguyên tử.
+Đối chứng non-atomic chỉ ở integration test, dùng barrier buộc các goroutine đọc cùng counter cũ. Nó minh họa lost update một cách tái lập, không đo tần suất race tự nhiên hay hiệu năng bản non-atomic.
 
 Backend có semaphore không chờ và service time cấu hình. Arrival được đếm trước admission; overload trả 503. Counter phía backend là nguồn đúng cho arrivals; header phía client chỉ xác nhận arrivals khi nhận được phản hồi. HTTP transport error có thể xảy ra sau khi backend nhận request.
 
@@ -58,4 +58,4 @@ Xem [hồ sơ từng bước](worklog/2026-10-11-bootstrap/README.md) để bi�
 
 ## Bổ sung công cụ đo vòng 2
 
-Đã có profile normal/burst/concurrent, topology 1/2/4 và [analyzer trace độc lập](experiments/ANALYSIS.md). [Hồ sơ vòng đo](worklog/2026-10-11-measurement/README.md) ghi pilot thực, các lượt generator không đạt tải và hiệu chỉnh. T09 đã hoàn tất theo protocol v1.2 cùng phụ lục v1.3; T10 chưa bắt đầu và chưa có kết luận RQ1–RQ5. Công cụ phân tích vẫn giữ trạng thái chưa đủ bằng chứng kết luận khi độ phủ cửa sổ/trạng thái không đủ.
+Đã có profile normal/burst/concurrent, topology 1/2/4 và [analyzer trace độc lập](experiments/ANALYSIS.md). [Hồ sơ vòng đo](worklog/2026-10-11-measurement/README.md) ghi pilot thực, các lượt generator không đạt tải và hiệu chỉnh. T09 đã hoàn tất theo protocol v1.2 cùng phụ lục v1.3; T10 chưa bắt đầu và chưa có kết luận RQ1–RQ5. Analyzer giữ trạng thái oracle `inconclusive` (chưa đủ bằng chứng kết luận) khi độ phủ cửa sổ/trạng thái không đủ.

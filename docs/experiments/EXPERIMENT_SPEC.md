@@ -2,7 +2,7 @@
 
 **Trạng thái thiết kế ban đầu, cập nhật 13/10/2026:** phạm vi đánh giá theo Roadmap/Proposal; [thiết kế prototype](../IMPLEMENTATION.md) đã chọn Go, middleware trước backend, local mutex/Redis Lua, policy và quy tắc thời gian. Các mục **Mở** bên dưới ghi lại phương án thiết kế ban đầu; xem thiết kế để biết phần đã chọn. Đây là tài liệu phương pháp lịch sử, không phản ánh trạng thái protocol hiện tại. Protocol v1.2 cùng phụ lục v1.3 đã hoàn tất T09; T10 chưa bắt đầu, chưa có kết luận RQ và không được chạy thêm tải. Xem [trạng thái sẵn sàng](PROTOCOL_READINESS.md) và [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md). [Hồ sơ triển khai](../worklog/2026-10-11-bootstrap/README.md) phân biệt kiểm tra/smoke với dữ liệu nghiên cứu chính thức.
 
-Đã có [Console tùy chỉnh](../CONSOLE.md) và [ma trận 84 lượt thực chạy](../worklog/2026-10-12-console-matrix/README.md) ngày 12/10: một lượt 3 giây cho mỗi tổ hợp, không chủ động gây outage. Các tệp bằng chứng nhất quán, nhưng có phát hiện từ oracle, lỗi Redis và request bị generator bỏ; không dùng bộ này như benchmark chính thức. Ma trận rộng phục vụ kiểm tra cấu hình; nghiên cứu chọn phép so sánh phù hợp với từng RQ.
+Đã có [Console tùy chỉnh](../CONSOLE.md) và [ma trận 84 lượt thực chạy](../worklog/2026-10-12-console-matrix/README.md) ngày 12/10: một lượt 3 giây cho mỗi tổ hợp, không chủ động gây outage. Các artifact nhất quán, nhưng có phát hiện từ oracle, lỗi Redis và request bị generator bỏ; không dùng bộ này như benchmark chính thức. Ma trận rộng phục vụ kiểm tra cấu hình; nghiên cứu chọn phép so sánh phù hợp với từng RQ.
 
 **Nguồn:** [Roadmap](../context/sources/00_Project3_Roadmap.md) → [Proposal](../context/sources/01_Project3_Proposal.md) → [Research Context](../context/sources/10_Supplementary_Research_Context.md).  
 
@@ -12,26 +12,26 @@
 
 ## Mục tiêu và câu hỏi
 
-**Phạm vi:** đo quota chung, chi phí hiệu năng và mức bảo vệ backend khi chuyển từ trạng thái local sang trạng thái Redis được chia sẻ. Phạm vi cập nhật bổ sung mẫu tải hỗn hợp và Redis outage ngắn. So sánh:
+**Phạm vi:** đo quota chung, chi phí hiệu năng và mức bảo vệ backend khi chuyển từ local state sang Redis state được chia sẻ. Phạm vi cập nhật bổ sung workload hỗn hợp và Redis outage ngắn. So sánh:
 
 | Câu hỏi từ Proposal | Biến so sánh | Kết quả cần đo |
 | --- | --- | --- |
 | RQ1: Thuật toán ảnh hưởng thế nào? | Fixed Window ↔ Token Bucket | Burst, độ trễ, thông lượng, allow/reject |
-| RQ2: Trạng thái dùng chung thay đổi điều gì? | Local ↔ Redis, giữ các biến khác cố định | Quota toàn hệ thống, độ trễ, thông lượng, Redis resource |
-| RQ3: Tăng quy mô thay đổi điều gì? | Số API instances | thông lượng, độ trễ, correctness |
-| RQ4: Tính nguyên tử giúp gì? | Redis không nguyên tử ↔ Redis nguyên tử dưới tải concurrent | Race condition và quyết định sai/overshoot |
+| RQ2: Shared state thay đổi điều gì? | Local ↔ Redis, giữ các biến khác cố định | Quota toàn hệ thống, độ trễ, thông lượng, Redis resource |
+| RQ3: Tăng quy mô thay đổi điều gì? | Số API instance | thông lượng, độ trễ, correctness |
+| RQ4: Atomicity giúp gì? | Redis non-atomic ↔ Redis atomic dưới tải concurrent | Race condition và quyết định sai/overshoot |
 | RQ5: Quá tải hoặc Redis không khả dụng ảnh hưởng gì? | Không limiter ↔ local ↔ Redis shared trên tải hỗn hợp; fail-open ↔ fail-closed khi ngắt Redis | Goodput/p95/p99 của client hợp lệ, backend arrivals, 429/timeout/5xx, vi phạm quota và recovery |
 
-**Phạm vi:** prototype có load balancer, API instances, limiter, Redis và backend mô phỏng có năng lực giới hạn; không cần gateway hoàn chỉnh hay database nghiệp vụ. **Mở:** Roadmap và Proposal đặt limiter ở vị trí khác nhau; chốt vị trí trước khi thiết kế code.
+**Phạm vi:** prototype có load balancer, API instance, limiter, Redis và backend mô phỏng có năng lực giới hạn; không cần gateway hoàn chỉnh hay database nghiệp vụ. **Mở:** Roadmap và Proposal đặt limiter ở vị trí khác nhau; chốt vị trí trước khi thiết kế code.
 
 ## Policy và phép so sánh
 
 - **Thiết kế đề xuất:** mỗi request tốn 1 đơn vị; cùng `client_key` phải chia sẻ quota trên mọi instance. Request bị reject không chạy xử lý backend. Cấu hình policy tĩnh và có version trong mỗi lượt chạy.
 - **Fixed Window:** tối đa `Q` request/key trong cửa sổ `W`. Chốt rõ ranh giới cửa sổ.
 - **Token Bucket:** sức chứa `B`, tốc độ nạp `r` token/giây. Bắt đầu so sánh với `B = Q`, `r = Q/W` để có cùng tốc độ dài hạn; hai thuật toán vẫn cho phép burst khác nhau.
-- **Thiết kế đề xuất:** ma trận cơ sở là `{Fixed Window, Token Bucket} × {local, Redis atomic} × {một, nhiều instance}`; chọn số instance qua pilot. Local nhiều instance là đối chứng cho trạng thái không chia sẻ. Chỉ dùng Redis không nguyên tử trong bài concurrent để kiểm tra RQ4, không xem là cấu hình mục tiêu.
+- **Thiết kế đề xuất:** ma trận cơ sở là `{Fixed Window, Token Bucket} × {local, Redis atomic} × {một, nhiều instance}`; chọn số instance qua pilot. Local nhiều instance là đối chứng cho việc không có shared state. Chỉ dùng Redis non-atomic trong bài concurrent để kiểm tra RQ4, không xem là cấu hình mục tiêu.
 - **Oracle:** đối chiếu quyết định với policy độc lập cho từng thuật toán. Với concurrent requests, định nghĩa thứ tự quyết định hoặc bất biến có thể kiểm tra; không suy thứ tự chỉ từ timestamp phía client.
-- **Mở:** giá trị `Q/W/B/r`, key, nguồn thời gian, thứ tự request concurrent, TTL, timeout, hành vi khi Redis lỗi và cơ chế nguyên tử cụ thể. Tính nguyên tử là phần cốt lõi; Lua Script là một cơ chế có thể chọn. Sliding Window là phần mở rộng.
+- **Mở:** giá trị `Q/W/B/r`, key, nguồn thời gian, thứ tự request concurrent, TTL, timeout, hành vi khi Redis lỗi và cơ chế atomic cụ thể. Atomicity là phần cốt lõi; Lua Script là một cơ chế có thể chọn. Sliding Window là phần mở rộng.
 
 ## Kịch bản
 
@@ -40,7 +40,7 @@
 | Normal | Đo độ trễ, thông lượng và tài nguyên khi tải dưới tốc độ cấp phát. |
 | Burst | Đo hành vi allow/reject, độ trễ đỉnh và phục hồi; thử gần ranh giới Fixed Window. |
 | Concurrent | Gửi nhiều request cùng key khi quota gần hết để tìm race condition. |
-| Scaling | Lặp cùng mẫu tải khi tăng API instances; ghi cả chi phí Redis. |
+| Scaling | Lặp cùng workload khi tăng API instance; ghi cả chi phí Redis. |
 | Mixed overload | Client hợp lệ gửi tải ổn định, một client khác tạo burst; backend có năng lực xử lý giới hạn được xác định qua pilot. So không limiter, local và Redis shared trên cùng offered load, policy và backend. |
 | Redis outage | Ngắt Redis trong khoảng định trước khi đang gửi tải; so fail-open và fail-closed rồi khôi phục. Ghi quyết định, lỗi, vi phạm quota, tính sẵn sàng và phục hồi. |
 
@@ -56,15 +56,15 @@
 - **Redis outage:** availability của client hợp lệ = số request hợp lệ thành công / số request hợp lệ đã gửi trong khoảng lỗi; báo cáo vi phạm quota theo policy và thời gian từ lúc Redis trở lại đến khi quyết định/độ trễ ổn định theo cửa sổ quan sát chốt ở pilot. Fail-open có thể chủ động vượt quota; phân loại đây là trade-off của policy, không tự động gọi là race condition.
 - **Resource:** Redis CPU/memory; ghi network overhead hoặc bottleneck API/load generator nếu đo được đáng tin cậy.
 
-Mỗi lượt chạy cần lưu cấu hình, version code/policy, `run_id`, request ID, client class/key, instance, thời điểm, quyết định, mã phản hồi, độ trễ và lỗi; ghi tải thực tế được chào và thời điểm ngắt/khôi phục Redis. Giữ endpoint, backend mẫu tải và môi trường giống nhau khi đổi một biến; đặt lại trạng thái, ghi làm nóng và trạng thái ban đầu; lặp nhiều lượt và báo cáo độ dao động. Tách timeout/lỗi hệ thống khỏi reject hợp lệ.
+Mỗi lượt chạy cần lưu cấu hình, version code/policy, `run_id`, request ID, client class/key, instance, thời điểm, quyết định, mã phản hồi, độ trễ và lỗi; ghi actual offered load và thời điểm ngắt/khôi phục Redis. Giữ endpoint, backend workload và môi trường giống nhau khi đổi một biến; đặt lại trạng thái, ghi làm nóng và trạng thái ban đầu; lặp nhiều lượt và báo cáo độ dao động. Tách timeout/lỗi hệ thống khỏi reject hợp lệ.
 
 ## Quyết định tiếp theo
 
 Prototype đã chọn client key, policy và quy tắc thời gian, vị trí limiter, Redis Lua, fail policy và stack; xem [thiết kế](../IMPLEMENTATION.md). Lượt smoke ban đầu đã chạy. Các mục dưới đây là câu hỏi trong bản thiết kế lịch sử, không phải trạng thái công việc hiện tại. Protocol nghiên cứu đã khóa ở v1.2 cùng phụ lục v1.3; T09 hoàn tất, T10 chưa bắt đầu và không được chạy thêm tải. Xem [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md):
 
-1. Công cụ phân tích độc lập đã có kiểm tra trace FW/TB và phân pha outage/recovery; xem [hợp đồng phân tích](ANALYSIS.md). Còn phải xác định mức quan sát cho cửa sổ đầy đủ và vi phạm quota khi fail-open có quyết định không rõ; không coi kết quả chưa đủ bằng chứng kết luận là pass.
-2. Dùng các lượt hiệu chỉnh đã có để chốt ngưỡng backend, mức tải, làm nóng, số lần lặp, số API instance, cửa sổ Redis outage và cách đo tài nguyên.
-3. Điều tra oracle mismatch ở hai lượt local Token Bucket và Redis I/O timeouts được giữ trong ma trận 84 lượt; không đổi trạng thái `observed_violations`/chưa đủ bằng chứng kết luận thành đạt.
+1. Analyzer độc lập đã có kiểm tra trace FW/TB và phân pha outage/recovery; xem [hợp đồng phân tích](ANALYSIS.md). Còn phải xác định mức quan sát cho cửa sổ đầy đủ và vi phạm quota khi fail-open có quyết định không rõ; không coi trạng thái `inconclusive` (chưa đủ bằng chứng kết luận) là pass.
+2. Dùng các lượt calibration đã có để chốt ngưỡng backend, mức tải, làm nóng, số lần lặp, số API instance, cửa sổ Redis outage và cách đo tài nguyên.
+3. Điều tra oracle mismatch ở hai lượt local Token Bucket và Redis I/O timeouts được giữ trong ma trận 84 lượt; không đổi trạng thái `observed_violations`/`inconclusive` thành đạt.
 4. Kiểm chứng generator đạt offered load ở các mức đã chọn, rồi khóa protocol trước các lượt đo chính thức.
 
 Kết quả mong muốn là dữ liệu tái chạy được để trả lời RQ1–RQ5 và giải thích trade-off correctness–performance–backend protection–availability; chưa đặt trước kết luận thuật toán hay fail policy nào tốt hơn. Redis Cluster, dashboard, tier/endpoint policy management và gateway đầy đủ nằm ngoài lõi.
