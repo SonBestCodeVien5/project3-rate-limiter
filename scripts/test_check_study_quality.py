@@ -21,7 +21,7 @@ class StudyQualityTest(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.fixture_number = 0
 
-    def fixture(self, outage=False):
+    def fixture(self, outage=False, outage_phase="outage"):
         self.fixture_number += 1
         case = self.root / f'{"outage" if outage else "standard"}-{self.fixture_number}'
         (case / "load").mkdir(parents=True)
@@ -34,7 +34,7 @@ class StudyQualityTest(unittest.TestCase):
         w = dict(legitimate_clients=5, duration_s=1, max_inflight=200, timeout_ms=2000, max_schedule_lag_ms=100,
                  profile="outage-pair" if outage else "normal", rps=100 if outage else 20,
                  legitimate_rps=20 if outage else 20, abusive_rps=80 if outage else 0)
-        plan = dict(planned_run_id="planned", cell="outage-open-outage" if outage else "normal-redis",
+        plan = dict(planned_run_id="planned", cell=f"outage-open-{outage_phase}" if outage else "normal-redis",
                     source_revision=revision, config=dict(policy=policy, workload=w,
                     topology=dict(api_instances=2, backend_capacity=10, backend_service_ms=50)))
         manifest = self.root / f'manifest-{self.fixture_number}.json'
@@ -81,9 +81,9 @@ class StudyQualityTest(unittest.TestCase):
             for item in api.values(): item["limiter_errors"] = 3
         analysis = dict(run_id="runtime", evidence=dict(summary_counts_match_trace=True), oracle=dict(status="inconclusive"),
                         counter_deltas={**api, "backend": dict(arrivals=summary["sent"], success=summary["sent"], overload=0, canceled=0)},
-                        outage={"phases": {}} if outage else None, redis_resources={"status":"incomplete"})
+                        outage={"phases": {}} if outage and outage_phase == "outage" else None, redis_resources={"status":"incomplete"})
         (case / "analysis.json").write_text(json.dumps(analysis))
-        if outage:
+        if outage and outage_phase == "outage":
             (case / "outage-events.txt").write_text("\n".join(f"{(BASE+timedelta(seconds=s)).isoformat()} {n}" for s,n in zip((.4,.41,.6,.61),("pause_requested","pause_completed","unpause_requested","unpause_completed")))+"\n")
         return manifest, case
 
@@ -161,6 +161,15 @@ class StudyQualityTest(unittest.TestCase):
         analysis["counter_deltas"]["api1"]["limiter_errors"] = 1
         (case/"analysis.json").write_text(json.dumps(analysis))
         self.assertIn("limiter_errors", checker.check(manifest, "planned", case)["reasons"])
+
+    def test_healthy_outage_calibration_allows_null_analysis_outage_and_enforces_gate(self):
+        manifest, case = self.fixture(outage=True, outage_phase="healthy")
+        result = checker.check(manifest, "planned", case)
+        self.assertTrue(result["valid"], result["reasons"])
+        analysis = json.loads((case/"analysis.json").read_text())
+        analysis["counter_deltas"]["api1"]["limiter_errors"] = 1
+        (case/"analysis.json").write_text(json.dumps(analysis))
+        self.assertIn("outage_healthy_gate", checker.check(manifest, "planned", case)["reasons"])
 
     def test_missing_expected_counter_key_with_extras_is_rejected(self):
         manifest, case = self.fixture()

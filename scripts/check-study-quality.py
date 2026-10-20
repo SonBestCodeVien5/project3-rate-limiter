@@ -236,7 +236,7 @@ def _check(manifest_path, planned_run_id, run_dir):
                 if names != required or times != sorted(times): fail("outage_event_order")
             except (OSError, ValueError, IndexError):
                 fail("outage_event_order")
-        if not analysis.get("outage"):
+        if planned["cell"].endswith("outage") and not analysis.get("outage"):
             fail("outage_analysis_missing")
     if not isinstance(analysis.get("oracle"), dict) or not analysis.get("oracle", {}).get("status"):
         fail("oracle_status_missing")
