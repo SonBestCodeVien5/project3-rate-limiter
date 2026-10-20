@@ -414,6 +414,7 @@ def continuation_results(manifest, accepted, evidence, identity, execution_ledge
     missing = [entry['planned_run_id'] for entry in manifest['runs']
                if entry['planned_run_id'] not in accepted]
     return {'schema_version': 1, 'protocol_id': manifest.get('protocol_id'),
+            'clock_tolerance_ms': manifest['clock_tolerance_ms'],
             'manifest_sha256': identity['manifest_sha256'],
             'source_revision': manifest['source_revision'],
             'source_manifest_sha256': identity['source_manifest_sha256'],

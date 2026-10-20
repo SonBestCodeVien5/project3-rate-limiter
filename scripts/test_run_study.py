@@ -645,6 +645,7 @@ class CoordinatorTest(unittest.TestCase):
         self.assertEqual([row['attempt'] for row in starts if row['invocation_id'] == source_runs[2]['invocation_id']], [1])
         self.assertFalse(any(row['invocation_id'] == source_runs[0]['invocation_id'] for row in starts))
         exported = json.loads((out / 'manifest.json').read_text())
+        self.assertEqual(exported['clock_tolerance_ms'], data['clock_tolerance_ms'])
         self.assertEqual(len(exported['runs']), 2)
         self.assertIn(source_runs[1]['planned_run_id'], exported['missing_planned_run_ids'])
 
