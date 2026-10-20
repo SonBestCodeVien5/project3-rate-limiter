@@ -1,8 +1,18 @@
 # Session checkpoint
 
-## T08 complete; paused before T09 — 2026-10-19
+## T09 authorized; formal batch in progress — 2026-10-20
 
-The user explicitly resumed T08 and authorized bounded Docker/live sampler calibration, then authorized locking a versioned protocol. T08 is complete within that scope. **Stop here: T09 formal benchmark has not been authorized or run.** No final RQ conclusion follows from calibration evidence. T01–T07 gates were not rerun.
+The user explicitly authorized T09 v1.1 tooling/smoke and the full 46-cell/138-slot formal batch, stopping before T10. T01–T08 remain complete within their recorded limits. T09 smoke passed: standard `p1-003-normal-none`, both outage policies, invalid-healthy stop behavior, and offline fixed-threshold analysis; see the [T09 smoke worklog](../worklog/2026-10-20-t09-smoke/README.md). The standard smoke used `p1-003-normal-none`; the first matrix row is a four-API scaling cell, so smoke did not substitute for or count as a formal slot.
+
+The v1.1 protocol retains the 46-cell/138-slot matrix and thresholds while adding complete-gates policy and selective-retry paths. Protocol lock is `c254346`; manifest SHA-256 is `32f8c6eb34bfd17e45b5dab5e1411b04ce410cf4b49c9ed495678fcb47fb3f79`. T09 tooling source is `0291a80fb404fea0eafee8c3431acc3631bb423e`; the formal worker was dispatched from that fixed source to `/tmp/project3-t09-formal-0291`, with outputs at `/tmp/project3-t09-formal-results-20261020`. No formal completion or accepted counts have been reported. T09 remains in progress; T10 is not started, and there are no RQ conclusions.
+
+Smoke specifics: standard `p1-003-normal-none` passed; open and closed outage pairs passed, including fixed-threshold reanalysis that preserved original dynamic-threshold files; invalid healthy input produced `valid:false` and `stop_sequence:true` without an outage phase or Redis pause. The 90-second pre-load observer had zero >5 ms steps. Two excluded attempts (misconfigured workload and launcher argument placement) and interim checker failures remain preserved. Tooling and smoke changes are committed separately from evidence and this progress update. Documentation commits must not change the fixed measurement source pin.
+
+The same T08 limits apply: Redis sampler counters describe total traffic including sampler/admin/health-check/workload traffic, not limiter-only bytes/request; cadence and paired-overhead limits remain. Absolute UTC accuracy and restart/resume durability remain unverified. Keep all formal invalid attempts and follow v1.1 bounded retry/stop rules. At the requested stopping point, hand off T09 counts/evidence and stop before T10 analysis.
+
+## Historical checkpoint: T08 complete; paused before T09 — 2026-10-19
+
+The user explicitly resumed T08 and authorized bounded Docker/live sampler calibration, then authorized locking a versioned protocol. T08 is complete within that scope. At this historical checkpoint T09 had not been authorized or run. No final RQ conclusion followed from calibration evidence. T01–T07 gates were not rerun.
 
 ### T08 result and provenance
 
@@ -16,7 +26,7 @@ Checks actually performed: fresh 90-second observer passed with zero >5ms steps;
 
 ### Status and next gate
 
-T01–T08 are complete within recorded limits. T09/T10 formal data and analysis remain pending, and T09 requires an explicit user resumption. On a future resumed measurement session, take a fresh observer run before load if session continuity is uncertain; then follow the locked manifest sequentially. Do not dispatch T09 from this checkpoint alone.
+T01–T08 are complete within recorded limits. At this historical checkpoint T09/T10 formal data and analysis remained pending, and T09 required explicit user resumption. On a future resumed measurement session, take a fresh observer run before load if session continuity is uncertain; then follow the locked manifest sequentially. Do not dispatch T09 from that checkpoint alone.
 
 ## Historical checkpoint: T07 complete; paused before T08 — 2026-10-19
 
