@@ -21,7 +21,7 @@ class StudyQualityTest(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.fixture_number = 0
 
-    def fixture(self, outage=False, outage_phase="outage"):
+    def fixture(self, outage=False, outage_phase="outage", cell=None):
         self.fixture_number += 1
         case = self.root / f'{"outage" if outage else "standard"}-{self.fixture_number}'
         (case / "load").mkdir(parents=True)
@@ -34,7 +34,7 @@ class StudyQualityTest(unittest.TestCase):
         w = dict(legitimate_clients=5, duration_s=1, max_inflight=200, timeout_ms=2000, max_schedule_lag_ms=100,
                  profile="outage-pair" if outage else "normal", rps=100 if outage else 20,
                  legitimate_rps=20 if outage else 20, abusive_rps=80 if outage else 0)
-        plan = dict(planned_run_id="planned", cell=f"outage-open-{outage_phase}" if outage else "normal-redis",
+        plan = dict(planned_run_id="planned", cell=f"outage-open-{outage_phase}" if outage else (cell or "normal-redis"),
                     source_revision=revision, config=dict(policy=policy, workload=w,
                     topology=dict(api_instances=2, backend_capacity=10, backend_service_ms=50)))
         manifest = self.root / f'manifest-{self.fixture_number}.json'
@@ -184,6 +184,22 @@ class StudyQualityTest(unittest.TestCase):
         analysis["counter_deltas"]["api1"]["limiter_errors"] = 1
         (case/"analysis.json").write_text(json.dumps(analysis))
         self.assertIn("outage_healthy_gate", checker.check(manifest, "planned", case)["reasons"])
+
+    def test_scaling_overload_is_valid_but_normal_block_overload_is_not(self):
+        for cell, expected_valid in (("scale-redis-fw-1api-50rps", True), ("normal-redis", False)):
+            manifest, case = self.fixture(cell=cell)
+            summary = json.loads((case/"load/summary.json").read_text())
+            summary["http_5xx"] = 1
+            (case/"load/summary.json").write_text(json.dumps(summary))
+            rows = [json.loads(x) for x in (case/"load/requests.jsonl").read_text().splitlines()]
+            rows[-1]["status"] = 503
+            (case/"load/requests.jsonl").write_text("".join(json.dumps(r)+"\n" for r in rows))
+            analysis = json.loads((case/"analysis.json").read_text())
+            analysis["counter_deltas"]["backend"].update(success=19, overload=1)
+            (case/"analysis.json").write_text(json.dumps(analysis))
+            result = checker.check(manifest, "planned", case)
+            self.assertEqual(result["valid"], expected_valid, result["reasons"])
+            self.assertEqual(result["reasons"].count("normal_outcome_gate"), 0 if expected_valid else 1)
 
     def test_missing_expected_counter_key_with_extras_is_rejected(self):
         manifest, case = self.fixture()

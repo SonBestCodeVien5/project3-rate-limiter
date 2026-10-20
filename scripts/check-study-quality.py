@@ -218,7 +218,7 @@ def _check(manifest_path, planned_run_id, run_dir):
     outage_attempt = w["profile"] == "outage-pair" and planned["cell"].endswith("outage")
     if limiter_errors and not outage_attempt:
         fail("limiter_errors")
-    if w["profile"] == "normal" and (summary.get("http_429") or backend.get("overload")):
+    if planned["cell"].startswith("normal-") and (summary.get("http_429") or backend.get("overload")):
         fail("normal_outcome_gate")
     if w["profile"] == "outage-pair":
         if planned["cell"].endswith("healthy"):
