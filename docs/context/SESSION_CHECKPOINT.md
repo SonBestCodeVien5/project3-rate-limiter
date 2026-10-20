@@ -1,6 +1,12 @@
 # Session checkpoint
 
-## T09 partial; v1.2 retry cap exhausted — 2026-10-20
+## T09 complete; stop before T10 — 2026-10-20
+
+The user authorized one additional attempt for the sole missing v1.2 planned slot under the precommitted [v1.3 addendum](../experiments/protocol-v1.3/protocol.md), then requested stopping before T10. Attempt `p1-129-scale-redis-fw-1api-250rps-r3` passed the frozen v1.2 checker: 7,500/7,500 sent, zero drops, 250 RPS, fingerprints match. It used unchanged workload, configuration, thresholds and clean measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`. The corrected derived export reports 138/138 usable planned slots and all 46 cells aggregated; all four outage cells aggregate. T09 measurement is complete. The Fixed Window correctness oracle remains inconclusive. See the [v1.3 handoff](../worklog/2026-10-20-t09-v1.3/README.md) and [SHA256SUMS](../worklog/2026-10-20-t09-v1.3/SHA256SUMS); archive SHA-256 `c947c8b9633b82c71e49ee473255c6db1a2431909d0a6342fa23fd798ecb150c`. Extraction/checksums and cleanup passed. V1.2 manifest and prior raw artifacts/ledgers remain unchanged.
+
+Before load, the fresh 90-second observer passed (1,789 samples, zero >5 ms steps); pinned source/image gates passed. The v1.2 three failed attempts for this slot remain preserved. No further load is authorized. T10 has not started and there are no RQ conclusions. Stop after T09 as originally requested. T08 Redis counters remain total traffic, not limiter-only; UTC accuracy, clock restart/resume durability, and simulated-backend limitations remain. No owned measurement process/container remains. Evidence handoff is complete.
+
+## Historical checkpoint: T09 partial at v1.2 retry cap — 2026-10-20
 
 The user resumed the earlier pause, authorized v1.2 continuation, and approved up to three new attempts per remaining slot after official v1.2 import/revalidation. Those attempts have concluded; stop at the authorized cap and await the user's next direction. T01–T08 remain complete within their recorded limits. Earlier T09 v1.1 smoke passed for standard `p1-003-normal-none`, both outage policies, invalid-healthy stop behavior, and offline fixed-threshold analysis; see the [T09 smoke worklog](../worklog/2026-10-20-t09-smoke/README.md). The standard smoke did not substitute for or count as a formal slot.
 
