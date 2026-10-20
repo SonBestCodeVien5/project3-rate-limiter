@@ -1,17 +1,19 @@
-# Portable post-fix measurement gate
+# Cổng đo pilot sau khi sửa lỗi
 
-This is a repeatable pilot gate, not the locked protocol or a formal benchmark. It preserves the PRESET: Redis Fixed Window, 2 API instances, 5 legitimate keys, Q=B=20, W=1000 ms, refill 20/s, backend capacity 4/service 50 ms, 30 seconds per run, 100 ms Redis bounds, and generator limits from `research-pilot.sh`. It runs normal 20 RPS × 3, then mixed 120 total / 20 legitimate RPS × 3. Quality is checked after each run. A repeated quality flag stops the sequence; invalid runs and logs remain in the unique output directory.
+**Trạng thái hiện tại (20/10/2026):** T09 đã hoàn tất; T10 chưa bắt đầu, chưa có kết luận RQ và không được chạy thêm tải. Các lệnh dưới đây mô tả cổng pilot lịch sử. Xem [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md).
 
-Use a detached clean checkout of the fixed revision and a new output path:
+Đây là cổng pilot có thể chạy lại, không phải protocol đã khóa hay benchmark chính thức. Cổng giữ nguyên PRESET: Redis Fixed Window, 2 API instance, 5 key hợp lệ, Q=B=20, W=1000 ms, refill 20/s, backend capacity 4/service 50 ms, 30 giây mỗi lượt, giới hạn Redis 100 ms và giới hạn generator từ `research-pilot.sh`. Cổng chạy normal 20 RPS × 3, sau đó mixed tổng 120 / hợp lệ 20 RPS × 3. Chất lượng được kiểm tra sau từng lượt. Cờ chất lượng lặp lại sẽ dừng chuỗi; các lượt không hợp lệ và log vẫn được giữ trong thư mục output duy nhất.
+
+Dùng checkout sạch, detached tại revision cố định và đường dẫn output mới:
 
 ```sh
 python3 scripts/observe-clock.py --output artifacts/clock-observe-NEW --duration-seconds 90
 ```
 
-Inspect `summary.json` first. Proceed to the gate only if `clock_steps_above_5ms` is empty; a detected step means the environment is not ready. An earlier 2026-10-19 observation recorded three realtime jumps of about 2.93–2.96 seconds in 90 seconds ([historical clock worklog](../worklog/2026-10-19-clock/README.md)). After the T01 remediation, a fresh 90 s observer passed and the six-run T03 gate passed its quality checks; evidence and limits are in the [T02/T03 worklog](../worklog/2026-10-19-measurement-gate/README.md).
+Trước tiên kiểm tra `summary.json`. Chỉ chạy gate nếu `clock_steps_above_5ms` rỗng; nếu phát hiện bước nhảy thì môi trường chưa sẵn sàng. Lần quan sát ngày 19/10/2026 trước đó ghi nhận ba bước nhảy realtime khoảng 2.93–2.96 giây trong 90 giây ([worklog clock lịch sử](../worklog/2026-10-19-clock/README.md)). Sau remediation T01, observer 90 giây mới đã đạt và gate T03 gồm sáu lượt đã qua kiểm tra chất lượng; bằng chứng và giới hạn nằm trong [worklog T02/T03](../worklog/2026-10-19-measurement-gate/README.md).
 
 ```sh
 bash scripts/run-measurement-gate.sh --output-root artifacts/measurement-gate-NEW --timeout-seconds 240
 ```
 
-The gate refuses a dirty measurement checkout and any existing output path. Its 240-second per-run bound includes build, startup, load, and cleanup; adjust only before starting if the host requires a longer bound, and record that change. The observer stores `samples.jsonl`, `summary.json`, and `metadata.json`; `clock_steps_above_5ms` reports wall/monotonic divergence. An empty step list only clears this initial check; the run-level gate still checks clock residuals. Neither check nor six passing gate runs locks the research protocol or establishes clock stability beyond the observed interval. For any future repeat, first require a fresh observer pass when session continuity is uncertain; T04–T08 calibration and protocol locking remain separate prerequisites for formal measurement.
+Gate từ chối checkout đo có thay đổi và đường dẫn output đã tồn tại. Giới hạn 240 giây mỗi lượt gồm build, khởi động, tải và cleanup; chỉ điều chỉnh trước khi bắt đầu nếu host cần thời gian dài hơn, đồng thời ghi lại thay đổi. Observer lưu `samples.jsonl`, `summary.json` và `metadata.json`; `clock_steps_above_5ms` báo độ lệch wall/monotonic. Danh sách bước nhảy rỗng chỉ đạt kiểm tra ban đầu; gate từng lượt vẫn kiểm tra clock residual. Hai kiểm tra này và cả sáu lượt gate đạt đều không khóa protocol nghiên cứu hay xác lập độ ổn định clock ngoài khoảng đã quan sát. Nếu sau này được yêu cầu lặp lại và không chắc phiên liên tục, trước hết cần observer mới đạt; hiệu chỉnh T04–T08 và khóa protocol là các điều kiện riêng cho phép đo chính thức.

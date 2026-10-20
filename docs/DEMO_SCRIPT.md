@@ -1,16 +1,16 @@
 # Demo Project3 — khoảng 6 phút
 
-Đây là kịch bản demo prototype/pilot. Chưa có kết luận benchmark chính thức; xem [readiness](experiments/PROTOCOL_READINESS.md). Dùng cùng revision và artifacts đã kiểm chứng, chuẩn bị trước để không phụ thuộc tải live trong buổi trình bày.
+Đây là kịch bản demo prototype/pilot. Chưa có kết luận benchmark chính thức; xem [trạng thái sẵn sàng](experiments/PROTOCOL_READINESS.md). Dùng cùng revision và tệp bằng chứng đã kiểm chứng, chuẩn bị trước để không phụ thuộc tải trực tiếp trong buổi trình bày.
 
 | Thời gian | Nội dung / thao tác |
 | --- | --- |
 | 0:00–0:45 | Flash sale giả định: traffic tăng, backend có năng lực giới hạn, người mua hợp lệ bị ảnh hưởng. Nêu rằng prototype mô phỏng API, không xây hệ thống bán hàng. |
-| 0:45–1:30 | Vẽ client → LB → API limiter→backend chung; local state riêng từng API, Redis state chung và Lua atomic. Quota theo key; FW/TB có burst semantics khác nhau. |
-| 1:30–3:00 | Mở Console, chọn saved run/lượt và bảng none/local/Redis cùng cấu hình. Chỉ ra goodput/p95/p99 hợp lệ,429,5xx và backend arrivals/overload; ghi rõ số liệu pilot. Nếu UI từ chối matching, trình bày nguyên nhân và mở artifact thay vì ép pass. |
-| 3:00–4:00 | Mở policy/Compose resolved, summary/analysis và trace. Chuyển lượt để chứng minh KPI không chỉ lấy repeat1; oracle inconclusive nghĩa là chưa đủ bằng chứng, runner complete không phải correctness pass. |
-| 4:00–5:00 | Trình bày hai sửa lỗi: local TB float reject tại biên refill và stale Redis socket deadline. Tests và evidence gốc giữ nguyên; chỉ ra clock host vẫn nhảy nên formal gate bị dừng. |
-| 5:00–6:00 | Nêu điều đã kiểm chứng, giới hạn pilot và việc còn thiếu cho RQ1–RQ5. Hướng tiếp tục: clock ổn→calibration→protocol khóa→benchmark→đánh giá; không kết luận scalability/HA production. |
+| 0:45–1:30 | Vẽ luồng client → LB → API limiter → backend dùng chung; mỗi API có trạng thái local riêng, còn Redis chia sẻ trạng thái giữa các API và Lua bảo đảm tính nguyên tử. Quota tính theo key; FW và TB có cách xử lý burst khác nhau. |
+| 1:30–3:00 | Mở Console, chọn lượt chạy đã lưu và bảng so sánh none/local/Redis có cùng cấu hình. Chỉ ra goodput/p95/p99 của client hợp lệ, 429, 5xx và số request backend nhận/quá tải; nêu rõ đây là số liệu pilot. Nếu giao diện từ chối ghép lượt, giải thích nguyên nhân và mở tệp bằng chứng thay vì ép chấp nhận. |
+| 3:00–4:00 | Mở policy/Compose đã resolve, summary/analysis và trace. Chuyển lượt để cho thấy KPI không chỉ lấy repeat1. Trạng thái oracle “chưa đủ bằng chứng kết luận” nghĩa là chưa đủ dữ liệu để kết luận; bộ chạy hoàn tất không đồng nghĩa tính đúng đã đạt. |
+| 4:00–5:00 | Trình bày hai sửa lỗi lịch sử: local TB từ chối do sai số float ở biên refill và deadline socket Redis cũ. Bài kiểm tra và bằng chứng gốc được giữ nguyên. Các bước nhảy clock và việc dừng gate là quan sát lịch sử, không phải trạng thái hiện tại. |
+| 5:00–6:00 | Nêu điều đã kiểm chứng và các giới hạn còn lại. T09 đã hoàn tất; T10 chưa bắt đầu, chưa có kết luận RQ1–RQ5 và không được chạy thêm tải. Chỉ sau khi người dùng yêu cầu tiếp tục mới xem các cổng T10 trong [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md); không tự chạy benchmark hoặc kết luận về khả năng mở rộng/HA ở production. |
 
-Fallback offline: [biểu đồ pilot](worklog/2026-10-13-evaluation/figures/calibration.png), [CSV](worklog/2026-10-13-evaluation/report/runs.csv), raw archive và ảnh UI lưu trong worklog. Không cần internet; nếu Docker lỗi, mở artifacts để giải thích cấu hình/outcomes và giới hạn.
+Phương án dự phòng ngoại tuyến: [biểu đồ pilot](worklog/2026-10-13-evaluation/figures/calibration.png), [CSV](worklog/2026-10-13-evaluation/report/runs.csv), archive dữ liệu thô và ảnh UI lưu trong worklog. Không cần internet; nếu Docker lỗi, mở các tệp bằng chứng để giải thích cấu hình, kết quả và giới hạn.
 
-Tự kiểm tra trước bảo vệ: vì sao local nhiều instance nhân quota? Vì sao TB không dùng quota FW để đo overshoot? Lua atomic bảo đảm gì?429 khác503/timeout thế nào? Goodput hợp lệ dùng mẫu số nào? Vì sao clock jump làm oracle/phân pha thiếu tin cậy dù latency monotonic vẫn thấp? First success khác stable recovery thế nào? Biểu đồ nào hiện chỉ là pilot?
+Tự kiểm tra trước bảo vệ: vì sao nhiều instance local làm quota tăng gấp bội? Vì sao không dùng quota FW để đo overshoot của TB? Lua có tính nguyên tử bảo đảm điều gì? 429 khác 503/timeout thế nào? Goodput của client hợp lệ dùng mẫu số nào? Vì sao bước nhảy clock làm oracle/phân pha thiếu tin cậy dù độ trễ đo bằng monotonic vẫn thấp? Thành công đầu tiên khác recovery ổn định thế nào? Biểu đồ nào hiện chỉ là pilot?

@@ -1,8 +1,10 @@
 # Xuất dữ liệu báo cáo RQ1–RQ5
 
-Đây là công cụ trình bày artifacts đo thật, không khóa protocol và không tự kết luận mode/thuật toán thắng. Dùng sau analyzer theo [ANALYSIS.md](ANALYSIS.md). Không thay đổi artifacts gốc, không chạy Docker hoặc tải HTTP. Matplotlib chưa được cài trên môi trường hiện tại; công cụ chỉ xuất CSV/Markdown, không thêm dependency.
+**Trạng thái hiện tại (20/10/2026):** T09 đã hoàn tất; T10 chưa bắt đầu và chưa có kết luận RQ. Công cụ này chỉ tổng hợp tệp bằng chứng đã có; tài liệu không cho phép chạy thêm tải. Xem [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md).
 
-Tạo manifest JSON có các lượt được chọn **tường minh**, đường dẫn tương đối tính từ thư mục manifest. `group` là nhãn RQ/nhóm phép đo; `cell` là một cấu hình duy nhất, gồm cùng mode/thuật toán, tải, policy, backend, topology, revision và images. Các cấu hình khác nhau cần cell khác nhau, kể cả khi thuộc cùng RQ. Không tự tìm run theo glob và không đếm cùng đường dẫn hai lần.
+Đây là công cụ trình bày các tệp bằng chứng đo thực tế; công cụ không thay đổi protocol và không tự kết luận mode/thuật toán nào tốt hơn. Dùng sau công cụ phân tích theo [ANALYSIS.md](ANALYSIS.md). Không thay đổi tệp bằng chứng gốc, không chạy Docker hoặc tải HTTP. Matplotlib chưa được cài trên môi trường hiện tại; công cụ chỉ xuất CSV/Markdown, không thêm thư viện phụ thuộc.
+
+Tạo manifest JSON, trong đó các lượt được chọn **ghi rõ**, còn đường dẫn tính tương đối từ thư mục chứa manifest. `group` là nhãn RQ/nhóm phép đo; `cell` là một cấu hình duy nhất có cùng mode/thuật toán, mẫu tải, policy, backend, topology, revision và image. Mỗi cấu hình khác nhau cần `cell` riêng, kể cả khi thuộc cùng RQ. Công cụ không tự tìm lượt bằng glob và không đếm cùng đường dẫn hai lần.
 
 ```json
 {
@@ -18,28 +20,28 @@ Tạo manifest JSON có các lượt được chọn **tường minh**, đườn
 }
 ```
 
-Các đường dẫn trên chỉ minh họa schema; không phải run đã đo. `clock_tolerance_ms: 5` cũng chỉ là ví dụ, phải hiệu chỉnh/khóa trước khi dùng bộ đo chính thức. Công cụ không tự điều chỉnh ngưỡng sau khi nhìn kết quả.
+Các đường dẫn chỉ minh họa schema, không phải lượt đã đo. `clock_tolerance_ms: 5` cũng chỉ là ví dụ; cần hiệu chỉnh và khóa trước khi dùng bộ đo chính thức. Công cụ không tự điều chỉnh ngưỡng sau khi thấy kết quả.
 
 ```bash
 python3 scripts/report-study.py path/to/manifest.json --output artifacts/report-new
 python3 -m unittest discover -s scripts -p test_report_study.py
 ```
 
-Thư mục output phải chưa tồn tại. Kết quả gồm `runs.csv` giữ mọi lượt kể cả invalid, `cells.csv` chứa trạng thái đầy đủ và median/min/max khi đủ điều kiện, `report.md` tóm tắt số liệu/chất lượng và bản sao manifest. Các giá trị không có mẫu hoặc thiếu evidence để trống; không biến p95 không có mẫu thành 0. Percentile là **chỉ số riêng từng lượt**: `legitimate_p95_ms_run_median` nghĩa là median của các p95 từng lượt, tuyệt đối không phải p95 của trace gộp.
+Thư mục output phải chưa tồn tại. Kết quả gồm `runs.csv` giữ mọi lượt, kể cả lượt không hợp lệ; `cells.csv` chứa trạng thái đầy đủ và median/min/max khi đủ điều kiện; `report.md` tóm tắt số liệu/chất lượng cùng bản sao manifest. Giá trị không có mẫu hoặc thiếu bằng chứng được để trống; không biến p95 không có mẫu thành 0. Percentile là **chỉ số riêng từng lượt**: `legitimate_p95_ms_run_median` nghĩa là median của các p95 từng lượt, tuyệt đối không phải p95 của trace đã gộp.
 
-Mỗi lượt đọc summary/analysis/metadata/policy, Compose resolve, IDs/platform images, base digests, nginx config, revision/dirty tree, và trace. Các file revision/status nằm ở thư mục cha case như runner hiện tại. Fingerprint bỏ run_id và namespace, giữ workload/key distribution version, các nhãn mode/algorithm/fail policy, policy số, backend/topology/runtime/images. Matching chỉ áp dụng **bên trong cell**; công cụ không xác nhận rằng hai cell khác cấu hình là một phép so sánh có kiểm soát.
+Mỗi lượt đọc summary/analysis/metadata/policy, Compose đã resolve, ID/nền tảng image, digest nền, nginx config, revision/trạng thái cây mã và trace. Các file revision/status nằm ở thư mục cha của case, theo cách bộ chạy hiện tại lưu. Fingerprint bỏ run_id và namespace, nhưng giữ phiên bản mẫu tải/phân bố key, nhãn mode/algorithm/fail policy, thông số policy, backend/topology/runtime/image. Việc khớp chỉ áp dụng **trong cùng một cấu hình**; công cụ không xác nhận hai cấu hình khác nhau là một phép so sánh có kiểm soát.
 
-Thiếu/malformed evidence, policy/analyzer/revision/run_id không khớp, dirty tree, counters thiếu, canceled, drops, duplicate trace IDs, raw/summary không khớp hoặc clock nghi ngờ làm lượt invalid cho aggregation. Nếu cell thiếu số lượt yêu cầu, nhãn lặp trùng, cấu hình khác hoặc có lượt invalid thì cell giữ trạng thái/lý do và **không xuất thống kê tổng hợp**. Đây là kiểm tra bảo thủ; công cụ không tự loại rồi thay thế một lượt hoặc chọn subset đẹp hơn.
+Thiếu bằng chứng hoặc sai định dạng, policy/công cụ phân tích/revision/run_id không khớp, cây mã có thay đổi, thiếu counter, lượt bị hủy, request bị bỏ, trace ID trùng, dữ liệu thô/summary không khớp hoặc clock có dấu hiệu bất thường đều làm lượt không hợp lệ để tổng hợp. Nếu cấu hình thiếu số lượt yêu cầu, nhãn lặp trùng, cấu hình khác hoặc có lượt không hợp lệ thì cấu hình giữ trạng thái/lý do và **không xuất thống kê tổng hợp**. Đây là kiểm tra thận trọng; công cụ không tự bỏ rồi thay một lượt, cũng không tự chọn các lượt có kết quả thuận lợi.
 
-Kiểm tra clock tính `abs((sent_at − scheduled_at) theo wall clock − schedule_lag_ms theo monotonic)` cho từng request đã gửi và ghi độ lệch lớn nhất. Vượt ngưỡng là `client_clock_discontinuity_suspected`, không phải bằng chứng chắc chắn NTP step; nó không kiểm tra server clock hoặc chứng minh clock luôn ổn. Unknown decisions, transport/timeouts/5xx và limiter errors được gắn cờ riêng. Overload và lỗi trong outage có thể là outcome chủ ý: không tự loại toàn lượt chỉ vì chúng xuất hiện. Người viết báo cáo phải quyết định phép so nào bị giới hạn theo protocol đã khóa.
+Kiểm tra clock tính `abs((sent_at − scheduled_at) theo wall clock − schedule_lag_ms theo monotonic)` cho từng request đã gửi và ghi độ lệch lớn nhất. Vượt ngưỡng được gắn nhãn `client_clock_discontinuity_suspected`; đây không phải bằng chứng chắc chắn có bước nhảy NTP, không kiểm tra đồng hồ server và không chứng minh clock luôn ổn định. Quyết định chưa rõ, lỗi truyền tải/timeout/5xx và lỗi limiter được gắn cờ riêng. Quá tải và lỗi trong outage có thể là kết quả được chủ ý tạo ra; không tự loại cả lượt chỉ vì chúng xuất hiện. Người viết báo cáo cần xác định theo protocol đã khóa phép so sánh nào bị giới hạn.
 
-Tooling validity, oracle correctness và kết luận nghiên cứu là ba việc riêng. FW inconclusive vì partial windows không tự làm lượt invalid; observed violations cũng giữ nguyên để báo lỗi thật. CSV ghi oracle, số observed violations, lower-bound envelope lớn nhất, Redis CPU cores/memory, availability hợp lệ từng pha outage và stable recovery/status nếu analyzer cung cấp. Không cộng các lower bound rồi gọi là tổng overshoot, không gọi oracle inconclusive là pass, và không thay recovery thiếu mẫu bằng thời gian request thành công đầu tiên.
+Tính hợp lệ của công cụ, tính đúng theo oracle và kết luận nghiên cứu là ba việc riêng. FW chưa đủ bằng chứng kết luận do cửa sổ chưa đầy đủ không tự làm lượt không hợp lệ; các vi phạm đã quan sát cũng được giữ nguyên để báo lỗi thực tế. CSV ghi trạng thái oracle, số vi phạm đã quan sát, cận dưới lớn nhất của envelope, số lõi CPU và memory của Redis, tỷ lệ availability của client hợp lệ trong từng pha outage và recovery ổn định/trạng thái nếu công cụ phân tích cung cấp. Không cộng các cận dưới rồi gọi đó là tổng overshoot, không coi oracle chưa đủ bằng chứng kết luận là đạt, và không thay recovery thiếu mẫu bằng thời điểm request thành công đầu tiên.
 
-Báo cáo cuối vẫn cần đi theo vấn đề doanh nghiệp → pain point → tác động → yêu cầu kỹ thuật → giải pháp → thí nghiệm → đánh giá → phát triển tương lai. Liên kết từng RQ với manifest, counter/trace/oracle, biến thiên giữa các lượt và giới hạn đo. Giữ mọi lượt invalid và lý do; không quy goodput backend mô phỏng thành doanh thu thực tế. Ba lượt và min–max không tự chứng minh ý nghĩa thống kê hoặc khả năng mở rộng production.
+Báo cáo cuối vẫn cần đi theo mạch: vấn đề doanh nghiệp → khó khăn → tác động → yêu cầu kỹ thuật → giải pháp → thí nghiệm → đánh giá → phát triển tương lai. Liên kết từng RQ với manifest, bộ đếm/trace/oracle, biến thiên giữa các lượt và giới hạn phép đo. Giữ lại mọi lượt không hợp lệ cùng lý do; không quy goodput của backend mô phỏng thành doanh thu thực tế. Ba lượt và khoảng min–max không tự chứng minh ý nghĩa thống kê hoặc khả năng mở rộng production.
 
-## Biểu đồ calibration ngoại tuyến
+## Biểu đồ hiệu chỉnh ngoại tuyến
 
-`scripts/plot-calibration.py` đọc schema `runs.json` của [calibration 13/10](../worklog/2026-10-13-calibration/runs.json), không tự tìm artifacts và không chạy benchmark. Chọn chính xác mỗi `cell`/lượt bằng manifest riêng; danh sách chọn phải ghi đủ những lượt cần trình bày, kể cả lượt chất lượng kém. Mọi entry được giữ: thiếu lượt hoặc thiếu số liệu tạo gap, không âm thầm bỏ điểm.
+`scripts/plot-calibration.py` đọc cấu trúc `runs.json` của [lượt hiệu chỉnh ngày 13/10](../worklog/2026-10-13-calibration/runs.json), không tự tìm tệp bằng chứng và không chạy benchmark. Chọn chính xác từng `cell`/lượt bằng manifest riêng; danh sách phải ghi đủ các lượt cần trình bày, kể cả lượt có chất lượng kém. Mọi mục được giữ lại: thiếu lượt hoặc số liệu sẽ tạo khoảng trống trên biểu đồ, không âm thầm bỏ điểm.
 
 ```json
 {
@@ -52,7 +54,7 @@ Báo cáo cuối vẫn cần đi theo vấn đề doanh nghiệp → pain point 
 }
 ```
 
-Tên cell trên minh họa cách chọn; đối chiếu đúng các tên trong file nguồn trước khi dùng. Source tính tương đối từ manifest. Chỉ hỗ trợ profile `mixed`, cùng mode thực tế với entry; nhãn trùng hoặc source có nhiều dòng cùng cell bị từ chối. Không hỗ trợ chọn pha vì schema calibration hiện không có số legitimate successes từng pha; không suy tỷ lệ thành công pha từ tỷ lệ toàn lượt.
+Tên `cell` chỉ minh họa cách chọn; trước khi dùng cần đối chiếu với các tên trong tệp nguồn. Đường dẫn source tính tương đối từ manifest. Công cụ chỉ hỗ trợ profile `mixed` và yêu cầu mode thực tế khớp với mục đã chọn; nhãn trùng hoặc tệp nguồn có nhiều dòng cho cùng `cell` sẽ bị từ chối. Không thể chọn riêng từng pha vì cấu trúc dữ liệu hiệu chỉnh hiện không có số request hợp lệ thành công theo pha; không suy tỷ lệ theo pha từ tỷ lệ cả lượt.
 
 ```bash
 # Chỉ stdlib, không import matplotlib hoặc tạo biểu đồ:
@@ -62,13 +64,13 @@ python3 -m unittest discover -s scripts -p test_plot_calibration.py
 python3 scripts/plot-calibration.py plot-manifest.json --output artifacts/calibration-figures-new
 ```
 
-Matplotlib là công cụ report ngoại tuyến tùy chọn; không thêm vào dependency runtime/repo và không cài trong lúc đo. Output mới gồm PNG, SVG độc lập và `points.json` gắn số điểm với cell, oracle, denominator và quality flags. Figure có tiêu đề **Pilot — not formal benchmark**, hai panel là legitimate 2xx/legitimate sent và backend overload counter delta. Denominator lấy tổng `sent` của các pha legitimate trong calibration; không dùng tổng HTTP sent hoặc scheduled làm denominator. Thiếu denominator, không có legitimate sent hay numerator bất khả thi được ghi thiếu, không gán bằng 0.
+Matplotlib là công cụ lập báo cáo ngoại tuyến tùy chọn; không thêm vào thư viện phụ thuộc runtime/repo và không cài trong lúc đo. Output mới gồm PNG, SVG riêng và `points.json` liên kết mỗi điểm với `cell`, oracle, mẫu số và cờ chất lượng. Hình có tiêu đề **Pilot — not formal benchmark**, gồm hai biểu đồ: số HTTP 2xx hợp lệ chia cho số request hợp lệ đã gửi, và delta bộ đếm backend quá tải. Mẫu số là tổng `sent` trong các pha client hợp lệ của lượt hiệu chỉnh; không dùng tổng HTTP sent hoặc scheduled. Nếu thiếu mẫu số, không có request hợp lệ đã gửi hoặc tử số không thể có, trường đó được ghi thiếu thay vì gán bằng 0.
 
-Mỗi điểm là một lượt riêng; không nối đường, fit trend, gộp percentile hoặc khẳng định nhân quả/ý nghĩa thống kê. Dấu × đỏ giữ số liệu của lượt có quality flag, gồm clock/errors; chỉ số thiếu có gap. Oracle inconclusive vẫn được giữ trong sidecar, không tự coi là invalid. Script tin quality flags/fidelity do calibration cung cấp, thêm flags khi có limiter errors/drops/transport/timeout hoặc thiếu metric; nó không tự đọc trace để chứng minh clock ổn và không xác minh matching policy/revision/images giữa mode. Những kiểm tra đó vẫn thuộc exporter và protocol; biểu đồ không chứng nhận một so sánh có kiểm soát. Không đổi `http_5xx` do backend overload chủ ý thành lỗi tooling một cách tự động.
+Mỗi điểm là một lượt riêng; không nối các điểm thành đường, khớp xu hướng, gộp percentile hoặc khẳng định quan hệ nhân quả/ý nghĩa thống kê. Dấu × đỏ giữ số liệu của lượt có cờ chất lượng, gồm clock/lỗi; chỉ số thiếu tạo khoảng trống. Oracle chưa đủ bằng chứng kết luận vẫn được giữ trong tệp phụ, không tự coi là lượt không hợp lệ. Script dùng cờ chất lượng/độ trung thực do hiệu chỉnh cung cấp, đồng thời thêm cờ nếu có lỗi limiter, request bị bỏ, lỗi truyền tải/timeout hoặc thiếu chỉ số. Script không tự đọc trace để chứng minh clock ổn định và không kiểm tra policy/revision/image có khớp giữa các mode hay không. Các kiểm tra đó thuộc công cụ xuất báo cáo và protocol; biểu đồ không xác nhận phép so sánh có kiểm soát. Không tự động coi `http_5xx` do backend quá tải có chủ ý là lỗi công cụ.
 
 
 ## Image identity khi build cache tạo ID khác nhau
 
-Runner mới giữ thêm `image-inspect.json` từ Docker trước load, không sửa `images.json`. Exporter/Console chỉ dùng inspect khi mỗi entry khớp đúng `.Id` với original ID trong images manifest. Khi có evidence hợp lệ, fingerprint dùng **toàn bộ** `RootFS.Layers` theo thứ tự, toàn bộ `Config`, OS/architecture/variant và platform. Image IDs khác nhau nhưng các trường này giống nhau được so theo nội dung; layer/config khác vẫn bị từ chối. Revision giống nhau không thay cho evidence image.
+Bộ chạy mới lưu thêm `image-inspect.json` từ Docker trước khi tải, không sửa `images.json`. Công cụ xuất báo cáo/Console chỉ dùng inspect khi mỗi mục khớp đúng `.Id` với ID gốc trong manifest images. Khi có bằng chứng hợp lệ, dấu vân tay gồm **toàn bộ** `RootFS.Layers` theo thứ tự, toàn bộ `Config`, OS/architecture/variant và platform. Nếu các trường này giống nhau, image ID khác vẫn được coi là cùng nội dung; layer/config khác nhau thì bị từ chối. Revision trùng nhau không thay thế bằng chứng về image.
 
-Run cũ thiếu file inspect tiếp tục dùng exact ID. Inspect malformed hoặc không khớp ID được ghi lỗi, giữ fallback exact ID nhưng không cho aggregation qua lỗi evidence. Không hồi tố chấp nhận IDs đã mất chỉ vì có revision hoặc vì inspect của một run khác. Matching giữa run có inspect và run không có inspect vẫn bảo thủ và có thể từ chối cả khi original IDs trùng; không bỏ evidence để làm cell khớp.
+Lượt cũ thiếu file inspect tiếp tục dùng ID chính xác. Inspect sai định dạng hoặc không khớp ID được ghi lỗi; công cụ vẫn dùng ID chính xác làm phương án dự phòng nhưng không cho phép tổng hợp khi bằng chứng có lỗi. Không hồi tố chấp nhận ID bị thiếu chỉ vì revision trùng hoặc vì có inspect từ một lượt khác. Việc so khớp lượt có inspect với lượt không có inspect vẫn thận trọng và có thể từ chối ngay cả khi ID gốc trùng nhau; không bỏ bằng chứng để làm các cấu hình khớp.
