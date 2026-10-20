@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run the locked manifest sequentially and retain every attempt."""
 import argparse
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 import json
 import os
@@ -75,6 +75,14 @@ def sha256(path):
 
 def tree_checksums(path):
     return {str(item.relative_to(path)): sha256(item) for item in sorted(path.rglob('*')) if item.is_file()}
+
+
+def atomic_json(path, data):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + '.tmp')
+    temporary.write_text(json.dumps(data, indent=2, sort_keys=True) + '\n')
+    os.replace(temporary, path)
 
 
 def docker_snapshot(measurement_root=ROOT):
@@ -166,9 +174,11 @@ def fixed_outage_analysis(manifest_path, group, run_output, measurement_root=ROO
 
 
 FATAL_DRIFT_REASONS = ('revision_mismatch', 'dirty_checkout', 'pinned_compose_image_mismatch',
+                       'pinned_base_image_mismatch', 'image_inspect_mismatch',
                        'policy_mismatch:', 'workload_config_mismatch:', 'topology_mismatch',
                        'backend_config_mismatch', 'topology_policy_mismatch:',
-                       'topology_policy_evidence_mismatch', 'namespace_mismatch:')
+                       'topology_policy_evidence_mismatch', 'namespace_mismatch:',
+                       'revision_evidence_missing')
 
 
 def import_legacy(manifest, manifest_path, output, measurement_root=ROOT,
@@ -178,6 +188,9 @@ def import_legacy(manifest, manifest_path, output, measurement_root=ROOT,
     checker_sha256 = sha256(checker)
     coordinator_sha256 = validation_tool_sha256 or sha256(Path(__file__))
     tool_pin = manifest.get('validation_tool', {})
+    if (tool_pin.get('measurement_source_revision')
+            and tool_pin['measurement_source_revision'] != manifest.get('source_revision')):
+        raise ValueError('validation-tool measurement source revision mismatch')
     if tool_pin.get('checker_sha256') and tool_pin['checker_sha256'] != checker_sha256:
         raise ValueError('validation checker checksum differs from manifest pin')
     if tool_pin.get('coordinator_sha256') and tool_pin['coordinator_sha256'] != coordinator_sha256:
@@ -250,7 +263,7 @@ def import_legacy(manifest, manifest_path, output, measurement_root=ROOT,
         raise ValueError('import output must be fresh and empty')
     output.mkdir(parents=True, exist_ok=True)
     validation_root = output / 'validations'
-    accepted, fingerprints = {}, {}
+    accepted, fingerprints, accepted_evidence = {}, {}, {}
     audit = output / 'import-attempts.jsonl'
     for row in records:
         if row.get('event') != 'attempt_finished':
@@ -301,6 +314,11 @@ def import_legacy(manifest, manifest_path, output, measurement_root=ROOT,
             if selected:
                 for run_id, path in selected_paths.items():
                     accepted[run_id] = str(path)
+                    decision = checks[run_id]
+                    accepted_evidence[run_id] = {
+                        'raw_checksums': decision['raw_checksums'],
+                        'config_fingerprint': decision.get('config_fingerprint'),
+                        'image_fingerprint': decision.get('image_fingerprint')}
                 for run_id, decision in checks.items():
                     fingerprints.setdefault(old_runs[run_id]['cell'],
                                             (decision.get('config_fingerprint'), decision.get('image_fingerprint')))
@@ -332,11 +350,13 @@ def import_legacy(manifest, manifest_path, output, measurement_root=ROOT,
             stream.flush()
             os.fsync(stream.fileno())
     results = {'schema_version': 1, 'protocol_id': manifest.get('protocol_id'),
+               'manifest_sha256': sha256(manifest_path),
                'source_revision': manifest['source_revision'],
                'source_manifest_sha256': expected_manifest_sha, 'source_ledger_sha256': expected_ledger_sha,
                'validation_tool': {'checker_sha256': checker_sha256,
                                    'coordinator_sha256': coordinator_sha256,
                                    'revision': tool_pin.get('revision')},
+               'accepted_evidence': accepted_evidence,
                'cells': [{'id': cell['id'], 'expected_repetitions': cell['expected_repetitions']}
                          for cell in manifest['cells']],
                'runs': [{'planned_run_id': entry['planned_run_id'], 'group': entry['group'], 'cell': entry['cell'],
@@ -344,8 +364,368 @@ def import_legacy(manifest, manifest_path, output, measurement_root=ROOT,
                         for entry in manifest['runs'] if entry['planned_run_id'] in accepted],
                'missing_planned_run_ids': [entry['planned_run_id'] for entry in manifest['runs']
                                            if entry['planned_run_id'] not in accepted]}
-    (output / 'manifest.json').write_text(json.dumps(results, indent=2) + '\n')
+    imported_manifest = output / 'imported-results.json'
+    atomic_json(imported_manifest, results)
+    atomic_json(output / 'manifest.json', results)
+    atomic_json(output / 'import-state.json', {
+        'source_manifest_sha256': expected_manifest_sha,
+        'source_ledger_sha256': expected_ledger_sha,
+        'import_ledger_sha256': sha256(audit),
+        'imported_results_sha256': sha256(imported_manifest),
+        'validation_tool': results['validation_tool']})
     return {'accepted': accepted, 'fingerprints': fingerprints, 'results': results}
+
+
+def continuation_identity(manifest, manifest_path, output, checker, coordinator_sha256):
+    pin = manifest['validation_tool']
+    checker_sha256 = sha256(checker)
+    if checker_sha256 != pin['checker_sha256']:
+        raise ValueError('validation checker checksum differs from manifest pin')
+    if coordinator_sha256 != pin['coordinator_sha256']:
+        raise ValueError('validation coordinator checksum differs from manifest pin')
+    if not pin.get('revision') or pin['revision'].startswith('PENDING_'):
+        raise ValueError('validation coordinator revision is not locked')
+    if pin.get('measurement_source_revision') != manifest.get('source_revision'):
+        raise ValueError('validation-tool measurement source revision mismatch')
+    retry = manifest.get('retry_policy', {})
+    if (retry.get('scope') != 'planned_invocation' or retry.get('max_new_attempts') != 3
+            or retry.get('legacy_attempts_preserved') is not True):
+        raise ValueError('v1.2 retry policy does not match the authorized three-new-attempt contract')
+    if manifest.get('status') != 'locked' or manifest.get('execution_authorized') is not True:
+        raise ValueError('v1.2 manifest is not locked for execution')
+    source = manifest['continuation']
+    source_manifest = (manifest_path.parent / source['source_manifest_path']).resolve()
+    source_ledger = Path(source['source_ledger_path']).resolve()
+    if sha256(source_manifest) != source['source_manifest_sha256']:
+        raise ValueError('legacy source manifest checksum mismatch')
+    if sha256(source_ledger) != source['source_ledger_sha256']:
+        raise ValueError('legacy source ledger checksum mismatch')
+    output = Path(output).resolve()
+    return {'manifest_sha256': sha256(manifest_path),
+            'source_revision': manifest['source_revision'],
+            'source_manifest_sha256': source['source_manifest_sha256'],
+            'source_ledger_sha256': source['source_ledger_sha256'],
+            'checker_sha256': checker_sha256,
+            'coordinator_sha256': coordinator_sha256,
+            'output': str(output)}
+
+
+def continuation_results(manifest, accepted, evidence, identity, execution_ledger):
+    missing = [entry['planned_run_id'] for entry in manifest['runs']
+               if entry['planned_run_id'] not in accepted]
+    return {'schema_version': 1, 'protocol_id': manifest.get('protocol_id'),
+            'manifest_sha256': identity['manifest_sha256'],
+            'source_revision': manifest['source_revision'],
+            'source_manifest_sha256': identity['source_manifest_sha256'],
+            'source_ledger_sha256': identity['source_ledger_sha256'],
+            'validation_tool': {'revision': manifest['validation_tool']['revision'],
+                                'checker_sha256': identity['checker_sha256'],
+                                'coordinator_sha256': identity['coordinator_sha256']},
+            'import_ledger_sha256': sha256(Path(identity['output']) / 'import-attempts.jsonl'),
+            'imported_results_sha256': sha256(Path(identity['output']) / 'imported-results.json'),
+            'execution_ledger_sha256': sha256(execution_ledger) if execution_ledger.exists() else None,
+            'cells': [{'id': cell['id'], 'expected_repetitions': cell['expected_repetitions']}
+                      for cell in manifest['cells']],
+            'runs': [{'planned_run_id': entry['planned_run_id'], 'group': entry['group'],
+                      'cell': entry['cell'], 'repetition': entry['repetition'],
+                      'path': accepted[entry['planned_run_id']],
+                      'raw_checksums': evidence[entry['planned_run_id']]['raw_checksums'],
+                      'config_fingerprint': evidence[entry['planned_run_id']]['config_fingerprint'],
+                      'image_fingerprint': evidence[entry['planned_run_id']]['image_fingerprint']}
+                     for entry in manifest['runs'] if entry['planned_run_id'] in accepted],
+            'missing_planned_run_ids': missing}
+
+
+def run_imported(args, manifest):
+    manifest_path, output = args.manifest.resolve(), args.output.resolve()
+    measurement_root = Path(args.measurement_root).resolve()
+    checker = Path(args.checker).resolve()
+    coordinator_sha256 = args.validation_tool_sha256 or sha256(Path(__file__))
+    identity = continuation_identity(manifest, manifest_path, output, checker, coordinator_sha256)
+    try:
+        output.relative_to(measurement_root)
+        raise ValueError('coordinator output must be outside the measurement checkout')
+    except ValueError as exc:
+        if str(exc).startswith('coordinator output'):
+            raise
+    import_state_path = output / 'import-state.json'
+    import_results_path = output / 'imported-results.json'
+    import_ledger = output / 'import-attempts.jsonl'
+    execution_ledger = output / 'attempts.jsonl'
+    if not all(path.is_file() for path in (import_state_path, import_results_path, import_ledger)):
+        raise ValueError('Stage A import outputs are missing; run --import-legacy first')
+    import_state = json.loads(import_state_path.read_text())
+    if (import_state.get('import_ledger_sha256') != sha256(import_ledger)
+            or import_state.get('imported_results_sha256') != sha256(import_results_path)
+            or import_state.get('source_manifest_sha256') != identity['source_manifest_sha256']
+            or import_state.get('source_ledger_sha256') != identity['source_ledger_sha256']
+            or import_state.get('validation_tool', {}).get('checker_sha256') != identity['checker_sha256']
+            or import_state.get('validation_tool', {}).get('coordinator_sha256') != identity['coordinator_sha256']):
+        raise ValueError('immutable Stage A import evidence or validation tool pin changed')
+    imported = json.loads(import_results_path.read_text())
+    if (imported.get('manifest_sha256') != identity['manifest_sha256']
+            or imported.get('source_revision') != identity['source_revision']
+            or imported.get('source_manifest_sha256') != identity['source_manifest_sha256']
+            or imported.get('source_ledger_sha256') != identity['source_ledger_sha256']):
+        raise ValueError('Stage A results do not match the locked v1.2 manifest/source')
+
+    runs = {entry['planned_run_id']: entry for entry in manifest['runs']}
+    accepted, evidence = {}, {}
+    for row in imported['runs']:
+        run_id = row['planned_run_id']
+        if run_id not in runs or run_id in accepted:
+            raise ValueError('Stage A results contain an unknown or duplicate planned run')
+        details = imported.get('accepted_evidence', {}).get(run_id)
+        path = Path(row['path']).resolve()
+        if not details or tree_checksums(path) != details.get('raw_checksums'):
+            raise ValueError(f'Stage A accepted raw evidence changed: {run_id}')
+        if not details.get('config_fingerprint') or not details.get('image_fingerprint'):
+            raise ValueError(f'Stage A accepted checker fingerprints missing: {run_id}')
+        accepted[run_id] = str(path)
+        evidence[run_id] = details
+    for entry in manifest['runs']:
+        if entry['planned_run_id'] not in accepted and entry['planned_run_id'] not in imported.get('missing_planned_run_ids', []):
+            raise ValueError('Stage A result omitted a planned slot without marking it missing')
+
+    history = [json.loads(line) for line in execution_ledger.read_text().splitlines() if line] if execution_ledger.exists() else []
+    starts, started_keys, finished, started_paths = Counter(), set(), set(), set()
+    seed = [row for row in history if row.get('event') == 'continuation_started']
+    if len(seed) > 1 or (seed and seed[0].get('identity') != identity):
+        raise ValueError('v1.2 execution ledger identity or imported evidence pin mismatch')
+    for row in history:
+        if row.get('event') == 'continuation_started':
+            continue
+        if row.get('event') in ('preflight_passed', 'preflight_failed'):
+            if row.get('identity') != identity:
+                raise ValueError('v1.2 preflight record identity mismatch')
+            continue
+        if row.get('event') not in ('attempt_started', 'attempt_finished'):
+            raise ValueError('unknown v1.2 execution ledger event')
+        ids = row.get('planned_run_ids', [])
+        if not ids or row.get('manifest_sha256') != identity['manifest_sha256']:
+            raise ValueError('v1.2 attempt lacks planned IDs or has manifest drift')
+        if row.get('source_revision') != identity['source_revision']:
+            raise ValueError('v1.2 attempt source revision drift')
+        if row.get('config') != [runs[run_id]['config'] for run_id in ids] or any(run_id not in runs for run_id in ids):
+            raise ValueError('v1.2 attempt config or planned ID drift')
+        group = [runs[run_id] for run_id in ids]
+        if any(entry['invocation_id'] != row.get('invocation_id') for entry in group):
+            raise ValueError('v1.2 attempt invocation mapping drift')
+        if row.get('environment') != group[0]['environment'] or any(entry['environment'] != group[0]['environment'] for entry in group):
+            raise ValueError('v1.2 attempt environment drift')
+        if row.get('event') == 'attempt_started':
+            key = (row['invocation_id'], row['attempt'])
+            path = str(Path(row['run_path']).resolve())
+            if key in finished or path in started_paths or row['attempt'] != starts[row['invocation_id']] + 1:
+                raise ValueError('v1.2 attempt number or output path was reused')
+            if row['attempt'] > manifest['retry_policy']['max_new_attempts']:
+                raise ValueError('v1.2 per-invocation retry limit exceeded')
+            starts[row['invocation_id']] += 1
+            started_paths.add(path)
+            started_keys.add(key)
+        else:
+            key = (row['invocation_id'], row['attempt'])
+            if key not in started_keys or key in finished:
+                raise ValueError('v1.2 finished attempt lacks a unique start')
+            finished.add(key)
+            if row.get('accepted'):
+                if set(row.get('accepted_result_paths', {})) != set(ids):
+                    raise ValueError('accepted v1.2 invocation does not contain the whole planned group')
+                for run_id, path in row['accepted_result_paths'].items():
+                    if run_id in accepted:
+                        raise ValueError(f'planned run accepted twice: {run_id}')
+                    checksums = row.get('evidence_checksums', {}).get(run_id)
+                    report = row.get('checks', {}).get(run_id, {})
+                    if not checksums or tree_checksums(Path(path)) != checksums or not report.get('valid'):
+                        raise ValueError(f'v1.2 accepted raw evidence changed: {run_id}')
+                    if not report.get('config_fingerprint') or not report.get('image_fingerprint'):
+                        raise ValueError(f'v1.2 accepted checker fingerprints missing: {run_id}')
+                    accepted[run_id] = str(Path(path).resolve())
+                    evidence[run_id] = {'raw_checksums': checksums,
+                                        'config_fingerprint': report.get('config_fingerprint'),
+                                        'image_fingerprint': report.get('image_fingerprint')}
+    if not seed:
+        with execution_ledger.open('a') as stream:
+            stream.write(json.dumps({'event': 'continuation_started', 'identity': identity,
+                                     'import_state_sha256': sha256(import_state_path),
+                                     'started_at_utc': now()}, sort_keys=True) + '\n')
+            stream.flush(); os.fsync(stream.fileno())
+    elif seed[0].get('import_state_sha256') != sha256(import_state_path):
+        raise ValueError('Stage A import state checksum differs from v1.2 execution ledger')
+
+    def append(record):
+        with execution_ledger.open('a') as stream:
+            stream.write(json.dumps(record, sort_keys=True) + '\n')
+            stream.flush(); os.fsync(stream.fileno())
+
+    invocation_groups = groups(manifest['runs'])
+    pending = [group for group in invocation_groups
+               if (not all(entry['planned_run_id'] in accepted for entry in group)
+                   and starts[group[0]['invocation_id']] < manifest['retry_policy']['max_new_attempts'])]
+    prior_stops = [row.get('stop_reason') for row in history
+                   if row.get('event') == 'attempt_finished' and row.get('stop_reason')]
+    prior_stops.extend('preflight_failed:' + row.get('error', 'unknown') for row in history
+                       if row.get('event') == 'preflight_failed')
+    stopped, stop_reason = bool(prior_stops), (prior_stops[-1] if prior_stops else '')
+    observer_dir = None
+    before_containers = set()
+    if pending and not stopped:
+        observer_dir = output / f'clock-observer-v12-{os.getpid()}-{time.time_ns()}'
+        try:
+            observer = preflight(manifest, manifest_path, observer_dir, measurement_root)
+            before_containers = observer['containers']
+            append({'event': 'preflight_passed', 'identity': identity, 'observer_path': str(observer_dir),
+                    'observer_summary': observer['summary'],
+                    'observer_summary_sha256': (sha256(observer_dir / 'summary.json')
+                                                if (observer_dir / 'summary.json').exists() else None),
+                    'observed_at_utc': now()})
+        except (OSError, KeyError, ValueError, subprocess.SubprocessError, RuntimeError) as exc:
+            stopped, stop_reason = True, 'preflight_failed:' + str(exc)
+            append({'event': 'preflight_failed', 'identity': identity, 'observer_path': str(observer_dir),
+                    'error': str(exc), 'observed_at_utc': now()})
+
+    for group in pending:
+        if stopped:
+            break
+        ids = [entry['planned_run_id'] for entry in group]
+        if any(run_id in accepted for run_id in ids):
+            raise ValueError('partially accepted planned invocation in continuation state')
+        invocation = group[0]['invocation_id']
+        attempt = starts[invocation] + 1
+        if attempt > manifest['retry_policy']['max_new_attempts']:
+            continue
+        while attempt <= manifest['retry_policy']['max_new_attempts']:
+            run_output = Path(group[0]['output_path'])
+            run_output = run_output if run_output.is_absolute() else measurement_root / run_output
+            if attempt > 1:
+                run_output = run_output.with_name(run_output.name + f'.attempt-{attempt}')
+            run_output = run_output.resolve()
+            if str(run_output) in started_paths or run_output.exists():
+                raise ValueError(f'v1.2 attempt output path already exists: {run_output}')
+            command = [str(run_output) if token in ('<OUTPUT_PATH>', group[0]['output_path']) else
+                       str(manifest_path) if token == '<ABSOLUTE_PROTOCOL_V1_2_MANIFEST>' else token
+                       for token in group[0]['command']]
+            for index, token in enumerate(command[:-1]):
+                if token == '--output':
+                    command[index + 1] = str(run_output)
+            env = os.environ.copy(); env.update(group[0]['environment'])
+            start, suspend_before = now(), suspend_gap_ms()
+            append({'event': 'attempt_started', 'invocation_id': invocation, 'planned_run_ids': ids,
+                    'attempt': attempt, 'run_path': str(run_output), 'source_revision': manifest['source_revision'],
+                    'config': [entry['config'] for entry in group], 'environment': group[0]['environment'],
+                    'command': command, 'manifest_sha256': identity['manifest_sha256'],
+                    'observer_path': str(observer_dir), 'started_at_utc': start,
+                    'boottime_minus_monotonic_before_ms': suspend_before})
+            starts[invocation] += 1; started_paths.add(str(run_output))
+            error, cleanup_error, runner_rc = '', '', 127
+            try:
+                runner_rc = subprocess.run(command, cwd=measurement_root, env=env, check=False).returncode
+            except OSError as exc:
+                error = str(exc)
+            try:
+                check_cleanup(before_containers, measurement_root)
+            except (OSError, subprocess.SubprocessError, RuntimeError) as exc:
+                cleanup_error = str(exc)
+            fixed_result, decisions = {'commands': [], 'thresholds': {}}, {}
+            if runner_rc == 0 and len(group) == 2 and any(entry.get('fixed_analysis_commands') for entry in group):
+                try:
+                    fixed_result = fixed_outage_analysis(manifest_path, group, run_output, measurement_root)
+                except (OSError, ValueError, subprocess.SubprocessError) as exc:
+                    error = 'fixed-threshold analysis failed: ' + str(exc)
+            healthy_failed = False
+            for entry in group:
+                planned_dir = base_path(manifest_path, entry, measurement_root)
+                planned_output = Path(group[0]['output_path'])
+                planned_output = planned_output if planned_output.is_absolute() else measurement_root / planned_output
+                try:
+                    suffix = planned_dir.relative_to(planned_output.resolve())
+                except ValueError:
+                    suffix = Path()
+                actual_dir = run_output / suffix
+                actual_dir.mkdir(parents=True, exist_ok=True)
+                if healthy_failed and entry['cell'].endswith('-outage') and not (actual_dir / 'load/metadata.json').exists():
+                    decisions[entry['planned_run_id']] = {'path': str(actual_dir), 'exit_code': runner_rc,
+                                                           'stop_sequence': False, 'valid': False,
+                                                           'reasons': ['healthy_gate_failed_before_outage']}
+                    continue
+                quality = actual_dir / 'coordinator-quality-check.json'
+                try:
+                    decision = checker_call(manifest_path, entry, actual_dir, checker, measurement_root)
+                    if not quality.exists():
+                        raise ValueError('checker produced no report')
+                except (OSError, ValueError, json.JSONDecodeError, subprocess.SubprocessError) as exc:
+                    decision = {'exit_code': 2, 'stop_sequence': True, 'valid': False,
+                                'reasons': ['checker_setup_or_output_invalid:' + str(exc)]}
+                drift = [reason for reason in decision.get('reasons', [])
+                         if any(reason.startswith(prefix) for prefix in FATAL_DRIFT_REASONS)]
+                cell = entry['cell']
+                fingerprint = (decision.get('config_fingerprint'), decision.get('image_fingerprint'))
+                if decision.get('valid'):
+                    previous = next((evidence[run_id] for run_id in accepted
+                                     if runs[run_id]['cell'] == cell), None)
+                    if previous and fingerprint != (previous['config_fingerprint'], previous['image_fingerprint']):
+                        drift.append('same_cell_fingerprint_drift')
+                if drift:
+                    decision['valid'] = False
+                    decision.setdefault('reasons', []).extend(reason for reason in drift if reason not in decision['reasons'])
+                decisions[entry['planned_run_id']] = {'path': str(actual_dir), **decision}
+                if entry['cell'].endswith('-healthy') and not decision.get('valid'):
+                    healthy_failed = True
+                if drift:
+                    stopped, stop_reason = True, 'actual_config_image_or_source_drift'
+                elif decision.get('stop_sequence') and not any(reason.startswith(('fatal_setup:', 'fatal_artifact:'))
+                                                               for reason in decision.get('reasons', [])):
+                    stopped, stop_reason = True, 'quality_stop_sequence'
+            suspend_after = suspend_gap_ms()
+            suspend_delta = (suspend_after - suspend_before if suspend_before is not None and suspend_after is not None else None)
+            if suspend_delta is not None and abs(suspend_delta) > manifest.get('clock_tolerance_ms', 5):
+                error = f'guest_suspend_detected:{suspend_delta:.6f}ms'
+                stopped, stop_reason = True, error
+            valid = (runner_rc == 0 and not error and not cleanup_error and len(decisions) == len(group)
+                     and all(row.get('exit_code') == 0 and row.get('valid') for row in decisions.values()))
+            if cleanup_error:
+                stopped, stop_reason = True, 'runner_cleanup_failed:' + cleanup_error
+            paths = {run_id: decisions[run_id]['path'] for run_id in ids} if valid else {}
+            checksums = {}
+            if valid:
+                for entry in group:
+                    run_id = entry['planned_run_id']; path = Path(paths[run_id])
+                    report = decisions[run_id]
+                    checksums[run_id] = tree_checksums(path)
+                    accepted[run_id] = paths[run_id]
+                    evidence[run_id] = {'raw_checksums': checksums[run_id],
+                                        'config_fingerprint': report.get('config_fingerprint'),
+                                        'image_fingerprint': report.get('image_fingerprint')}
+            finished_record = {'event': 'attempt_finished', 'invocation_id': invocation,
+                               'planned_run_ids': ids, 'attempt': attempt, 'run_path': str(run_output),
+                               'source_revision': manifest['source_revision'],
+                               'config': [entry['config'] for entry in group],
+                               'environment': group[0]['environment'], 'command': command,
+                               'manifest_sha256': identity['manifest_sha256'],
+                               'observer_path': str(observer_dir), 'started_at_utc': start,
+                               'ended_at_utc': now(), 'runner_exit_code': runner_rc,
+                               'setup_error': error, 'cleanup_error': cleanup_error,
+                               'fixed_analysis': fixed_result, 'checks': decisions, 'accepted': valid,
+                               'accepted_result_paths': paths, 'boottime_minus_monotonic_before_ms': suspend_before,
+                               'boottime_minus_monotonic_after_ms': suspend_after,
+                               'boottime_minus_monotonic_delta_ms': suspend_delta,
+                               'stop_reason': stop_reason if stopped else ''}
+            if valid:
+                finished_record['evidence_checksums'] = checksums
+            append(finished_record); finished.add((invocation, attempt))
+            if valid or stopped:
+                break
+            attempt += 1
+        if stopped:
+            break
+    results = continuation_results(manifest, accepted, evidence, identity, execution_ledger)
+    results['observer_path'] = str(observer_dir) if observer_dir else None
+    results['observer_summary_sha256'] = (sha256(observer_dir / 'summary.json')
+                                          if observer_dir and (observer_dir / 'summary.json').exists() else None)
+    results['stop_reason'] = stop_reason
+    atomic_json(output / 'manifest.json', results)
+    print(f"Accepted {len(accepted)}/{len(manifest['runs'])} planned runs")
+    return 2 if stopped else (0 if not results['missing_planned_run_ids'] else 1)
 
 
 def run(args):
@@ -356,11 +736,13 @@ def run(args):
     result_path = output / 'manifest.json'
     try:
         manifest = json.loads(manifest_path.read_text())
+        if getattr(args, 'resume_imported', False):
+            return run_imported(args, manifest)
         if getattr(args, 'import_legacy', False):
             imported = import_legacy(manifest, manifest_path, output, measurement_root, checker,
                                       getattr(args, 'validation_tool_sha256', None))
             print(f"Imported {len(imported['accepted'])}/{len(manifest['runs'])} planned runs")
-            return 0 if len(imported['accepted']) == len(manifest['runs']) else 1
+            return 0
         if any(entry['source_revision'] != manifest['source_revision'] for entry in manifest['runs']):
             raise ValueError('planned run source revision differs from manifest pin')
         invocation_groups = groups(manifest['runs'])
@@ -587,6 +969,8 @@ if __name__ == '__main__':
                         help='checker version run outside the pinned measurement source')
     parser.add_argument('--import-legacy', action='store_true',
                         help='offline revalidation of the immutable continuation source ledger')
+    parser.add_argument('--resume-imported', action='store_true',
+                        help='execute only missing v1.2 invocations from the immutable Stage A import')
     parser.add_argument('--validation-tool-sha256',
                         help='explicit SHA-256 of the separately versioned validation coordinator')
     raise SystemExit(run(parser.parse_args()))

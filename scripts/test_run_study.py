@@ -521,6 +521,251 @@ class CoordinatorTest(unittest.TestCase):
         self.assertIn(str(checker), seen[1][0])
         self.assertEqual(seen[1][1], measurement.resolve())
 
+    def continuation_case(self, root, outage=False):
+        measurement = root / 'measurement-029'
+        measurement.mkdir()
+        source_path = root / 'v11.json'
+        original = manifest(root, standard_cells=1)
+        source_runs = original['runs'][:3] if not outage else original['runs'][-6:-4]
+        source = dict(original, runs=source_runs,
+                      cells=original['cells'][:1] if not outage else original['cells'][-6:-4])
+        source_path.write_text(json.dumps(source))
+        source_sha = mod.sha256(source_path)
+        new_runs = []
+        old_outputs = {}
+        for entry in source_runs:
+            old_outputs[entry['planned_run_id']] = entry['output_path']
+            updated = dict(entry)
+            updated['output_path'] = f"artifacts/protocol-v1.2/{entry['planned_run_id']}"
+            suffix = 'custom-repeat-1' if not outage else '/'.join(entry['result_path'].split('/')[-2:])
+            updated['result_path'] = f"../../../../{updated['output_path']}/{suffix}"
+            updated['command'] = ['runner', updated['output_path']]
+            if outage:
+                # Stage B command stays a single policy-scoped invocation for the matched pair.
+                updated['invocation_id'] = source_runs[0]['invocation_id']
+                updated['output_path'] = 'artifacts/protocol-v1.2/outage-open-r1'
+                updated['result_path'] = f"../../../../{updated['output_path']}/open/{entry['cell'].rsplit('-', 1)[-1]}"
+                updated['command'] = ['runner', updated['output_path']]
+            new_runs.append(updated)
+        current = dict(source, protocol_id='project3-formal-v1.2', status='locked', execution_authorized=True,
+                       runs=new_runs, retry_policy={'scope': 'planned_invocation', 'max_new_attempts': 3,
+                                                    'legacy_attempts_preserved': True},
+                       validation_tool={'revision': 'c659271ff49c980f442aeb590412461e832db8a5',
+                                        'checker_sha256': mod.sha256(Path(__file__).with_name('check-study-quality.py')),
+                                        'coordinator_sha256': mod.sha256(Path(mod.__file__)),
+                                        'measurement_source_revision': 'abc'})
+        # A real v1.2 outage group uses the same command for both rows.
+        if outage:
+            current['runs'][1]['command'] = current['runs'][0]['command']
+        current['continuation'] = {'source_manifest_path': source_path.name,
+                                   'source_manifest_sha256': source_sha,
+                                   'source_ledger_path': str(root / 'legacy.jsonl'),
+                                   'source_ledger_sha256': 'pending'}
+        ledger_path = root / 'legacy.jsonl'
+        records = []
+        for index, entry in enumerate(source_runs):
+            run_root = root / f'legacy-attempt-{index + 1}'
+            suffix = Path(entry['result_path']).relative_to(Path(entry['output_path']))
+            case_path = run_root / suffix
+            case_path.mkdir(parents=True)
+            (case_path / 'raw-marker').write_text(entry['planned_run_id'])
+            accepted = index == 0
+            records.append({'event': 'attempt_finished', 'invocation_id': entry['invocation_id'],
+                            'planned_run_ids': [entry['planned_run_id']], 'attempt': 1,
+                            'run_path': str(run_root), 'source_revision': entry['source_revision'],
+                            'config': [entry['config']], 'environment': entry['environment'],
+                            'manifest_sha256': source_sha, 'accepted': accepted,
+                            'accepted_result_paths': {entry['planned_run_id']: str(case_path)} if accepted else {},
+                            'evidence_checksums': {entry['planned_run_id']: mod.tree_checksums(case_path)} if accepted else {},
+                            'checks': {entry['planned_run_id']: {'valid': accepted, 'reasons': []}}})
+        if outage:
+            # One ledger invocation must contain the complete healthy/outage pair.
+            records = [{'event': 'attempt_finished', 'invocation_id': source_runs[0]['invocation_id'],
+                        'planned_run_ids': [e['planned_run_id'] for e in source_runs], 'attempt': 1,
+                        'run_path': str(root / 'legacy-pair'), 'source_revision': source['source_revision'],
+                        'config': [e['config'] for e in source_runs], 'environment': source_runs[0]['environment'],
+                        'manifest_sha256': source_sha, 'accepted': False,
+                        'accepted_result_paths': {}, 'evidence_checksums': {},
+                        'checks': {e['planned_run_id']: {'valid': False, 'reasons': ['generator_drops']} for e in source_runs}}]
+            for i, entry in enumerate(source_runs):
+                case_path = root / f'legacy-outage-{i}' / 'open' / entry['cell'].rsplit('-', 1)[-1]
+                case_path.mkdir(parents=True); (case_path / 'raw-marker').write_text(entry['planned_run_id'])
+            records[0]['run_path'] = str(root / 'legacy-outage-0')
+        ledger_path.write_text(''.join(json.dumps(row) + '\n' for row in records))
+        current['continuation']['source_ledger_sha256'] = mod.sha256(ledger_path)
+        current_path = root / 'v12.json'; current_path.write_text(json.dumps(current))
+        output = root / 'coordinator'
+        def import_check(_manifest, entry, run_dir, _checker, _measurement, quality_path):
+            quality_path.parent.mkdir(parents=True, exist_ok=True)
+            valid = entry['planned_run_id'] == source_runs[0]['planned_run_id']
+            decision = {'valid': valid, 'stop_sequence': False,
+                        'reasons': [] if valid else ['generator_drops'],
+                        'config_fingerprint': 'cfg-' + entry['cell'], 'image_fingerprint': 'img'}
+            quality_path.write_text(json.dumps(decision))
+            return decision
+        with patch.object(mod, 'checker_call', side_effect=import_check):
+            mod.import_legacy(current, current_path, output, measurement,
+                              Path(__file__).with_name('check-study-quality.py'),
+                              current['validation_tool']['coordinator_sha256'])
+        args = type('Args', (), {'manifest': current_path, 'output': output, 'measurement_root': measurement,
+                                 'checker': Path(__file__).with_name('check-study-quality.py'),
+                                 'validation_tool_sha256': current['validation_tool']['coordinator_sha256'],
+                                 'resume_imported': True})
+        return root, current, current_path, output, args, source_runs
+
+    def test_resume_imported_skips_seed_acceptance_and_caps_each_missing_slot_at_three(self):
+        tmp = tempfile.TemporaryDirectory(); self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        root, data, planned, out, args, source_runs = self.continuation_case(root)
+        runner_attempts = {}
+        def fake_run(command, **kwargs):
+            if command[0] == 'runner':
+                path = Path(command[1]); runner_attempts[path.name] = runner_attempts.get(path.name, 0) + 1
+                (path / 'custom-repeat-1').mkdir(parents=True, exist_ok=True)
+                return type('Result', (), {'returncode': 0})()
+            run_id = command[command.index('--planned-run-id') + 1]
+            run_dir = Path(command[command.index('--run-dir') + 1])
+            attempt = run_dir.parent.name.split('.attempt-')[-1] if '.attempt-' in run_dir.parent.name else '1'
+            valid = not (run_id == source_runs[1]['planned_run_id'] and attempt in ('1', '2', '3'))
+            report = {'valid': valid, 'stop_sequence': False,
+                      'reasons': [] if valid else ['generator_drops'],
+                      'config_fingerprint': 'cfg-' + data['runs'][int(run_id[1:]) - 1]['cell'],
+                      'image_fingerprint': 'img'}
+            target = Path(command[command.index('--output') + 1]); target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps(report))
+            return type('Result', (), {'returncode': 0 if valid else 1})()
+        with patch.object(mod, 'preflight', return_value={'containers': set(), 'summary': {}}), \
+             patch.object(mod, 'check_cleanup'), patch.object(mod, 'suspend_gap_ms', return_value=0.0), \
+             patch.object(mod.subprocess, 'run', side_effect=fake_run):
+            self.assertEqual(mod.run(args), 1)
+        rows = [json.loads(line) for line in (out / 'attempts.jsonl').read_text().splitlines()]
+        starts = [row for row in rows if row.get('event') == 'attempt_started']
+        self.assertEqual(len(starts), 4)
+        self.assertEqual([row['attempt'] for row in starts if row['invocation_id'] == source_runs[1]['invocation_id']], [1, 2, 3])
+        self.assertEqual([row['attempt'] for row in starts if row['invocation_id'] == source_runs[2]['invocation_id']], [1])
+        self.assertFalse(any(row['invocation_id'] == source_runs[0]['invocation_id'] for row in starts))
+        exported = json.loads((out / 'manifest.json').read_text())
+        self.assertEqual(len(exported['runs']), 2)
+        self.assertIn(source_runs[1]['planned_run_id'], exported['missing_planned_run_ids'])
+
+    def test_resume_imported_interrupted_start_consumes_budget_and_uses_unique_path(self):
+        tmp = tempfile.TemporaryDirectory(); self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        root, data, planned, out, args, source_runs = self.continuation_case(root)
+        state = json.loads((out / 'import-state.json').read_text())
+        identity = mod.continuation_identity(data, planned, out, args.checker, args.validation_tool_sha256)
+        starts = [{'event': 'continuation_started', 'identity': identity,
+                   'import_state_sha256': mod.sha256(out / 'import-state.json')},
+                  {'event': 'attempt_started', 'invocation_id': source_runs[1]['invocation_id'],
+                   'planned_run_ids': [source_runs[1]['planned_run_id']], 'attempt': 1,
+                   'run_path': str(args.measurement_root / source_runs[1]['output_path']),
+                   'source_revision': data['source_revision'], 'config': [source_runs[1]['config']],
+                   'environment': source_runs[1]['environment'], 'manifest_sha256': mod.sha256(planned)}]
+        (out / 'attempts.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in starts))
+        calls = []
+        def fake_run(command, **kwargs):
+            if command[0] == 'runner':
+                calls.append(command[1]); path=Path(command[1]); (path/'custom-repeat-1').mkdir(parents=True,exist_ok=True)
+                return type('Result', (), {'returncode': 0})()
+            target = Path(command[command.index('--output') + 1]); target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps({'valid': True, 'stop_sequence': False, 'reasons': [],
+                                          'config_fingerprint': 'cfg-' + source_runs[1]['cell'], 'image_fingerprint': 'img'}))
+            return type('Result', (), {'returncode': 0})()
+        with patch.object(mod, 'preflight', return_value={'containers': set(), 'summary': {}}), \
+             patch.object(mod, 'check_cleanup'), patch.object(mod, 'suspend_gap_ms', return_value=0.0), \
+             patch.object(mod.subprocess, 'run', side_effect=fake_run):
+            self.assertEqual(mod.run(args), 0)
+        self.assertEqual(len(calls), 2)
+        self.assertIn('.attempt-2', calls[0])
+        self.assertEqual(calls[1], str(args.measurement_root / data['runs'][2]['output_path']))
+
+    def test_v12_draft_manifest_shape_stays_138_rows_132_invocations(self):
+        path = Path(__file__).resolve().parents[1] / 'docs/experiments/protocol-v1.2/manifest.json'
+        if not path.exists():
+            self.skipTest('v1.2 draft fixture is absent from pinned validation checkout')
+        data = json.loads(path.read_text())
+        self.assertEqual((len(data['runs']), len(mod.groups(data['runs']))), (138, 132))
+        self.assertEqual(data['retry_policy']['max_new_attempts'], 3)
+        self.assertEqual(data['continuation']['source_ledger_sha256'], 'bd6c89ce44907d1d8ec72a7f7fe4c0cca03f0afaaf34b2347deab43fa2c29a16')
+
+    def test_resume_imported_retries_outage_as_one_matched_pair(self):
+        tmp = tempfile.TemporaryDirectory(); self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        root, data, planned, out, args, source_runs = self.continuation_case(root, outage=True)
+        calls, checker_ids = [], []
+        def fake_run(command, **kwargs):
+            if command[0] == 'runner':
+                calls.append(command[1])
+                attempt = len(calls)
+                phases = ('healthy',) if attempt == 1 else ('healthy', 'outage')
+                for phase in phases:
+                    path = Path(command[1]) / 'open' / phase
+                    path.mkdir(parents=True, exist_ok=True)
+                    (path / 'load').mkdir(exist_ok=True)
+                    (path / 'load/metadata.json').write_text('{}')
+                return type('Result', (), {'returncode': 0})()
+            run_id = command[command.index('--planned-run-id') + 1]
+            checker_ids.append(run_id)
+            target = Path(command[command.index('--output') + 1]); target.parent.mkdir(parents=True, exist_ok=True)
+            valid = not (run_id.endswith('-healthy') and len(calls) == 1)
+            target.write_text(json.dumps({'valid': valid, 'stop_sequence': False,
+                                          'reasons': [] if valid else ['generator_drops'],
+                                          'config_fingerprint': 'cfg-' + data['runs'][0]['cell'],
+                                          'image_fingerprint': 'img'}))
+            return type('Result', (), {'returncode': 0 if valid else 1})()
+        with patch.object(mod, 'preflight', return_value={'containers': set(), 'summary': {}}), \
+             patch.object(mod, 'check_cleanup'), patch.object(mod, 'suspend_gap_ms', return_value=0.0), \
+             patch.object(mod.subprocess, 'run', side_effect=fake_run):
+            self.assertEqual(mod.run(args), 0)
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(checker_ids.count(source_runs[0]['planned_run_id']), 2)
+        self.assertEqual(checker_ids.count(source_runs[1]['planned_run_id']), 1)
+        self.assertIn('.attempt-2', calls[1])
+        exported = json.loads((out / 'manifest.json').read_text())
+        self.assertEqual(len(exported['runs']), 2)
+        self.assertEqual(exported['execution_ledger_sha256'], mod.sha256(out / 'attempts.jsonl'))
+
+    def test_resume_imported_rejects_source_or_checker_pin_mismatch(self):
+        for mutate in ('source', 'checker'):
+            with self.subTest(mutate=mutate), tempfile.TemporaryDirectory() as td:
+                root = Path(td)
+                root, data, planned, out, args, _runs = self.continuation_case(root)
+                if mutate == 'source':
+                    data['continuation']['source_ledger_sha256'] = '0' * 64
+                else:
+                    data['validation_tool']['checker_sha256'] = '0' * 64
+                planned.write_text(json.dumps(data))
+                args.manifest = planned
+                with patch.object(mod, 'preflight') as preflight:
+                    self.assertEqual(mod.run(args), 2)
+                    preflight.assert_not_called()
+
+    def test_resume_imported_clock_gap_invalidates_attempt_and_stops(self):
+        tmp = tempfile.TemporaryDirectory(); self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        root, data, planned, out, args, source_runs = self.continuation_case(root)
+        runner_ids = []
+        def fake_run(command, **kwargs):
+            if command[0] == 'runner':
+                runner_ids.append(command[1]); (Path(command[1]) / 'custom-repeat-1').mkdir(parents=True, exist_ok=True)
+                return type('Result', (), {'returncode': 0})()
+            target = Path(command[command.index('--output') + 1]); target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps({'valid': True, 'stop_sequence': False, 'reasons': [],
+                                          'config_fingerprint': 'cfg-' + source_runs[1]['cell'], 'image_fingerprint': 'img'}))
+            return type('Result', (), {'returncode': 0})()
+        with patch.object(mod, 'preflight', return_value={'containers': set(), 'summary': {}}), \
+             patch.object(mod, 'check_cleanup'), patch.object(mod, 'suspend_gap_ms', side_effect=[0.0, 6.0]), \
+             patch.object(mod.subprocess, 'run', side_effect=fake_run):
+            self.assertEqual(mod.run(args), 2)
+        self.assertEqual(len(runner_ids), 1)
+        ledger = [json.loads(line) for line in (out / 'attempts.jsonl').read_text().splitlines()]
+        finished = [row for row in ledger if row.get('event') == 'attempt_finished']
+        self.assertFalse(finished[0]['accepted'])
+        self.assertIn('guest_suspend_detected', finished[0]['stop_reason'])
+        exported = json.loads((out / 'manifest.json').read_text())
+        self.assertEqual(len(exported['runs']), 1)
+        self.assertEqual(len(exported['missing_planned_run_ids']), 2)
+
 
 if __name__ == '__main__':
     unittest.main()
