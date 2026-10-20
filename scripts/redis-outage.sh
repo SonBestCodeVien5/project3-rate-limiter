@@ -4,7 +4,23 @@ set -euo pipefail
 LAB_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 PROJECT=project3-outage-$$
 PORT=${OUTAGE_HOST_PORT:-18080}
-OUT=${1:-"$LAB_ROOT/artifacts/outage-$(date -u +%Y%m%dT%H%M%S)-$$"}
+OUT= POLICY=both QUALITY_MANIFEST= HEALTHY_RUN_ID= OUTAGE_RUN_ID=
+while (($#)); do
+  case $1 in
+    --policy) (($# >= 2)) || { echo 'Missing value for --policy' >&2; exit 2; }; POLICY=$2; shift 2;;
+    --quality-manifest) (($# >= 2)) || { echo 'Missing value for --quality-manifest' >&2; exit 2; }; QUALITY_MANIFEST=$2; shift 2;;
+    --healthy-run-id) (($# >= 2)) || { echo 'Missing value for --healthy-run-id' >&2; exit 2; }; HEALTHY_RUN_ID=$2; shift 2;;
+    --outage-run-id) (($# >= 2)) || { echo 'Missing value for --outage-run-id' >&2; exit 2; }; OUTAGE_RUN_ID=$2; shift 2;;
+    --*) echo "Unknown option: $1" >&2; exit 2;;
+    *) [[ -z $OUT ]] || { echo 'Only one output path is allowed' >&2; exit 2; }; OUT=$1; shift;;
+  esac
+done
+OUT=${OUT:-"$LAB_ROOT/artifacts/outage-$(date -u +%Y%m%dT%H%M%S)-$$"}
+[[ $POLICY == both || $POLICY == open || $POLICY == closed ]] || { echo 'Policy must be open or closed' >&2; exit 2; }
+quality_count=0; for value in "$QUALITY_MANIFEST" "$HEALTHY_RUN_ID" "$OUTAGE_RUN_ID"; do [[ -z $value ]] || ((quality_count+=1)); done
+if ((quality_count != 0)); then
+  ((quality_count == 3)) && [[ $POLICY != both ]] || { echo 'Quality checking requires manifest, both run IDs, and one selected policy' >&2; exit 2; }
+fi
 [[ ! -e "$OUT" ]] || { echo "Output already exists: $OUT" >&2; exit 2; }
 mkdir -p "$(dirname "$OUT")"
 mkdir "$OUT"
@@ -33,7 +49,7 @@ duration=${OUTAGE_DURATION:-25}; rps=${OUTAGE_RPS:-100}; legit=${OUTAGE_LEGIT_RP
 (( duration >= pause_at + pause_for + 5 && legit >= 5 && rps >= legit )) || { echo 'Need >=5s post-outage, >=5 legitimate RPS, and total RPS >= legitimate RPS' >&2; exit 2; }
 algo=${ALGORITHM:-fixed-window}; limit=${LIMIT:-20}; window=${WINDOW:-1s}; capacity=${CAPACITY:-20}; rate=${RATE:-20}; backend=${BACKEND_CAPACITY:-10}; service=${BACKEND_SERVICE_TIME:-50ms}
 
-for policy in open closed; do
+for policy in $([[ $POLICY == both ]] && echo 'open closed' || echo "$POLICY"); do
   for phase in healthy outage; do
     CASE_DIR="$OUT/$policy/$phase"; mkdir -p "$CASE_DIR"
     export MODE=redis ALGORITHM="$algo" FAIL_POLICY="$policy" NAMESPACE="outage-$$-$policy-$phase" LIMIT="$limit" WINDOW="$window" CAPACITY="$capacity" RATE="$rate" BACKEND_CAPACITY="$backend" BACKEND_SERVICE_TIME="$service"
@@ -108,9 +124,35 @@ PY
       )
       printf '%s\n' "$threshold" >"$OUT/$policy/recovery-p95-threshold-ms.txt"
       timeout 20s python3 "$LAB_ROOT/scripts/analyze.py" "$CASE_DIR" >"$CASE_DIR/analyzer.log" 2>&1
+      if [[ -n $QUALITY_MANIFEST ]]; then
+        set +e
+        python3 "$LAB_ROOT/scripts/check-study-quality.py" --manifest "$QUALITY_MANIFEST" --planned-run-id "$HEALTHY_RUN_ID" --run-dir "$CASE_DIR" --output "$CASE_DIR/quality-check.json"
+        quality_rc=$?
+        set -e
+        ((quality_rc <= 1)) || exit "$quality_rc"
+        python3 - "$CASE_DIR/quality-check.json" <<'PY'
+import json, pathlib, sys
+result=json.loads(pathlib.Path(sys.argv[1]).read_text())
+if not result.get('valid') or result.get('stop_sequence'):
+    raise SystemExit('formal healthy quality gate failed: ' + '; '.join(result.get('reasons', [])))
+PY
+      fi
     else
       threshold=$(cat "$OUT/$policy/recovery-p95-threshold-ms.txt")
       timeout 20s python3 "$LAB_ROOT/scripts/analyze.py" "$CASE_DIR" --recovery-p95-ms "$threshold" --recovery-window-ms 1000 --recovery-min-samples 5 --recovery-consecutive 3 >"$CASE_DIR/analyzer.log" 2>&1
+      if [[ -n $QUALITY_MANIFEST ]]; then
+        set +e
+        python3 "$LAB_ROOT/scripts/check-study-quality.py" --manifest "$QUALITY_MANIFEST" --planned-run-id "$OUTAGE_RUN_ID" --run-dir "$CASE_DIR" --output "$CASE_DIR/quality-check.json"
+        quality_rc=$?
+        set -e
+        ((quality_rc <= 1)) || exit "$quality_rc"
+        python3 - "$CASE_DIR/quality-check.json" <<'PY'
+import json, pathlib, sys
+result=json.loads(pathlib.Path(sys.argv[1]).read_text())
+if not result.get('valid') or result.get('stop_sequence'):
+    raise SystemExit('formal outage quality gate failed: ' + '; '.join(result.get('reasons', [])))
+PY
+      fi
     fi
   done
 done

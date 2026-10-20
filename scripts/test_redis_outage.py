@@ -81,6 +81,14 @@ fi
         self._script("python3", f"""#!/bin/bash
 for arg in \"$@\"; do
   if [[ $arg == */scripts/analyze.py ]]; then echo \"analyze $*\" >>\"$MOCK_LOG\"; exit 0; fi
+  if [[ $arg == */scripts/check-study-quality.py ]]; then
+    echo \"quality $*\" >>\"$MOCK_LOG\"
+    output= run_id=
+    while (($#)); do case $1 in --output) output=$2; shift 2;; --planned-run-id) run_id=$2; shift 2;; *) shift;; esac; done
+    stop=false; [[ $run_id != o1 ]] || stop=${{MOCK_QUALITY_STOP:-false}}
+    printf '{{\"valid\":%s,\"stop_sequence\":%s,\"reasons\":[]}}\\n' \"${{MOCK_QUALITY_VALID:-true}}\" \"$stop\" >\"$output\"
+    exit \"${{MOCK_QUALITY_EXIT:-0}}\"
+  fi
 done
 exec {REAL_PYTHON} \"$@\"
 """)
@@ -171,6 +179,52 @@ exec {REAL_PYTHON} \"$@\"
         self.assertIn("healthy baseline gate failed", run.stderr)
         self.assertTrue((out / "open/healthy/load/metadata.json").is_file())
         self.assertFalse((out / "open/outage").exists())
+
+    def test_policy_selection_and_quality_gate_order(self):
+        out = self.root / "formal"
+        run = subprocess.run(["bash", str(RUNNER), str(out), "--policy", "open",
+                              "--quality-manifest", "manifest.json", "--healthy-run-id", "h1",
+                              "--outage-run-id", "o1"], env=self.env, text=True,
+                             capture_output=True, timeout=20)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertTrue((out / "open/healthy/quality-check.json").is_file())
+        self.assertTrue((out / "open/outage/quality-check.json").is_file())
+        self.assertFalse((out / "closed").exists())
+        commands = self.log.read_text().splitlines()
+        healthy_quality = next(i for i, line in enumerate(commands) if line.startswith("quality "))
+        pause = next(i for i, line in enumerate(commands) if line.startswith("docker ") and " pause redis" in line)
+        self.assertLess(healthy_quality, pause)
+
+    def test_invalid_healthy_quality_stops_before_pause_and_preserves_case(self):
+        out = self.root / "invalid-formal"
+        run = subprocess.run(["bash", str(RUNNER), str(out), "--policy", "closed",
+                              "--quality-manifest", "manifest.json", "--healthy-run-id", "h1",
+                              "--outage-run-id", "o1"], env=self.env | {"MOCK_QUALITY_VALID": "false"},
+                             text=True, capture_output=True, timeout=20)
+        self.assertNotEqual(run.returncode, 0)
+        self.assertIn("formal healthy quality gate failed", run.stderr)
+        self.assertTrue((out / "closed/healthy/quality-check.json").is_file())
+        self.assertFalse((out / "closed/outage").exists())
+        self.assertNotIn(" pause redis", self.log.read_text())
+
+    def test_quality_checker_fatal_error_propagates(self):
+        out = self.root / "fatal-formal"
+        run = subprocess.run(["bash", str(RUNNER), str(out), "--policy", "open",
+                              "--quality-manifest", "manifest.json", "--healthy-run-id", "h1",
+                              "--outage-run-id", "o1"], env=self.env | {"MOCK_QUALITY_EXIT": "2"},
+                             text=True, capture_output=True, timeout=20)
+        self.assertEqual(run.returncode, 2)
+        self.assertFalse((out / "open/outage").exists())
+
+    def test_quality_stop_sequence_stops_after_outage_and_preserves_artifacts(self):
+        out = self.root / "stop-sequence"
+        run = subprocess.run(["bash", str(RUNNER), str(out), "--policy", "open",
+                              "--quality-manifest", "manifest.json", "--healthy-run-id", "h1",
+                              "--outage-run-id", "o1"], env=self.env | {"MOCK_QUALITY_STOP": "true"},
+                             text=True, capture_output=True, timeout=20)
+        self.assertNotEqual(run.returncode, 0)
+        self.assertTrue((out / "open/outage/quality-check.json").is_file())
+        self.assertFalse((out / "closed").exists())
 
 
 if __name__ == "__main__":
