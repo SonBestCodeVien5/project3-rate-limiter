@@ -2,6 +2,8 @@
 
 ## Bối cảnh và cách đọc
 
+Muốn xem cách diễn giải biểu đồ và ký hiệu trục, mở [hướng dẫn đọc T10](READING_GUIDE.md).
+
 Một đợt bán hàng tăng đột biến có thể làm backend quá tải, kéo dài độ trễ và làm khách hợp lệ gặp lỗi. Yêu cầu kỹ thuật là so sánh limiter Fixed Window (FW) và Token Bucket (TB), local state và Redis shared state, đo ảnh hưởng lên backend dưới tải hỗn hợp/burst, xem scaling theo topology, và quan sát fail-open/fail-closed khi Redis outage.
 
 T09 dùng workload và topology mô phỏng theo protocol khóa, không đo doanh thu hay backend production. T10 phân tích 138 lượt hợp lệ trong 46 ô, ba repetition mỗi ô. Bảng máy và Markdown được sinh từ CSV export đã khóa cùng `analysis.json` đã băm trong archive; xem [bảng T10](../worklog/2026-10-20-t10/T10_TABLES.md), [dữ liệu từng lượt](../worklog/2026-10-20-t10/run-evidence.csv), [traceability](../worklog/2026-10-20-t10/traceability.csv) và [provenance](../worklog/2026-10-20-t10/provenance.json).

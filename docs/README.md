@@ -18,6 +18,7 @@
 | Hiểu hệ thống và thuật toán | [Thiết kế triển khai](IMPLEMENTATION.md) | Đường đi yêu cầu, quy tắc quota, thời gian, tính atomic và giới hạn |
 | Hiểu phương pháp thí nghiệm | [Đặc tả](experiments/EXPERIMENT_SPEC.md) → [điều kiện đo hiện tại](experiments/PROTOCOL_READINESS.md) | Phân biệt yêu cầu, thiết kế ban đầu và quy trình đã khóa |
 | Hiểu số liệu có nghĩa gì | [Quy tắc phân tích](experiments/ANALYSIS.md) → [xuất số liệu báo cáo](experiments/REPORTING.md) | Cách kiểm chứng quota, mẫu số, tổng hợp lượt lặp và giới hạn diễn giải |
+| Đọc bảng và biểu đồ T10 | [Hướng dẫn đọc T10](analysis/READING_GUIDE.md) → [kết quả T10](analysis/T10_RESULTS.md) → [bảng chi tiết](worklog/2026-10-20-t10/T10_TABLES.md) | Hiểu cách đọc 11 biểu đồ, tổng hợp lượt và giới hạn; truy nguyên qua traceability/provenance |
 | Viết báo cáo | [Bản nháp báo cáo](REPORT_DRAFT.md), [kết quả T10](analysis/T10_RESULTS.md) và bảng bên dưới | Dùng kết quả có giới hạn; T11 cần được yêu cầu riêng |
 | Chuẩn bị thuyết trình/demo | [Kịch bản demo](DEMO_SCRIPT.md) → [hướng dẫn Console](CONSOLE.md) | Trình tự trình bày và cách dùng dữ liệu đã lưu |
 | Chạy hoặc sửa công cụ khi được yêu cầu | [README dự án](../README.md) → [hướng dẫn script](../scripts/README.md), [cổng kiểm tra chất lượng đo](experiments/MEASUREMENT_GATE.md) | Tra lệnh và điều kiện chạy; lệnh minh họa không cấp quyền chạy thí nghiệm |
