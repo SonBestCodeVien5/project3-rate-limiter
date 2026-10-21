@@ -1,0 +1,347 @@
+{
+  "v1_1": {
+    "started": 120,
+    "finished": 119,
+    "accepted": 98,
+    "rejected": 21,
+    "unfinished": 1,
+    "initial_rejection_reasons": {
+      "generator_drops": 12,
+      "fatal_setup:[Errno 2] No such file or directory: '/tmp/project3-t09-formal-0291/artifacts/protocol-v1.1/p1-026-scale-local-fw-2api-250rps-r1/custom-repeat-1/load/metadata.json'": 1,
+      "fatal_setup:[Errno 2] No such file or directory: '/tmp/project3-t09-formal-0291/artifacts/protocol-v1.1/p1-038-burst-none-r1/custom-repeat-1/load/metadata.json'": 1,
+      "client_clock_residual": 1,
+      "rate_fidelity:legitimate:0-30": 1,
+      "same_cell_fingerprint_mismatch": 6
+    },
+    "corrected_import_accepted": 104,
+    "corrected_import_missing": 34,
+    "imported_results_sha256": "acf52bd8a99137baf7d6492817314d9762f54171ebb2443002990b84c0295c3e"
+  },
+  "v1_2": {
+    "started": 36,
+    "finished": 36,
+    "accepted": 31,
+    "rejected": 5,
+    "rejection_reasons": {
+      "generator_drops": 5
+    }
+  },
+  "v1_3": {
+    "planned_id": "p1-129-scale-redis-fw-1api-250rps-r3",
+    "attempts": 1,
+    "accepted": true,
+    "reason": "frozen checker passed",
+    "receipt_sha256": "da219c555190e880f4620f6acf28fb8c48ae492a53706a883fae456dd1faee51"
+  },
+  "focused_attempts": [
+    {
+      "source": "v1.2",
+      "planned_id": "p1-128-scale-none-fw-4api-250rps-r3",
+      "attempt": 1,
+      "accepted": false,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-128-scale-none-fw-4api-250rps-r3"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-128-scale-none-fw-4api-250rps-r3",
+      "attempt": 2,
+      "accepted": false,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-128-scale-none-fw-4api-250rps-r3.attempt-2"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-128-scale-none-fw-4api-250rps-r3",
+      "attempt": 3,
+      "accepted": true,
+      "reasons": [],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-128-scale-none-fw-4api-250rps-r3.attempt-3"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-129-scale-redis-fw-1api-250rps-r3",
+      "attempt": 1,
+      "accepted": false,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-129-scale-redis-fw-1api-250rps-r3"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-129-scale-redis-fw-1api-250rps-r3",
+      "attempt": 2,
+      "accepted": false,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-129-scale-redis-fw-1api-250rps-r3.attempt-2"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-129-scale-redis-fw-1api-250rps-r3",
+      "attempt": 3,
+      "accepted": false,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-129-scale-redis-fw-1api-250rps-r3.attempt-3"
+    },
+    {
+      "source": "v1.3",
+      "planned_id": "p1-129-scale-redis-fw-1api-250rps-r3",
+      "attempt": 1,
+      "accepted": true,
+      "reasons": [],
+      "archive_relative_path": "v1.3/attempt/raw"
+    }
+  ],
+  "invalid_attempts": [
+    {
+      "source": "v1.1",
+      "planned_id": "p1-020-scale-none-fw-2api-250rps-r1",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-020-scale-none-fw-2api-250rps-r1"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-020-scale-none-fw-2api-250rps-r1",
+      "attempt": 2,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-020-scale-none-fw-2api-250rps-r1.attempt-2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-026-scale-local-fw-2api-250rps-r1",
+      "attempt": 1,
+      "reasons": [
+        "fatal_setup:[Errno 2] No such file or directory: '/tmp/project3-t09-formal-0291/artifacts/protocol-v1.1/p1-026-scale-local-fw-2api-250rps-r1/custom-repeat-1/load/metadata.json'"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-026-scale-local-fw-2api-250rps-r1"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-038-burst-none-r1",
+      "attempt": 1,
+      "reasons": [
+        "fatal_setup:[Errno 2] No such file or directory: '/tmp/project3-t09-formal-0291/artifacts/protocol-v1.1/p1-038-burst-none-r1/custom-repeat-1/load/metadata.json'"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-038-burst-none-r1"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-041-scale-local-fw-4api-180rps-r1",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-041-scale-local-fw-4api-180rps-r1"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-047-scale-redis-fw-4api-250rps-r2",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-047-scale-redis-fw-4api-250rps-r2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-047-scale-redis-fw-4api-250rps-r2",
+      "attempt": 2,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-047-scale-redis-fw-4api-250rps-r2.attempt-2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-047-scale-redis-fw-4api-250rps-r2",
+      "attempt": 3,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-047-scale-redis-fw-4api-250rps-r2.attempt-3"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-049-normal-none-r2",
+      "attempt": 1,
+      "reasons": [
+        "client_clock_residual",
+        "rate_fidelity:legitimate:0-30"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-049-normal-none-r2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-052-scale-local-fw-4api-250rps-r2",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-052-scale-local-fw-4api-250rps-r2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-053-scale-redis-fw-2api-180rps-r2",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-053-scale-redis-fw-2api-180rps-r2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-060-scale-none-fw-4api-180rps-r2",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-060-scale-none-fw-4api-180rps-r2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "outage-open-r2",
+      "attempt": 1,
+      "reasons": [
+        "same_cell_fingerprint_mismatch"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/outage-open-r2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "outage-open-r2",
+      "attempt": 2,
+      "reasons": [
+        "same_cell_fingerprint_mismatch"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/outage-open-r2.attempt-2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "outage-open-r2",
+      "attempt": 3,
+      "reasons": [
+        "same_cell_fingerprint_mismatch"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/outage-open-r2.attempt-3"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "outage-closed-r2",
+      "attempt": 1,
+      "reasons": [
+        "same_cell_fingerprint_mismatch"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/outage-closed-r2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "outage-closed-r2",
+      "attempt": 2,
+      "reasons": [
+        "same_cell_fingerprint_mismatch"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/outage-closed-r2.attempt-2"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "outage-closed-r2",
+      "attempt": 3,
+      "reasons": [
+        "same_cell_fingerprint_mismatch"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/outage-closed-r2.attempt-3"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-104-scale-local-fw-1api-180rps-r3",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-104-scale-local-fw-1api-180rps-r3"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-106-scale-none-fw-4api-180rps-r3",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-106-scale-none-fw-4api-180rps-r3"
+    },
+    {
+      "source": "v1.1",
+      "planned_id": "p1-106-scale-none-fw-4api-180rps-r3",
+      "attempt": 2,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.1/raw/artifacts/protocol-v1.1/p1-106-scale-none-fw-4api-180rps-r3.attempt-2"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-128-scale-none-fw-4api-250rps-r3",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-128-scale-none-fw-4api-250rps-r3"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-128-scale-none-fw-4api-250rps-r3",
+      "attempt": 2,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-128-scale-none-fw-4api-250rps-r3.attempt-2"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-129-scale-redis-fw-1api-250rps-r3",
+      "attempt": 1,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-129-scale-redis-fw-1api-250rps-r3"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-129-scale-redis-fw-1api-250rps-r3",
+      "attempt": 2,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-129-scale-redis-fw-1api-250rps-r3.attempt-2"
+    },
+    {
+      "source": "v1.2",
+      "planned_id": "p1-129-scale-redis-fw-1api-250rps-r3",
+      "attempt": 3,
+      "reasons": [
+        "generator_drops"
+      ],
+      "archive_relative_path": "v1.2/source-raw/artifacts-protocol-v1.2/p1-129-scale-redis-fw-1api-250rps-r3.attempt-3"
+    }
+  ],
+  "ledger_sha256": {
+    "v1.1": "bd6c89ce44907d1d8ec72a7f7fe4c0cca03f0afaaf34b2347deab43fa2c29a16",
+    "v1.2": "fe0f672cafa0d9805149e6eea8b1dd1364e4d0815ef123d707690b4a55ef3969"
+  },
+  "selection_rule": "Earliest complete qualifying attempt per planned run ID; selection is based on validation, never performance.",
+  "final_selected_count": 138
+}

@@ -1,0 +1,24 @@
+{
+  "protocol_id": "project3-formal-v1.2",
+  "source_revision": "0291a80fb404fea0eafee8c3431acc3631bb423e",
+  "exporter_revision": "046654e27e08e2292d554fd96a594226ef86bc7e",
+  "validation_tool_revision": "371ed1184800d81791821ab6b048243d6510fbcb",
+  "locked_manifest_sha256": "8fdee2bee729665327fd0d5e03b89a4fd4d10bfed4dc872a82bd5ddf649acb1e",
+  "derived_manifest_sha256": "d6e74897868bef82750f98cdc0b82025d563ab492c58fa311b5c185fdedcdaf3",
+  "runs_csv_sha256": "f0392733923dc050fc6cf655f47c75e8876051b50e6f21bbf0e34d9b6e715c59",
+  "v12_archive_sha256": "ec67b58202c14027ded4f411516dcd5979052d5e384a12ba8f8511a712e06f8d",
+  "v13_archive_sha256": "c947c8b9633b82c71e49ee473255c6db1a2431909d0a6342fa23fd798ecb150c",
+  "v11_archive_sha256": "e7122b897a9af2036e09cc178835060cbdaaf9f7c22a7818b5ad6ee8a3fa8ce0",
+  "v11_ledger_sha256": "bd6c89ce44907d1d8ec72a7f7fe4c0cca03f0afaaf34b2347deab43fa2c29a16",
+  "v12_ledger_sha256": "fe0f672cafa0d9805149e6eea8b1dd1364e4d0815ef123d707690b4a55ef3969",
+  "exporter_sha256": "391c53239e1a4191505f213df30d5924a5c47dec0af15d537c74dd7f2c9106c5",
+  "analysis_script_sha256": "298c5a834df3a833b79ca881726771881d67659eaa0e2a6886699fc0abd39cee",
+  "run_count": 138,
+  "usable_runs": 138,
+  "cell_count": 46,
+  "accepted_sources": {
+    "v1.1": 104,
+    "v1.2": 33,
+    "v1.3": 1
+  }
+}

@@ -1,0 +1,7492 @@
+[
+  {
+    "cell": "normal-none",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.997501576145083,
+    "minimum": 19.997419499658733,
+    "maximum": 19.997578583198464
+  },
+  {
+    "cell": "normal-none",
+    "metric": "legitimate_p95_ms",
+    "median": 54.115577,
+    "minimum": 54.091594,
+    "maximum": 54.118891
+  },
+  {
+    "cell": "normal-none",
+    "metric": "legitimate_p99_ms",
+    "median": 54.533141,
+    "minimum": 54.48951,
+    "maximum": 54.564319
+  },
+  {
+    "cell": "normal-none",
+    "metric": "backend_arrivals",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "legitimate_p50_ms",
+    "median": 52.952788,
+    "minimum": 52.862693,
+    "maximum": 52.974463
+  },
+  {
+    "cell": "normal-none",
+    "metric": "backend_success",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006277807903633733,
+    "minimum": 0.006060801219792335,
+    "maximum": 0.006425276338901141
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1158.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.44290417383215,
+    "minimum": 39.31544804906175,
+    "maximum": 39.50449345956358
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43932.0,
+    "minimum": 43928.0,
+    "maximum": 43958.0
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1497.2635420322224,
+    "minimum": 1491.5425420478246,
+    "maximum": 1498.5780558650333
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.358892917633057,
+    "minimum": 29.31312108039856,
+    "maximum": 29.454071044921875
+  },
+  {
+    "cell": "normal-none",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.99760815608008,
+    "minimum": 19.997329917847864,
+    "maximum": 19.99787678342636
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "legitimate_p95_ms",
+    "median": 54.056857,
+    "minimum": 53.993084,
+    "maximum": 54.109056
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "legitimate_p99_ms",
+    "median": 54.476546,
+    "minimum": 54.281698,
+    "maximum": 54.650485
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "backend_arrivals",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "legitimate_p50_ms",
+    "median": 52.929629,
+    "minimum": 52.903522,
+    "maximum": 53.009541
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "backend_success",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "api_allowed",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006389659980256528,
+    "minimum": 0.0062466430420060216,
+    "maximum": 0.006512361395098649
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1158.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.52050344311421,
+    "minimum": 39.24869313758382,
+    "maximum": 39.59526669917166
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43959.0,
+    "minimum": 43957.0,
+    "maximum": 43959.0
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1500.175103496521,
+    "minimum": 1489.9251309456367,
+    "maximum": 1503.0814584014568
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.301246166229248,
+    "minimum": 29.245919942855835,
+    "maximum": 29.504167079925537
+  },
+  {
+    "cell": "normal-local-fw",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.99700660608742,
+    "minimum": 19.99696222414087,
+    "maximum": 19.99724948565182
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "legitimate_p95_ms",
+    "median": 54.596894,
+    "minimum": 54.566405,
+    "maximum": 54.617631
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "legitimate_p99_ms",
+    "median": 55.145653,
+    "minimum": 55.073835,
+    "maximum": 55.235387
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "backend_arrivals",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "legitimate_p50_ms",
+    "median": 53.39117,
+    "minimum": 53.386065,
+    "maximum": 53.402969
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "backend_success",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "api_allowed",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.011170951329890898,
+    "minimum": 0.010841716126304515,
+    "maximum": 0.011176807579614817
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_memory_bytes_first",
+    "median": 1288880.0,
+    "minimum": 1288768.0,
+    "maximum": 1289432.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_memory_bytes_last",
+    "median": 1282968.0,
+    "minimum": 1282360.0,
+    "maximum": 1312880.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 138008.0,
+    "minimum": 138008.0,
+    "maximum": 138246.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 4749.486296794096,
+    "minimum": 4653.802449403619,
+    "maximum": 4765.672173576828
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 63139.0,
+    "minimum": 63136.0,
+    "maximum": 63170.0
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 2170.2258970855078,
+    "minimum": 2129.024922073698,
+    "maximum": 2180.3067602419233
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.107568979263306,
+    "minimum": 28.95876908302307,
+    "maximum": 29.654890060424805
+  },
+  {
+    "cell": "normal-redis-fw",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.99753741858603,
+    "minimum": 19.99745483793372,
+    "maximum": 19.997808974056035
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "legitimate_p95_ms",
+    "median": 54.102449,
+    "minimum": 53.86006,
+    "maximum": 54.109455
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "legitimate_p99_ms",
+    "median": 54.593827,
+    "minimum": 54.481601,
+    "maximum": 55.13953
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "backend_arrivals",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "legitimate_p50_ms",
+    "median": 52.960332,
+    "minimum": 52.896242,
+    "maximum": 52.980865
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "backend_success",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "api_allowed",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006287156757862545,
+    "minimum": 0.006144664197587903,
+    "maximum": 0.006340827044443598
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034136.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034136.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1070.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.161682925363195,
+    "minimum": 38.39474086348002,
+    "maximum": 39.16449874103618
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43957.0,
+    "minimum": 40574.0,
+    "maximum": 43961.0
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1486.6613740584864,
+    "minimum": 1455.9142203690076,
+    "maximum": 1486.6897608651911
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.567594051361084,
+    "minimum": 27.86840009689331,
+    "maximum": 29.569720029830933
+  },
+  {
+    "cell": "normal-local-tb",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.99713239321739,
+    "minimum": 19.996904193275153,
+    "maximum": 19.997393932290365
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "legitimate_p95_ms",
+    "median": 54.575182,
+    "minimum": 54.546914,
+    "maximum": 54.591001
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "legitimate_p99_ms",
+    "median": 55.164052,
+    "minimum": 55.097577,
+    "maximum": 55.189983
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "backend_arrivals",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "legitimate_p50_ms",
+    "median": 53.39802,
+    "minimum": 53.393141,
+    "maximum": 53.404786
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "backend_success",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "api_allowed",
+    "median": 600.0,
+    "minimum": 600.0,
+    "maximum": 600.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.011222553116964015,
+    "minimum": 0.01105785087694026,
+    "maximum": 0.011560369258364449
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_memory_bytes_first",
+    "median": 1292056.0,
+    "minimum": 1290056.0,
+    "maximum": 1292184.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_memory_bytes_last",
+    "median": 1283880.0,
+    "minimum": 1283848.0,
+    "maximum": 1284008.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 138008.0,
+    "minimum": 138008.0,
+    "maximum": 138008.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 4713.593899136196,
+    "minimum": 4691.442200623872,
+    "maximum": 4725.617100059367
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 63117.0,
+    "minimum": 63117.0,
+    "maximum": 63118.0
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 2155.7294224376797,
+    "minimum": 2145.5984970202953,
+    "maximum": 2161.262391466778
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.27872085571289,
+    "minimum": 29.204228162765503,
+    "maximum": 29.416966915130615
+  },
+  {
+    "cell": "normal-redis-tb",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "legitimate_goodput_per_second",
+    "median": 18.931010839061575,
+    "minimum": 18.897747517000656,
+    "maximum": 18.99767805439423
+  },
+  {
+    "cell": "burst-none",
+    "metric": "legitimate_p95_ms",
+    "median": 53.767424,
+    "minimum": 53.580416,
+    "maximum": 53.768787
+  },
+  {
+    "cell": "burst-none",
+    "metric": "legitimate_p99_ms",
+    "median": 54.107913,
+    "minimum": 54.072963,
+    "maximum": 54.209229
+  },
+  {
+    "cell": "burst-none",
+    "metric": "backend_arrivals",
+    "median": 1560.0,
+    "minimum": 1560.0,
+    "maximum": 1560.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "backend_overload",
+    "median": 294.0,
+    "minimum": 294.0,
+    "maximum": 294.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "http_5xx",
+    "median": 294.0,
+    "minimum": 294.0,
+    "maximum": 294.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "legitimate_p50_ms",
+    "median": 52.698769,
+    "minimum": 52.684535,
+    "maximum": 52.874178
+  },
+  {
+    "cell": "burst-none",
+    "metric": "backend_success",
+    "median": 1266.0,
+    "minimum": 1266.0,
+    "maximum": 1266.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006283044718707335,
+    "minimum": 0.006212455546613542,
+    "maximum": 0.0063136660674933676
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1070.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.20059893493748,
+    "minimum": 38.49993041471108,
+    "maximum": 39.467533056713044
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43926.0,
+    "minimum": 40574.0,
+    "maximum": 43939.0
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1486.9823046770844,
+    "minimum": 1459.902968828493,
+    "maximum": 1497.5508937641748
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.340572118759155,
+    "minimum": 27.7922580242157,
+    "maximum": 29.540364980697632
+  },
+  {
+    "cell": "burst-none",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.663646016675624,
+    "minimum": 19.63042517221794,
+    "maximum": 19.731043203107163
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "legitimate_p95_ms",
+    "median": 53.680055,
+    "minimum": 53.648873,
+    "maximum": 53.73
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "legitimate_p99_ms",
+    "median": 54.1863,
+    "minimum": 54.185805,
+    "maximum": 54.432616
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "backend_arrivals",
+    "median": 1260.0,
+    "minimum": 1260.0,
+    "maximum": 1260.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "backend_overload",
+    "median": 74.0,
+    "minimum": 73.0,
+    "maximum": 77.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "http_429",
+    "median": 300.0,
+    "minimum": 300.0,
+    "maximum": 300.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "http_5xx",
+    "median": 74.0,
+    "minimum": 73.0,
+    "maximum": 77.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "legitimate_p50_ms",
+    "median": 52.749997,
+    "minimum": 52.734407,
+    "maximum": 52.8471
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "backend_success",
+    "median": 1186.0,
+    "minimum": 1183.0,
+    "maximum": 1187.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "api_allowed",
+    "median": 1260.0,
+    "minimum": 1260.0,
+    "maximum": 1260.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "api_rejected",
+    "median": 300.0,
+    "minimum": 300.0,
+    "maximum": 300.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 20.0,
+    "minimum": 20.0,
+    "maximum": 20.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006266511349079764,
+    "minimum": 0.006234494371537954,
+    "maximum": 0.0063175078866438165
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034072.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034072.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1084.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 38.98915839800047,
+    "minimum": 37.8446494936415,
+    "maximum": 39.05398063739501
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43958.0,
+    "minimum": 40583.0,
+    "maximum": 43959.0
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1480.039226994218,
+    "minimum": 1416.8352494469123,
+    "maximum": 1482.5336224863966
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.6512668132782,
+    "minimum": 28.643414974212646,
+    "maximum": 29.70056414604187
+  },
+  {
+    "cell": "burst-local-fw",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.830573675666614,
+    "minimum": 19.796926699363187,
+    "maximum": 19.930477159764745
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "legitimate_p95_ms",
+    "median": 54.334352,
+    "minimum": 54.329183,
+    "maximum": 54.505027
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "legitimate_p99_ms",
+    "median": 54.895112,
+    "minimum": 54.782516,
+    "maximum": 55.063271
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "backend_arrivals",
+    "median": 1200.0,
+    "minimum": 1200.0,
+    "maximum": 1200.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "backend_overload",
+    "median": 35.0,
+    "minimum": 34.0,
+    "maximum": 39.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "http_429",
+    "median": 360.0,
+    "minimum": 360.0,
+    "maximum": 360.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "http_5xx",
+    "median": 35.0,
+    "minimum": 34.0,
+    "maximum": 39.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "legitimate_p50_ms",
+    "median": 53.256088,
+    "minimum": 53.252813,
+    "maximum": 53.267608
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "backend_success",
+    "median": 1165.0,
+    "minimum": 1161.0,
+    "maximum": 1166.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "api_allowed",
+    "median": 1200.0,
+    "minimum": 1200.0,
+    "maximum": 1200.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "api_rejected",
+    "median": 360.0,
+    "minimum": 360.0,
+    "maximum": 360.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.016093288936130615,
+    "minimum": 0.0158732851146895,
+    "maximum": 0.016113236067370966
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_memory_bytes_first",
+    "median": 1300048.0,
+    "minimum": 1300016.0,
+    "maximum": 1300096.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_memory_bytes_last",
+    "median": 1290528.0,
+    "minimum": 1289240.0,
+    "maximum": 1290872.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 360538.0,
+    "minimum": 360062.0,
+    "maximum": 360538.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 12162.528590142347,
+    "minimum": 12107.376226502509,
+    "maximum": 12350.609429781263
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 94070.0,
+    "minimum": 94002.0,
+    "maximum": 94072.0
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 3175.292067839874,
+    "minimum": 3159.0708784636963,
+    "maximum": 3222.467060502703
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.6042058467865,
+    "minimum": 29.191919803619385,
+    "maximum": 29.77837586402893
+  },
+  {
+    "cell": "burst-redis-fw",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.797587363716325,
+    "minimum": 19.63070724397841,
+    "maximum": 19.83095059107625
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "legitimate_p95_ms",
+    "median": 53.701808,
+    "minimum": 53.622227,
+    "maximum": 53.832646
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "legitimate_p99_ms",
+    "median": 54.27495,
+    "minimum": 54.246761,
+    "maximum": 54.460022
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "backend_arrivals",
+    "median": 1277.0,
+    "minimum": 1277.0,
+    "maximum": 1277.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "backend_overload",
+    "median": 41.0,
+    "minimum": 39.0,
+    "maximum": 47.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "http_429",
+    "median": 283.0,
+    "minimum": 283.0,
+    "maximum": 283.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "http_5xx",
+    "median": 41.0,
+    "minimum": 39.0,
+    "maximum": 47.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "legitimate_p50_ms",
+    "median": 52.756948,
+    "minimum": 52.705641,
+    "maximum": 52.810578
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "backend_success",
+    "median": 1236.0,
+    "minimum": 1230.0,
+    "maximum": 1238.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "api_allowed",
+    "median": 1277.0,
+    "minimum": 1277.0,
+    "maximum": 1277.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "api_rejected",
+    "median": 283.0,
+    "minimum": 283.0,
+    "maximum": 283.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 59.0,
+    "minimum": 58.0,
+    "maximum": 59.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006101440274829097,
+    "minimum": 0.00602836582779356,
+    "maximum": 0.006282360037201427
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034264.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034264.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1158.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.19160362104941,
+    "minimum": 39.13085040975533,
+    "maximum": 39.65354045488884
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43957.0,
+    "minimum": 43942.0,
+    "maximum": 43960.0
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1487.791792039147,
+    "minimum": 1485.3841031620166,
+    "maximum": 1504.7114634444952
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.547145128250122,
+    "minimum": 29.202940940856934,
+    "maximum": 29.593019008636475
+  },
+  {
+    "cell": "burst-local-tb",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.93017197623751,
+    "minimum": 19.929986966284442,
+    "maximum": 19.930833602867974
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "legitimate_p95_ms",
+    "median": 54.312582,
+    "minimum": 54.283828,
+    "maximum": 54.393623
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "legitimate_p99_ms",
+    "median": 54.895323,
+    "minimum": 54.853843,
+    "maximum": 55.026856
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "backend_arrivals",
+    "median": 1218.0,
+    "minimum": 1218.0,
+    "maximum": 1218.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "backend_overload",
+    "median": 16.0,
+    "minimum": 16.0,
+    "maximum": 17.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "http_429",
+    "median": 342.0,
+    "minimum": 342.0,
+    "maximum": 342.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "http_5xx",
+    "median": 16.0,
+    "minimum": 16.0,
+    "maximum": 17.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "legitimate_p50_ms",
+    "median": 53.296347,
+    "minimum": 53.284675,
+    "maximum": 53.316255
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "backend_success",
+    "median": 1202.0,
+    "minimum": 1201.0,
+    "maximum": 1202.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "api_allowed",
+    "median": 1218.0,
+    "minimum": 1218.0,
+    "maximum": 1218.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "api_rejected",
+    "median": 342.0,
+    "minimum": 342.0,
+    "maximum": 342.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.01632164733962126,
+    "minimum": 0.016158916125389087,
+    "maximum": 0.016947172197586038
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_memory_bytes_first",
+    "median": 1304456.0,
+    "minimum": 1302912.0,
+    "maximum": 1304568.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_memory_bytes_last",
+    "median": 1291648.0,
+    "minimum": 1291384.0,
+    "maximum": 1312664.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 358480.0,
+    "minimum": 358080.0,
+    "maximum": 360062.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 12220.592057407906,
+    "minimum": 12198.490709647995,
+    "maximum": 12532.45899383125
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 93278.0,
+    "minimum": 89955.0,
+    "maximum": 93322.0
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 3167.3714304242617,
+    "minimum": 3144.8263467699458,
+    "maximum": 3177.6441477171184
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.354451179504395,
+    "minimum": 28.60412311553955,
+    "maximum": 29.463547945022583
+  },
+  {
+    "cell": "burst-redis-tb",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "legitimate_goodput_per_second",
+    "median": 7.821783813545697,
+    "minimum": 7.760488276541013,
+    "maximum": 8.021722642780274
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "legitimate_p95_ms",
+    "median": 53.41402,
+    "minimum": 53.26118,
+    "maximum": 53.414455
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "legitimate_p99_ms",
+    "median": 53.984645,
+    "minimum": 53.625337,
+    "maximum": 54.24859
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "backend_arrivals",
+    "median": 3600.0,
+    "minimum": 3600.0,
+    "maximum": 3600.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "backend_overload",
+    "median": 1575.0,
+    "minimum": 1572.0,
+    "maximum": 1580.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "http_5xx",
+    "median": 1575.0,
+    "minimum": 1572.0,
+    "maximum": 1580.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "legitimate_p50_ms",
+    "median": 52.563279,
+    "minimum": 52.478951,
+    "maximum": 52.670133
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "backend_success",
+    "median": 2025.0,
+    "minimum": 2020.0,
+    "maximum": 2028.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005838518188270024,
+    "minimum": 0.005760876005350589,
+    "maximum": 0.006117096432107012
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1084.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 38.80080015256021,
+    "minimum": 37.74480886852082,
+    "maximum": 39.3263992725278
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40582.0,
+    "minimum": 40580.0,
+    "maximum": 43934.0
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1452.5244189952891,
+    "minimum": 1413.0625770316533,
+    "maximum": 1492.0259288767154
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.719181060791016,
+    "minimum": 27.937568187713623,
+    "maximum": 29.445868968963623
+  },
+  {
+    "cell": "mixed-none",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "legitimate_goodput_per_second",
+    "median": 15.264626595624863,
+    "minimum": 14.79791715221992,
+    "maximum": 15.410952096986401
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "legitimate_p95_ms",
+    "median": 53.511405,
+    "minimum": 53.445635,
+    "maximum": 53.528013
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "legitimate_p99_ms",
+    "median": 54.16162,
+    "minimum": 54.104785,
+    "maximum": 54.178866
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "backend_arrivals",
+    "median": 1806.0,
+    "minimum": 1800.0,
+    "maximum": 1816.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "backend_overload",
+    "median": 593.0,
+    "minimum": 591.0,
+    "maximum": 595.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "http_429",
+    "median": 1794.0,
+    "minimum": 1784.0,
+    "maximum": 1800.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "http_5xx",
+    "median": 593.0,
+    "minimum": 591.0,
+    "maximum": 595.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "legitimate_p50_ms",
+    "median": 52.590409,
+    "minimum": 52.588083,
+    "maximum": 52.685553
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "backend_success",
+    "median": 1213.0,
+    "minimum": 1209.0,
+    "maximum": 1221.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "api_allowed",
+    "median": 1806.0,
+    "minimum": 1800.0,
+    "maximum": 1816.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "api_rejected",
+    "median": 1794.0,
+    "minimum": 1784.0,
+    "maximum": 1800.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 20.0,
+    "minimum": 20.0,
+    "maximum": 20.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.0057448464476137495,
+    "minimum": 0.0057388996837401335,
+    "maximum": 0.006142844409163901
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034104.0,
+    "minimum": 1034104.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034104.0,
+    "minimum": 1034104.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1084.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 38.62923105738409,
+    "minimum": 37.44415207178419,
+    "maximum": 39.79215577237215
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40581.0,
+    "minimum": 40580.0,
+    "maximum": 43958.0
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1446.1016571112973,
+    "minimum": 1401.7722649677805,
+    "maximum": 1510.521229224469
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.94978094100952,
+    "minimum": 28.06165099143982,
+    "maximum": 29.101212978363037
+  },
+  {
+    "cell": "mixed-local-fw",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "legitimate_goodput_per_second",
+    "median": 17.59736514593012,
+    "minimum": 17.464375412216523,
+    "maximum": 17.863829571363645
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "legitimate_p95_ms",
+    "median": 54.043189,
+    "minimum": 54.000114,
+    "maximum": 54.136107
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "legitimate_p99_ms",
+    "median": 54.734393,
+    "minimum": 54.588988,
+    "maximum": 55.215069
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "backend_arrivals",
+    "median": 1220.0,
+    "minimum": 1214.0,
+    "maximum": 1220.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "backend_overload",
+    "median": 300.0,
+    "minimum": 298.0,
+    "maximum": 306.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "http_429",
+    "median": 2380.0,
+    "minimum": 2380.0,
+    "maximum": 2386.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "http_5xx",
+    "median": 300.0,
+    "minimum": 298.0,
+    "maximum": 306.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "legitimate_p50_ms",
+    "median": 53.160265,
+    "minimum": 53.144715,
+    "maximum": 53.164704
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "backend_success",
+    "median": 920.0,
+    "minimum": 908.0,
+    "maximum": 922.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "api_allowed",
+    "median": 1220.0,
+    "minimum": 1214.0,
+    "maximum": 1220.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "api_rejected",
+    "median": 2380.0,
+    "minimum": 2380.0,
+    "maximum": 2386.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.030748275336070892,
+    "minimum": 0.030689721148794518,
+    "maximum": 0.031268839094410326
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_memory_bytes_first",
+    "median": 1299928.0,
+    "minimum": 1294840.0,
+    "maximum": 1313528.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_memory_bytes_last",
+    "median": 1288216.0,
+    "minimum": 1283448.0,
+    "maximum": 1312376.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 815758.0,
+    "minimum": 799537.0,
+    "maximum": 823210.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 28192.6457809046,
+    "minimum": 28123.4497913037,
+    "maximum": 28428.658672734593
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 155492.0,
+    "minimum": 153711.0,
+    "maximum": 159941.0
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 5418.79944093818,
+    "minimum": 5406.733635680504,
+    "maximum": 5477.533021760744
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.69491696357727,
+    "minimum": 28.42954921722412,
+    "maximum": 29.199458837509155
+  },
+  {
+    "cell": "mixed-redis-fw",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "legitimate_goodput_per_second",
+    "median": 18.545671293942373,
+    "minimum": 15.644366483727227,
+    "maximum": 19.312103661375847
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "legitimate_p95_ms",
+    "median": 53.359596,
+    "minimum": 53.326414,
+    "maximum": 53.502245
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "legitimate_p99_ms",
+    "median": 53.721756,
+    "minimum": 53.595228,
+    "maximum": 54.146092
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "backend_arrivals",
+    "median": 1838.0,
+    "minimum": 1838.0,
+    "maximum": 1838.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "backend_overload",
+    "median": 174.0,
+    "minimum": 86.0,
+    "maximum": 194.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "http_429",
+    "median": 1762.0,
+    "minimum": 1762.0,
+    "maximum": 1762.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "http_5xx",
+    "median": 174.0,
+    "minimum": 86.0,
+    "maximum": 194.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "legitimate_p50_ms",
+    "median": 52.53191,
+    "minimum": 52.495194,
+    "maximum": 52.595316
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "backend_success",
+    "median": 1664.0,
+    "minimum": 1644.0,
+    "maximum": 1752.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "api_allowed",
+    "median": 1838.0,
+    "minimum": 1838.0,
+    "maximum": 1838.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "api_rejected",
+    "median": 1762.0,
+    "minimum": 1762.0,
+    "maximum": 1762.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 619.0,
+    "minimum": 619.0,
+    "maximum": 619.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.0059033231769482115,
+    "minimum": 0.005767467527550088,
+    "maximum": 0.005921344685474529
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1084.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 38.96805074991894,
+    "minimum": 37.68324373909136,
+    "maximum": 39.40670629862169
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43939.0,
+    "minimum": 40550.0,
+    "maximum": 43959.0
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1478.5986026776236,
+    "minimum": 1409.6453262178547,
+    "maximum": 1495.9234906572635
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.38586115837097,
+    "minimum": 28.766101121902466,
+    "maximum": 29.716651916503906
+  },
+  {
+    "cell": "mixed-local-tb",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.923597085184504,
+    "minimum": 19.890877718593917,
+    "maximum": 19.923763664071533
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "legitimate_p95_ms",
+    "median": 54.005597,
+    "minimum": 53.892096,
+    "maximum": 54.032697
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "legitimate_p99_ms",
+    "median": 54.512002,
+    "minimum": 54.416217,
+    "maximum": 54.532591
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "backend_arrivals",
+    "median": 1219.0,
+    "minimum": 1219.0,
+    "maximum": 1219.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "backend_overload",
+    "median": 12.0,
+    "minimum": 12.0,
+    "maximum": 12.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "http_429",
+    "median": 2381.0,
+    "minimum": 2381.0,
+    "maximum": 2381.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "http_5xx",
+    "median": 12.0,
+    "minimum": 12.0,
+    "maximum": 12.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "legitimate_p50_ms",
+    "median": 53.033575,
+    "minimum": 52.978026,
+    "maximum": 53.055684
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "backend_success",
+    "median": 1207.0,
+    "minimum": 1207.0,
+    "maximum": 1207.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "api_allowed",
+    "median": 1219.0,
+    "minimum": 1219.0,
+    "maximum": 1219.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "api_rejected",
+    "median": 2381.0,
+    "minimum": 2381.0,
+    "maximum": 2381.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.03217447861135497,
+    "minimum": 0.0315103995262804,
+    "maximum": 0.03289780473379626
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_memory_bytes_first",
+    "median": 1285576.0,
+    "minimum": 1282896.0,
+    "maximum": 1316176.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_memory_bytes_last",
+    "median": 1283960.0,
+    "minimum": 1283928.0,
+    "maximum": 1284152.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 822258.0,
+    "minimum": 821306.0,
+    "maximum": 822972.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 27706.65995245586,
+    "minimum": 27553.50022499953,
+    "maximum": 27859.612420595688
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 156951.0,
+    "minimum": 156820.0,
+    "maximum": 157048.0
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 5288.593101189529,
+    "minimum": 5261.059708908039,
+    "maximum": 5316.458411014848
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.677268981933594,
+    "minimum": 29.539965867996216,
+    "maximum": 29.807682991027832
+  },
+  {
+    "cell": "mixed-redis-tb",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.945039482981805,
+    "minimum": 49.94390567381652,
+    "maximum": 49.94567820134428
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.226368,
+    "minimum": 54.156101,
+    "maximum": 54.269459
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.491413,
+    "minimum": 54.469068,
+    "maximum": 54.643121
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.154626,
+    "minimum": 53.12491,
+    "maximum": 53.182797
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005995396777580408,
+    "minimum": 0.0058450343038225225,
+    "maximum": 0.006270022126123811
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034232.0,
+    "minimum": 1034040.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034232.0,
+    "minimum": 1034040.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1158.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.27493462410753,
+    "minimum": 39.035524467755046,
+    "maximum": 39.8757502537777
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43958.0,
+    "minimum": 43957.0,
+    "maximum": 43959.0
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1490.88737150822,
+    "minimum": 1481.8330052487427,
+    "maximum": 1513.6600638215082
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.484453916549683,
+    "minimum": 29.04020595550537,
+    "maximum": 29.66528606414795
+  },
+  {
+    "cell": "scale-none-fw-1api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.7111559977411,
+    "minimum": 179.70915799184996,
+    "maximum": 179.7132569254455
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.507397,
+    "minimum": 53.503245,
+    "maximum": 53.550003
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.89194,
+    "minimum": 53.881536,
+    "maximum": 53.968445
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.658999,
+    "minimum": 52.610856,
+    "maximum": 52.667206
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "backend_success",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005652991929322222,
+    "minimum": 0.005558576217008178,
+    "maximum": 0.00576214208671111
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034104.0,
+    "minimum": 1034104.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034104.0,
+    "minimum": 1034104.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1084.0,
+    "maximum": 1084.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 37.53094162602729,
+    "minimum": 36.75926654380444,
+    "maximum": 38.21272184849898
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40583.0,
+    "minimum": 40583.0,
+    "maximum": 40583.0
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1405.090594104304,
+    "minimum": 1376.2004743055495,
+    "maximum": 1430.6152128944964
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.882835149765015,
+    "minimum": 28.367516040802002,
+    "maximum": 29.489162921905518
+  },
+  {
+    "cell": "scale-none-fw-1api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 190.91378852658218,
+    "minimum": 190.79086590364838,
+    "maximum": 191.2186547238764
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.498306,
+    "minimum": 53.434046,
+    "maximum": 53.595845
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.958916,
+    "minimum": 53.869479,
+    "maximum": 54.003454
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "backend_overload",
+    "median": 1764.0,
+    "minimum": 1754.0,
+    "maximum": 1767.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "http_5xx",
+    "median": 1764.0,
+    "minimum": 1754.0,
+    "maximum": 1767.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.738073,
+    "minimum": 52.624478,
+    "maximum": 52.8669
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "backend_success",
+    "median": 5736.0,
+    "minimum": 5733.0,
+    "maximum": 5746.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005504867014035227,
+    "minimum": 0.005415359523016345,
+    "maximum": 0.005867040314790673
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034136.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034136.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1010.0,
+    "maximum": 1084.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 36.31563285122164,
+    "minimum": 34.355331933805545,
+    "maximum": 36.5731695374639
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40581.0,
+    "minimum": 37208.0,
+    "maximum": 40584.0
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1359.6251325036708,
+    "minimum": 1265.6368223693435,
+    "maximum": 1369.165860700943
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.639214038848877,
+    "minimum": 29.39863896369934,
+    "maximum": 29.849404096603394
+  },
+  {
+    "cell": "scale-none-fw-1api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 12.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.94352236327637,
+    "minimum": 49.94309626282592,
+    "maximum": 49.94402647094455
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.191772,
+    "minimum": 53.992619,
+    "maximum": 54.194283
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.645235,
+    "minimum": 54.425995,
+    "maximum": 54.702566
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.140671,
+    "minimum": 53.094122,
+    "maximum": 53.141927
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006118757921813647,
+    "minimum": 0.005990153293709015,
+    "maximum": 0.006138412270381212
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1084.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.27368908808098,
+    "minimum": 38.09682592529662,
+    "maximum": 39.493743418070636
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43909.0,
+    "minimum": 40582.0,
+    "maximum": 43957.0
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1489.1782505773297,
+    "minimum": 1426.2411344099517,
+    "maximum": 1499.1593086598714
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.321099996566772,
+    "minimum": 28.453814029693604,
+    "maximum": 29.48538899421692
+  },
+  {
+    "cell": "scale-none-fw-2api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.70985403178395,
+    "minimum": 179.67954448037517,
+    "maximum": 179.7155840396556
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.473379,
+    "minimum": 53.407473,
+    "maximum": 53.739919
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.87631,
+    "minimum": 53.800821,
+    "maximum": 54.237798
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 1.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 1.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.628249,
+    "minimum": 52.600329,
+    "maximum": 52.803765
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "backend_success",
+    "median": 5400.0,
+    "minimum": 5399.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005477047524411822,
+    "minimum": 0.005402097958297064,
+    "maximum": 0.005942834669674548
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034136.0,
+    "maximum": 1034264.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034136.0,
+    "maximum": 1034264.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1010.0,
+    "maximum": 1172.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 38.95916509296922,
+    "minimum": 36.22695486236711,
+    "maximum": 38.98633281877106
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40581.0,
+    "minimum": 37207.0,
+    "maximum": 43965.0
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1458.4888179315349,
+    "minimum": 1334.5508015486068,
+    "maximum": 1462.4864525403325
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 27.87979292869568,
+    "minimum": 27.824004888534546,
+    "maximum": 30.061816930770874
+  },
+  {
+    "cell": "scale-none-fw-2api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 12.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 191.1432348873457,
+    "minimum": 191.017230462449,
+    "maximum": 191.28965398635367
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.370197,
+    "minimum": 53.315781,
+    "maximum": 53.658122
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.834662,
+    "minimum": 53.670437,
+    "maximum": 54.070818
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "backend_overload",
+    "median": 1756.0,
+    "minimum": 1752.0,
+    "maximum": 1760.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "http_5xx",
+    "median": 1756.0,
+    "minimum": 1752.0,
+    "maximum": 1760.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.611182,
+    "minimum": 52.554582,
+    "maximum": 52.92247
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "backend_success",
+    "median": 5744.0,
+    "minimum": 5740.0,
+    "maximum": 5748.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005397599684568873,
+    "minimum": 0.0052978112282848116,
+    "maximum": 0.0058254836618609135
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034136.0,
+    "maximum": 1034264.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034136.0,
+    "maximum": 1034264.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1010.0,
+    "maximum": 1084.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 37.96933158167308,
+    "minimum": 35.857869387692496,
+    "maximum": 38.101864821299564
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40582.0,
+    "minimum": 37206.0,
+    "maximum": 40582.0
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1421.4680943242222,
+    "minimum": 1320.9187014242448,
+    "maximum": 1426.4297769169546
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.450051069259644,
+    "minimum": 28.166759967803955,
+    "maximum": 28.549356937408447
+  },
+  {
+    "cell": "scale-none-fw-2api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 12.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.944276105671015,
+    "minimum": 49.944045431761545,
+    "maximum": 49.94447193421661
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.098409,
+    "minimum": 54.052752,
+    "maximum": 54.130936
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.592335,
+    "minimum": 54.41016,
+    "maximum": 54.718175
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.018171,
+    "minimum": 52.994512,
+    "maximum": 53.060337
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005947012758855157,
+    "minimum": 0.0058826417321431665,
+    "maximum": 0.006103125777674457
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034072.0,
+    "minimum": 1034072.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034072.0,
+    "minimum": 1034072.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1172.0,
+    "minimum": 1172.0,
+    "maximum": 1172.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 40.025423660017815,
+    "minimum": 39.055804961213965,
+    "maximum": 40.06727480398782
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43966.0,
+    "minimum": 43965.0,
+    "maximum": 43966.0
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1501.4998094166751,
+    "minimum": 1465.0925470305222,
+    "maximum": 1503.0697986622256
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.281388998031616,
+    "minimum": 29.25080394744873,
+    "maximum": 30.00834321975708
+  },
+  {
+    "cell": "scale-none-fw-4api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.71245345506318,
+    "minimum": 179.70755395437615,
+    "maximum": 179.7207993948874
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.527905,
+    "minimum": 53.426481,
+    "maximum": 53.642582
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.91856,
+    "minimum": 53.890949,
+    "maximum": 54.177759
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.674829,
+    "minimum": 52.572467,
+    "maximum": 52.764065
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "backend_success",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005554079734699528,
+    "minimum": 0.0053974044525522714,
+    "maximum": 0.005839322986821223
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1084.0,
+    "maximum": 1172.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 38.079417308621935,
+    "minimum": 36.10009135178997,
+    "maximum": 39.899824136288174
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40588.0,
+    "minimum": 40581.0,
+    "maximum": 43965.0
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1425.5542747243421,
+    "minimum": 1351.6886603196044,
+    "maximum": 1496.7540683890013
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.373563051223755,
+    "minimum": 28.466822147369385,
+    "maximum": 30.02762484550476
+  },
+  {
+    "cell": "scale-none-fw-4api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 190.98309570150445,
+    "minimum": 190.946756965085,
+    "maximum": 191.31145602057157
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.564999,
+    "minimum": 53.395613,
+    "maximum": 53.578735
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.00717,
+    "minimum": 53.814412,
+    "maximum": 54.101049
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "backend_overload",
+    "median": 1761.0,
+    "minimum": 1752.0,
+    "maximum": 1762.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "http_5xx",
+    "median": 1761.0,
+    "minimum": 1752.0,
+    "maximum": 1762.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.791314,
+    "minimum": 52.596259,
+    "maximum": 52.846682
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "backend_success",
+    "median": 5739.0,
+    "minimum": 5738.0,
+    "maximum": 5748.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "api_allowed",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005543037582226975,
+    "minimum": 0.005410474825459972,
+    "maximum": 0.005619415119386086
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034072.0,
+    "minimum": 1034040.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034072.0,
+    "minimum": 1034040.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1070.0,
+    "maximum": 1084.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 37.054766639125546,
+    "minimum": 36.8472863450272,
+    "maximum": 37.17464883607636
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40578.0,
+    "minimum": 40575.0,
+    "maximum": 40583.0
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1387.092546755015,
+    "minimum": 1379.4957765131355,
+    "maximum": 1409.6835294614937
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.25399613380432,
+    "minimum": 28.783056020736694,
+    "maximum": 29.41872000694275
+  },
+  {
+    "cell": "scale-none-fw-4api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.943765870091916,
+    "minimum": 49.94284973613656,
+    "maximum": 49.94395684552454
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.057231,
+    "minimum": 54.02382,
+    "maximum": 54.206264
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.454703,
+    "minimum": 54.432751,
+    "maximum": 54.48573
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.110909,
+    "minimum": 53.047561,
+    "maximum": 53.192506
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "api_allowed",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006010837450824864,
+    "minimum": 0.005967494253967928,
+    "maximum": 0.006134855510622407
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034232.0,
+    "minimum": 1034040.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034232.0,
+    "minimum": 1034040.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1158.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.277945260385955,
+    "minimum": 38.92545596241079,
+    "maximum": 39.43765980937246
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43958.0,
+    "minimum": 43957.0,
+    "maximum": 43959.0
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1490.9677373150132,
+    "minimum": 1477.6546793191844,
+    "maximum": 1497.064464508113
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.48219394683838,
+    "minimum": 29.362797021865845,
+    "maximum": 29.74916982650757
+  },
+  {
+    "cell": "scale-local-fw-1api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.70977625317138,
+    "minimum": 179.70759453220967,
+    "maximum": 179.71100152084492
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.510143,
+    "minimum": 53.449149,
+    "maximum": 53.699061
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.84253,
+    "minimum": 53.820183,
+    "maximum": 54.154899
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.65623,
+    "minimum": 52.58429,
+    "maximum": 52.806231
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "backend_success",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "api_allowed",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.0056527923240145056,
+    "minimum": 0.0054634912226617285,
+    "maximum": 0.005761946734252746
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1070.0,
+    "minimum": 1010.0,
+    "maximum": 1084.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 37.45974042653227,
+    "minimum": 35.330910182345825,
+    "maximum": 38.43481662227514
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40574.0,
+    "minimum": 37188.0,
+    "maximum": 40582.0
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1402.3903929792737,
+    "minimum": 1300.877116694135,
+    "maximum": 1457.4338781609267
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.5868661403656,
+    "minimum": 27.83934187889099,
+    "maximum": 28.9377338886261
+  },
+  {
+    "cell": "scale-local-fw-1api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 12.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 191.18663940702294,
+    "minimum": 191.15044176307043,
+    "maximum": 191.41614985651753
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.324615,
+    "minimum": 53.293861,
+    "maximum": 53.422703
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.764062,
+    "minimum": 53.620288,
+    "maximum": 53.776335
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "backend_overload",
+    "median": 1755.0,
+    "minimum": 1748.0,
+    "maximum": 1756.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "http_5xx",
+    "median": 1755.0,
+    "minimum": 1748.0,
+    "maximum": 1756.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.628485,
+    "minimum": 52.54539,
+    "maximum": 52.688067
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "backend_success",
+    "median": 5745.0,
+    "minimum": 5744.0,
+    "maximum": 5752.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "api_allowed",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.00526915459489464,
+    "minimum": 0.005191912854772011,
+    "maximum": 0.005877912431236841
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034072.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034072.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 996.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 37.59173619450705,
+    "minimum": 36.0224265264913,
+    "maximum": 39.04707993444341
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40582.0,
+    "minimum": 37164.0,
+    "maximum": 43957.0
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1407.331954101001,
+    "minimum": 1344.1139150908864,
+    "maximum": 1482.2042251108194
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.836124897003174,
+    "minimum": 27.649442195892334,
+    "maximum": 29.65650701522827
+  },
+  {
+    "cell": "scale-local-fw-1api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 12.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.94463334562677,
+    "minimum": 49.944483861017716,
+    "maximum": 49.945297363117746
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.146425,
+    "minimum": 54.094677,
+    "maximum": 54.165297
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.55269,
+    "minimum": 54.489348,
+    "maximum": 54.565423
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.131412,
+    "minimum": 53.071105,
+    "maximum": 53.183802
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "api_allowed",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.006112560773641121,
+    "minimum": 0.005895267399701381,
+    "maximum": 0.006135541148587379
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034104.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1084.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.435732475617826,
+    "minimum": 38.6212485056712,
+    "maximum": 39.68207593572741
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43957.0,
+    "minimum": 40583.0,
+    "maximum": 43960.0
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1496.9572473495102,
+    "minimum": 1445.9097122745889,
+    "maximum": 1506.411103743158
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.181941032409668,
+    "minimum": 28.067451000213623,
+    "maximum": 29.364232063293457
+  },
+  {
+    "cell": "scale-local-fw-2api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.70921834834982,
+    "minimum": 179.70665906380682,
+    "maximum": 179.71356750808752
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.46251,
+    "minimum": 53.415774,
+    "maximum": 53.46628
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.817739,
+    "minimum": 53.751042,
+    "maximum": 53.834647
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.618067,
+    "minimum": 52.598857,
+    "maximum": 52.628183
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "backend_success",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "api_allowed",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.0054438590705639485,
+    "minimum": 0.005323246622835792,
+    "maximum": 0.005536471217343229
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1084.0,
+    "maximum": 1172.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 38.63597878284332,
+    "minimum": 38.2251189427092,
+    "maximum": 39.11427276556673
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40583.0,
+    "minimum": 40582.0,
+    "maximum": 43932.0
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1446.4611872178325,
+    "minimum": 1431.044074661462,
+    "maximum": 1466.184497557063
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.35831594467163,
+    "minimum": 28.056750059127808,
+    "maximum": 29.963486909866333
+  },
+  {
+    "cell": "scale-local-fw-2api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 191.1384628162032,
+    "minimum": 190.87622446618724,
+    "maximum": 191.18806633287647
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.514492,
+    "minimum": 53.411649,
+    "maximum": 53.614628
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.887056,
+    "minimum": 53.858066,
+    "maximum": 53.995415
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "backend_overload",
+    "median": 1757.0,
+    "minimum": 1755.0,
+    "maximum": 1765.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "http_5xx",
+    "median": 1757.0,
+    "minimum": 1755.0,
+    "maximum": 1765.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.761278,
+    "minimum": 52.634554,
+    "maximum": 52.825525
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "backend_success",
+    "median": 5743.0,
+    "minimum": 5735.0,
+    "maximum": 5745.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "api_allowed",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.0054962916122061065,
+    "minimum": 0.00538014231464505,
+    "maximum": 0.005857260918511292
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034104.0,
+    "minimum": 1034104.0,
+    "maximum": 1034168.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034104.0,
+    "minimum": 1034104.0,
+    "maximum": 1034168.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1010.0,
+    "maximum": 1158.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 38.14865158749261,
+    "minimum": 34.98588654517307,
+    "maximum": 38.73758666152027
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40579.0,
+    "minimum": 37173.0,
+    "maximum": 43957.0
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1428.0757682369579,
+    "minimum": 1287.6538223205132,
+    "maximum": 1470.4560422110937
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.868783950805664,
+    "minimum": 28.415158987045288,
+    "maximum": 29.893447160720825
+  },
+  {
+    "cell": "scale-local-fw-2api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 12.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.943872104288495,
+    "minimum": 49.94353127976716,
+    "maximum": 49.944362592722555
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.035875,
+    "minimum": 54.003984,
+    "maximum": 54.28478
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.389536,
+    "minimum": 54.330455,
+    "maximum": 54.673629
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.044152,
+    "minimum": 53.009509,
+    "maximum": 53.151567
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "api_allowed",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.0059452500416520985,
+    "minimum": 0.00589023249610071,
+    "maximum": 0.005976406502048315
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034136.0,
+    "minimum": 1034072.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034136.0,
+    "minimum": 1034072.0,
+    "maximum": 1034136.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1158.0,
+    "minimum": 1158.0,
+    "maximum": 1172.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 39.30530637218684,
+    "minimum": 38.88806731253845,
+    "maximum": 40.074311266481054
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 43957.0,
+    "minimum": 43929.0,
+    "maximum": 43961.0
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1492.1421186767752,
+    "minimum": 1476.1681993585948,
+    "maximum": 1502.0686174276846
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.461670875549316,
+    "minimum": 29.245667934417725,
+    "maximum": 29.777771949768066
+  },
+  {
+    "cell": "scale-local-fw-4api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 14.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.7036522465415,
+    "minimum": 179.61433932509533,
+    "maximum": 179.71669392077985
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.61041,
+    "minimum": 53.566741,
+    "maximum": 53.70777
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.081686,
+    "minimum": 54.061864,
+    "maximum": 54.551617
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 3.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 3.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.692695,
+    "minimum": 52.674861,
+    "maximum": 52.735979
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "backend_success",
+    "median": 5400.0,
+    "minimum": 5397.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "api_allowed",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005561915754847457,
+    "minimum": 0.005554721875490817,
+    "maximum": 0.005790170729258207
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034104.0,
+    "minimum": 1034072.0,
+    "maximum": 1034232.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1070.0,
+    "maximum": 1084.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 37.8814391776475,
+    "minimum": 36.39821777022805,
+    "maximum": 38.111781766252804
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40582.0,
+    "minimum": 40559.0,
+    "maximum": 40584.0
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1426.8010402565233,
+    "minimum": 1362.7170387333351,
+    "maximum": 1435.9189641179487
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.44264817237854,
+    "minimum": 28.246022939682007,
+    "maximum": 29.781677961349487
+  },
+  {
+    "cell": "scale-local-fw-4api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 190.9561065013597,
+    "minimum": 190.87631792971703,
+    "maximum": 191.27030614877532
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.477258,
+    "minimum": 53.334758,
+    "maximum": 53.512637
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 53.90664,
+    "minimum": 53.768215,
+    "maximum": 53.932928
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "backend_overload",
+    "median": 1762.0,
+    "minimum": 1753.0,
+    "maximum": 1765.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "http_5xx",
+    "median": 1762.0,
+    "minimum": 1753.0,
+    "maximum": 1765.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.68068,
+    "minimum": 52.571789,
+    "maximum": 52.721663
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "backend_success",
+    "median": 5738.0,
+    "minimum": 5735.0,
+    "maximum": 5747.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "api_allowed",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.005562621185905756,
+    "minimum": 0.005204183505659243,
+    "maximum": 0.005574926424764934
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1034072.0,
+    "minimum": 1034008.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1034072.0,
+    "minimum": 1034008.0,
+    "maximum": 1034104.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1084.0,
+    "minimum": 1070.0,
+    "maximum": 1098.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 37.7379406164726,
+    "minimum": 37.09275638015766,
+    "maximum": 38.54497117719196
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 40570.0,
+    "minimum": 40543.0,
+    "maximum": 40576.0
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 1411.4477180937718,
+    "minimum": 1370.540187926226,
+    "maximum": 1461.6829443791971
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.72440791130066,
+    "minimum": 27.759782075881958,
+    "maximum": 29.60146689414978
+  },
+  {
+    "cell": "scale-local-fw-4api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.943592689232275,
+    "minimum": 49.94357647920743,
+    "maximum": 49.94372770777384
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.690471,
+    "minimum": 54.533418,
+    "maximum": 54.754052
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 55.024859,
+    "minimum": 54.976738,
+    "maximum": 55.119178
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.557378,
+    "minimum": 53.530083,
+    "maximum": 53.677383
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "api_allowed",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.01782575987593316,
+    "minimum": 0.01776787542164146,
+    "maximum": 0.018463875315381465
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1281184.0,
+    "minimum": 1279136.0,
+    "maximum": 1283592.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1260288.0,
+    "minimum": 1259104.0,
+    "maximum": 1291144.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 351078.0,
+    "minimum": 339569.0,
+    "maximum": 352518.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 11981.995366143525,
+    "minimum": 11945.712452768725,
+    "maximum": 12087.775405104378
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 93166.0,
+    "minimum": 88170.0,
+    "maximum": 93171.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 3157.2684939121264,
+    "minimum": 3138.6232473166074,
+    "maximum": 3179.6768247572554
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.300462007522583,
+    "minimum": 28.0919349193573,
+    "maximum": 29.51000213623047
+  },
+  {
+    "cell": "scale-redis-fw-1api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.70412644650915,
+    "minimum": 179.64573497910166,
+    "maximum": 179.70585343966903
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.879848,
+    "minimum": 53.829066,
+    "maximum": 54.075433
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.283383,
+    "minimum": 54.263053,
+    "maximum": 54.583034
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 2.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 2.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.997664,
+    "minimum": 52.948508,
+    "maximum": 53.178015
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "backend_success",
+    "median": 5400.0,
+    "minimum": 5398.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "api_allowed",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.04603282798213967,
+    "minimum": 0.04493641669637456,
+    "maximum": 0.04845363946108009
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1287392.0,
+    "minimum": 1265472.0,
+    "maximum": 1291712.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1261472.0,
+    "minimum": 1259104.0,
+    "maximum": 1271840.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1259071.0,
+    "minimum": 1227170.0,
+    "maximum": 1259392.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 42739.28639082958,
+    "minimum": 42352.50598318909,
+    "maximum": 44006.1366320936
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 216226.0,
+    "minimum": 211726.0,
+    "maximum": 220426.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 7482.3818053032755,
+    "minimum": 7271.5349618872,
+    "maximum": 7592.463378803792
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.459336042404175,
+    "minimum": 27.886337995529175,
+    "maximum": 29.735949993133545
+  },
+  {
+    "cell": "scale-redis-fw-1api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 190.62029221623297,
+    "minimum": 190.5429019100064,
+    "maximum": 190.74870064436868
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.800917,
+    "minimum": 53.574131,
+    "maximum": 53.830031
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.172424,
+    "minimum": 53.94829,
+    "maximum": 54.297175
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "backend_overload",
+    "median": 1772.0,
+    "minimum": 1768.0,
+    "maximum": 1775.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "http_5xx",
+    "median": 1772.0,
+    "minimum": 1768.0,
+    "maximum": 1775.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.9802,
+    "minimum": 52.877449,
+    "maximum": 53.00563
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "backend_success",
+    "median": 5728.0,
+    "minimum": 5725.0,
+    "maximum": 5732.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "api_allowed",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.058839129696689106,
+    "minimum": 0.05591954018886562,
+    "maximum": 0.05975409494307184
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1265440.0,
+    "minimum": 1264128.0,
+    "maximum": 1286784.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1260416.0,
+    "minimum": 1259104.0,
+    "maximum": 1266080.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1754468.0,
+    "minimum": 1745440.0,
+    "maximum": 1755762.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 59477.638787906355,
+    "minimum": 59119.51247942853,
+    "maximum": 61037.310829567694
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 285231.0,
+    "minimum": 283964.0,
+    "maximum": 288804.0
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 9783.433057841841,
+    "minimum": 9618.098153880079,
+    "maximum": 9923.083923575934
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.519699096679688,
+    "minimum": 28.744189023971558,
+    "maximum": 29.523924112319946
+  },
+  {
+    "cell": "scale-redis-fw-1api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.943266151053,
+    "minimum": 49.943024888996746,
+    "maximum": 49.944868067703226
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.760563,
+    "minimum": 54.748683,
+    "maximum": 54.78878
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 55.154535,
+    "minimum": 55.126783,
+    "maximum": 55.20819
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.524649,
+    "minimum": 53.517799,
+    "maximum": 53.652013
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "api_allowed",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.018139495284031495,
+    "minimum": 0.01767979605813382,
+    "maximum": 0.018384855047103545
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1302808.0,
+    "minimum": 1301344.0,
+    "maximum": 1303480.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1283288.0,
+    "minimum": 1281976.0,
+    "maximum": 1305752.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 352274.0,
+    "minimum": 341708.0,
+    "maximum": 352518.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 12046.067999284553,
+    "minimum": 11975.174300805505,
+    "maximum": 12278.177009020948
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 93137.0,
+    "minimum": 88276.0,
+    "maximum": 93172.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 3171.913896216457,
+    "minimum": 3166.0917605446966,
+    "maximum": 3183.82677658826
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.26415491104126,
+    "minimum": 27.83051586151123,
+    "maximum": 29.417024850845337
+  },
+  {
+    "cell": "scale-redis-fw-2api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.70762453051373,
+    "minimum": 179.70499814397883,
+    "maximum": 179.7104051823508
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.960961,
+    "minimum": 53.888285,
+    "maximum": 54.187851
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.412178,
+    "minimum": 54.28527,
+    "maximum": 54.733524
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.045716,
+    "minimum": 53.005121,
+    "maximum": 53.176263
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "backend_success",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "api_allowed",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.046320718121837065,
+    "minimum": 0.046020312997158044,
+    "maximum": 0.04767411139459559
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1312024.0,
+    "minimum": 1286904.0,
+    "maximum": 1312248.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1285528.0,
+    "minimum": 1282008.0,
+    "maximum": 1292216.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1229692.0,
+    "minimum": 1227428.0,
+    "maximum": 1254235.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 43855.22327018755,
+    "minimum": 42010.19515096288,
+    "maximum": 44159.80782531066
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 212790.0,
+    "minimum": 211769.0,
+    "maximum": 216234.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 7588.853924123446,
+    "minimum": 7242.68780433755,
+    "maximum": 7618.92212281145
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.039807081222534,
+    "minimum": 27.79513907432556,
+    "maximum": 29.855490922927856
+  },
+  {
+    "cell": "scale-redis-fw-2api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 13.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 190.61148655625303,
+    "minimum": 190.21440013848738,
+    "maximum": 190.78650510310635
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.075881,
+    "minimum": 53.953837,
+    "maximum": 54.286898
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.561461,
+    "minimum": 54.414937,
+    "maximum": 54.883999
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "backend_overload",
+    "median": 1772.0,
+    "minimum": 1767.0,
+    "maximum": 1784.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "http_5xx",
+    "median": 1772.0,
+    "minimum": 1767.0,
+    "maximum": 1784.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.240688,
+    "minimum": 53.129883,
+    "maximum": 53.405804
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "backend_success",
+    "median": 5728.0,
+    "minimum": 5716.0,
+    "maximum": 5733.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "api_allowed",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.0651190958495137,
+    "minimum": 0.06124961256211391,
+    "maximum": 0.06755555869430695
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1306360.0,
+    "minimum": 1287096.0,
+    "maximum": 1312856.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1283384.0,
+    "minimum": 1283288.0,
+    "maximum": 1292800.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1741462.0,
+    "minimum": 1739754.0,
+    "maximum": 1752028.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 60157.36903668164,
+    "minimum": 59526.530513764475,
+    "maximum": 61234.96003682973
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 280034.0,
+    "minimum": 279792.0,
+    "maximum": 284897.0
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 9679.59984873527,
+    "minimum": 9674.672739658152,
+    "maximum": 9846.82456404652
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.920047998428345,
+    "minimum": 28.439015865325928,
+    "maximum": 29.432724952697754
+  },
+  {
+    "cell": "scale-redis-fw-2api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 12.0,
+    "minimum": 12.0,
+    "maximum": 13.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 49.941836676574795,
+    "minimum": 49.94087427646611,
+    "maximum": 49.942693732197334
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.78335,
+    "minimum": 54.488528,
+    "maximum": 54.82661
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "legitimate_p99_ms",
+    "median": 55.179925,
+    "minimum": 54.969735,
+    "maximum": 55.346221
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "backend_arrivals",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.674004,
+    "minimum": 53.51336,
+    "maximum": 53.691108
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "backend_success",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "api_allowed",
+    "median": 1500.0,
+    "minimum": 1500.0,
+    "maximum": 1500.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.018266648371137933,
+    "minimum": 0.017537320631542758,
+    "maximum": 0.01898264784566356
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1349112.0,
+    "minimum": 1348696.0,
+    "maximum": 1349744.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1329168.0,
+    "minimum": 1327664.0,
+    "maximum": 1350808.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 352274.0,
+    "minimum": 340474.0,
+    "maximum": 352274.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 12077.759833805847,
+    "minimum": 11855.647006519119,
+    "maximum": 12235.142780307558
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 93151.0,
+    "minimum": 88116.0,
+    "maximum": 93152.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 3166.502702789584,
+    "minimum": 3134.9950037506856,
+    "maximum": 3193.694130928903
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.167163848876953,
+    "minimum": 27.82754611968994,
+    "maximum": 29.713603973388672
+  },
+  {
+    "cell": "scale-redis-fw-4api-50rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 179.67767684649021,
+    "minimum": 179.64096778401353,
+    "maximum": 179.67773222393822
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "legitimate_p95_ms",
+    "median": 54.048787,
+    "minimum": 53.931394,
+    "maximum": 54.395004
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.621118,
+    "minimum": 54.433125,
+    "maximum": 55.143394
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "backend_arrivals",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "backend_overload",
+    "median": 1.0,
+    "minimum": 1.0,
+    "maximum": 2.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "http_5xx",
+    "median": 1.0,
+    "minimum": 1.0,
+    "maximum": 2.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "legitimate_p50_ms",
+    "median": 53.086225,
+    "minimum": 53.000798,
+    "maximum": 53.25816
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "backend_success",
+    "median": 5399.0,
+    "minimum": 5398.0,
+    "maximum": 5399.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "api_allowed",
+    "median": 5400.0,
+    "minimum": 5400.0,
+    "maximum": 5400.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.04808669110638741,
+    "minimum": 0.045519494442945105,
+    "maximum": 0.05003315233639303
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1342488.0,
+    "minimum": 1329008.0,
+    "maximum": 1357904.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1356632.0,
+    "minimum": 1329040.0,
+    "maximum": 1359184.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1258748.0,
+    "minimum": 1217092.0,
+    "maximum": 1264272.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 43892.23879364764,
+    "minimum": 42363.7243143834,
+    "maximum": 43943.96170958733
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 216916.0,
+    "minimum": 206981.0,
+    "maximum": 219541.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 7473.194416372875,
+    "minimum": 7388.750091125504,
+    "maximum": 7530.75989198754
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 28.803998947143555,
+    "minimum": 27.69645595550537,
+    "maximum": 29.712873935699463
+  },
+  {
+    "cell": "scale-redis-fw-4api-180rps",
+    "metric": "redis_network_sample_count",
+    "median": 13.0,
+    "minimum": 12.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "legitimate_goodput_per_second",
+    "median": 190.71471924591873,
+    "minimum": 190.61179504885283,
+    "maximum": 190.7490780798803
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "legitimate_p95_ms",
+    "median": 53.749409,
+    "minimum": 53.602152,
+    "maximum": 53.871077
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "legitimate_p99_ms",
+    "median": 54.203996,
+    "minimum": 54.045706,
+    "maximum": 54.329318
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "backend_arrivals",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "backend_overload",
+    "median": 1769.0,
+    "minimum": 1768.0,
+    "maximum": 1772.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "http_429",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "http_5xx",
+    "median": 1769.0,
+    "minimum": 1768.0,
+    "maximum": 1772.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "legitimate_p50_ms",
+    "median": 52.976096,
+    "minimum": 52.880749,
+    "maximum": 53.147766
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "backend_success",
+    "median": 5731.0,
+    "minimum": 5728.0,
+    "maximum": 5732.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "api_allowed",
+    "median": 7500.0,
+    "minimum": 7500.0,
+    "maximum": 7500.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "api_rejected",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_average_cpu_cores",
+    "median": 0.056762391226157075,
+    "minimum": 0.05557950161469728,
+    "maximum": 0.05990038573835277
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_memory_bytes_first",
+    "median": 1337328.0,
+    "minimum": 1334032.0,
+    "maximum": 1340240.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_memory_bytes_last",
+    "median": 1329008.0,
+    "minimum": 1328816.0,
+    "maximum": 1342480.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_network_input_bytes_delta",
+    "median": 1745912.0,
+    "minimum": 1695908.0,
+    "maximum": 1755532.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_network_input_bytes_per_second",
+    "median": 59454.70598440368,
+    "minimum": 58111.67520464271,
+    "maximum": 60879.64633046553
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_network_output_bytes_delta",
+    "median": 288454.0,
+    "minimum": 277083.0,
+    "maximum": 288794.0
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_network_output_bytes_per_second",
+    "median": 9780.603463827418,
+    "minimum": 9601.025228923341,
+    "maximum": 9946.715885640248
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_network_sample_interval_s",
+    "median": 29.527216911315918,
+    "minimum": 27.85673213005066,
+    "maximum": 30.04408311843872
+  },
+  {
+    "cell": "scale-redis-fw-4api-250rps",
+    "metric": "redis_network_sample_count",
+    "median": 14.0,
+    "minimum": 13.0,
+    "maximum": 14.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.971697150657786,
+    "minimum": 19.971657163487187,
+    "maximum": 19.997031466008444
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "legitimate_p95_ms",
+    "median": 54.182922,
+    "minimum": 54.141003,
+    "maximum": 54.357637
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "legitimate_p99_ms",
+    "median": 54.537649,
+    "minimum": 54.530447,
+    "maximum": 54.727225
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "backend_arrivals",
+    "median": 1217.0,
+    "minimum": 1204.0,
+    "maximum": 1220.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "http_429",
+    "median": 1783.0,
+    "minimum": 1780.0,
+    "maximum": 1796.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "legitimate_p50_ms",
+    "median": 53.275275,
+    "minimum": 53.153426,
+    "maximum": 53.370546
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "backend_success",
+    "median": 1217.0,
+    "minimum": 1204.0,
+    "maximum": 1220.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "api_allowed",
+    "median": 1217.0,
+    "minimum": 1204.0,
+    "maximum": 1220.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "api_rejected",
+    "median": 1783.0,
+    "minimum": 1780.0,
+    "maximum": 1796.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-healthy",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.930823073406028,
+    "minimum": 19.930536077944335,
+    "maximum": 19.963614953288623
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "legitimate_p95_ms",
+    "median": 153.015416,
+    "minimum": 152.898142,
+    "maximum": 153.039116
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "legitimate_p99_ms",
+    "median": 153.882719,
+    "minimum": 153.863291,
+    "maximum": 153.913592
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "backend_arrivals",
+    "median": 1365.0,
+    "minimum": 1364.0,
+    "maximum": 1369.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "backend_overload",
+    "median": 7.0,
+    "minimum": 6.0,
+    "maximum": 7.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "http_429",
+    "median": 1635.0,
+    "minimum": 1631.0,
+    "maximum": 1636.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "http_5xx",
+    "median": 7.0,
+    "minimum": 6.0,
+    "maximum": 7.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "legitimate_p50_ms",
+    "median": 53.360098,
+    "minimum": 53.307921,
+    "maximum": 53.36188
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "backend_success",
+    "median": 1358.0,
+    "minimum": 1357.0,
+    "maximum": 1363.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "api_allowed",
+    "median": 1134.0,
+    "minimum": 1130.0,
+    "maximum": 1135.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "api_rejected",
+    "median": 1635.0,
+    "minimum": 1631.0,
+    "maximum": 1636.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "outage_stable_recovery_ms",
+    "median": 4000.0,
+    "minimum": 3000.0,
+    "maximum": 4000.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "outage_first_success_ms",
+    "median": 87.70203590393066,
+    "minimum": 69.94009017944336,
+    "maximum": 91.74704551696777
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "outage_before_availability",
+    "median": 1.0,
+    "minimum": 1.0,
+    "maximum": 1.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "outage_pausing_availability",
+    "median": 1.0,
+    "minimum": 1.0,
+    "maximum": 1.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "outage_paused_availability",
+    "median": 1.0,
+    "minimum": 1.0,
+    "maximum": 1.0
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "outage_unpausing_availability",
+    "median": 0.75,
+    "minimum": 0.75,
+    "maximum": 0.875
+  },
+  {
+    "cell": "outage-open-outage",
+    "metric": "outage_after_availability",
+    "median": 1.0,
+    "minimum": 1.0,
+    "maximum": 1.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "legitimate_goodput_per_second",
+    "median": 19.996891601848716,
+    "minimum": 19.971790763583087,
+    "maximum": 19.99705371076163
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "legitimate_p95_ms",
+    "median": 54.080204,
+    "minimum": 54.050344,
+    "maximum": 54.198134
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "legitimate_p99_ms",
+    "median": 54.516331,
+    "minimum": 54.494123,
+    "maximum": 54.611465
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "backend_arrivals",
+    "median": 1218.0,
+    "minimum": 1201.0,
+    "maximum": 1220.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "backend_overload",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "http_429",
+    "median": 1782.0,
+    "minimum": 1780.0,
+    "maximum": 1799.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "http_5xx",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "legitimate_p50_ms",
+    "median": 53.265774,
+    "minimum": 53.065154,
+    "maximum": 53.267091
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "backend_success",
+    "median": 1218.0,
+    "minimum": 1201.0,
+    "maximum": 1220.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "api_allowed",
+    "median": 1218.0,
+    "minimum": 1201.0,
+    "maximum": 1220.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "api_rejected",
+    "median": 1782.0,
+    "minimum": 1780.0,
+    "maximum": 1799.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-healthy",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "legitimate_goodput_per_second",
+    "median": 18.40714379455887,
+    "minimum": 18.349038172592632,
+    "maximum": 18.40758582329114
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "legitimate_p95_ms",
+    "median": 54.228171,
+    "minimum": 54.027894,
+    "maximum": 54.230425
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "legitimate_p99_ms",
+    "median": 54.801364,
+    "minimum": 54.632862,
+    "maximum": 54.880742
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "backend_arrivals",
+    "median": 1130.0,
+    "minimum": 1130.0,
+    "maximum": 1130.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "backend_overload",
+    "median": 5.0,
+    "minimum": 5.0,
+    "maximum": 5.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "http_429",
+    "median": 1637.0,
+    "minimum": 1631.0,
+    "maximum": 1637.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "http_5xx",
+    "median": 238.0,
+    "minimum": 238.0,
+    "maximum": 244.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "legitimate_p50_ms",
+    "median": 53.228773,
+    "minimum": 53.09122,
+    "maximum": 53.30053
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "backend_success",
+    "median": 1125.0,
+    "minimum": 1125.0,
+    "maximum": 1125.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "backend_canceled",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "http_timeouts",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "api_allowed",
+    "median": 1130.0,
+    "minimum": 1130.0,
+    "maximum": 1130.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "api_rejected",
+    "median": 1637.0,
+    "minimum": 1631.0,
+    "maximum": 1637.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "oracle_violations",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "oracle_overshoot_lower_bound",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "outage_stable_recovery_ms",
+    "median": 4000.0,
+    "minimum": 4000.0,
+    "maximum": 4000.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "outage_first_success_ms",
+    "median": 108.55889320373535,
+    "minimum": 107.11812973022461,
+    "maximum": 140.0439739227295
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "outage_before_availability",
+    "median": 1.0,
+    "minimum": 1.0,
+    "maximum": 1.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "outage_pausing_availability",
+    "median": 1.0,
+    "minimum": 1.0,
+    "maximum": 1.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "outage_paused_availability",
+    "median": 0.0,
+    "minimum": 0.0,
+    "maximum": 0.0
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "outage_unpausing_availability",
+    "median": 0.25,
+    "minimum": 0.2,
+    "maximum": 0.25
+  },
+  {
+    "cell": "outage-closed-outage",
+    "metric": "outage_after_availability",
+    "median": 0.9978354978354979,
+    "minimum": 0.9978260869565218,
+    "maximum": 0.9978401727861771
+  }
+]

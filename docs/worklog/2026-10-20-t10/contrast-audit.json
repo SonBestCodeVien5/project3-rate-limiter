@@ -1,0 +1,321 @@
+{
+  "runtime_signatures": 1,
+  "shared_service_image_signatures": {
+    "api1": 1,
+    "api2": 1,
+    "api3": 1,
+    "api4": 1,
+    "backend": 1,
+    "nginx": 1,
+    "redis": 1
+  },
+  "same_revision": true,
+  "contrasts": [
+    {
+      "rq": "RQ1/RQ2",
+      "profile": "normal",
+      "mode": "local",
+      "factor": "policy.algorithm",
+      "levels": [
+        "fixed-window",
+        "token-bucket"
+      ]
+    },
+    {
+      "rq": "RQ1/RQ2",
+      "profile": "normal",
+      "mode": "redis",
+      "factor": "policy.algorithm",
+      "levels": [
+        "fixed-window",
+        "token-bucket"
+      ]
+    },
+    {
+      "rq": "RQ1/RQ2/RQ5",
+      "profile": "normal",
+      "factor": "policy.mode",
+      "levels": [
+        "none",
+        "local",
+        "redis"
+      ]
+    },
+    {
+      "rq": "RQ1/RQ2",
+      "profile": "mixed",
+      "mode": "local",
+      "factor": "policy.algorithm",
+      "levels": [
+        "fixed-window",
+        "token-bucket"
+      ]
+    },
+    {
+      "rq": "RQ1/RQ2",
+      "profile": "mixed",
+      "mode": "redis",
+      "factor": "policy.algorithm",
+      "levels": [
+        "fixed-window",
+        "token-bucket"
+      ]
+    },
+    {
+      "rq": "RQ1/RQ2/RQ5",
+      "profile": "mixed",
+      "factor": "policy.mode",
+      "levels": [
+        "none",
+        "local",
+        "redis"
+      ]
+    },
+    {
+      "rq": "RQ1/RQ2",
+      "profile": "burst",
+      "mode": "local",
+      "factor": "policy.algorithm",
+      "levels": [
+        "fixed-window",
+        "token-bucket"
+      ]
+    },
+    {
+      "rq": "RQ1/RQ2",
+      "profile": "burst",
+      "mode": "redis",
+      "factor": "policy.algorithm",
+      "levels": [
+        "fixed-window",
+        "token-bucket"
+      ]
+    },
+    {
+      "rq": "RQ1/RQ2/RQ5",
+      "profile": "burst",
+      "factor": "policy.mode",
+      "levels": [
+        "none",
+        "local",
+        "redis"
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "none",
+      "rps": 50,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "none",
+      "rps": 180,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "none",
+      "rps": 250,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "none",
+      "api_instances": 1,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "none",
+      "api_instances": 2,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "none",
+      "api_instances": 4,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "local",
+      "rps": 50,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "local",
+      "rps": 180,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "local",
+      "rps": 250,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "local",
+      "api_instances": 1,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "local",
+      "api_instances": 2,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "local",
+      "api_instances": 4,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "redis",
+      "rps": 50,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "redis",
+      "rps": 180,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "redis",
+      "rps": 250,
+      "factor": "topology.api_instances",
+      "levels": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "redis",
+      "api_instances": 1,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "redis",
+      "api_instances": 2,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ3",
+      "mode": "redis",
+      "api_instances": 4,
+      "factor": "workload.rps",
+      "levels": [
+        50,
+        180,
+        250
+      ]
+    },
+    {
+      "rq": "RQ5",
+      "policy": "open",
+      "factor": "workload.pause_at_s/pause_for_s",
+      "levels": [
+        "healthy",
+        "outage"
+      ]
+    },
+    {
+      "rq": "RQ5",
+      "policy": "closed",
+      "factor": "workload.pause_at_s/pause_for_s",
+      "levels": [
+        "healthy",
+        "outage"
+      ]
+    }
+  ]
+}
