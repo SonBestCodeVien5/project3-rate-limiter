@@ -1,5 +1,11 @@
 # Session checkpoint
 
+## Push paused at oversized evidence archive — 2026-10-21
+
+The user authorized pushing the 41 commits originally ahead of `origin/main`, from base `7e79669b00ba9c1b8d17c52807ef073dbc714b37` through `ce278ec31922278a80a219808b2c3236329b57a9`. Chronological fast-forward pushes advanced `main` through `0291a80`, `c254346`, `3da65c2`, and `10a7a40`, for 9 of the original 41 commits. The 16,781,462-byte smoke archive pushed successfully in a 15.96 MiB pack at observed rates of about 0.5–0.76 MiB/s. An earlier broader batch timed out without remote advancement; splitting it allowed the safe commits to complete. The current local tip is `ce278ec`; 32 of the original 41 commits remain unpushed. No history was rewritten, and tracked evidence and ignored artifacts were preserved.
+
+The next commit (`627f7ff`) adds a single blob exceeding GitHub's 100 MiB file limit: `docs/worklog/2026-10-20-t09-formal/T09-FORMAL-PARTIAL-EVIDENCE.tar.gz` (132,093,287 bytes). Later commits add `docs/worklog/2026-10-20-t09-resume/T09-V1.1-RESUME-EVIDENCE.tar.gz` (394,853,956 bytes, `9778b03`) and `docs/worklog/2026-10-20-t09-v1.2/T09-V1.2-FORMAL-EVIDENCE.tar.gz` (583,519,788 bytes, `6f26649`). Git LFS is unavailable. Completing the push needs a separately approved evidence-storage/history approach that preserves recorded revisions and evidence; no migration, deletion, or rewrite was performed. No code, load, experiment, analysis, or T12/T13 work occurred. The existing pause boundary remains unchanged.
+
 ## T11 report integration complete; stop before T12/T13 — 2026-10-21
 
 The user explicitly resumed T11 documentation/report integration only. Report commit `a9f3f3e` updates [REPORT_DRAFT.md](../REPORT_DRAFT.md) with T10 RQ1–RQ5, a selected mixed table, three existing figures, units/sample/median–min–max captions, protocol/manifest/cell/run/artifact links and T06's distinct source revision/test hash/uncommitted-patch caveat. Reader navigation commit: `aca1a3d`. T11's authorized report package is complete; rubric, instructor feedback, official dates, additional academic references and final formatting remain pending. Do not claim submission readiness or dispatch T12/T13 without user resumption.
