@@ -2,7 +2,7 @@
 
 Đây là mục lục dành cho người học và người viết báo cáo. Phần giải thích trong các tài liệu hiện hành dùng tiếng Việt; tên thuật toán, lệnh, mã định danh và trường dữ liệu giữ nguyên để đối chiếu với mã nguồn. Không cần đọc toàn bộ thư mục `docs/` theo thứ tự tên tệp.
 
-**Mốc đối chiếu 21/10/2026:** T09 có 138/138 lượt dự kiến dùng được trên 46/46 cấu hình; T10 đã hoàn tất phân tích offline và xuất bảng/hình cho RQ1–RQ5. Xem [kết quả T10](analysis/T10_RESULTS.md), [bảng, dữ liệu và traceability](worklog/2026-10-20-t10/README.md). Đây là kết quả của prototype/workload mô phỏng, với các giới hạn oracle FW, backend và Redis counter được nêu trong phân tích. Chỉ dẫn hiện tại: dừng sau T10; T11 chưa được yêu cầu. Trạng thái task ở [kế hoạch công việc](REMAINING_WORK_PLAN.md), giới hạn đo ở [readiness](experiments/PROTOCOL_READINESS.md).
+**Mốc đối chiếu 21/10/2026:** T09 có 138/138 lượt được chấp nhận trên 46/46 cấu hình; T10 phân tích offline RQ1–RQ5 đã xong và T11 đã tích hợp kết quả vào [bản nháp báo cáo](REPORT_DRAFT.md). Kết quả là của prototype/workload mô phỏng; FW oracle, backend và Redis counter có giới hạn được nêu rõ. Dừng sau T11, trước T12/T13; rubric, phản hồi giảng viên và ngày chính thức còn chờ. Trạng thái task ở [kế hoạch công việc](REMAINING_WORK_PLAN.md), cổng đo ở [readiness](experiments/PROTOCOL_READINESS.md).
 
 ## Đọc lần đầu
 
@@ -19,7 +19,7 @@
 | Hiểu phương pháp thí nghiệm | [Đặc tả](experiments/EXPERIMENT_SPEC.md) → [điều kiện đo hiện tại](experiments/PROTOCOL_READINESS.md) | Phân biệt yêu cầu, thiết kế ban đầu và quy trình đã khóa |
 | Hiểu số liệu có nghĩa gì | [Quy tắc phân tích](experiments/ANALYSIS.md) → [xuất số liệu báo cáo](experiments/REPORTING.md) | Cách kiểm chứng quota, mẫu số, tổng hợp lượt lặp và giới hạn diễn giải |
 | Đọc bảng và biểu đồ T10 | [Hướng dẫn đọc T10](analysis/READING_GUIDE.md) → [kết quả T10](analysis/T10_RESULTS.md) → [bảng chi tiết](worklog/2026-10-20-t10/T10_TABLES.md) | Hiểu cách đọc 11 biểu đồ, tổng hợp lượt và giới hạn; truy nguyên qua traceability/provenance |
-| Viết báo cáo | [Bản nháp báo cáo](REPORT_DRAFT.md), [kết quả T10](analysis/T10_RESULTS.md) và bảng bên dưới | Dùng kết quả có giới hạn; T11 cần được yêu cầu riêng |
+| Viết báo cáo | [Bản nháp báo cáo](REPORT_DRAFT.md), [kết quả T10](analysis/T10_RESULTS.md) và [bảng chi tiết](worklog/2026-10-20-t10/T10_TABLES.md) | T11 tích hợp RQ1–RQ5; định dạng cuối cần đối chiếu rubric/phản hồi khi có |
 | Chuẩn bị thuyết trình/demo | [Kịch bản demo](DEMO_SCRIPT.md) → [hướng dẫn Console](CONSOLE.md) | Trình tự trình bày và cách dùng dữ liệu đã lưu |
 | Chạy hoặc sửa công cụ khi được yêu cầu | [README dự án](../README.md) → [hướng dẫn script](../scripts/README.md), [cổng kiểm tra chất lượng đo](experiments/MEASUREMENT_GATE.md) | Tra lệnh và điều kiện chạy; lệnh minh họa không cấp quyền chạy thí nghiệm |
 
@@ -33,7 +33,7 @@ Viết theo mạch: vấn đề doanh nghiệp → khó khăn → tác động �
 | Yêu cầu và câu hỏi nghiên cứu | [Roadmap nguồn](context/sources/00_Project3_Roadmap.md), [đề xuất](context/sources/01_Project3_Proposal.md) | Tách yêu cầu dự án khỏi lựa chọn kỹ thuật và hướng mở rộng |
 | Thiết kế giải pháp | [Thiết kế triển khai](IMPLEMENTATION.md) | Nêu quyết định triển khai, khác biệt giữa các nguồn và giới hạn mô hình |
 | Phương pháp và khả năng tái lập | [Điều kiện đo](experiments/PROTOCOL_READINESS.md), [quy tắc phân tích](experiments/ANALYSIS.md) | Dẫn đúng phiên bản quy trình/manifest đã khóa, revision và cấu hình thực chạy |
-| Bảng, hình và đánh giá RQ1–RQ5 | [Kết quả T10](analysis/T10_RESULTS.md), [hướng dẫn xuất số liệu](experiments/REPORTING.md), [bản nháp](REPORT_DRAFT.md) | Mỗi kết luận cần truy về lượt đo, bằng chứng và giới hạn |
+| Bảng, hình và đánh giá RQ1–RQ5 | [Kết quả T10](analysis/T10_RESULTS.md), [hướng dẫn xuất số liệu](experiments/REPORTING.md), [bản nháp](REPORT_DRAFT.md) | Tích hợp T11 đã có; mỗi kết luận cần truy về lượt đo, bằng chứng và giới hạn |
 | Phụ lục và truy nguyên | Các hồ sơ `worklog/` được dẫn trong [điều kiện đo](experiments/PROTOCOL_READINESS.md) | Giữ mã lượt đo, checksum và bằng chứng gốc; không dùng pilot thay kết quả chính thức |
 
 ## Thuật ngữ dùng thống nhất
