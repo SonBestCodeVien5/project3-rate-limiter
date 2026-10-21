@@ -1,8 +1,8 @@
 # Xuất dữ liệu báo cáo RQ1–RQ5
 
-**Trạng thái hiện tại (20/10/2026):** T09 đã hoàn tất; T10 chưa bắt đầu và chưa có kết luận RQ. Công cụ này chỉ tổng hợp artifact đã có; tài liệu không cho phép chạy thêm tải. Xem [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md).
+**Trạng thái hiện tại (21/10/2026):** T10 đã hoàn tất phân tích offline RQ1–RQ5. Kết quả và giới hạn nằm trong [T10_RESULTS.md](../analysis/T10_RESULTS.md); quy trình tái lập, bảng, dữ liệu run, traceability và hình nằm trong [worklog T10](../worklog/2026-10-20-t10/README.md), kèm [SHA256SUMS](../worklog/2026-10-20-t10/SHA256SUMS). Tài liệu này mô tả exporter tổng quát và không cho phép chạy thêm tải. T11 đang dừng theo yêu cầu; xem [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md).
 
-Đây là công cụ trình bày các artifact đo thực tế; công cụ không thay đổi protocol và không tự kết luận mode/thuật toán nào tốt hơn. Dùng sau analyzer theo [ANALYSIS.md](ANALYSIS.md). Không thay đổi artifact gốc, không chạy Docker hoặc tải HTTP. Matplotlib chưa được cài trên môi trường hiện tại; công cụ chỉ xuất CSV/Markdown, không thêm thư viện phụ thuộc.
+Đây là công cụ trình bày các artifact đo thực tế; công cụ không thay đổi protocol và không tự kết luận mode/thuật toán nào tốt hơn. Dùng sau analyzer theo [ANALYSIS.md](ANALYSIS.md). Không thay đổi artifact gốc, không chạy Docker hoặc tải HTTP. T10 dùng pipeline offline riêng có Matplotlib trong môi trường cô lập; hướng dẫn tái lập và ba định dạng hình được ghi tại [worklog T10](../worklog/2026-10-20-t10/README.md), không thêm thư viện vào runtime/repo.
 
 Tạo manifest JSON, trong đó các lượt được chọn **ghi rõ**, còn đường dẫn tính tương đối từ thư mục chứa manifest. `group` là nhãn RQ/nhóm phép đo; `cell` là một cấu hình duy nhất có cùng mode/thuật toán, workload, policy, backend, topology, revision và image. Mỗi cấu hình khác nhau cần `cell` riêng, kể cả khi thuộc cùng RQ. Công cụ không tự tìm lượt bằng glob và không đếm cùng đường dẫn hai lần.
 

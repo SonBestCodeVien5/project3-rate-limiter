@@ -1,12 +1,12 @@
-# Điều kiện chuyển sang đo chính thức — cập nhật 20/10/2026
+# Điều kiện đo và trạng thái hiện tại — cập nhật 21/10/2026
 
-**T09 đã hoàn tất; dừng trước T10.** Theo [phụ lục một slot dự kiến v1.3](protocol-v1.3/protocol.md) đã cam kết trước, cấu hình còn thiếu `p1-129-scale-redis-fw-1api-250rps-r3` đã qua checker v1.2 cố định: gửi 7,500/7,500, không có request bị bỏ, 250 RPS, p95 schedule lag 1.15658 ms, clock residual 0.001790 ms và fingerprint khớp. Oracle tính đúng Fixed Window vẫn ở trạng thái `inconclusive` (chưa đủ bằng chứng kết luận). Bản xuất dẫn xuất đã sửa có 138/138 slot dự kiến dùng được và 46/46 cấu hình tổng hợp, gồm cả bốn cấu hình outage. Protocol/manifest v1.2 và bằng chứng trước đó không đổi. Mã nguồn đo `0291a80fb404fea0eafee8c3431acc3631bb423e`; SHA-256 manifest v1.2 `8fdee2bee729665327fd0d5e03b89a4fd4d10bfed4dc872a82bd5ddf649acb1e`; commit phụ lục v1.3 `e0f02867343fbea93d399b9a17229ed813867452`. Bộ quan sát trước tải 90 giây đạt (1,789 mẫu, không có bước nhảy trên 5 ms); các gate mã nguồn/image đã ghim đều đạt. Xem [bàn giao bằng chứng v1.3](../worklog/2026-10-20-t09-v1.3/README.md) và [SHA256SUMS](../worklog/2026-10-20-t09-v1.3/SHA256SUMS); SHA-256 archive `c947c8b9633b82c71e49ee473255c6db1a2431909d0a6342fa23fd798ecb150c`, giải nén/kiểm tra checksum/dọn dẹp đều đạt. Không chạy thêm tải; dừng trước T10. T10 chưa bắt đầu và chưa có kết luận RQ. Các giới hạn T08 về tổng lưu lượng Redis, độ chính xác UTC/độ bền sau restart-resume và backend mô phỏng vẫn còn.
+**T09 đo và T10 phân tích offline đã hoàn tất.** T09 có 138/138 slot dự kiến dùng được trên 46/46 cấu hình. Phân tích T10, bảng, dữ liệu từng lượt, traceability và 11 hình SVG/PDF/PNG được ghi trong [T10_RESULTS.md](../analysis/T10_RESULTS.md) và [worklog T10](../worklog/2026-10-20-t10/README.md); checksum nằm tại [SHA256SUMS](../worklog/2026-10-20-t10/SHA256SUMS). Measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`; T10 chỉ đọc evidence, không mở lại phép đo. FW oracle vẫn inconclusive; Redis counters là tổng traffic, outage thiếu resource sampling, UTC/restart-resume và khái quát hóa backend mô phỏng chưa xác minh. Xem [bàn giao T09 v1.3](../worklog/2026-10-20-t09-v1.3/README.md) nếu cần provenance phép đo. Người dùng yêu cầu dừng sau T10: không chạy thêm tải và chưa bắt đầu T11.
 
-**Trạng thái hiện tại (20/10/2026):** T09 đã hoàn tất; các hướng dẫn chạy pilot bên dưới chỉ là ghi nhận lịch sử. T10 chưa bắt đầu, chưa có kết luận RQ và không được chạy thêm tải. Xem [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md) để biết cổng tiếp theo sau khi người dùng yêu cầu tiếp tục.
+**Trạng thái hiện tại (21/10/2026):** Các hướng dẫn chạy pilot bên dưới là ghi nhận lịch sử, không cấp quyền chạy thêm tải. T10 đã xuất kết quả RQ1–RQ5 có giới hạn; [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md) ghi điểm dừng sau T10 và T11 chưa được yêu cầu.
 
 **Cập nhật 19/10/2026 (ghi nhận lịch sử):** T01 ổn định trong phiên làm việc khi đó. Observer không ghi nhận bước nhảy trên 5 ms; bounded gate T03 hoàn tất sáu lượt normal/mixed, không có cờ chất lượng hay request bị generator bỏ. Xem [worklog T02/T03](../worklog/2026-10-19-measurement-gate/README.md). Oracle Fixed Window ở trạng thái `inconclusive` (chưa đủ bằng chứng kết luận) vì chỉ quan sát một phần window. T04 calibration normal/burst, T05 calibration scaling, T06 kiểm thử atomicity, T07 calibration recovery capacity10 và kiểm tra smoke của exporter cũng đã hoàn tất. Các lần hiệu chỉnh không thay benchmark chính thức; T08 khóa protocol v1 như ghi bên dưới.
 
-**Trạng thái T08/T09:** Kiểm chứng giới hạn của T08 và các giới hạn về tổng lưu lượng Redis được ghi trong [worklog T08](../worklog/2026-10-19-t08-network/README.md). Bằng chứng smoke T09 nằm trong [worklog smoke](../worklog/2026-10-20-t09-smoke/README.md); provenance chính thức v1.2 và v1.3 được dẫn ở trên. Chưa có kết luận RQ. Giới hạn về độ chính xác UTC, độ bền clock sau restart/resume và backend mô phỏng vẫn còn.
+**Trạng thái T08/T09/T10:** Giới hạn T08 về tổng lưu lượng Redis được ghi trong [worklog T08](../worklog/2026-10-19-t08-network/README.md). Provenance T09 nằm tại các worklog được dẫn ở trên; kết quả phân tích T10 ở [T10_RESULTS.md](../analysis/T10_RESULTS.md). T10 không xóa các giới hạn về UTC, restart/resume, resource sampling trong outage, backend mô phỏng hoặc correctness oracle FW.
 
 ## Bằng chứng lịch sử đã kiểm chứng
 
@@ -32,10 +32,10 @@
 
 Các bước nhảy clock lịch sử ảnh hưởng deadline Redis; server cũng dùng wall time cho quota, còn trace dùng timestamp để chia pha và phát lại quyết định. Sửa deadline socket không tự làm môi trường clock ổn định. Không tăng ngưỡng 5 ms sau khi thấy bước nhảy 2,6 giây, không chọn riêng lượt đẹp và không đổi trạng thái `inconclusive` thành đạt.
 
-## Thứ tự tiếp tục
+## Trạng thái hiện tại và điểm dừng
 
-1. Chuỗi chạy T09 và bàn giao bằng chứng đã hoàn tất.
-2. Không chạy thêm tải và dừng trước T10 theo phạm vi đã được phép.
-3. T10 chưa bắt đầu; chưa có kết luận RQ.
+1. Chuỗi chạy T09 và bàn giao bằng chứng đã hoàn tất; 138/138 slot hợp lệ, 46/46 cấu hình tổng hợp.
+2. T10 đã hoàn tất phân tích offline RQ1–RQ5; xem [kết quả](../analysis/T10_RESULTS.md) và [worklog/checksum](../worklog/2026-10-20-t10/README.md).
+3. Không chạy thêm tải. Người dùng yêu cầu dừng sau T10, trước T11.
 
 Giao diện so sánh, CSV và [biểu đồ pilot](../worklog/2026-10-13-evaluation/README.md) có thể hoàn thiện độc lập. Đây là công cụ trình bày và kiểm tra bằng chứng; chúng không thay điều kiện đo hoặc chứng minh tính đúng/khả năng mở rộng ở production.
