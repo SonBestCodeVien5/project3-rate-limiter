@@ -1,5 +1,9 @@
 # Session checkpoint
 
+## Hướng dẫn đọc T10 — chỉ cập nhật tài liệu — 2026-10-21
+
+Đã thêm [hướng dẫn đọc T10](../analysis/READING_GUIDE.md) để giải thích lộ trình từ narrative tới bảng rồi traceability/provenance, cách đọc median (min–max) của ba lượt và đủ 11 biểu đồ. Tài liệu làm rõ ký hiệu e, trục CPU dưới một core, snapshot memory, offset trục goodput, backend overload và các giới hạn outage/scaling. Đã cập nhật [mục lục tài liệu](../README.md) và liên kết từ narrative. Đây chỉ là thay đổi tài liệu; không chạy code suite, phân tích, phép đo hay T11. T10 hoàn tất và điểm dừng trước T11 giữ nguyên như mục ngay dưới.
+
 ## T10 offline analysis complete; stop before T11 — 2026-10-21
 
 T10 completed offline analysis for RQ1–RQ5 using measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`. Five focused tests passed; fresh deterministic table/data reproduction matched. The [analysis](../analysis/T10_RESULTS.md) and [worklog](../worklog/2026-10-20-t10/README.md) preserve results, run evidence, retry history, provenance, traceability, `SHA256SUMS`, and 11 Matplotlib figures in SVG/PDF/PNG. Tooling commit `0e8a221`; evidence commit `d7cff03`. Staged whitespace verification used `git -c core.whitespace=cr-at-eol diff --cached --check -- ":!*.svg"`; this excludes generated SVG whitespace and treats CSV CRLF as line endings. T09 remains 138/138 usable slots over 46/46 cells. No live work or additional load was run for T10. Stop after T10 as requested: T11 report writing is not authorized.
