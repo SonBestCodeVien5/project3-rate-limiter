@@ -1,6 +1,14 @@
 # Session checkpoint
 
-## Push paused at oversized evidence archive — 2026-10-21
+## User-authorized LFS migration and push batches complete — 2026-10-21
+
+The user resumed the previously paused push and authorized installing Git LFS, migrating only the three unpublished evidence archives, and pushing the rewritten unpublished history. The original push began at `7e79669b00ba9c1b8d17c52807ef073dbc714b37`; its original local tip was `ce278ec31922278a80a219808b2c3236329b57a9`, with 41 commits ahead. The first 9/41 original commits had already reached `10a7a404817b95689c7e549a2b2ac60bf246aa79`. The remaining 32 original commits were migrated to LFS, preserving archive bytes and recorded evidence; the final pre-checkpoint migrated tip is `ff28623c329ecf70b0547ea025506d2b4725c6d1`.
+
+The three migrated paths, their original SHA-256 hashes, and the 33-row old-to-new commit map are recorded in [the migration provenance](../worklog/2026-10-21-lfs-migration/README.md) and [commit-map.csv](../worklog/2026-10-21-lfs-migration/commit-map.csv). Original history remains recoverable from local ref `refs/archive/pre-lfs/d043441` and verified ignored bundle `artifacts/pre-lfs-migration/original-history-d043441.bundle` (SHA-256 `2266f4700b8d85e47c55f77b069de0b814ad9005a388a35664318cb140cfc41f`). Neither backup was pushed. LFS upload and the chronological fast-forward pushes succeeded, including the migration provenance commit. No force push or billing change occurred.
+
+The project remains paused at the same boundary: no code, load, experiment, analysis, T12 or T13 work was done or authorized. This push does not change any experiment gate or task status.
+
+## Historical checkpoint: push paused at oversized evidence archive — 2026-10-21
 
 The user authorized pushing the 41 commits originally ahead of `origin/main`, from base `7e79669b00ba9c1b8d17c52807ef073dbc714b37` through `ce278ec31922278a80a219808b2c3236329b57a9`. Chronological fast-forward pushes advanced `main` through `0291a80`, `c254346`, `3da65c2`, and `10a7a40`, for 9 of the original 41 commits. The 16,781,462-byte smoke archive pushed successfully in a 15.96 MiB pack at observed rates of about 0.5–0.76 MiB/s. An earlier broader batch timed out without remote advancement; splitting it allowed the safe commits to complete. The current local tip is `ce278ec`; 32 of the original 41 commits remain unpushed. No history was rewritten, and tracked evidence and ignored artifacts were preserved.
 
