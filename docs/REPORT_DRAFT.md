@@ -1,6 +1,6 @@
 # Báo cáo Project 3 — bản nháp phần đã có căn cứ
 
-> Bản nháp nền, chưa phải báo cáo nộp cuối. **Tính đến 20/10/2026, T09 đã thu thập đủ dữ liệu (138/138 slot dự kiến dùng được; 46/46 cấu hình được tổng hợp), nhưng T10 chưa bắt đầu.** Vì vậy kết quả được thu thập nhưng chưa phân tích; phần kết quả chính thức và kết luận RQ1–RQ5 vẫn để trống có chủ đích. Không chạy thêm tải; dừng trước T10. Cập nhật theo rubric/định dạng do giảng viên cung cấp và sau khi có chỉ dẫn tiếp tục phân tích.
+> Bản nháp nghiên cứu có căn cứ, chưa phải bản nộp cuối. Phân tích offline T10 đã hoàn tất trên 138 lượt hợp lệ thuộc 46 cấu hình, ba lượt mỗi cấu hình. Kết quả áp dụng cho prototype và workload mô phỏng; rubric, ngày chính thức và phản hồi giảng viên chưa có. Trạng thái việc làm xem [kế hoạch còn lại](REMAINING_WORK_PLAN.md); các cổng đo xem [readiness](experiments/PROTOCOL_READINESS.md).
 
 ## 1. Bài toán doanh nghiệp
 
@@ -26,7 +26,7 @@ Do đó, chỉ báo số yêu cầu bị giới hạn chưa đủ để chứng 
 
 ### Lựa chọn kỹ thuật của prototype
 
-Roadmap minh họa một lớp kiểm soát lưu lượng trước backend; Proposal minh họa rate limiter gắn với API instance. Prototype hiện đặt rate limiter middleware ở đầu mỗi API instance, trước backend mô phỏng dùng chung. Đây là lựa chọn triển khai để khảo sát, không nhằm giải quyết khác biệt giữa hai tài liệu nguồn. Local state dùng mutex trong từng API instance; chế độ Redis dùng Lua để gộp quyết định quota thành một atomic operation. Backend dùng giới hạn yêu cầu xử lý đồng thời và thời gian xử lý cấu hình được để giữ năng lực ổn định giữa các lượt. Mã liên quan: [thiết kế và policy](IMPLEMENTATION.md), [limiter](../internal/limiter/limiter.go), [API handler](../internal/server/server.go).
+Roadmap minh họa một lớp kiểm soát lưu lượng trước backend; Proposal minh họa rate limiter gắn với API instance. Prototype hiện đặt rate limiter middleware ở đầu mỗi API instance, trước backend mô phỏng dùng chung. Đây là lựa chọn triển khai để khảo sát, không nhằm giải quyết khác biệt giữa hai tài liệu nguồn. Local state dùng mutex trong từng API instance; chế độ Redis dùng Lua để gộp quyết định quota thành một atomic operation, phù hợp với semantics script atomic và blocking do [Redis mô tả](https://redis.io/docs/latest/develop/programmability/eval-intro/). Backend dùng giới hạn yêu cầu xử lý đồng thời và thời gian xử lý cấu hình được để giữ năng lực ổn định giữa các lượt. Mã liên quan: [thiết kế và policy](IMPLEMENTATION.md), [limiter](../internal/limiter/limiter.go), [API handler](../internal/server/server.go).
 
 `X-Client-ID` là mã định danh do bộ tạo tải đáng tin cậy cung cấp, không phải xác thực người dùng. Khi hết quota, API trả 429; lỗi rate limiter theo policy trả 503 ở fail-closed hoặc tiếp tục tới backend ở fail-open. Lỗi backend và quá tải được ghi riêng với lần từ chối hợp lệ của bộ giới hạn.
 
@@ -38,7 +38,7 @@ Sliding Window, dashboard/quản trị policy, Redis Cluster, gateway hoàn ch�
 
 Prototype gồm load generator, Nginx phân phối vòng tròn, hai API instance, Redis shared state và backend mô phỏng có giới hạn xử lý đồng thời. Chế độ `none` làm baseline; `local` và `redis` lần lượt biểu diễn local state của từng API instance và shared state. Hai thuật toán có cách hoạt động khác nhau: Fixed Window đặt lại quota ở ranh giới cửa sổ; Token Bucket cho phép tải đột biến tối đa theo dung lượng bucket và được nạp lại theo thời gian. Cấu hình pilot mặc định không làm cho hai thuật toán có cách xử lý tải đột biến tương đương.
 
-T09 đã thu thập đủ ma trận theo protocol v1.2 đã khóa; lượt bổ sung v1.3 chỉ lấp slot còn thiếu duy nhất theo phụ lục đã cho phép. Ma trận gồm các cấu hình normal, burst, mixed, topology một/nhiều API instance và Redis outage; T10 chưa bắt đầu. Bằng chứng về tính đúng với concurrent requests đến từ các bài test Redis của T06, không phải một nghiên cứu tải HTTP concurrent riêng. Khi T10 được tiếp tục, việc so sánh cần giữ cùng workload, policy phù hợp với câu hỏi, backend và môi trường trong từng cặp; lưu revision, cấu hình, runtime images và artifacts để truy nguyên. Tham khảo [protocol readiness](experiments/PROTOCOL_READINESS.md) và [hướng dẫn báo cáo số liệu](experiments/REPORTING.md).
+T09 thu thập ma trận theo protocol v1.2 khóa; phụ lục v1.3 chỉ bổ sung slot còn thiếu đã được cho phép. Ma trận gồm normal, burst, mixed, topology một/nhiều API và Redis outage. T10 đối chiếu các cấu hình giữ cùng workload, policy, backend và môi trường theo từng contrast; dữ liệu truy nguyên được qua revision, manifest, run ID và artifacts. Bằng chứng concurrent requests cho RQ4 đến từ Redis tests của T06, không phải tải HTTP concurrent riêng. Xem [readiness](experiments/PROTOCOL_READINESS.md) và [hướng dẫn báo cáo số liệu](experiments/REPORTING.md).
 
 Phân biệt các nhóm số đo khi viết kết quả:
 
@@ -48,38 +48,76 @@ Phân biệt các nhóm số đo khi viết kết quả:
 - **Redis outage:** khả năng phục vụ client hợp lệ, quota violations và phục hồi theo định nghĩa/cửa sổ đã chốt trước lượt đo. Chế độ fail-open có thể nhận yêu cầu khi không xác minh được quota; đây là đánh đổi về policy, tự nó không chứng minh có race condition.
 - **Chất lượng lượt đo:** offered load/đã gửi/đã hoàn tất, request rơi, lỗi bộ giới hạn, clock discontinuity và sự khớp giữa trace, summary, metrics và cấu hình. Phải giữ lại lượt lỗi/không hợp lệ cùng lý do, không chỉ chọn lượt thuận lợi.
 
-## 5. Tình trạng bằng chứng và đánh giá hiện tại
+## 5. Thí nghiệm, kết quả và đánh giá
 
 **Calibration lịch sử:** T04 hoàn tất 10 cấu hình normal/burst với một lượt mỗi cấu hình. T05 hoàn tất 27 cấu hình scaling hợp lệ, đồng thời lưu riêng một lượt lỗi do bộ tạo tải và ba lượt gián đoạn. T05 ghi nhận backend chung giới hạn khoảng 190 success/s ở offered 250 RPS; không suy ra khả năng mở rộng API hoặc chế độ nào tốt hơn. T07 hoàn tất calibration capacity10 có giới hạn: bốn ca healthy/outage gửi đủ 12.000 request, không rơi request, hai healthy gate đạt, recovery ổn định sau 4 giây theo tiêu chí cửa sổ 1s/min5/3 cửa sổ sạch; first success được báo riêng. Exporter smoke đánh dấu cả bốn ca dùng được sau một sửa lỗi null-resource riêng; revision đo gốc không đổi. Batch capacity4 quá tải/observer lỗi trước đó vẫn là bằng chứng sơ bộ, không ghép với cấu hình khác như cùng phép đo.
 
-Các pilot trước đó gồm calibration dừng do clock discontinuity và ma trận 84 cấu hình có oracle mismatch, kết quả inconclusive, limiter errors hoặc generator drops; chúng không thay thế benchmark chính thức. Gate T01–T03 đạt ổn định trong phiên đo hiện tại và chất lượng sáu lượt pilot normal/mixed; độ chính xác UTC tuyệt đối và độ bền sau resume/restart chưa xác minh. Bằng chứng T06 là kiểm tra Redis thật: khi quota gần cạn, đúng hai đơn vị còn lại được chấp nhận ở cả Fixed Window và Token Bucket. Đối chứng non-atomic đồng bộ chủ động 16 reader để buộc lost update, tạo overshoot 15 khi quota là 1; đây là minh họa race có điều kiện, không đo tần suất tự nhiên. T06 không đo hiệu năng HTTP hay thông lượng Redis.
+Các pilot trước đó gồm calibration dừng do clock discontinuity và ma trận 84 cấu hình có oracle mismatch, kết quả inconclusive, limiter errors hoặc generator drops; chúng không thay thế benchmark chính thức. Gate T01–T03 đạt ổn định trong phiên đo hiện tại và chất lượng sáu lượt pilot normal/mixed; độ chính xác UTC tuyệt đối và độ bền sau resume/restart chưa xác minh. Bằng chứng T06 là kiểm tra Redis thật: khi quota gần cạn, đúng hai đơn vị còn lại được chấp nhận ở cả Fixed Window và Token Bucket. Đối chứng non-atomic đồng bộ chủ động 16 reader để buộc lost update, tạo overshoot 15 khi quota là 1; đây là minh họa race có điều kiện, không đo tần suất tự nhiên. T06 không đo hiệu năng HTTP hay thông lượng Redis. Tài liệu [Redis Scripting with Lua](https://redis.io/docs/latest/develop/programmability/eval-intro/) xác nhận script chạy atomic và blocking; đây là semantics triển khai, còn kết quả T06 là evidence riêng trong test.
 
-T09 đã thu thập đủ dữ liệu với 138/138 slot dự kiến dùng được và 46/46 cấu hình đã tổng hợp. T10 chưa bắt đầu; phân tích và kết luận RQ1–RQ5 đang chờ yêu cầu tiếp tục riêng. Xem [gate T01–T03](worklog/2026-10-19-measurement-gate/README.md), [calibration T04](worklog/2026-10-19-calibration-next/README.md), [scaling T05](worklog/2026-10-19-calibration-next/T05-README.md), [atomicity T06](worklog/2026-10-19-atomicity/README.md), [calibration recovery T07](worklog/2026-10-19-outage-recovery/README.md), [bằng chứng sơ bộ T07](worklog/2026-10-19-outage/README.md), [readiness](experiments/PROTOCOL_READINESS.md), [checkpoint](context/SESSION_CHECKPOINT.md) và các [pilot cũ](worklog/2026-10-13-calibration/README.md).
+Các calibration và pilot trên là bằng chứng lịch sử, không gộp vào benchmark formal. Chi tiết gate T01–T03, calibration T04–T07, [readiness](experiments/PROTOCOL_READINESS.md), [checkpoint](context/SESSION_CHECKPOINT.md) và [pilot cũ](worklog/2026-10-13-calibration/README.md) được giữ để người đọc truy cứu.
 
-**Kết quả chính thức:** `[Đã thu thập dữ liệu T09; điền sau khi hoàn tất phân tích T10, kèm bảng/hình, run IDs, revision, manifest và giới hạn tương ứng.]`
+T09 gồm 138/138 lượt được chấp nhận trên 46/46 cấu hình, mỗi cấu hình có ba lượt. T10 phân tích offline theo [protocol v1.2](experiments/protocol-v1.2/protocol.md) và [manifest khóa](experiments/protocol-v1.2/manifest.json); lượt bổ sung duy nhất tuân theo [phụ lục v1.3](experiments/protocol-v1.3/protocol.md). Số liệu liên tục được trình bày dạng median (min–max) của ba lượt; trong phần kết quả dưới đây dấu chấm là dấu thập phân và số đếm nguyên không có dấu phân nhóm. Goodput từng lượt = legitimate request thành công / `elapsed_seconds_including_drain`; latency lấy từ response thành công của legitimate request. p50/p95/p99 được tính riêng từng lượt rồi tổng hợp, nên median p95 không phải p95 gộp. Bảng đầy đủ, hình, run evidence, traceability và provenance nằm trong [T10_RESULTS](analysis/T10_RESULTS.md), [bảng T10](worklog/2026-10-20-t10/T10_TABLES.md), [hướng dẫn đọc](analysis/READING_GUIDE.md) và [worklog T10](worklog/2026-10-20-t10/README.md).
 
-**Trả lời RQ1–RQ5:** `[Để trống đến khi có phân tích T10 theo yêu cầu tiếp tục riêng. Không suy câu trả lời từ smoke test hoặc pilot.]`
+### Kết quả theo câu hỏi nghiên cứu
 
-**Hạn chế cần bàn luận:** gate clock mới chỉ chứng minh ổn định trong phiên quan sát, chưa xác minh UTC tuyệt đối hoặc restart/resume. Fixed Window oracle ở gate T03 là inconclusive do chỉ quan sát cửa sổ một phần. Kiểm tra atomicity ép race bằng barrier nên không ước lượng tần suất race trong workload tự nhiên. Backend là mô phỏng; phép đo cùng host có thể chịu ảnh hưởng từ scheduler, generator, logging và tài nguyên dùng chung. Không ngoại suy kết quả sang doanh thu, production readiness hay hệ thống phân tán lớn hơn.
+- **RQ1 — FW và TB:** Ở normal 20 RPS, các mode gần đạt 20 legitimate success/s. Trong một số workload mixed và burst, TB cho goodput/backend outcomes khác FW trong các cặp được đo. Đây là kết quả theo workload và cấu hình đã khóa; FW oracle vẫn **inconclusive**, còn TB `no_violation_observed_within_trace` chỉ có nghĩa là không thấy vi phạm trong trace, không phải chứng minh tổng quát. Xem [bảng RQ1](worklog/2026-10-20-t10/T10_TABLES.md) và [hình latency p95](worklog/2026-10-20-t10/figures/rq1-latency.svg).
+- **RQ2 — local và Redis:** Redis có p95 cao hơn local một lượng nhỏ ở normal trong máy đo này; không suy rộng sang workload khác. Mixed goodput median tăng từ 15.265 lên 17.597/s với FW và 18.546 lên 19.924/s với TB trong các cặp local→Redis. CPU Redis được đo theo core; memory là snapshot đầu/cuối. Network counters là tổng traffic Redis gồm workload, sampler, healthcheck và admin, không phải bytes/request riêng của limiter; outage không có resource sampling. Xem [bảng RQ2](worklog/2026-10-20-t10/T10_TABLES.md) và [hình CPU](worklog/2026-10-20-t10/figures/rq2-redis-cpu.svg)/[memory](worklog/2026-10-20-t10/figures/rq2-redis-memory.svg).
+- **RQ3 — topology và tải:** Ở 50 và 180 RPS, goodput gần offered load. Ở 250 RPS, backend mô phỏng (capacity 10, service 50 ms) giới hạn goodput quanh 191/s; cell `scale-redis-fw-1api-250rps` có overload median 1772 (1768–1775) trên 7500 arrival mỗi lượt, theo [run evidence](worklog/2026-10-20-t10/run-evidence.csv) và [traceability](worklog/2026-10-20-t10/traceability.csv). Mức overload tương tự theo 1/2/4 API nên các cell 250 RPS không chứng minh khả năng scale API. Xem [bảng RQ3](worklog/2026-10-20-t10/T10_TABLES.md) và ba [hình scaling](analysis/READING_GUIDE.md).
+- **RQ4 — atomicity/concurrency:** T06 kiểm tra Redis thật: với FW/TB khi quota còn hai đơn vị, 16 request đồng thời chỉ được phép đúng hai; đối chứng non-atomic dùng barrier buộc 16 reader cùng đọc counter 0 với quota 1 và tạo overshoot 15. Đây là invariant trong test, không phải tần suất race tự nhiên hay hiệu năng HTTP. T06 dùng source revision `26b5decb835dbb136eb2d45b361920a414434f6b`, hash test `b51ef6d5c7c63dac5ae84e729911d4f7fc34cc761384c85674a56cff4d4ca46f`; test patch chưa commit và không nằm trong revision đó. Revision đo T09/T10 riêng là `0291a80fb404fea0eafee8c3431acc3631bb423e`. Xem [T06 evidence](worklog/2026-10-19-atomicity/README.md).
+- **RQ5 — bảo vệ backend và outage:** Các cell mixed được trình bày trong bảng 1 bên dưới. Các cell `outage-open-outage` (ba lượt; ID trong traceability) và `outage-closed-outage` (ba lượt; ID trong traceability) đo policy khi Redis pause. Đây là kết quả trong backend mô phỏng, không phải hiệu quả kinh doanh. Availability khi pause lần lượt là 1.000/0.000; stable recovery lần lượt 4000 (3000–4000) ms và 4000 (4000–4000) ms. First success là số đo riêng: 87.702 (69.940–91.747) ms open, 108.559 (107.118–140.044) ms closed. Stable recovery dùng cửa sổ 1000 ms, tối thiểu 5 mẫu/3 cửa sổ sạch; không đồng nhất hai metric. Fallback và overload dự kiến là outcome, không phải measurement fault.
+
+#### Bảng 1. Tải hỗn hợp: goodput khách hợp lệ và backend overload
+
+| Cell | Goodput (request/s), median (min–max) | Backend overload (request), median (min–max) |
+|---|---:|---:|
+| `mixed-none` | 7.822 (7.760–8.022) | 1575 (1572–1580) |
+| `mixed-local-fw` | 15.265 (14.798–15.411) | 593 (591–595) |
+| `mixed-local-tb` | 18.546 (15.644–19.312) | 174 (86–194) |
+| `mixed-redis-fw` | 17.597 (17.464–17.864) | 300 (298–306) |
+| `mixed-redis-tb` | 19.924 (19.891–19.924) | 12 (12–12) |
+
+*Chú thích:* Tên cell khớp `traceability.csv`; ví dụ `mixed-none` gồm `p1-011-mixed-none-r1`, `p1-057-mixed-none-r2`, `p1-103-mixed-none-r3`. Mỗi cell có n=3 lượt. Goodput chia legitimate success cho `elapsed_seconds_including_drain`; overload là số request mỗi lượt. Dấu chấm là dấu thập phân theo bảng nguồn; số đếm nguyên viết không phân nhóm. Quan sát: các mode limiter đo được đồng thời có goodput cao hơn và overload thấp hơn `mixed-none` trong cấu hình này. Giới hạn: kết quả chỉ đại diện tải và backend mô phỏng đã khóa, không phải ước lượng lợi ích kinh doanh. Xem đủ ID từng cell trong [traceability](worklog/2026-10-20-t10/traceability.csv).
+
+#### Hình 1. Backend overload trong tải mixed
+
+![Backend overload trong tải mixed theo mode limiter; trục Y là số request backend quá tải mỗi lượt.](worklog/2026-10-20-t10/figures/rq5-mixed-backend.svg)
+
+*Chú thích:* Trục X là mode limiter; trục Y là backend overload (request). Mỗi cell có n=3 lượt; dấu giữa là median, thanh dọc min–max. Hình cho thấy overload của các mode limiter thấp hơn none trong workload này; không chứng minh khả năng khái quát sang backend thật. Hình SVG nguyên bản được lưu kèm T10 [checksum](worklog/2026-10-20-t10/SHA256SUMS).
+
+#### Hình 2. Availability trong pha Redis pause
+
+![Availability khách hợp lệ theo policy khi Redis bị pause; trục Y là tỷ lệ từ 0 đến 1.](worklog/2026-10-20-t10/figures/rq5-outage.svg)
+
+*Chú thích:* Trục X là fail-open/fail-closed; trục Y là availability (tỷ lệ legitimate request thành công, 0–1) chỉ trong pha pause. Hình vẽ ba điểm riêng cho mỗi policy (n=3), không vẽ median/min–max; các số tổng hợp bên cạnh là 1.000 (1.000–1.000) open và 0.000 (0.000–0.000) closed. Hình SVG nguyên bản được lưu kèm T10 [checksum](worklog/2026-10-20-t10/SHA256SUMS); các run ID nằm trong [traceability](worklog/2026-10-20-t10/traceability.csv).
+
+#### Hình 3. Stable recovery sau Redis unpause
+
+![Thời gian stable recovery theo policy sau khi Redis được unpause; trục Y tính bằng millisecond.](worklog/2026-10-20-t10/figures/rq5-recovery.svg)
+
+*Chú thích:* Trục X là policy; trục Y là stable recovery (ms), không phải first success. Mỗi policy có n=3 lượt, median và min–max. Fail-open là 4000 (3000–4000) ms; fail-closed là 4000 (4000–4000) ms theo tiêu chí 1000 ms/window, tối thiểu 5 mẫu và 3 cửa sổ sạch liên tiếp. Hình SVG nguyên bản được lưu kèm T10 [checksum](worklog/2026-10-20-t10/SHA256SUMS); các run ID nằm trong [traceability](worklog/2026-10-20-t10/traceability.csv).
+
+Các số trên là mô tả thực nghiệm, không có kiểm định ý nghĩa thống kê. Valid measurement không đồng nghĩa correctness đã được chứng minh. Các nguồn số liệu được truy về manifest v1.2, các run/cell và artifacts trong [traceability](worklog/2026-10-20-t10/traceability.csv), [provenance](worklog/2026-10-20-t10/provenance.json) và [checksums](worklog/2026-10-20-t10/SHA256SUMS); revision đo là `0291a80fb404fea0eafee8c3431acc3631bb423e`. RQ4 là nguồn evidence T06 riêng như đã nêu.
+
+### Giới hạn
+
+FW correctness oracle còn inconclusive; Redis network là tổng traffic chứ không cô lập lưu lượng limiter; outage không có resource sampling. UTC accuracy tuyệt đối, độ bền restart/resume và khả năng khái quát từ backend mô phỏng chưa được xác minh. Kiểm tra atomicity ép race bằng barrier, không ước lượng tần suất race tự nhiên. Latency là median p95 theo run, không phải pooled p95. Stable recovery không phải first success. Tác động flash-sale vẫn là giả định nghiệp vụ; không có số liệu doanh thu hay SLO thực tế. Pilot/calibration lịch sử không thay thế kết quả formal T09/T10.
 
 ## 6. Kết luận tạm thời và hướng phát triển
 
-Ở trạng thái hiện tại, dự án đã có prototype để khảo sát local/shared state, hai thuật toán quota, atomic operation bằng Redis Lua, mixed workload và hai chính sách khi Redis lỗi. Bằng chứng hiện tại cho thấy đã có công cụ và các hành vi pilot cụ thể; dữ liệu T09 cũng đã được thu thập đầy đủ. Tuy nhiên, T10 chưa bắt đầu nên chưa có căn cứ để kết luận cuối về thuật toán/chế độ nào tốt hơn hoặc mức cải thiện là bao nhiêu.
+Trong phạm vi prototype, kết quả mixed cho thấy các cấu hình limiter đo được giảm backend overload và tăng goodput khách hợp lệ so với none; kết quả 250 RPS bị giới hạn bởi backend mô phỏng, và FW correctness chưa được xác nhận. Các số này không xác lập lựa chọn phổ quát giữa thuật toán hoặc state mode.
 
-Protocol đã khóa và các lượt đo T09 đã hoàn tất. Phần tiếp theo là tiếp tục T10 theo yêu cầu riêng, phân tích từng câu hỏi nghiên cứu rồi cập nhật kết luận và hình/bảng có thể truy ngược về artifacts. Hướng mở rộng như Sliding Window, dashboard hoặc nền tảng kiểm soát lưu lượng rộng hơn chỉ nên cân nhắc sau khi hoàn thành baseline và theo yêu cầu của giảng viên.
+Hướng phát triển là hoàn tất tài liệu tham khảo học thuật và chỉnh báo cáo theo rubric/phản hồi khi được cung cấp; giữ rõ giới hạn correctness, outage, clock và backend. Sliding Window, dashboard hoặc nền tảng kiểm soát lưu lượng rộng hơn là tùy chọn sau baseline, không phải kết luận bắt buộc từ dữ liệu này.
 
 ## 7. Việc còn lại cho bản nộp
 
-- Khi được yêu cầu tiếp tục, hoàn thành T10: bảng/hình cho RQ1–RQ5, biến thiên giữa lượt, phân tích nguyên nhân lỗi và liên kết tới run/cấu hình/revision; không thay kết quả thiếu bằng số 0 hoặc gộp percentile sai.
-- Bổ sung chương kết quả/kết luận sau T10; hiện không điền phát hiện hay effect size.
-- Đối chiếu yêu cầu hình thức và rubric khi được cung cấp; xác nhận ngày nộp/bảo vệ. H01 phần tự kiểm tra kiến thức vẫn do người học hoàn tất.
-- Bổ sung tài liệu tham khảo có thật, trích dẫn chính xác và rà soát cùng slide/demo khi bộ kết quả cuối đã thống nhất.
+- Đối chiếu yêu cầu hình thức/rubric và phản hồi giảng viên khi được cung cấp; xác nhận ngày nộp/bảo vệ. Không suy đoán rubric hoặc ngày chính thức.
+- Bổ sung nguồn học thuật đã đọc và xác minh cho phần nền tảng; H01 phần tự kiểm tra kiến thức do người học hoàn tất.
+- Đồng bộ báo cáo với slide/demo sau các phần việc được phép tiếp tục; xem [kế hoạch còn lại](REMAINING_WORK_PLAN.md).
 
 ## Tài liệu tham khảo
 
-Các khái niệm rate limiting và lý do chọn các biến đo cần gắn với nguồn học thuật sau khi người viết đã đọc và xác định đúng ấn phẩm. Tài liệu Redis dưới đây chỉ hỗ trợ các tuyên bố triển khai về atomic scripting và thời gian server; không thay thế nguồn học thuật hoặc kết quả thí nghiệm.
+Các khái niệm rate limiting và lý do chọn các biến đo cần gắn với nguồn học thuật sau khi người viết đã đọc và xác định đúng ấn phẩm. Tài liệu Redis dưới đây chỉ hỗ trợ tuyên bố semantics triển khai; không thay thế nguồn học thuật hoặc kết quả thí nghiệm.
 
-1. Redis, “Scripting with Lua.” Tài liệu chính thức mô tả việc thực thi script là atomic và blocking trên Redis. Dùng để dẫn giải lựa chọn gộp quyết định quota vào một script; không phải bằng chứng thực nghiệm của dự án. https://redis.io/docs/latest/develop/programmability/eval-intro/
-2. Redis, “TIME.” Đặc tả chính thức về timestamp giây và microsecond do Redis trả về; dùng cho mô tả nguồn thời gian shared-state. https://redis.io/docs/latest/commands/time/
+1. Redis, [“Scripting with Lua”](https://redis.io/docs/latest/develop/programmability/eval-intro/). Tài liệu chính thức mô tả script atomic và blocking; đây là nguồn cho semantics được viện dẫn ở phần lựa chọn kỹ thuật, không phải bằng chứng thực nghiệm của dự án.
 
 Danh mục này còn sơ bộ; bổ sung nguồn thuật toán/queueing chỉ khi phần tổng quan thực sự dùng các khẳng định cần trích dẫn, và hoàn thiện định dạng theo rubric khi được cung cấp.
