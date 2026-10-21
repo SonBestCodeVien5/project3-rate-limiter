@@ -1,5 +1,13 @@
 # Session checkpoint
 
+## T11 report integration complete; stop before T12/T13 — 2026-10-21
+
+The user explicitly resumed T11 documentation/report integration only. Report commit `a9f3f3e` updates [REPORT_DRAFT.md](../REPORT_DRAFT.md) with T10 RQ1–RQ5, a selected mixed table, three existing figures, units/sample/median–min–max captions, protocol/manifest/cell/run/artifact links and T06's distinct source revision/test hash/uncommitted-patch caveat. Reader navigation commit: `aca1a3d`. T11's authorized report package is complete; rubric, instructor feedback, official dates, additional academic references and final formatting remain pending. Do not claim submission readiness or dispatch T12/T13 without user resumption.
+
+Checks: worker checked displayed mixed numbers, outage recovery/first-success and the named scaling cell against T10 tables/run evidence; explicit run IDs against traceability; figure-caption semantics; local links; whitespace; and used Redis atomic-scripting claims against the official source. Root inspected staged diffs and corrected remaining wording/number formatting. Documentation checks passed. No code suite, live load, analysis/figure regeneration, Drive reconnection, locked protocol/raw evidence/checksum modification or T12/T13 work occurred. No owned process or checkout was created; ignored artifacts were preserved. Report/navigation and progress are separate commits; no push.
+
+Measurement source remains `0291a80fb404fea0eafee8c3431acc3631bb423e`, T10 tooling `0e8a221`, evidence `d7cff03`; T09 remains 138/138 usable runs across 46 cells. FW oracle remains inconclusive; valid measurement is not a full correctness proof. Redis counters are total sampled traffic, not limiter-only bytes/request; outage has no resource sampling. UTC accuracy, restart/resume durability and simulated-backend generalization remain unverified. Expected overload/fallback are outcomes rather than measurement faults; median p95 is not pooled p95; stable recovery differs from first success; pilot/calibration remain separate from formal evidence. Next work requires user direction; unknown rubric/instructor-feedback items stay pending.
+
 ## Hướng dẫn đọc T10 — chỉ cập nhật tài liệu — 2026-10-21
 
 Đã thêm [hướng dẫn đọc T10](../analysis/READING_GUIDE.md) để giải thích lộ trình từ narrative tới bảng rồi traceability/provenance, cách đọc median (min–max) của ba lượt và đủ 11 biểu đồ. Tài liệu làm rõ ký hiệu e, trục CPU dưới một core, snapshot memory, offset trục goodput, backend overload và các giới hạn outage/scaling. Đã cập nhật [mục lục tài liệu](../README.md) và liên kết từ narrative. Đây chỉ là thay đổi tài liệu; không chạy code suite, phân tích, phép đo hay T11. T10 hoàn tất và điểm dừng trước T11 giữ nguyên như mục ngay dưới.
