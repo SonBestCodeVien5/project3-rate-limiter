@@ -2,7 +2,7 @@
 
 Đây là mục lục dành cho người học và người viết báo cáo. Phần giải thích trong các tài liệu hiện hành dùng tiếng Việt; tên thuật toán, lệnh, mã định danh và trường dữ liệu giữ nguyên để đối chiếu với mã nguồn. Không cần đọc toàn bộ thư mục `docs/` theo thứ tự tên tệp.
 
-**Mốc đối chiếu 21/10/2026:** T09 có 138/138 lượt được chấp nhận trên 46/46 cấu hình; T10 phân tích offline RQ1–RQ5 đã xong và T11 đã tích hợp kết quả vào [bản nháp báo cáo](REPORT_DRAFT.md). Kết quả là của prototype/workload mô phỏng; FW oracle, backend và Redis counter có giới hạn được nêu rõ. Dừng sau T11, trước T12/T13; rubric, phản hồi giảng viên và ngày chính thức còn chờ. Trạng thái task ở [kế hoạch công việc](REMAINING_WORK_PLAN.md), cổng đo ở [readiness](experiments/PROTOCOL_READINESS.md).
+**Mốc đối chiếu 22/10/2026:** T09 có 138/138 lượt được chấp nhận trên 46/46 cấu hình; T10 phân tích offline RQ1–RQ5 đã xong và T11 đã tích hợp kết quả vào [bản nháp báo cáo](REPORT_DRAFT.md). Kết quả là của prototype/workload mô phỏng; FW oracle, backend và Redis counter có giới hạn được nêu rõ. T12 đã kiểm tra gói demo/source; T13 có nội dung nháp, PowerPoint qua Canva còn bị chặn HTTP 429; rubric, phản hồi giảng viên và ngày chính thức còn chờ. Trạng thái task ở [kế hoạch công việc](REMAINING_WORK_PLAN.md), cổng đo ở [readiness](experiments/PROTOCOL_READINESS.md).
 
 ## Đọc lần đầu
 
@@ -20,7 +20,8 @@
 | Hiểu số liệu có nghĩa gì | [Quy tắc phân tích](experiments/ANALYSIS.md) → [xuất số liệu báo cáo](experiments/REPORTING.md) | Cách kiểm chứng quota, mẫu số, tổng hợp lượt lặp và giới hạn diễn giải |
 | Đọc bảng và biểu đồ T10 | [Hướng dẫn đọc T10](analysis/READING_GUIDE.md) → [kết quả T10](analysis/T10_RESULTS.md) → [bảng chi tiết](worklog/2026-10-20-t10/T10_TABLES.md) | Hiểu cách đọc 11 biểu đồ, tổng hợp lượt và giới hạn; truy nguyên qua traceability/provenance |
 | Viết báo cáo | [Bản nháp báo cáo](REPORT_DRAFT.md), [kết quả T10](analysis/T10_RESULTS.md) và [bảng chi tiết](worklog/2026-10-20-t10/T10_TABLES.md) | T11 tích hợp RQ1–RQ5; định dạng cuối cần đối chiếu rubric/phản hồi khi có |
-| Chuẩn bị thuyết trình/demo | [Kịch bản demo](DEMO_SCRIPT.md) → [hướng dẫn Console](CONSOLE.md) | Trình tự trình bày và cách dùng dữ liệu đã lưu |
+| Chuẩn bị demo/source | [Gói demo T12](DEMO_PACKAGE.md) → [kịch bản demo](DEMO_SCRIPT.md) → [hướng dẫn Console](CONSOLE.md) | Source revision, dữ liệu pilot đã lưu, kết quả T10 ngoại tuyến và giới hạn kiểm tra |
+| Chuẩn bị thuyết trình | [Nội dung slide nháp](slides/project3-defense.md) → [chuẩn bị bảo vệ](DEFENSE_PREPARATION.md) | Nội dung từ báo cáo; template HUST đã nhận, bước dựng PowerPoint qua Canva còn chờ kết nối |
 | Chạy hoặc sửa công cụ khi được yêu cầu | [README dự án](../README.md) → [hướng dẫn script](../scripts/README.md), [cổng kiểm tra chất lượng đo](experiments/MEASUREMENT_GATE.md) | Tra lệnh và điều kiện chạy; lệnh minh họa không cấp quyền chạy thí nghiệm |
 
 ## Dùng tài liệu để viết báo cáo

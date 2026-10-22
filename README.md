@@ -4,9 +4,11 @@ Prototype nghiên cứu rate limiter phân tán cho nhiều API instance: Fixed 
 
 Bắt đầu với [hướng dẫn đọc tài liệu](docs/README.md): lộ trình đọc, tài liệu hiện hành, thuật ngữ và cách dùng để viết báo cáo. Google Drive là nguồn yêu cầu; [thiết kế triển khai](docs/IMPLEMENTATION.md) ghi lựa chọn kỹ thuật. [Lộ trình](docs/PROJECT_ROADMAP.md) là lịch đề xuất; [đặc tả thí nghiệm](docs/experiments/EXPERIMENT_SPEC.md) giữ thiết kế ban đầu, còn [điều kiện đo hiện tại](docs/experiments/PROTOCOL_READINESS.md) dẫn tới quy trình đã khóa.
 
-**Cập nhật 20/10/2026:** T09 đã thu thập đủ 138/138 lượt dự kiến, tổng hợp đủ 46/46 cấu hình; T10 chưa bắt đầu và chưa có kết luận RQ1–RQ5. Đang dừng trước T10, không chạy thêm tải. Xem [công việc còn lại](docs/REMAINING_WORK_PLAN.md). Các lệnh bên dưới là hướng dẫn tham khảo khi có yêu cầu chạy phù hợp, không thay đổi điểm dừng này.
+**Cập nhật 22/10/2026:** T09 đã thu thập đủ 138/138 lượt dự kiến trên 46/46 cấu hình; T10 đã phân tích offline RQ1–RQ5 và T11 đã tích hợp vào [bản nháp báo cáo](docs/REPORT_DRAFT.md). Gói demo/source T12 đã kiểm tra; T13 có nội dung nháp, bước dựng PowerPoint qua Canva còn bị chặn bởi HTTP 429. Xem [công việc còn lại](docs/REMAINING_WORK_PLAN.md); rubric, phản hồi giảng viên và định dạng cuối còn chờ. Không chạy thêm tải. Các lệnh bên dưới là hướng dẫn tham khảo khi có yêu cầu chạy phù hợp.
 
 [Giao diện demo Console](docs/CONSOLE.md) chạy trên máy, hỗ trợ cấu hình tùy chỉnh, chỉ số và tệp bằng chứng. [Ma trận 84 lượt thực chạy](docs/worklog/2026-10-12-console-matrix/README.md) giữ kho dữ liệu thô, checksum và bảng đối chiếu số đo để tham chiếu các lượt thử sơ bộ.
+
+[Gói demo/source T12](docs/DEMO_PACKAGE.md) hướng dẫn dùng saved runs pilot và kết quả T10 ngoại tuyến. [Nội dung slide nháp](docs/slides/project3-defense.md) dành cho T13; bản PowerPoint theo template HUST chưa được tạo do kết nối Canva trả lỗi HTTP 429.
 
 ## Chạy prototype
 
@@ -55,7 +57,7 @@ Hai script đầu tạo project Compose riêng `project3-lab`, từ chối nếu
 
 Mỗi lượt chạy lưu `metadata.json`, `requests.jsonl`, `summary.json`; runner thêm cấu hình Compose, metrics backend/API, Redis CPU/memory, logs và timestamps outage. Generator open-loop gửi POST, ghi cả request bị bỏ và schedule lag; goodput dùng tổng thời gian gồm drain, độ trễ của request hợp lệ thành công chỉ tính 2xx. Mode/algorithm truyền cho loadgen là nhãn; dùng Compose resolved để kiểm tra cấu hình thực.
 
-Summary không phải oracle quota hay đánh giá recovery. Protocol hiện đã khóa; T09 hoàn tất. T10 chưa bắt đầu và không được chạy thêm tải. Chưa có kết luận RQ1–RQ5. Test đối chứng non-atomic có barrier chỉ chứng minh khả năng lost update, không đo tần suất race tự nhiên. Xem [trạng thái triển khai và việc còn lại](docs/IMPLEMENTATION_STATUS.md) và [chi tiết runner](scripts/README.md).
+Summary không phải oracle quota hay đánh giá recovery. Protocol hiện đã khóa; T09 và T10 hoàn tất, kết quả RQ1–RQ5 cùng giới hạn nằm tại [phân tích T10](docs/analysis/T10_RESULTS.md). Không chạy thêm tải. Test đối chứng non-atomic có barrier chỉ chứng minh khả năng lost update, không đo tần suất race tự nhiên. Xem [công việc còn lại](docs/REMAINING_WORK_PLAN.md) và [chi tiết runner](scripts/README.md).
 
 Workspace hội thoại: [ChatGPT Project 3](https://chatgpt.com/g/g-p-6ac5bc31497c81919197782e9d2226c6-project3/project). Hướng dẫn agent: [AGENTS.md](AGENTS.md).
 
