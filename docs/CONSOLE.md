@@ -2,7 +2,7 @@
 
 Console là giao diện local cho pilot, không thay đổi protocol hoặc phép đo của runner. Ba preset cố định là `mixed-none`, `mixed-local`, `mixed-redis` (tổng RPS 21..1000); chế độ `custom` cho phép chọn workload, mode, thuật toán, topology và policy trong các giới hạn bên dưới. Mỗi lượt chạy chọn một case, lặp 1..3 lượt. Roadmap/Proposal chỉ yêu cầu các thí nghiệm rate limiting; Console là lựa chọn kỹ thuật để trình bày demo.
 
-**Trạng thái hiện tại (20/10/2026):** T09 đã hoàn tất; T10 chưa bắt đầu, chưa có kết luận RQ và không được chạy thêm tải. Các lệnh pilot trong tài liệu này ghi lại quy trình trước đây. Xem [trạng thái sẵn sàng](experiments/PROTOCOL_READINESS.md) và [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md).
+**Trạng thái hiện tại (22/10/2026):** T09 và phân tích offline T10 đã hoàn tất; không có quyền tải mới. Các lệnh chạy trong tài liệu này ghi lại quy trình lịch sử. Saved-run UI là công cụ xem/so sánh artifact pilot và không thay kết quả T10. Xem [kết quả T10](analysis/T10_RESULTS.md), [trạng thái sẵn sàng](experiments/PROTOCOL_READINESS.md), [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md) và gói [demo/source T12](DEMO_PACKAGE.md).
 
 ## Quy trình phát triển
 

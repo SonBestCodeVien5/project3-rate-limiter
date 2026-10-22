@@ -1,0 +1,11 @@
+Pilot restore used the original `console-content-artifacts.tar.gz` (SHA-256 `fa3c8eef86e2ef263dbde33fa07e06dfbef5c353e875b03a9ab060abb3ce25be`). For each original Console run ID, all 36 member hashes matched `manifest.json` in both extracted source folders and restored destination folders.
+
+The restored triplet is in `/tmp/project3-t12-source/artifacts/console/`. Read-only browser verification ran against a temporary loopback Console on port 8090:
+
+- `GET /api/runs` returned 200 and listed all three runs.
+- `GET /api/runs/{id}` returned 200 for none/local/Redis; each run was completed with one summary and one analysis.
+- `GET /api/runs/{id}/artifacts` returned 200 and listed 24 artifacts for each run, including summary and resolved Compose.
+- Browser selected all three original IDs and the saved-run comparison rendered a table. Status: “Cấu hình và nội dung image khớp.” Values included goodput 7.96/14.16/17.04 per second, 429 0/323/465, 5xx 317/135/64; these remain pilot values. Oracle displayed not applicable/inconclusive/inconclusive.
+- Temporary server was stopped. Loopback startup required a narrow sandbox escalation; no POST, Docker, benchmark, or live workload was issued.
+
+Previously verified: demo checkout `1c3f56dddc12bd405cd3d70ff1b553abda6c787c` is clean with LFS status clean; `go build ./cmd/console` passed using Go caches under `/tmp`. T10 offline bundle matches all 41 original checksum entries.
