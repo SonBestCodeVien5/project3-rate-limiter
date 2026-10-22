@@ -1,8 +1,8 @@
-# Điều kiện đo và trạng thái hiện tại — cập nhật 21/10/2026
+# Điều kiện đo và trạng thái hiện tại — cập nhật 22/10/2026
 
-**T09 đo và T10 phân tích offline đã hoàn tất.** T09 có 138/138 slot dự kiến dùng được trên 46/46 cấu hình. Phân tích T10, bảng, dữ liệu từng lượt, traceability và 11 hình SVG/PDF/PNG được ghi trong [T10_RESULTS.md](../analysis/T10_RESULTS.md) và [worklog T10](../worklog/2026-10-20-t10/README.md); checksum nằm tại [SHA256SUMS](../worklog/2026-10-20-t10/SHA256SUMS). Measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`; T10 chỉ đọc evidence, không mở lại phép đo. FW oracle vẫn inconclusive; Redis counters là tổng traffic, outage thiếu resource sampling, UTC/restart-resume và khái quát hóa backend mô phỏng chưa xác minh. Xem [bàn giao T09 v1.3](../worklog/2026-10-20-t09-v1.3/README.md) nếu cần provenance phép đo. Người dùng yêu cầu dừng sau T10: không chạy thêm tải và chưa bắt đầu T11.
+**T09 đo và T10 phân tích offline đã hoàn tất.** T09 có 138/138 slot dự kiến dùng được trên 46/46 cấu hình. Phân tích T10, bảng, dữ liệu từng lượt, traceability và 11 hình SVG/PDF/PNG được ghi trong [T10_RESULTS.md](../analysis/T10_RESULTS.md) và [worklog T10](../worklog/2026-10-20-t10/README.md); checksum nằm tại [SHA256SUMS](../worklog/2026-10-20-t10/SHA256SUMS). Measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`; T10 chỉ đọc evidence, không mở lại phép đo. FW oracle vẫn inconclusive; Redis counters là tổng traffic, outage thiếu resource sampling, UTC/restart-resume và khái quát hóa backend mô phỏng chưa xác minh. Xem [bàn giao T09 v1.3](../worklog/2026-10-20-t09-v1.3/README.md) nếu cần provenance phép đo. T11 đã tích hợp kết quả vào báo cáo; việc tiếp tục T12 không cấp quyền chạy thêm tải.
 
-**Trạng thái hiện tại (21/10/2026):** Các hướng dẫn chạy pilot bên dưới là ghi nhận lịch sử, không cấp quyền chạy thêm tải. T10 đã xuất kết quả RQ1–RQ5 có giới hạn; [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md) ghi điểm dừng sau T10 và T11 chưa được yêu cầu.
+**Trạng thái hiện tại (22/10/2026):** Các hướng dẫn chạy pilot bên dưới là ghi nhận lịch sử, không cấp quyền chạy thêm tải. T11 đã tích hợp kết quả T10 vào báo cáo; T12 đã đóng gói và kiểm tra demo/source, T13 có nội dung nháp nhưng chưa dựng được PowerPoint qua Canva (HTTP 429). [Kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md) ghi trạng thái task; không có phép đo mới được cho phép.
 
 **Cập nhật 19/10/2026 (ghi nhận lịch sử):** T01 ổn định trong phiên làm việc khi đó. Observer không ghi nhận bước nhảy trên 5 ms; bounded gate T03 hoàn tất sáu lượt normal/mixed, không có cờ chất lượng hay request bị generator bỏ. Xem [worklog T02/T03](../worklog/2026-10-19-measurement-gate/README.md). Oracle Fixed Window ở trạng thái `inconclusive` (chưa đủ bằng chứng kết luận) vì chỉ quan sát một phần window. T04 calibration normal/burst, T05 calibration scaling, T06 kiểm thử atomicity, T07 calibration recovery capacity10 và kiểm tra smoke của exporter cũng đã hoàn tất. Các lần hiệu chỉnh không thay benchmark chính thức; T08 khóa protocol v1 như ghi bên dưới.
 
@@ -36,6 +36,6 @@ Các bước nhảy clock lịch sử ảnh hưởng deadline Redis; server cũn
 
 1. Chuỗi chạy T09 và bàn giao bằng chứng đã hoàn tất; 138/138 slot hợp lệ, 46/46 cấu hình tổng hợp.
 2. T10 đã hoàn tất phân tích offline RQ1–RQ5; xem [kết quả](../analysis/T10_RESULTS.md) và [worklog/checksum](../worklog/2026-10-20-t10/README.md).
-3. Không chạy thêm tải. Người dùng yêu cầu dừng sau T10, trước T11.
+3. Không chạy thêm tải. T11 đã tích hợp kết quả vào báo cáo; T12 dùng bằng chứng đã lưu để kiểm tra demo, không mở lại gate đo; T13 còn chờ Canva khả dụng.
 
 Giao diện so sánh, CSV và [biểu đồ pilot](../worklog/2026-10-13-evaluation/README.md) có thể hoàn thiện độc lập. Đây là công cụ trình bày và kiểm tra bằng chứng; chúng không thay điều kiện đo hoặc chứng minh tính đúng/khả năng mở rộng ở production.
