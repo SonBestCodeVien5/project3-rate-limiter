@@ -1,5 +1,50 @@
 # Session checkpoint
 
+## Documentation consolidation complete; P2-02 remains next — 2026-10-23
+
+Authorization is documentation/instruction cleanup and rewriting the three unpushed
+review commits only. No P2-02 implementation, runtime smoke, load, Redis outage,
+research rerun, analysis/plot regeneration, Drive sync or push. P2-01 code remains
+`0bea7b2`; the published baseline remains `17e10cd`.
+
+**Human entrypoint:** [docs/README.md](../README.md). The main reading route is
+PROJECT_ROADMAP → IMPLEMENTATION → REPORT_DRAFT → DEMO_SCRIPT. Baseline task state
+belongs to REMAINING_WORK_PLAN; P2 state/gates belong to PHASE2_PLAN. Technical
+contracts, operations and learning exercises remain separate because they serve
+different tasks. P2-02 has not started and requires a new implementation request
+covering G1; G2/G3/G4 remain unauthorized. Learning confirmation is still separate.
+
+**Consolidation:** deleted ten redundant/obsolete guides without replacement stubs:
+WEEK1_BUSINESS_CASE into PROJECT_ROADMAP; DEMO_PACKAGE/DEFENSE_PREPARATION into
+DEMO_SCRIPT; analysis/READING_GUIDE into T10_RESULTS; experiments/REPORTING into
+scripts/README; MEASUREMENT_GATE into PROTOCOL_READINESS. Retired DEMO_CONSOLE_PLAN,
+IMPLEMENTATION_STATUS, SCOPE_PROGRESS_2026-10-11 and SCOPE_REASSESSMENT_2026-10-08;
+originals remain in published Git history. The affected 25 human-facing guides
+shrank from 255,875 to 129,586 characters (49.4%) against the previous review tip.
+T10 scientific results remain unchanged; interpretation, teaching exercises,
+metric contracts, commands, restore guards, revisions and evidence caveats remain.
+No new editorial guide, archive or worklog was added for this consolidation.
+
+**History and checks:** the [earlier review record](../worklog/2026-10-23-docs-review/README.md)
+is a dated snapshot, including its old inventory and commit IDs. Before rewriting,
+the original review tip `10b9cf1` is retained at local ref
+`refs/archive/docs-before-concision-10b9cf1`. The final history still has three
+review commits above `17e10cd`, grouped as technical guides, reader navigation,
+and checkpoint/P2 registry. Historical narrative is preserved; only links to
+retired files in old worklogs/brief history/checkpoint now use immutable URLs at
+published revision `17e10cd`. Locked protocols, source notes, raw artifacts and
+checksum manifests are unchanged. Static local-link/fragment and whitespace checks
+passed across 98 Markdown files; retained shell/JSON examples were checked without
+execution. No application test suite or runtime verification was needed for docs.
+
+**Exact next package:** P2-02 (Compose overlay, Prometheus/Grafana and provisioning),
+only when requested. P2-01 has no independent parser/runtime scrape verification;
+`promtool` was unavailable. Measurement source remains
+`0291a80fb404fea0eafee8c3431acc3631bb423e`; all T09/T10 limitations remain. T12 is
+technically packaged; T13 has draft content but no deck after Canva HTTP 429.
+Rubric/feedback/official dates/H01/H02 remain pending. User files, ignored artifacts
+and template backups are untouched. Do not dispatch implementation from this stop.
+
 ## P2-01 complete; stop before P2-02 — 2026-10-23
 
 The user resumed Phase 2 **P2-01 only**, authorizing G1 implementation and focused
@@ -119,9 +164,9 @@ the baseline submission/defense package is finished.
 
 ## T12 verified; T13 content drafted, Canva unavailable — 2026-10-22
 
-The user resumed work, chose PowerPoint, supplied a HUST template and requested Canva. T12's [technical package](../DEMO_PACKAGE.md) is verified: clean detached demo checkout `/tmp/project3-t12-source` at `1c3f56dddc12bd405cd3d70ff1b553abda6c787c`, successful Console build, byte-identical restore of the original three pilot IDs (36 manifest hashes per run), and browser GET/run/artifact/comparison checks. Original local clock/fidelity flags remain; this UI is pilot evidence, distinct from T10 formal findings and measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`. T10 offline fallback matches all 41 original checksum entries. [Worklog/checks](../worklog/2026-10-22-t12/README.md) record results. Ignored package `artifacts/t12/PROJECT3-T12-DEMO-PACKAGE-v2.tar.gz` SHA-256 is `d11c6d79d26c8e2d5849e55a9c4c8fbc53a0cc1d4f44b49f333aa10b30c084d0`; V1 and extra T09 raw exports are preserved separately. T12 commit `6347392`.
+The user resumed work, chose PowerPoint, supplied a HUST template and requested Canva. T12's [technical package](https://github.com/SonBestCodeVien5/project3-rate-limiter/blob/17e10cd195723c091c8590f9ce9ec48401ec46ba/docs/DEMO_PACKAGE.md) is verified: clean detached demo checkout `/tmp/project3-t12-source` at `1c3f56dddc12bd405cd3d70ff1b553abda6c787c`, successful Console build, byte-identical restore of the original three pilot IDs (36 manifest hashes per run), and browser GET/run/artifact/comparison checks. Original local clock/fidelity flags remain; this UI is pilot evidence, distinct from T10 formal findings and measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`. T10 offline fallback matches all 41 original checksum entries. [Worklog/checks](../worklog/2026-10-22-t12/README.md) record results. Ignored package `artifacts/t12/PROJECT3-T12-DEMO-PACKAGE-v2.tar.gz` SHA-256 is `d11c6d79d26c8e2d5849e55a9c4c8fbc53a0cc1d4f44b49f333aa10b30c084d0`; V1 and extra T09 raw exports are preserved separately. T12 commit `6347392`.
 
-T13 has [11 draft topics/notes](../slides/project3-defense.md), traceability and [rehearsal checklist](../DEFENSE_PREPARATION.md), committed as `46fb74b`. No actual user rehearsal or final submission readiness. The first locally generated PPTX/builder was unvalidated and removed from deliverable paths, preserved only under ignored `artifacts/t13-draft-2026-10-22/`; do not deliver it. The requested Canva import failed twice at transport HTTP 429 (Cloudflare challenge), before any design ID. No Canva design, edited template or usable exported PPTX exists. Next prerequisite is a working Canva connector, then apply the provided HUST template, inspect layout and export the requested PPTX. Preserve report numbers/limits; do not silently switch methods.
+T13 has [11 draft topics/notes](../slides/project3-defense.md), traceability and [rehearsal checklist](https://github.com/SonBestCodeVien5/project3-rate-limiter/blob/17e10cd195723c091c8590f9ce9ec48401ec46ba/docs/DEFENSE_PREPARATION.md), committed as `46fb74b`. No actual user rehearsal or final submission readiness. The first locally generated PPTX/builder was unvalidated and removed from deliverable paths, preserved only under ignored `artifacts/t13-draft-2026-10-22/`; do not deliver it. The requested Canva import failed twice at transport HTTP 429 (Cloudflare challenge), before any design ID. No Canva design, edited template or usable exported PPTX exists. Next prerequisite is a working Canva connector, then apply the provided HUST template, inspect layout and export the requested PPTX. Preserve report numbers/limits; do not silently switch methods.
 
 **User template — preserve:** `Thuyet_trinh_Tinh_hoa_van_hoa_Ho_Chi_Minh_HUST_giu_nen_them_anh (2).pptx`, 23 slides, SHA-256 `8bdfe6d16bfaa09e6a3377990a4f8b2df7a060fc5a38b147cb63a218e1b1ffd1`. A worker incorrectly deleted the first upload during unrelated cleanup; the user reuploaded it and root saved a byte-identical backup under `artifacts/hust-template-backup-2026-10-22/`. The reuploaded original remains intentionally untracked in repo root; never infer an untracked file is disposable. All project-owned changes are committed separately from this user file. No further cleanup of user paths is authorized.
 
@@ -151,7 +196,7 @@ Measurement source remains `0291a80fb404fea0eafee8c3431acc3631bb423e`, T10 tooli
 
 ## Hướng dẫn đọc T10 — chỉ cập nhật tài liệu — 2026-10-21
 
-Đã thêm [hướng dẫn đọc T10](../analysis/READING_GUIDE.md) để giải thích lộ trình từ narrative tới bảng rồi traceability/provenance, cách đọc median (min–max) của ba lượt và đủ 11 biểu đồ. Tài liệu làm rõ ký hiệu e, trục CPU dưới một core, snapshot memory, offset trục goodput, backend overload và các giới hạn outage/scaling. Đã cập nhật [mục lục tài liệu](../README.md) và liên kết từ narrative. Đây chỉ là thay đổi tài liệu; không chạy code suite, phân tích, phép đo hay T11. T10 hoàn tất và điểm dừng trước T11 giữ nguyên như mục ngay dưới.
+Đã thêm [hướng dẫn đọc T10](https://github.com/SonBestCodeVien5/project3-rate-limiter/blob/17e10cd195723c091c8590f9ce9ec48401ec46ba/docs/analysis/READING_GUIDE.md) để giải thích lộ trình từ narrative tới bảng rồi traceability/provenance, cách đọc median (min–max) của ba lượt và đủ 11 biểu đồ. Tài liệu làm rõ ký hiệu e, trục CPU dưới một core, snapshot memory, offset trục goodput, backend overload và các giới hạn outage/scaling. Đã cập nhật [mục lục tài liệu](../README.md) và liên kết từ narrative. Đây chỉ là thay đổi tài liệu; không chạy code suite, phân tích, phép đo hay T11. T10 hoàn tất và điểm dừng trước T11 giữ nguyên như mục ngay dưới.
 
 ## T10 offline analysis complete; stop before T11 — 2026-10-21
 
@@ -311,7 +356,7 @@ The prepared helper corrects a concrete instrumentation defect: opening `kprobe_
 - Read-only Windows diagnostics initially hit a sandbox interop restriction; a bounded sandbox-escalated query reached Windows. W32Time was not started at query time and the targeted event filter found no matching records; neither result identifies the adjustment actor or authorizes a service change. `windows-escalated-retry.txt` preserves results; all nine final manifest entries verified. Observer raw evidence was not modified.
 - **Same-machine localization:** paired observation at revision `a533a8062932b4f32f8a3318eaea13cbc05c170f` found Windows UTC smooth against Stopwatch (no >5 ms adjacent residual), while WSL realtime recorded three forward steps of about 2.95 s. WSL realtime advanced 98.914 s over 90.048 s monotonic/boottime; negligible boottime-minus-monotonic difference argues against guest-accounted suspend during this window, not every VM pause mode. Post-run `systemd-timesyncd` was active/synchronized and kernel command line had `hv_utils.timesync_implicit=1`; the adjusting actor remains unconfirmed. No host/service settings changed.
 - Both clock batches are preserved in [the evidence archive](../worklog/2026-10-19-clock/evidence-2026-10-19.tar.gz), with [SHA256SUMS](../worklog/2026-10-19-clock/SHA256SUMS). Raw paired artifacts: `artifacts/clock-host-20261019-0256-a533a80/`. Artifact and archive checks passed; the historical worklog checksum is validated against its preserved snapshot rather than the updated README.
-- **T02 preparation complete:** portable observer, quality checker and sequential normal/mixed gate in `scripts/observe-clock.py`, `scripts/check-gate-quality.py`, `scripts/run-measurement-gate.sh`. Four focused self-checks passed, plus shell syntax/Python compilation/diff checks; no Docker or live gate validation. [Usage](../experiments/MEASUREMENT_GATE.md). Run from a clean fixed revision after integration, using fresh output paths.
+- **T02 preparation complete:** portable observer, quality checker and sequential normal/mixed gate in `scripts/observe-clock.py`, `scripts/check-gate-quality.py`, `scripts/run-measurement-gate.sh`. Four focused self-checks passed, plus shell syntax/Python compilation/diff checks; no Docker or live gate validation. [Usage](https://github.com/SonBestCodeVien5/project3-rate-limiter/blob/17e10cd195723c091c8590f9ce9ec48401ec46ba/docs/experiments/MEASUREMENT_GATE.md). Run from a clean fixed revision after integration, using fresh output paths.
 - **T11 partial:** [report draft](../REPORT_DRAFT.md) covers substantiated background/design/methodology and explicitly leaves final analysis, references and instructor format pending.
 - **T12 partial:** saved none/local/Redis Console folders are present at their original IDs; source/destination hashes and IDs matched, local clock flag preserved. The referenced historical manifest was absent, so direct source/destination hashes were used. [Demo handoff](../worklog/2026-10-19-demo/README.md). No live UI/build or clean-checkout validation this session; final package awaits T09–T10.
 
