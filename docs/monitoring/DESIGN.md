@@ -60,7 +60,7 @@ Các target có thể `up=1` khi Redis lỗi hoặc API trả 503. `/healthz` l�
 
 ## 4. Scrape và dashboard
 
-Khoảng khởi đầu đề xuất: scrape **2s**, timeout **1s**, refresh **5s**, rate window khoảng **20s**, dashboard **5 phút gần nhất**. Đây là lựa chọn demo cần kiểm chứng ở P2-03, không đủ phân giải để kiểm tra FW 1s hay quota từng request.
+Khoảng scrape **2s**, timeout **1s**, refresh **5s**, rate window **20s**, dashboard **5 phút gần nhất** là cấu hình demo. Không đủ phân giải để kiểm tra FW 1s hay quota từng request.
 
 Prometheus dùng DNS trong cùng Compose network, không `localhost` trong container:
 
@@ -68,9 +68,9 @@ Prometheus dùng DNS trong cùng Compose network, không `localhost` trong conta
 | --- | --- |
 | `api1:8080`, `api2:8080`, `backend:8080` | `/metrics/prometheus` |
 
-Compose overlay dùng job `project3-demo`, label target `service` (`api1`, `api2`, `backend`) và scrape `/metrics/prometheus` qua DNS service nội bộ. Grafana datasource Prometheus đã provision với UID `project3-prometheus`; datasource Loki dự kiến UID `project3-loki`. Dashboard dự kiến UID `project3-monitoring-demo`; provider hiện đặt dashboard vào folder UID `project3-monitoring-demo` — hai UID này định danh hai loại tài nguyên riêng. Dashboard và datasource Loki thuộc các gói sau. Dashboard tương lai cần giải thích tiếng Việt, panels dự kiến: `up`; API requests/s; quota rejects/s; backend attempts/s; arrivals/s, success/s và overload/s riêng; limiter errors/fail-open/fail-closed; API backend errors; logs liên quan. `up=1` chỉ xác nhận scrape. Đặt nhãn **demo monitoring — dữ liệu minh họa mới**. Không dựng p95/p99, legitimate goodput hay correctness pass từ counter; dùng summary/trace/T10 riêng cho phía client.
+Compose overlay dùng job `project3-demo`, label target `service` (`api1`, `api2`, `backend`) và scrape `/metrics/prometheus` qua DNS service nội bộ. Grafana datasource Prometheus đã provision với UID `project3-prometheus`; datasource Loki dự kiến UID `project3-loki`. Dashboard có UID `project3-monitoring-demo`; provider đặt dashboard vào folder UID cùng tên — hai UID này định danh hai loại tài nguyên riêng. Dashboard có bảy panel: `up`, API requests/s, limiter quota reject/errors/fail-open/fail-closed, API backend attempts/s, backend arrivals và success/s, backend overload/s, API backend errors/s. `up=1` chỉ xác nhận scrape. Nhãn dashboard là **demo monitoring — dữ liệu minh họa mới**. Query giữ series thiếu là thiếu mẫu, không ép thành 0. Không dựng p95/p99, legitimate goodput hay correctness pass từ counter; dùng summary/trace/T10 riêng cho phía client.
 
-PromQL mẫu, chưa chạy trên stack:
+PromQL trong dashboard (runtime cần xác minh tại G2):
 
 ```promql
 sum by (service) (rate(project3_api_requests_total{job="project3-demo"}[20s]))
@@ -105,7 +105,7 @@ Log pipeline có buffering/độ trễ riêng; không dùng log count làm oracl
 
 ## 6. Ranh giới vận hành
 
-Overlay `compose.observability.yaml` merge với base bằng project `project3-monitoring-demo`; Compose base và Console research stack không đổi, research stack không tự được scrape. Prometheus `v3.15.0` và Grafana `12.4.11` được pin; UI chỉ bind loopback (`19090`, `13000`). Named volumes tách riêng theo project. Prometheus retention đặt 24h và 512MB block-size budget; WAL có thể làm volume dùng nhiều hơn con số retention size. Prometheus và Grafana có memory limit 512 MiB mỗi service; log rotation là 10 MiB × 3 file/service. Đây là ngân sách cấu hình, chưa đo thực tế. Grafana admin password đọc từ Compose secret file cục bộ; không commit credentials. Redis/Nginx và logs nội bộ không thuộc allowlist logs ban đầu. Chi tiết credentials, storage, cleanup và giới hạn file secret nằm trong [runbook](RUNBOOK.md); không mount socket vào Grafana/app hay expose daemon TCP.
+Overlay `compose.observability.yaml` merge với base bằng project `project3-monitoring-demo`; Compose base và Console research stack không đổi, research stack không tự được scrape. Prometheus `v3.15.0` và Grafana `12.4.11` được pin; UI chỉ bind loopback (`19090`, `13000`). Named volumes tách riêng theo project. Prometheus retention đặt 24h và 512MB block-size budget; WAL có thể làm volume dùng nhiều hơn con số retention size. Prometheus và Grafana có memory limit 512 MiB mỗi service; log rotation là 10 MiB × 3 file/service. Đây là ngân sách cấu hình, chưa đo thực tế. Grafana admin password đọc từ Compose secret file cục bộ; không commit credentials. Redis/Nginx và logs nội bộ không thuộc allowlist logs ban đầu. Chi tiết credentials, storage, cleanup và giới hạn file secret nằm trong [runbook](RUNBOOK.md); không mount socket vào Grafana/app hay expose daemon TCP. P2-03 runtime result và giới hạn hiện hành được ghi trong [sổ task P2](PHASE2_PLAN.md) và [checkpoint](../context/SESSION_CHECKPOINT.md).
 
 ## 7. Tham chiếu và trạng thái
 

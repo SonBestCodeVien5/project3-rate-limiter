@@ -1,12 +1,12 @@
 # Runbook dự kiến cho demo monitoring
 
-**Runbook này vẫn là quy trình dự kiến, chưa có lần chạy runtime thành công.** P2-01 đã thêm exposition endpoint; P2-02 đã thêm overlay/provisioning và xác minh cấu hình tĩnh. Chưa chạy image, scrape, Grafana provisioning hay dashboard trên stack. Task/gate ở [kế hoạch P2](PHASE2_PLAN.md); [thiết kế](DESIGN.md) quy định metrics/labels, [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý baseline, [readiness](../experiments/PROTOCOL_READINESS.md) quản lý phép đo nghiên cứu. Ví dụ lệnh runtime chỉ dùng khi gate tương ứng được cấp.
+**Trạng thái runtime:** P2-01/P2-02 hoàn tất; G2 của P2-03 đang được kiểm chứng theo yêu cầu cho phép. Dashboard đã được provision từ `deploy/monitoring/grafana/dashboards/project3-overview.json`; kết quả thật của lượt kiểm chứng được ghi trong [sổ task P2](PHASE2_PLAN.md) và [checkpoint](../context/SESSION_CHECKPOINT.md). Chỉ các target, query và thao tác có bằng chứng runtime mới được coi là đã kiểm tra. [Thiết kế](DESIGN.md) quy định metrics/labels, [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý baseline, [readiness](../experiments/PROTOCOL_READINESS.md) quản lý phép đo nghiên cứu.
 
 ## 1. Trước khi chạy
 
 1. Xác nhận task/gate được người dùng tiếp tục trong [kế hoạch P2](PHASE2_PLAN.md). Commands dưới đây không tự cấp quyền runtime, tải hay outage.
 2. Kiểm tra working tree và giữ file người dùng, template HUST, ignored artifacts, T12 bundle, evidence và volumes. Không prune Docker hoặc xóa dữ liệu chưa xác minh ownership.
-3. Trước runtime, ghi version Docker/Compose, Go, browser, ports và tài nguyên máy. Không pull/cài tool trong phiên tài liệu.
+3. Trước runtime, ghi version Docker/Compose, Go, browser, ports và tài nguyên máy. Image dùng tag đã pin trong overlay; ghi image ID/digest thực tế khi đã tải.
 4. Demo dùng project riêng `project3-monitoring-demo`; không điều khiển nhầm `project3-research-lab` hay `project3-rate-limiter`. Kiểm tra đủ host ports base `8080`, `18081`, `18082`, `18083`, `16379` và ports monitoring `13000` (Grafana), `19090` (Prometheus).
 5. Không chạy đồng thời research load/observer; không sửa clock/NTP, protocol hoặc dataset để phục vụ demo.
 
@@ -37,7 +37,7 @@ docker compose -p project3-monitoring-demo \
   -f compose.yaml -f compose.observability.yaml config
 ```
 
-Compose config chỉ xác nhận cấu hình hợp nhất; nó không thay validator Prometheus/Loki/Alloy hoặc browser check. P2-02 static resolve đạt; `promtool` không có sẵn, image/runtime scrape và Grafana UI chưa được kiểm chứng. Ghi đúng checks chạy được, không tuyên bố stack pass từ config. Không lưu resolved config nguyên trạng nếu có thông tin nhạy cảm; password file chỉ lộ đường dẫn host.
+Compose config chỉ xác nhận cấu hình hợp nhất; nó không thay validator Prometheus/Loki/Alloy hoặc browser check. `promtool` không có sẵn. Ghi riêng check tĩnh và runtime; không tuyên bố runtime pass chỉ từ config. Không lưu resolved config nguyên trạng nếu có thông tin nhạy cảm; password file chỉ lộ đường dẫn host.
 
 ## 3. Start và smoke có giới hạn — G2
 
