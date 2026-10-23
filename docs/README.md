@@ -2,7 +2,7 @@
 
 Đây là mục lục dành cho người học và người viết báo cáo. Phần giải thích trong các tài liệu hiện hành dùng tiếng Việt; tên thuật toán, lệnh, mã định danh và trường dữ liệu giữ nguyên để đối chiếu với mã nguồn. Không cần đọc toàn bộ thư mục `docs/` theo thứ tự tên tệp.
 
-**Mốc đối chiếu 22/10/2026:** T09 có 138/138 lượt được chấp nhận trên 46/46 cấu hình; T10 phân tích offline RQ1–RQ5 đã xong và T11 đã tích hợp kết quả vào [bản nháp báo cáo](REPORT_DRAFT.md). Kết quả là của prototype/workload mô phỏng; FW oracle, backend và Redis counter có giới hạn được nêu rõ. T12 đã kiểm tra gói demo/source; T13 có nội dung nháp, PowerPoint qua Canva còn bị chặn HTTP 429; rubric, phản hồi giảng viên và ngày chính thức còn chờ. Trạng thái task ở [kế hoạch công việc](REMAINING_WORK_PLAN.md), cổng đo ở [readiness](experiments/PROTOCOL_READINESS.md).
+**Mốc đối chiếu 23/10/2026:** T09 có 138/138 lượt được chấp nhận trên 46/46 cấu hình; T10 phân tích offline RQ1–RQ5 đã xong và T11 đã tích hợp kết quả vào [bản nháp báo cáo](REPORT_DRAFT.md). Kết quả là của prototype/workload mô phỏng; FW oracle, backend và Redis counter có giới hạn được nêu rõ. T12 đã kiểm tra gói demo/source; T13 có nội dung nháp, lần nhập template vào Canva ngày 22/10 trả HTTP 429 nên chưa có PowerPoint; rubric, phản hồi giảng viên và ngày chính thức còn chờ. P2 mới có [bộ tài liệu chuẩn bị monitoring](monitoring/PHASE2_PLAN.md), chưa triển khai hoặc chạy tải. Trạng thái baseline ở [kế hoạch công việc](REMAINING_WORK_PLAN.md), cổng đo ở [readiness](experiments/PROTOCOL_READINESS.md).
 
 ## Đọc lần đầu
 

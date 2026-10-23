@@ -1,5 +1,65 @@
 # Session checkpoint
 
+## Phase 2 monitoring preparation complete; stop before P2-01 — 2026-10-23
+
+The user explicitly requested a full detailed plan and supporting docs for Phase 2,
+personally written by root without workers, to reduce future-session context and
+teach monitoring for the graduation project. They authorized documentation and
+reasonable commits only: this session is groundwork, not implementation. No agents
+were called for this preparation package. The no-delegation request applies to this
+preparation scope; future explicit user instructions still take precedence over the
+default delegation workflow.
+
+**P2-00 complete.** Read [PHASE2_PLAN.md](../monitoring/PHASE2_PLAN.md) for the single
+P2 task registry, dependencies, package ownership, completion checks and gates.
+Supporting docs: [DESIGN.md](../monitoring/DESIGN.md), [RUNBOOK.md](../monitoring/RUNBOOK.md),
+[LEARNING_GUIDE.md](../monitoring/LEARNING_GUIDE.md). The user selected all four local
+tools (Prometheus/Grafana then Alloy/Loki); a fixed demo Compose overlay is planned,
+not implemented. Outage live is conditional; latency histograms, live legitimate
+goodput, alerting, tracing and automatic Console-runner discovery are deferred.
+Learning milestones are all unconfirmed by the user, separately from code checks.
+
+**Next prerequisite:** the user requests resuming implementation, starting P2-01.
+Read the mandatory brief/source/Roadmap route, active P2 package and only relevant
+design/code. Do not repeat the whole inventory or reconnect Drive. Record which
+gates the actual request covers: G1 implementation/focused checks, G2 bounded
+runtime smoke, G3 bounded traffic demo, G4 Redis outage. The current planning-only
+instruction covers none of those. If a later request already covers a gate, do not
+ask permission again for each action. Do not automatically dispatch the next task
+after the requested stop.
+
+**Code facts preserved in the design:** JSON `/metrics` is used by Console/runner;
+the separate planned `/metrics/prometheus` will expose existing atomic counters.
+`allowed=0` in none mode, backend confirmed arrival includes overload, and backend
+success is not client legitimate goodput. No latency histogram exists. The base
+Compose project and Console's generated research stack are different environments.
+Docker socket access, label cardinality, sampled rates, resets/time ranges, storage
+and cleanup are explicit design concerns, not verified runtime behavior.
+
+**Commits:** `3880a1d` adds the four monitoring docs; `a9afb38` updates navigation,
+demo routing and AGENTS root-only/Phase-2 rules. This checkpoint/brief and baseline
+status update are committed separately after the documentation checks. No push.
+
+**Checks performed by root:** read targeted server/metrics/Compose/logging/Console
+callers and current source notes; consulted official vendor docs via Context7/web;
+checked local Markdown links, fence pairing, table columns, final newlines and
+`git diff --check`; ran `bash -n` on four illustrative Bash blocks (syntax only);
+verified 14 proposed metric names map to the existing JSON fields (the role-specific
+`canceled` field maps to two metric names). Inspected staged diffs before commits.
+No application tests, Docker validation/start/build, browser, request generation,
+load/outage, resource/clock observation or analysis/figure generation was performed.
+Image versions, exact storage budgets and actual runtime suitability remain pending
+at P2-02/P2-04. No new runtime artifacts, owned service/process, volume or checkout
+were created; existing user files, T12 packages, ignored raw artifacts and template
+backups were left untouched. No new skill was needed: routing plus explicit
+resumption instructions in the plan cover this scope.
+
+T09 measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`, 138/138 usable slots,
+T10 analysis, locked protocols, raw evidence/checksums and limitations remain
+unchanged. T12/source fallback and T13/rubric/feedback/date/H01/H02 retain their
+previous status. Phase 2 planning does not authorize experiments or imply that
+the baseline submission/defense package is finished.
+
 ## T12 verified; T13 content drafted, Canva unavailable — 2026-10-22
 
 The user resumed work, chose PowerPoint, supplied a HUST template and requested Canva. T12's [technical package](../DEMO_PACKAGE.md) is verified: clean detached demo checkout `/tmp/project3-t12-source` at `1c3f56dddc12bd405cd3d70ff1b553abda6c787c`, successful Console build, byte-identical restore of the original three pilot IDs (36 manifest hashes per run), and browser GET/run/artifact/comparison checks. Original local clock/fidelity flags remain; this UI is pilot evidence, distinct from T10 formal findings and measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`. T10 offline fallback matches all 41 original checksum entries. [Worklog/checks](../worklog/2026-10-22-t12/README.md) record results. Ignored package `artifacts/t12/PROJECT3-T12-DEMO-PACKAGE-v2.tar.gz` SHA-256 is `d11c6d79d26c8e2d5849e55a9c4c8fbc53a0cc1d4f44b49f333aa10b30c084d0`; V1 and extra T09 raw exports are preserved separately. T12 commit `6347392`.
