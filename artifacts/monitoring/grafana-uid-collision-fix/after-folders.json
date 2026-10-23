@@ -1,0 +1,14 @@
+[
+  {
+    "uid": "project3-monitoring-demo",
+    "title": "Project 3 Demo",
+    "url": "/dashboards/f/project3-monitoring-demo/project-3-demo",
+    "type": "dash-folder"
+  },
+  {
+    "uid": "project3-monitoring-folder",
+    "title": "Project 3 Monitoring",
+    "url": "/dashboards/f/project3-monitoring-folder/project-3-monitoring",
+    "type": "dash-folder"
+  }
+]

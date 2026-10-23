@@ -1,0 +1,28 @@
+{
+  "dashboard": {
+    "id": 1442510460461056,
+    "uid": "project3-monitoring-demo",
+    "title": "Project 3 — demo monitoring · dữ liệu minh họa mới",
+    "version": 2,
+    "schemaVersion": 39
+  },
+  "meta": {
+    "folderId": 1455232995889152,
+    "folderUid": "project3-monitoring-folder",
+    "folderTitle": "Project 3 Monitoring",
+    "provisioned": true,
+    "provisionedExternalId": "project3-overview.json",
+    "folderUrl": "/dashboards/f/project3-monitoring-folder/project-3-monitoring",
+    "url": "/d/project3-monitoring-demo/f67e2fb"
+  },
+  "panel_count": 7,
+  "panel_titles": [
+    "Target scrape được (1 = có scrape thành công)",
+    "Request nhận tại API (/s)",
+    "Limiter: quota reject và lỗi (/s)",
+    "Request API gửi tới backend (/s)",
+    "Backend arrivals và service thành công (/s)",
+    "Backend overload (/s)",
+    "API backend errors (/s)"
+  ]
+}

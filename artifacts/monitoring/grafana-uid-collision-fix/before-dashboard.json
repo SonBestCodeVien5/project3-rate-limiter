@@ -1,0 +1,18 @@
+{
+  "dashboard": {
+    "id": 1442510460461056,
+    "uid": "project3-monitoring-demo",
+    "title": "Project 3 — demo monitoring · dữ liệu minh họa mới",
+    "version": 1,
+    "schemaVersion": 39
+  },
+  "meta": {
+    "folderId": 1442510274269184,
+    "folderUid": "project3-monitoring-demo",
+    "folderTitle": "Project 3 Demo",
+    "provisioned": true,
+    "provisionedExternalId": "project3-overview.json",
+    "folderUrl": "/dashboards/f/project3-monitoring-demo/project-3-demo",
+    "url": "/d/project3-monitoring-demo/f67e2fb"
+  }
+}

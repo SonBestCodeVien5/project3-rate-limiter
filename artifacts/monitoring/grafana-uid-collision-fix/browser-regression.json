@@ -1,0 +1,402 @@
+{
+  "captured_utc": "2026-10-23T14:50:33.867310+00:00",
+  "grafana_version": {
+    "Browser": "Chrome/149.0.7827.22",
+    "Protocol-Version": "1.3",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+    "V8-Version": "14.9.207.8",
+    "WebKit-Version": "537.36 (@e44bf5d2837ae8a8b51feb6025022cfc81bf3865)"
+  },
+  "login_form": {
+    "url": "http://127.0.0.1:13000/login",
+    "inputs": [
+      {
+        "name": "user",
+        "id": ":r0:",
+        "type": "text",
+        "placeholder": "email or username"
+      },
+      {
+        "name": "password",
+        "id": ":r1:",
+        "type": "password",
+        "placeholder": "password"
+      }
+    ],
+    "buttons": [
+      "",
+      "Log in"
+    ]
+  },
+  "login_route_after": "http://127.0.0.1:13000/",
+  "pages": {
+    "dashboards_list_expanded": {
+      "clicked": true,
+      "contains_dashboard_title": true,
+      "contains_range_error": false,
+      "text_excerpt": "Skip to main content\nGrafana\n\nHome\n\nBookmarks\n\nStarred\n\nDashboards\n\nExplore\n\nDrilldown\n\nAlerting\n\nConnections\n\nAdministration\n\nDashboards\nSearch...\nctrl+k\nDashboards\nNew\nCreate and manage dashboards to visualize your data\nFilter by tag\nStarred\nSort\nName\nTags\nProject 3 Demo\nProject 3 Monitoring\nProject 3 — demo monitoring · dữ liệu minh họa mới\ndemo\nmonitoring\nproject3"
+    },
+    "dashboards_list": {
+      "url": "http://127.0.0.1:13000/dashboards",
+      "has_new_folder": true,
+      "has_old_folder": true,
+      "contains_range_error": false,
+      "text": "Skip to main content\nGrafana\n\nHome\n\nBookmarks\n\nStarred\n\nDashboards\n\nExplore\n\nDrilldown\n\nAlerting\n\nConnections\n\nAdministration\n\nDashboards\nSearch...\nctrl+k\nDashboards\nNew\nCreate and manage dashboards to visualize your data\nFilter by tag\nStarred\nSort\nName\nTags\nProject 3 Demo\nProject 3 Monitoring",
+      "links": [
+        {
+          "text": "Skip to main content",
+          "href": "#pageContent"
+        },
+        {
+          "text": "",
+          "href": "/"
+        },
+        {
+          "text": "Home",
+          "href": "/"
+        },
+        {
+          "text": "Bookmarks",
+          "href": "/bookmarks"
+        },
+        {
+          "text": "Starred",
+          "href": "/dashboards?starred"
+        },
+        {
+          "text": "Dashboards",
+          "href": "/dashboards"
+        },
+        {
+          "text": "Explore",
+          "href": "/explore"
+        },
+        {
+          "text": "Drilldown",
+          "href": "/drilldown"
+        },
+        {
+          "text": "Alerting",
+          "href": "/alerting"
+        },
+        {
+          "text": "Connections",
+          "href": "/connections"
+        },
+        {
+          "text": "Administration",
+          "href": "/admin"
+        },
+        {
+          "text": "Project 3 Demo",
+          "href": "/dashboards/f/project3-monitoring-demo/?orgId=1"
+        },
+        {
+          "text": "Project 3 Monitoring",
+          "href": "/dashboards/f/project3-monitoring-folder/?orgId=1"
+        }
+      ],
+      "buttons": [
+        {
+          "text": "",
+          "aria": "Undock menu",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Close menu",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Add to Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand section: Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Add to Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand section: Starred",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Add to Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand section: Dashboards",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Add to Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Add to Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand section: Drilldown",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Add to Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand section: Alerting",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Add to Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand section: Connections",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Add to Bookmarks",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand section: Administration",
+          "title": ""
+        },
+        {
+          "text": "Search...",
+          "aria": null,
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "New",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Help",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Profile",
+          "title": ""
+        },
+        {
+          "text": "New",
+          "aria": null,
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand folder Project 3 Demo",
+          "title": ""
+        },
+        {
+          "text": "",
+          "aria": "Expand folder Project 3 Monitoring",
+          "title": ""
+        }
+      ]
+    },
+    "folder_expanded": {
+      "url": "http://127.0.0.1:13000/dashboards/f/project3-monitoring-folder/?orgId=1",
+      "contains_dashboard_title": true,
+      "contains_dashboard_uid": false,
+      "contains_range_error": false,
+      "text": "Skip to main content\nGrafana\n\nHome\n\nBookmarks\n\nStarred\n\nDashboards\n\nExplore\n\nDrilldown\n\nAlerting\n\nConnections\n\nAdministration\n\nDashboards\nProject 3 Monitoring\nSearch...\nctrl+k\nProject 3 Monitoring\nFolder actions\nNew\nManage folder dashboards and permissions\nDashboards\nPanels\nAlert rules\nFilter by tag\nStarred\nSort\nName\nTags\nProject 3 — demo monitoring · dữ liệu minh họa mới\ndemo\nmonitoring\nproject3"
+    },
+    "dashboard": {
+      "url": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?orgId=1&from=now-5m&to=now&timezone=browser&refresh=5s",
+      "title": "Project 3 — demo monitoring · dữ liệu minh họa mới - Project 3 Monitoring - Dashboards - Grafana",
+      "panel_titles_present": [
+        "Target scrape được (1 = có scrape thành công)",
+        "Request nhận tại API (/s)",
+        "Limiter: quota reject và lỗi (/s)",
+        "Request API gửi tới backend (/s)",
+        "Backend arrivals và service thành công (/s)",
+        "Backend overload (/s)",
+        "API backend errors (/s)"
+      ],
+      "panel_titles_missing": [],
+      "range_error": false,
+      "scroll_container_candidates": [
+        {
+          "tag": "BODY",
+          "cls": "theme-dark app-grafana page-dashboard",
+          "height": 900,
+          "scrollHeight": 1223,
+          "overflow": "auto"
+        }
+      ],
+      "scroll_steps": [
+        {
+          "step": 1,
+          "scroll": [
+            {
+              "top": 0,
+              "max": 323
+            }
+          ],
+          "present": [
+            "Target scrape được (1 = có scrape thành công)",
+            "Request nhận tại API (/s)",
+            "Limiter: quota reject và lỗi (/s)",
+            "Request API gửi tới backend (/s)",
+            "Backend arrivals và service thành công (/s)",
+            "Backend overload (/s)",
+            "API backend errors (/s)"
+          ]
+        },
+        {
+          "step": 2,
+          "scroll": [
+            {
+              "top": 0,
+              "max": 323
+            }
+          ],
+          "present": [
+            "Target scrape được (1 = có scrape thành công)",
+            "Request nhận tại API (/s)",
+            "Limiter: quota reject và lỗi (/s)",
+            "Request API gửi tới backend (/s)",
+            "Backend arrivals và service thành công (/s)",
+            "Backend overload (/s)",
+            "API backend errors (/s)"
+          ]
+        },
+        {
+          "step": 3,
+          "scroll": [
+            {
+              "top": 0,
+              "max": 323
+            }
+          ],
+          "present": [
+            "Target scrape được (1 = có scrape thành công)",
+            "Request nhận tại API (/s)",
+            "Limiter: quota reject và lỗi (/s)",
+            "Request API gửi tới backend (/s)",
+            "Backend arrivals và service thành công (/s)",
+            "Backend overload (/s)",
+            "API backend errors (/s)"
+          ]
+        },
+        {
+          "step": 4,
+          "scroll": [
+            {
+              "top": 0,
+              "max": 323
+            }
+          ],
+          "present": [
+            "Target scrape được (1 = có scrape thành công)",
+            "Request nhận tại API (/s)",
+            "Limiter: quota reject và lỗi (/s)",
+            "Request API gửi tới backend (/s)",
+            "Backend arrivals và service thành công (/s)",
+            "Backend overload (/s)",
+            "API backend errors (/s)"
+          ]
+        },
+        {
+          "step": 5,
+          "scroll": [
+            {
+              "top": 0,
+              "max": 323
+            }
+          ],
+          "present": [
+            "Target scrape được (1 = có scrape thành công)",
+            "Request nhận tại API (/s)",
+            "Limiter: quota reject và lỗi (/s)",
+            "Request API gửi tới backend (/s)",
+            "Backend arrivals và service thành công (/s)",
+            "Backend overload (/s)",
+            "API backend errors (/s)"
+          ]
+        },
+        {
+          "step": 6,
+          "scroll": [
+            {
+              "top": 0,
+              "max": 323
+            }
+          ],
+          "present": [
+            "Target scrape được (1 = có scrape thành công)",
+            "Request nhận tại API (/s)",
+            "Limiter: quota reject và lỗi (/s)",
+            "Request API gửi tới backend (/s)",
+            "Backend arrivals và service thành công (/s)",
+            "Backend overload (/s)",
+            "API backend errors (/s)"
+          ]
+        },
+        {
+          "step": 7,
+          "scroll": [
+            {
+              "top": 0,
+              "max": 323
+            }
+          ],
+          "present": [
+            "Target scrape được (1 = có scrape thành công)",
+            "Request nhận tại API (/s)",
+            "Limiter: quota reject và lỗi (/s)",
+            "Request API gửi tới backend (/s)",
+            "Backend arrivals và service thành công (/s)",
+            "Backend overload (/s)",
+            "API backend errors (/s)"
+          ]
+        },
+        {
+          "step": 8,
+          "scroll": [
+            {
+              "top": 0,
+              "max": 323
+            }
+          ],
+          "present": [
+            "Target scrape được (1 = có scrape thành công)",
+            "Request nhận tại API (/s)",
+            "Limiter: quota reject và lỗi (/s)",
+            "Request API gửi tới backend (/s)",
+            "Backend arrivals và service thành công (/s)",
+            "Backend overload (/s)",
+            "API backend errors (/s)"
+          ]
+        }
+      ],
+      "text_excerpt": "Skip to main content\nGrafana\n\nHome\n\nBookmarks\n\nStarred\n\nDashboards\n\nExplore\n\nDrilldown\n\nAlerting\n\nConnections\n\nAdministration\n\nDashboards\nProject 3 Monitoring\nProject 3 — demo monitoring · dữ liệu minh họa mới\nSearch...\nctrl+k\nEdit\nExport \nShare\nLast 5 minutes\nRefresh\n5s\nTarget scrape được (1 = có scrape thành công)\napi1\napi2\nbackend\nRequest nhận tại API (/s)\napi1\napi2\nLimiter: quota reject và lỗi (/s)\napi1 quota reject\napi2 quota reject\napi1 limiter error\napi2 limiter error\napi1 fail-open\napi2 fail-open\napi1 fail-closed\napi2 fail-closed\nRequest API gửi tới backend (/s)\napi1\napi2\nBackend arrivals và service thành công (/s)\nbackend arrivals\nbackend success\nBackend overload (/s)\nbackend overload\nAPI backend errors (/s)\napi1\napi2"
+    }
+  },
+  "browser_errors": []
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "scrapePool": "project3-demo",
+    "health": "up",
+    "lastError": "",
+    "labels": {
+      "instance": "api2:8080",
+      "job": "project3-demo",
+      "service": "api2"
+    }
+  },
+  {
+    "scrapePool": "project3-demo",
+    "health": "up",
+    "lastError": "",
+    "labels": {
+      "instance": "backend:8080",
+      "job": "project3-demo",
+      "service": "backend"
+    }
+  },
+  {
+    "scrapePool": "project3-demo",
+    "health": "up",
+    "lastError": "",
+    "labels": {
+      "instance": "api1:8080",
+      "job": "project3-demo",
+      "service": "api1"
+    }
+  }
+]
