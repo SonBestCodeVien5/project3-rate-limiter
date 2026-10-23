@@ -2,11 +2,11 @@
 
 P2 là phần mở rộng local do người dùng chọn để học monitoring và cải thiện demo; không đổi yêu cầu hay bằng chứng baseline. Mục tiêu cơ bản là Prometheus, Grafana, Alloy, Loki, một dashboard, truy vấn metrics/logs và demo lặp lại được. Histogram, alerting, tracing, exporters hạ tầng, tự discovery mọi Console run và observability production là tùy chọn/ngoài scope.
 
-**Hiện trạng 23/10/2026:** P2-01 hoàn tất G1 ở commit `0bea7b2`; P2-02 là gói tiếp theo nhưng chưa được yêu cầu. `GET /metrics/prometheus` đã có, JSON `GET /metrics` giữ nguyên. Chưa có scrape/runtime stack, demo load hay outage. Chỉ thực hiện khi yêu cầu hiện hành bao phủ gói và cổng tương ứng.
+**Hiện trạng 23/10/2026:** P2-01 hoàn tất G1 ở commit `0bea7b2`; P2-02 hoàn tất triển khai và kiểm tra tĩnh G1 ở commit `d785529`. Dừng trước P2-03. `GET /metrics/prometheus` đã có, JSON `GET /metrics` giữ nguyên. Chưa có scrape/runtime stack, demo load hay outage. Chỉ thực hiện khi yêu cầu hiện hành bao phủ gói và cổng tương ứng.
 
 ## Cách tiếp tục
 
-Đọc đúng task đang làm trong sổ này, rồi phần liên quan của [DESIGN](DESIGN.md), [RUNBOOK](RUNBOOK.md) hoặc [LEARNING_GUIDE](LEARNING_GUIDE.md). Kiểm tra code/caller thuộc gói trước khi sửa. [AGENTS.md](../../AGENTS.md) quy định nguồn bắt buộc, ownership và commit. [Checkpoint](../context/SESSION_CHECKPOINT.md) ghi kiểm tra/giới hạn P2-01.
+Đọc đúng task đang làm trong sổ này, rồi phần liên quan của [DESIGN](DESIGN.md), [RUNBOOK](RUNBOOK.md) hoặc [LEARNING_GUIDE](LEARNING_GUIDE.md). Kiểm tra code/caller thuộc gói trước khi sửa. [AGENTS.md](../../AGENTS.md) quy định nguồn bắt buộc, ownership và commit. [Checkpoint](../context/SESSION_CHECKPOINT.md) ghi kiểm tra/giới hạn từng phiên.
 
 Chuỗi mặc định: `P2-01 → P2-02 → P2-03 → P2-04 → P2-05 → P2-06 → P2-08`; P2-07 là nhánh có điều kiện. Không tự giao hoặc khởi chạy task sau điểm dừng được yêu cầu.
 
@@ -24,7 +24,7 @@ Chuỗi mặc định: `P2-01 → P2-02 → P2-03 → P2-04 → P2-05 → P2-06 
 | Cổng | Giới hạn | Trạng thái hiện tại |
 | --- | --- | --- |
 | G0 — tài liệu | Đọc, viết và kiểm tra tài liệu | P2-00 hoàn tất |
-| G1 — triển khai | Sửa code/config/test và focused checks; không start stack, loadgen hoặc outage | P2-01 được cho phép riêng và hoàn tất; P2-02 chưa được yêu cầu |
+| G1 — triển khai | Sửa code/config/test và focused checks; không start stack, loadgen hoặc outage | P2-01/P2-02 hoàn tất trong phạm vi được cấp riêng; dừng sau P2-02 |
 | G2 — runtime smoke | Stack demo đúng project; scrape/browser; tối đa **10 request `/work` tuần tự**; không pause Redis | Chưa được cấp |
 | G3 — demo load | Chỉ scenario đã ghi theo P2-06; không chạy research matrix | Chưa được cấp |
 | G4 — Redis outage | Pause/unpause đúng Redis demo, cleanup và healthy reference theo P2-07 | Chưa được cấp |
@@ -39,8 +39,8 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 | --- | --- | --- | --- |
 | P2-00 | Kế hoạch, design, runbook, learning guide và routing | — | **Xong**; xem checkpoint |
 | P2-01 | Prometheus exposition, giữ JSON metrics | P2-00; G1 | **Xong**, `0bea7b2`; chi tiết tests/skips ở checkpoint |
-| P2-02 | Compose overlay, Prometheus/Grafana và provisioning | P2-01; G1 | **Chưa bắt đầu; bước kế tiếp**, cần yêu cầu G1 mới |
-| P2-03 | Dashboard metrics và runtime smoke | P2-02; G2 | **Chưa bắt đầu** |
+| P2-02 | Compose overlay, Prometheus/Grafana và provisioning | P2-01; G1 | **Xong G1**, `d785529`; runtime chưa kiểm chứng |
+| P2-03 | Dashboard metrics và runtime smoke | P2-02; G2 | **Chưa bắt đầu; gói kế tiếp**, cần yêu cầu mới bao phủ triển khai dashboard và G2 |
 | P2-04 | Alloy → Loki logs và datasource | P2-02; sau P2-03 theo mặc định | **Chưa bắt đầu** |
 | P2-05 | Kiểm chứng pipeline logs và vòng đời stack | P2-03/P2-04; G2 | **Chưa bắt đầu** |
 | P2-06 | Demo normal/mixed: none/local/Redis | P2-05; G3 | **Chưa bắt đầu** |
@@ -53,12 +53,16 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 
 `GET /metrics/prometheus` xuất 10 API counters hoặc 4 backend counters từ atomic counters hiện có; JSON schema, limiter và nghiên cứu không đổi. Focused/full server tests, vet, formatting đạt. `promtool` không có sẵn; chưa có parser độc lập hoặc runtime scrape. Xem commit/test/skips ở [checkpoint](../context/SESSION_CHECKPOINT.md); snapshot nhiều counter không phải transaction.
 
-### P2-02 — Prometheus/Grafana
+### P2-02 — Prometheus/Grafana (hoàn tất G1)
 
-- Tệp dự kiến: `compose.observability.yaml`, `deploy/monitoring/prometheus.yml`, `deploy/monitoring/grafana/provisioning/`. Giữ research runner Compose nguyên trạng.
+- Tệp triển khai: `compose.observability.yaml`, `deploy/monitoring/prometheus.yml`, `deploy/monitoring/grafana/provisioning/`. Giữ research runner Compose nguyên trạng.
 - Dùng project `project3-monitoring-demo`; pin image versions (không dùng `latest`), provision datasource/provider với UID ổn định, không commit credentials; kiểm tra host-port conflicts.
 - Compose mount, scrape service DNS, retention/storage, loopback ports, healthcheck và cleanup theo [design](DESIGN.md)/[runbook](RUNBOOK.md). Static config pass không phải runtime pass.
 - Tiêu chí tĩnh: Compose resolve được, mounts/ports đúng và config được validator phù hợp kiểm tra khi có công cụ; không đánh dấu runtime đạt chỉ từ `compose config`.
+
+Kết quả G1 (`d785529`): overlay project cố định; scrape ba service qua `/metrics/prometheus`; datasource UID `project3-prometheus`, provider/folder ổn định; named volumes, loopback, healthchecks, memory/retention budget và log rotation đã cấu hình. Image Prometheus `v3.15.0`/Grafana `12.4.11` được đối chiếu nguồn chính thức; digest và image thực tế chưa kiểm chứng.
+
+Kiểm tra đạt: base Compose độc lập và base+overlay resolve; YAML/PyYAML và assertions cho targets/labels, mount paths, ports, provisioning, healthchecks, logging, secret không lộ nội dung; `git diff --check`. Bảy host ports không có listener tại lúc kiểm tra. `promtool` không sẵn có; chưa chạy validator Prometheus, image, scrape hay UI. Chi tiết lệnh và file tạm ở [checkpoint](../context/SESSION_CHECKPOINT.md). Dashboard, Loki/Alloy chưa triển khai; xác nhận học tập còn riêng. **Điều kiện tiếp theo:** yêu cầu mới cho P2-03, bao phủ triển khai dashboard và G2 runtime smoke theo ngân sách; G3/G4 chưa được cấp.
 
 ### P2-03 — dashboard và smoke
 

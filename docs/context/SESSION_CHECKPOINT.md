@@ -1,5 +1,69 @@
 # Session checkpoint
 
+## P2-02 complete within G1; stop before P2-03 — 2026-10-23
+
+The user resumed **P2-02 only**, authorizing G1 implementation and focused static/local
+checks, explicitly including Docker Compose configuration validation. G2/G3/G4,
+service/image startup or pulls, demo load, Redis interruption, T09/T10 reruns and
+P2-03 were prohibited. Default delegation used one fresh `gpt-6-luna` worker,
+reasoning `low`, no worker spawning. Root integrated named documentation findings,
+inspected staged diffs and committed; worker performed implementation/static checks.
+
+**Implementation commit:** `d785529` (`feat(monitoring): provision fixed Prometheus and Grafana demo stack`).
+Files: `compose.observability.yaml`, `deploy/monitoring/prometheus.yml`, Grafana
+`provisioning/datasources/prometheus.yml`, `provisioning/dashboards/provider.yml`,
+`dashboards/.gitkeep`, `.gitignore`, [DESIGN](../monitoring/DESIGN.md) and
+[RUNBOOK](../monitoring/RUNBOOK.md). Pins: `prom/prometheus:v3.15.0`,
+`grafana/grafana:12.4.11`; official versioned sources/config references are linked
+in DESIGN section 7. Source inspection is not image/digest/executable runtime
+verification. Redis/Nginx pins and base Compose are unchanged.
+
+Prometheus scrapes `api1:8080`, `api2:8080`, `backend:8080` at
+`/metrics/prometheus`, interval 2s/timeout 1s, job `project3-demo` and distinct
+`service` target labels. Grafana datasource UID is `project3-prometheus`; provider
+name/folder UID are `project3-monitoring-demo`. Dashboard authoring and Loki/Alloy
+are deferred. Monitoring ports are loopback `19090`/`13000`; all seven services
+have healthchecks and 10 MiB × 3 JSON log rotation. Monitoring services each have
+512 MiB memory limits; Prometheus retention is 24h/512MB, not a hard volume quota
+(WAL/metadata can exceed the budget). Named volumes belong to the fixed project.
+The ignored `.secrets/` path and required `GRAFANA_ADMIN_PASSWORD_FILE` avoid
+committed/default passwords. Runbook creation preserves an existing password and
+explains persisted Grafana credentials, file readability and scoped non-destructive
+`down` cleanup; no credential was created inside the repository.
+
+**Worker checks passed:**
+
+- `docker compose -f compose.yaml config --quiet`; standalone resolved output at
+  `/tmp/p2-02-base-resolved.yaml` confirms the base remains independently usable.
+- `GRAFANA_ADMIN_PASSWORD_FILE=/tmp/p2-02-grafana-secret docker compose -p project3-monitoring-demo -f compose.yaml -f compose.observability.yaml config --quiet`;
+  resolved output at `/tmp/p2-02-compose-resolved.yaml`.
+- Inline Python/PyYAML assertions checked YAML syntax, merged services, pins,
+  target paths/labels, referenced mounts, provisioning identifiers, loopback ports,
+  healthchecks, logging and password content non-disclosure. These checks were
+  ephemeral, not a new committed validator or runtime acceptance test.
+- Read-only `ss -ltn`: no listeners on the seven selected host ports at inspection;
+  availability must be checked again before a future startup.
+- `git diff --check`; root additionally checked local documentation links and Bash
+  example syntax without execution, and inspected each staged diff before commit.
+
+**Skips/limitations:** local `promtool` is unavailable; no Prometheus semantic
+validator, Grafana runtime provisioning, image pull/run, actual scrape, healthcheck
+execution, browser, dashboard, pipeline, restart/cleanup or storage/memory usage
+verification. No code changed, so no application suite was rerun. No research
+measurement/analysis, Drive reconnection or push. No owned long-lived process,
+container or volume was created; ignored artifacts/user files were preserved.
+Only temporary resolved configs and a dummy validation secret remain at the `/tmp`
+paths above; they are not research evidence. Technical completion does not confirm
+user learning, and static configuration success does not imply runtime success.
+
+**Exact next prerequisite:** a new user request for **P2-03 — dashboard metrics and
+runtime smoke**, covering dashboard implementation and G2 (maximum 10 sequential
+`/work` requests for that smoke package). G3 demo load and G4 outage remain
+unauthorized. Do not dispatch P2-03 from this stop. Task-state/brief/checkpoint and
+reader-entrypoint updates are committed separately from implementation. No push.
+Measurement source remains `0291a80fb404fea0eafee8c3431acc3631bb423e`; T09/T10
+artifacts, conclusions and limitations remain unchanged.
+
 ## Documentation consolidation complete; P2-02 remains next — 2026-10-23
 
 Authorization is documentation/instruction cleanup and rewriting the three unpushed
