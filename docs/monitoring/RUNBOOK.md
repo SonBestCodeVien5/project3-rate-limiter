@@ -1,6 +1,6 @@
-# Runbook dự kiến cho demo monitoring
+# Runbook vận hành demo monitoring
 
-**Trạng thái runtime:** P2-01/P2-02 hoàn tất; G2 của P2-03 đang được kiểm chứng theo yêu cầu cho phép. Dashboard đã được provision từ `deploy/monitoring/grafana/dashboards/project3-overview.json`; kết quả thật của lượt kiểm chứng được ghi trong [sổ task P2](PHASE2_PLAN.md) và [checkpoint](../context/SESSION_CHECKPOINT.md). Chỉ các target, query và thao tác có bằng chứng runtime mới được coi là đã kiểm tra. [Thiết kế](DESIGN.md) quy định metrics/labels, [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý baseline, [readiness](../experiments/PROTOCOL_READINESS.md) quản lý phép đo nghiên cứu.
+**Trạng thái runtime:** P2-01/P2-02 hoàn tất; P2-03 G2 đã kiểm tra trên project `project3-monitoring-demo`. Cả ba scrape targets lên; JSON/exposition giữ contract; Grafana datasource/dashboard provision thành công; 11 PromQL expressions trả kết quả; browser cuộn qua dashboard và xác nhận đủ bảy panel. Stack đã dừng; hai named volumes còn được giữ lại. Lệnh, giới hạn, UTC bounds và kết quả chi tiết nằm trong [G2 smoke evidence](../../artifacts/monitoring/p2-03-g2/checks.md). [Thiết kế](DESIGN.md) quy định metrics/labels, [kế hoạch P2](PHASE2_PLAN.md) quản lý task state, [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý baseline, [readiness](../experiments/PROTOCOL_READINESS.md) quản lý phép đo nghiên cứu.
 
 ## 1. Trước khi chạy
 
@@ -37,7 +37,7 @@ docker compose -p project3-monitoring-demo \
   -f compose.yaml -f compose.observability.yaml config
 ```
 
-Compose config chỉ xác nhận cấu hình hợp nhất; nó không thay validator Prometheus/Loki/Alloy hoặc browser check. `promtool` không có sẵn. Ghi riêng check tĩnh và runtime; không tuyên bố runtime pass chỉ từ config. Không lưu resolved config nguyên trạng nếu có thông tin nhạy cảm; password file chỉ lộ đường dẫn host.
+Compose config chỉ xác nhận cấu hình hợp nhất; nó không thay validator Prometheus/Loki/Alloy hoặc browser check. `promtool` không cài trên host; có thể chạy validator từ pinned Prometheus image như đã ghi ở bằng chứng P2-03. Ghi riêng check tĩnh và runtime; không tuyên bố runtime pass chỉ từ config. Không lưu resolved config nguyên trạng nếu có thông tin nhạy cảm; password file chỉ lộ đường dẫn host.
 
 ## 3. Start và smoke có giới hạn — G2
 
