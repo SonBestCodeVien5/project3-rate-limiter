@@ -1,18 +1,31 @@
 # Runbook dự kiến cho demo monitoring
 
-**Runbook này vẫn là quy trình dự kiến, chưa được chạy thành công.** P2-01 đã thêm exposition endpoint và qua focused checks; file Compose/config P2, provisioning và xác minh runtime chưa có. Task/gate và điểm tiếp theo P2-02 ở [kế hoạch P2](PHASE2_PLAN.md); [thiết kế](DESIGN.md) quy định metrics/labels, [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý baseline, [readiness](../experiments/PROTOCOL_READINESS.md) quản lý phép đo nghiên cứu. Ví dụ command chỉ là tài liệu tham khảo, không tự cấp quyền runtime.
+**Runbook này vẫn là quy trình dự kiến, chưa có lần chạy runtime thành công.** P2-01 đã thêm exposition endpoint; P2-02 đã thêm overlay/provisioning và xác minh cấu hình tĩnh. Chưa chạy image, scrape, Grafana provisioning hay dashboard trên stack. Task/gate ở [kế hoạch P2](PHASE2_PLAN.md); [thiết kế](DESIGN.md) quy định metrics/labels, [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý baseline, [readiness](../experiments/PROTOCOL_READINESS.md) quản lý phép đo nghiên cứu. Ví dụ lệnh runtime chỉ dùng khi gate tương ứng được cấp.
 
 ## 1. Trước khi chạy
 
 1. Xác nhận task/gate được người dùng tiếp tục trong [kế hoạch P2](PHASE2_PLAN.md). Commands dưới đây không tự cấp quyền runtime, tải hay outage.
 2. Kiểm tra working tree và giữ file người dùng, template HUST, ignored artifacts, T12 bundle, evidence và volumes. Không prune Docker hoặc xóa dữ liệu chưa xác minh ownership.
 3. Trước runtime, ghi version Docker/Compose, Go, browser, ports và tài nguyên máy. Không pull/cài tool trong phiên tài liệu.
-4. Demo dùng project riêng `project3-monitoring-demo`; không điều khiển nhầm `project3-research-lab` hay `project3-rate-limiter`. Project khác vẫn có thể xung đột ports `8080`, `18081`, `18082`, `18083`, `16379`.
+4. Demo dùng project riêng `project3-monitoring-demo`; không điều khiển nhầm `project3-research-lab` hay `project3-rate-limiter`. Kiểm tra đủ host ports base `8080`, `18081`, `18082`, `18083`, `16379` và ports monitoring `13000` (Grafana), `19090` (Prometheus).
 5. Không chạy đồng thời research load/observer; không sửa clock/NTP, protocol hoặc dataset để phục vụ demo.
+
+Tạo password local cho Grafana trong thư mục bị ignore, chỉ khi file chưa tồn tại. Thư mục `0700` giới hạn truy cập trên host; file mới được mount trực tiếp nên đặt ở chế độ đọc được trong container. Nếu đã có file, giữ và dùng lại credential đó: thay file không tự đổi mật khẩu trong Grafana database đang lưu trên volume. Không ghi secret hoặc password file vào evidence.
+
+```bash
+umask 077
+mkdir -p .secrets
+chmod 700 .secrets
+if [ ! -e .secrets/grafana_admin_password ] && [ ! -L .secrets/grafana_admin_password ]; then
+  openssl rand -base64 32 > .secrets/grafana_admin_password
+  chmod 444 .secrets/grafana_admin_password
+fi
+export GRAFANA_ADMIN_PASSWORD_FILE="$PWD/.secrets/grafana_admin_password"
+```
 
 ## 2. Kiểm tra trước runtime
 
-Lệnh dưới đây dành cho **sau khi file P2 được triển khai**, từ repo root; chưa chạy ở phiên lập kế hoạch:
+Lệnh sau resolve base và overlay, không khởi động service. Khai báo biến password file theo bước trên trước khi chạy.
 
 ```bash
 # Xem trạng thái nguồn trước khi sửa hoặc chụp evidence.
@@ -24,7 +37,7 @@ docker compose -p project3-monitoring-demo \
   -f compose.yaml -f compose.observability.yaml config
 ```
 
-Compose config chỉ xác nhận cấu hình hợp nhất; nó không thay validator Prometheus/Loki/Alloy hoặc browser check. P2-01 đã có focused handler checks; `promtool` không sẵn có và scrape runtime chưa được kiểm chứng. Ghi đúng checks chạy được, không tuyên bố stack pass từ config.
+Compose config chỉ xác nhận cấu hình hợp nhất; nó không thay validator Prometheus/Loki/Alloy hoặc browser check. P2-02 static resolve đạt; `promtool` không có sẵn, image/runtime scrape và Grafana UI chưa được kiểm chứng. Ghi đúng checks chạy được, không tuyên bố stack pass từ config. Không lưu resolved config nguyên trạng nếu có thông tin nhạy cảm; password file chỉ lộ đường dẫn host.
 
 ## 3. Start và smoke có giới hạn — G2
 
@@ -80,7 +93,7 @@ docker compose -p project3-monitoring-demo \
 
 Không dùng `down -v`, `docker system prune`, `volume prune` hoặc xóa artifact làm cleanup mặc định. Nếu cần reset dữ liệu demo, xác định chính xác volume/project, lưu phần cần giữ và áp dụng quyền xóa đã có; không suy dữ liệu ignored là có thể bỏ.
 
-Giữ TSDB/chunks trên volume riêng của project; Prometheus khởi đầu đề xuất retention 24h kèm size budget; chốt storage/memory budget ở P2-02/P2-04 theo máy và image version, theo dõi dung lượng và bật Docker log rotation. Loki filesystem không tự reclaim theo dung lượng trống; cấu hình compactor/retention tương thích hoặc cleanup có scope rõ ràng. Không commit credentials; lọc env nhạy cảm khỏi `docker inspect` evidence. Nếu Alloy cần Docker socket, chỉ mount vào Alloy: `:ro` không làm Docker API read-only, không expose daemon TCP/`privileged`; lọc project `project3-monitoring-demo` và allowlist `api1`, `api2`, `backend`. Filter giới hạn logs thu, không phải security boundary. Ghi trước/sau containers/process, paused state, ports, volumes và vị trí credentials; bàn giao cách dừng nếu để stack chạy.
+Giữ TSDB trên volume riêng `project3-monitoring-demo`; Prometheus đặt retention 24h và 512MB cho blocks. WAL/metadata có thể khiến volume vượt retention size; đây không phải hard disk quota. Prometheus/Grafana memory limit là 512 MiB mỗi service; log rotation mỗi service là 10 MiB × 3 file. Đây là cấu hình ban đầu, chưa đo hoặc runtime xác minh; theo dõi dung lượng trước khi tăng thời lượng. Loki filesystem cần retention/cleanup riêng khi P2-04 được làm. Không commit credentials; lọc env nhạy cảm khỏi `docker inspect` evidence. Nếu Alloy cần Docker socket, chỉ mount vào Alloy: `:ro` không làm Docker API read-only, không expose daemon TCP/`privileged`; lọc project `project3-monitoring-demo` và allowlist `api1`, `api2`, `backend`. Filter giới hạn logs thu, không phải security boundary. Ghi trước/sau containers/process, paused state, ports, volumes và vị trí credentials; bàn giao cách dừng nếu để stack chạy.
 
 ## 7. Bằng chứng và mẫu bàn giao
 

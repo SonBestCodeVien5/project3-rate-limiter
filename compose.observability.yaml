@@ -1,0 +1,80 @@
+name: project3-monitoring-demo
+
+services:
+  redis:
+    logging: &local-logs
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+  backend:
+    logging: *local-logs
+  api1:
+    logging: *local-logs
+  api2:
+    logging: *local-logs
+  nginx:
+    logging: *local-logs
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 2s
+      timeout: 1s
+      retries: 20
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=24h
+      - --storage.tsdb.retention.size=512MB
+    ports:
+      - 127.0.0.1:19090:9090
+    volumes:
+      - ./deploy/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9090/-/healthy"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 10s
+    mem_limit: 512m
+    logging: *local-logs
+    depends_on:
+      api1:
+        condition: service_healthy
+      api2:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+  grafana:
+    image: grafana/grafana:12.4.11
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_admin_password
+    ports:
+      - 127.0.0.1:13000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./deploy/monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./deploy/monitoring/grafana/dashboards:/etc/grafana/dashboards:ro
+    secrets:
+      - grafana_admin_password
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 10s
+    mem_limit: 512m
+    logging: *local-logs
+    depends_on:
+      prometheus:
+        condition: service_healthy
+
+volumes:
+  prometheus-data:
+  grafana-data:
+
+secrets:
+  grafana_admin_password:
+    file: ${GRAFANA_ADMIN_PASSWORD_FILE:?Set GRAFANA_ADMIN_PASSWORD_FILE to the local password file path}
