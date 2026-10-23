@@ -1,5 +1,53 @@
 # Session checkpoint
 
+## Grafana dashboard-list UID collision fixed; guided stack stays running — 2026-10-23
+
+The user manually restarted the fixed demo following the runbook, opened Console,
+sent one tutorial request (api2 Redis/FW allow, backend success, HTTP 200), and
+confirmed three Prometheus targets UP and API counters 0/1. This is separate from
+the completed P2-03 five-request G2 package and is not a research run. On Grafana's
+dashboard-list page the user then reported `RangeError: Maximum call stack size
+exceeded` and asked for diagnosis.
+
+Root reused the same Luna worker for bounded diagnosis and the necessary reversible
+configuration fix. Grafana health/API/assets and Prometheus were responsive; no
+OOM/restart or resource pressure explained the error. Runtime API metadata and the
+running Grafana 12.4.11 source map confirmed the actual cause: folder and dashboard
+shared UID `project3-monitoring-demo`; BrowseView selection recursively looks up
+children by UID without cycle protection. The original direct-dashboard UI smoke
+missed this list/expansion path.
+
+**Commits:** `9cecd15` changes provider folder to `Project 3 Monitoring` /
+`project3-monitoring-folder` and updates DESIGN/RUNBOOK; dashboard UID/URL and
+datasource remain stable. `dde34ad` records separate sanitized runtime evidence;
+the original G2 artifacts/checksums are unchanged. Evidence:
+[checks](../../artifacts/monitoring/grafana-uid-collision-fix/checks.md),
+[UI result](../../artifacts/monitoring/grafana-uid-collision-fix/browser-regression.json),
+[23-file checksum manifest](../../artifacts/monitoring/grafana-uid-collision-fix/SHA256SUMS).
+UTC diagnosis/fix bounds: 2026-10-23T14:46:45.043537Z–14:52:13.153122128Z.
+The live provider patch was later committed unchanged as `9cecd15`; exact parent
+revision, configuration checksum and commands are recorded in the evidence.
+
+Scoped provisioning reload returned HTTP 200. The existing dashboard moved intact
+(same database ID/UID/URL, seven panels, version 1→2); the old folder remains empty.
+Static UID assertions, Chromium list rendering, expansion of the new folder,
+folder route, stable dashboard route and all seven rendered panel headings passed,
+with zero browser console errors. Three targets remained UP; all seven containers
+were healthy with zero restarts. The user also confirmed the dashboard list works
+after Ctrl+Shift+R. Screenshots show the list/folder and upper six panels; the
+rendered DOM confirms all seven panel headings. No broad application suite was
+needed for this provisioning-only fix.
+
+**Current operational state:** leave the user's demo stack running for the ongoing
+guided learning session. No `/work`, load, outage, restart, stop, folder deletion,
+volume deletion or push was performed during diagnosis/fix. Both named volumes and
+the old empty folder were preserved; use RUNBOOK section 6 when the user is done.
+One logged datasource-proxy RBAC error was induced by a diagnostic request and is
+not the list-page crash. Credentials stayed in the existing ignored file. Concurrent
+Console commits `0656f94` and `a7266fc` were preserved outside this fix.
+P2-04/G3/G4 remain outside scope; the exact next implementation prerequisite is
+still a new user request for P2-04 and any applicable runtime authorization.
+
 ## Console recent-runs scrolling — 2026-10-23
 
 The user authorized a Console layout fix only. Commit `0656f94` changes

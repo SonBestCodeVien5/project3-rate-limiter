@@ -2,7 +2,7 @@
 
 P2 là phần mở rộng local do người dùng chọn để học monitoring và cải thiện demo; không đổi yêu cầu hay bằng chứng baseline. Mục tiêu cơ bản là Prometheus, Grafana, Alloy, Loki, một dashboard, truy vấn metrics/logs và demo lặp lại được. Histogram, alerting, tracing, exporters hạ tầng, tự discovery mọi Console run và observability production là tùy chọn/ngoài scope.
 
-**Hiện trạng 23/10/2026:** P2-01 hoàn tất G1 ở commit `0bea7b2`; P2-02 hoàn tất triển khai G1 ở commit `d785529`; P2-03 đã kiểm chứng dashboard và runtime G2 trên stack cố định. Dashboard 7 panel ở commit `bedb095`; JSON `GET /metrics` giữ nguyên. Smoke dùng **5/10 request `/work` tuần tự**, không có demo load hay outage. Stack demo đã dừng, giữ named volumes. Dừng sau P2-03; gói kế tiếp cần yêu cầu mới.
+**Hiện trạng 23/10/2026:** P2-01 hoàn tất G1 ở commit `0bea7b2`; P2-02 hoàn tất triển khai G1 ở commit `d785529`; P2-03 đã kiểm chứng dashboard và runtime G2 trên stack cố định. Dashboard 7 panel ở commit `bedb095`; JSON `GET /metrics` giữ nguyên. Smoke dùng **5/10 request `/work` tuần tự**, không có demo load hay outage, khép gói bằng cleanup giữ named volumes. Sửa lỗi trang danh sách Grafana sau đó ở `9cecd15`, chi tiết bên dưới. Dừng triển khai sau P2-03; gói kế tiếp cần yêu cầu mới.
 
 ## Cách tiếp tục
 
@@ -73,6 +73,8 @@ Tệp dashboard: `deploy/monitoring/grafana/dashboards/project3-overview.json`. 
 Smoke có 5 request tuần tự, đều HTTP 200; API deltas +1, backend kiểm tra riêng +1 arrival/+1 success/0 overload. Khoảng backend ban đầu có delta +2 vì chứa hai request, không phải phép kiểm tra một request. Snapshot nhiều counters không phải transaction; `rate`/`increase` không thay exact count. Không suy latency, legitimate goodput, correctness hoặc kết quả T09/T10 từ dashboard. Technical completion không xác nhận người dùng đã hiểu monitoring.
 
 Bằng chứng và lệnh đã loại secrets: [checks](../../artifacts/monitoring/p2-03-g2/checks.md), [request ledger](../../artifacts/monitoring/p2-03-g2/work-ledger.txt), [commands](../../artifacts/monitoring/p2-03-g2/commands.md), [ảnh UI và mô tả](../../artifacts/monitoring/p2-03-g2/browser-ui.md), [checksums](../../artifacts/monitoring/p2-03-g2/SHA256SUMS). Source chạy là `bedb095`; evidence hoàn chỉnh ở `6b0f2ed`, cập nhật design/runbook ở `e8201a5`. `promtool check config` đạt khi chạy từ pinned Prometheus image; bản host không có sẵn. UTC, image IDs/digests, lỗi ban đầu và cleanup được ghi trong evidence. Stack `project3-monitoring-demo` đã dừng/xóa containers và network, giữ hai named volumes; không còn service thuộc project chạy hoặc paused. **Điều kiện tiếp theo:** người dùng yêu cầu mới cho P2-04 (Alloy → Loki logs và datasource), nêu rõ gate được cấp; không tự dùng lại G2 của P2-03. G3/G4 chưa được cấp.
+
+**Sửa lỗi vận hành sau P2-03 (23/10/2026):** người dùng mở lại stack để học và gặp `RangeError: Maximum call stack size exceeded` ở trang danh sách Grafana. UID folder trùng UID dashboard làm cây danh sách lặp đệ quy; kiểm tra UI trực tiếp ban đầu chưa bao phủ trang này. Commit `9cecd15` đổi folder sang **Project 3 Monitoring** / `project3-monitoring-folder`, giữ dashboard UID/URL. Reload provisioning đạt; browser kiểm tra list, mở folder và dashboard đạt; người dùng xác nhận hết lỗi sau refresh. Evidence riêng ở `dde34ad`: [checks](../../artifacts/monitoring/grafana-uid-collision-fix/checks.md). Không sửa evidence G2 gốc, không gửi `/work`, restart hay dừng service; stack phiên học được để chạy. Việc này không mở P2-04 hoặc G3/G4.
 
 ### P2-04 — Alloy/Loki
 
