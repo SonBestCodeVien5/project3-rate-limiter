@@ -1,5 +1,25 @@
 # Session checkpoint
 
+## Console recent-runs scrolling — 2026-10-23
+
+The user authorized a Console layout fix only. Commit `0656f94` changes
+`internal/console/index.html`: desktop cards stretch to the same row height;
+recent history uses remaining space, size containment and internal vertical
+scrolling with an 8rem minimum. Mobile history uses natural sizing capped at
+16rem. Custom configuration remains accessible; history entries no longer set
+the desktop row's intrinsic height.
+
+One `gpt-6-luna` worker (`low`, `fork_turns=none`) implemented and checked the
+change. Existing Console JavaScript tests passed 6/6; whitespace checks passed.
+Rendered geometry remains **unverified**: shared Playwright reported its browser
+in use; isolated local Chromium hit sandbox socket restrictions, then timed out
+without DOM output after an approved escalation, even on a minimal static page.
+These attempts used static mock content, no Console run or application workload.
+Root inspected the staged diff before committing; no broad suite, experiment,
+Docker startup, Drive sync or push. P2-04 and the existing runtime gates remain
+paused. Concurrent edits to Grafana `provider.yml`, DESIGN and RUNBOOK were
+preserved outside this task's commits.
+
 ## P2-03 complete within G2; stop before P2-04 — 2026-10-23
 
 The user resumed **P2-03 only**, authorizing dashboard implementation, focused
