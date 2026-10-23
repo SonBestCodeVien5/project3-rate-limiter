@@ -50,4 +50,56 @@ Summary có p50/p95/p99 nearest-rank, số lượng status/error/decision, goodp
 
 Chưa có oracle độc lập trong summary: không gọi việc Token Bucket nhận hơn Q trong cửa sổ Fixed Window là overshoot. JSONL lưu thời điểm quyết định, client key và instance để hỗ trợ phân tích tiếp theo. Quy trình công cụ đo đã bổ sung profile burst/concurrent, topology 1/2/4 và analyzer độc lập; xem các phần bên dưới. Ghi chú này mô tả nhu cầu trước khi khóa protocol; protocol chính thức v1.2 cùng phụ lục v1.3 đã hoàn tất T09, rồi T10 phân tích offline. Xem [kết quả T10](../docs/analysis/T10_RESULTS.md) và [readiness hiện tại](../docs/experiments/PROTOCOL_READINESS.md); hướng dẫn chạy trong tài liệu này không cấp quyền tải mới.
 
+## Xuất báo cáo từ artifact
+
+`scripts/report-study.py` chỉ đọc artifact đã có, không chạy Docker/HTTP. Manifest phải liệt kê tường minh từng run và cell; mỗi cell là một cấu hình cùng mode/algorithm, workload, policy, backend, topology, revision và image. Đường dẫn tính từ manifest; không glob hay đếm trùng. Ví dụ schema (đường dẫn minh họa, không phải lượt đã đo):
+
+```json
+{
+  "clock_tolerance_ms": 5,
+  "cells": [{"id": "rq1-fw-redis-normal", "expected_repetitions": 3}],
+  "runs": [
+    {"group": "RQ1", "cell": "rq1-fw-redis-normal", "repetition": "1", "path": "artifacts/block-1/custom-repeat-1"},
+    {"group": "RQ1", "cell": "rq1-fw-redis-normal", "repetition": "2", "path": "artifacts/block-2/custom-repeat-1"},
+    {"group": "RQ1", "cell": "rq1-fw-redis-normal", "repetition": "3", "path": "artifacts/block-3/custom-repeat-1"}
+  ]
+}
+```
+
+`clock_tolerance_ms: 5` cũng chỉ là ví dụ; ngưỡng phải được hiệu chỉnh/khóa trước phân tích chính thức. Output phải là thư mục mới. Thiếu mẫu/evidence để trống, không đổi p95 thiếu mẫu thành 0. Percentile tính riêng mỗi run rồi tóm tắt; `legitimate_p95_ms_run_median` không phải p95 của trace gộp.
+
+Tool đọc summary/analysis/metadata/policy, Compose đã resolve, image ID/platform/digest, nginx config, revision/working tree và trace. Fingerprint bỏ run_id/namespace nhưng giữ workload/key distribution, mode/algorithm/fail policy, policy, backend/topology/runtime/image; chỉ khẳng định khớp trong cùng cấu hình, không chứng minh hai cấu hình khác nhau là contrast có kiểm soát. Inspect chỉ được dùng khi `.Id` khớp ID trong `images.json`; fingerprint gồm toàn bộ `RootFS.Layers`, `Config`, OS/architecture/variant và platform. Run cũ thiếu inspect chỉ so bằng ID chính xác; không suy nội dung image từ revision. Run sai schema, thiếu evidence/counter, policy/analyzer/revision/run_id không khớp, dirty source, drops, duplicate trace IDs, summary mismatch hoặc clock flag là invalid; cell không tổng hợp nếu thiếu repetition, config không khớp hay có run invalid. Không tự thay lượt.
+
+`runs.csv` giữ mọi run và lý do; `cells.csv` ghi trạng thái cùng median/min/max khi đủ điều kiện; `report.md` tóm tắt kèm manifest. Bảng còn ghi `observed_violations`, `max_envelope_lower_bound`, Redis CPU cores/memory, availability mỗi outage phase và stable recovery nếu có. Không cộng lower bounds thành tổng overshoot; không thay `inconclusive` hay thiếu/null bằng pass/0. `client_clock_discontinuity_suspected` chỉ là nghi ngờ từ sai khác wall/monotonic, không chứng minh lỗi NTP. Tính hợp lệ, oracle correctness và kết luận nghiên cứu là ba việc riêng. Quá tải/lỗi chủ ý trong outage vẫn có thể là outcome; ba lượt/min–max không chứng minh ý nghĩa thống kê hoặc production scaling.
+
+```bash
+python3 scripts/report-study.py path/to/manifest.json --output artifacts/report-new
+python3 -m unittest discover -s scripts -p test_report_study.py
+```
+
+### Biểu đồ calibration ngoại tuyến
+
+`scripts/plot-calibration.py` đọc manifest chọn đích danh các cell từ `runs.json` của pilot; source path tính từ manifest. Không tự chạy benchmark. Chỉ hỗ trợ profile `mixed`, không tách availability theo pha, và không kiểm tra policy/revision/image giữa mode; entry/cell trùng hoặc nhiều dòng source cho cùng cell bị từ chối. Thiếu run/sample tạo khoảng trống; giữ điểm có cờ chất lượng bằng dấu ×, không lọc lượt đẹp. Hình có nhãn **Pilot — not formal benchmark**; goodput dùng legitimate 2xx / legitimate sent, không dùng toàn bộ HTTP sent/scheduled; overload là backend delta. Không nối điểm để suy xu hướng hay ý nghĩa thống kê.
+
+```json
+{
+  "source": "runs.json",
+  "entries": [
+    {"cell": "mixed-none-repeat-1", "mode": "none"},
+    {"cell": "mixed-local/custom-repeat-1", "mode": "local"},
+    {"cell": "mixed-redis/custom-repeat-1", "mode": "redis"}
+  ]
+}
+```
+
+```bash
+# Chỉ stdlib, không import matplotlib hoặc tạo biểu đồ:
+python3 scripts/plot-calibration.py plot-manifest.json --validate-only
+python3 -m unittest discover -s scripts -p test_plot_calibration.py
+# Chỉ chạy sau khi kết thúc measurements, bằng Python có matplotlib:
+python3 scripts/plot-calibration.py plot-manifest.json --output artifacts/calibration-figures-new
+```
+
+Output mới gồm PNG, SVG và `points.json` liên kết cell/oracle/mẫu số/cờ chất lượng; thiếu mẫu số/tử số ghi thiếu thay vì 0. Oracle `inconclusive` vẫn được giữ; 5xx do overload chủ ý không tự loại run. Script tin cờ quality/fidelity của calibration và thêm cờ lỗi/drops/thiếu chỉ số; không đọc trace để chứng minh clock hay xác minh phép so sánh. Matplotlib chỉ dùng offline, không thêm vào runtime/repo hay cài trong lúc đo.
+
 Để hiệu chỉnh tải khi phát hiện generator drops, có thể đặt `MIXED_RPS` và `BACKEND_CAPACITY` cho cả nhóm mixed, ví dụ `MIXED_RPS=120 BACKEND_CAPACITY=4 bash scripts/research-pilot.sh --case mixed-none --case mixed-local --case mixed-redis --analyze`. Không trộn kết quả hai cấu hình tải/backend khác nhau trong một phép so sánh; metadata/config resolved lưu giá trị thực. Mặc định 300 RPS có thể cần hiệu chỉnh theo máy; xem kết quả pilot thực tế thay vì giả định một con số luôn đạt.

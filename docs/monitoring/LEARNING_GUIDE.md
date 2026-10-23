@@ -1,6 +1,6 @@
 # Học monitoring từ prototype rate limiter
 
-Mục tiêu là tự giải thích và kiểm tra được pipeline monitoring trước bảo vệ, đồng thời có nền cho đồ án tốt nghiệp. **Chưa có xác nhận người học hoàn thành các nội dung dưới đây.** Task kỹ thuật ở [kế hoạch P2](PHASE2_PLAN.md), việc baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), thiết kế ở [DESIGN.md](DESIGN.md), thao tác dự kiến ở [RUNBOOK.md](RUNBOOK.md); quy tắc đo nghiên cứu vẫn theo [readiness](../experiments/PROTOCOL_READINESS.md).
+Mục tiêu là tự giải thích và kiểm tra được pipeline monitoring trước bảo vệ, đồng thời có nền cho đồ án tốt nghiệp. **P2-01 đã triển khai exposition endpoint; stack Prometheus/Grafana/Alloy/Loki và các bài tập runtime vẫn chưa được thực hiện/kiểm chứng. Chưa có xác nhận người học hoàn thành các nội dung dưới đây.** Task kỹ thuật ở [kế hoạch P2](PHASE2_PLAN.md), việc baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), thiết kế ở [DESIGN.md](DESIGN.md), thao tác dự kiến ở [RUNBOOK.md](RUNBOOK.md); quy tắc đo nghiên cứu vẫn theo [readiness](../experiments/PROTOCOL_READINESS.md).
 
 ## 1. Mạch học gắn với bài toán
 
@@ -47,26 +47,12 @@ Sau G2/G3 mới làm bài thực hành: tự mở target, query một metric, t�
 
 Các câu cần tự trả lời: 429 tăng có luôn xấu không? Backend success tăng có đồng nghĩa người mua hợp lệ được phục vụ tốt hơn không? Local quota ở hai instance có nghĩa gì? Lua atomicity được bảo đảm ở đâu? Một biểu đồ sampled có đủ chứng minh không overshoot không? Log warning dày là nhiều incident hay nhiều request gặp cùng incident?
 
-## 5. Kiến thức chuyển tiếp sang đồ án tốt nghiệp
+## 5. Nguồn học tối thiểu
 
-| Nền tảng từ P2 | Có thể dùng tiếp khi xuất hiện nhu cầu | Chưa được tuyên bố đã làm |
-| --- | --- | --- |
-| Định nghĩa metric, mẫu số và labels | Thiết kế service-level indicators (SLI) gắn với trải nghiệm người dùng | Chưa có SLO/SLA hoặc alert policy production |
-| PromQL và dashboard có nguồn rõ | Theo dõi capacity, error rate và độ trễ theo loại request | Chưa có histogram/client-class instrumentation |
-| Thu logs có scope và truy vấn JSON | Điều tra sự cố nhiều service, correlation khi có ID phù hợp | Chưa có tracing hay correlation end-to-end |
-| Config/provisioning trong Git | Tái lập môi trường và review thay đổi monitoring | Chưa có cloud deployment, CI/CD observability hoặc HA |
-| Giới hạn quyền và storage | Cân nhắc collector permissions, retention và chi phí dữ liệu | Chưa kiểm định an toàn/hiệu năng production |
+Đọc code và bài tập trước, sau đó tra đúng phần vendor docs:
 
-Alerting, histogram và tracing là những bài học tiếp theo có thể chọn sau P2, không phải checklist phải triển khai ngay để hoàn tất đồ án hiện tại.
-
-## 6. Nguồn học tối thiểu
-
-Đọc code và bài tập trước, sau đó đọc đúng phần vendor docs:
-
-- [Metric types](https://prometheus.io/docs/concepts/metric_types/), [instrumentation practices](https://prometheus.io/docs/practices/instrumentation/).
-- [PromQL basics](https://prometheus.io/docs/prometheus/latest/querying/basics/), [query functions](https://prometheus.io/docs/prometheus/latest/querying/functions/).
+- [Metric types](https://prometheus.io/docs/concepts/metric_types/) và [PromQL functions](https://prometheus.io/docs/prometheus/latest/querying/functions/).
 - [Grafana provisioning](https://grafana.com/docs/grafana/latest/administration/provisioning/).
-- [Alloy Docker log source](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.docker/).
-- [Loki labels/cardinality](https://grafana.com/docs/loki/latest/get-started/labels/cardinality/), [LogQL](https://grafana.com/docs/loki/latest/query/).
+- [Alloy Docker source](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.docker/), [Loki labels](https://grafana.com/docs/loki/latest/get-started/labels/cardinality/) và [LogQL](https://grafana.com/docs/loki/latest/query/).
 
-Nguồn API/config phải đối chiếu phiên bản thực tế lúc triển khai. Không cần đọc hết tài liệu vendor hoặc cài thêm stack khác để hoàn thành từng mốc học.
+Đối chiếu API/config với phiên bản triển khai thực tế. Alerting, histogram, tracing, SLO/SLA và production HA là hướng học tương lai, chưa phải tính năng đã làm hay điều kiện hoàn tất baseline.

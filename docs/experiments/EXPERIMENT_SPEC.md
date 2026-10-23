@@ -1,6 +1,6 @@
 # Đặc tả thí nghiệm Project 3 — phạm vi cơ sở cập nhật
 
-**Trạng thái thiết kế ban đầu, cập nhật 13/10/2026:** phạm vi đánh giá theo Roadmap/Proposal; [thiết kế prototype](../IMPLEMENTATION.md) đã chọn Go, middleware trước backend, local mutex/Redis Lua, policy và quy tắc thời gian. Các mục **Mở** bên dưới ghi lại phương án thiết kế ban đầu; xem thiết kế để biết phần đã chọn. Đây là tài liệu phương pháp lịch sử, không phản ánh trạng thái protocol hiện tại. Protocol v1.2 cùng phụ lục v1.3 đã hoàn tất T09; T10 chưa bắt đầu, chưa có kết luận RQ và không được chạy thêm tải. Xem [trạng thái sẵn sàng](PROTOCOL_READINESS.md) và [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md). [Hồ sơ triển khai](../worklog/2026-10-11-bootstrap/README.md) phân biệt kiểm tra/smoke với dữ liệu nghiên cứu chính thức.
+**Vai trò tài liệu:** đây là đặc tả thiết kế ban đầu ngày 13/10/2026, không phải protocol đã khóa. Các mục **Mở** là ghi chép lịch sử; quyết định đã chọn ở [thiết kế prototype](../IMPLEMENTATION.md), protocol đo ở [PROTOCOL_READINESS.md](PROTOCOL_READINESS.md). T09 đã hoàn tất và T10 đã phân tích offline; xem [kết quả T10](../analysis/T10_RESULTS.md), [task baseline](../REMAINING_WORK_PLAN.md) và [hồ sơ triển khai](../worklog/2026-10-11-bootstrap/README.md) để phân biệt kiểm tra/smoke với dữ liệu nghiên cứu.
 
 Đã có [Console tùy chỉnh](../CONSOLE.md) và [ma trận 84 lượt thực chạy](../worklog/2026-10-12-console-matrix/README.md) ngày 12/10: một lượt 3 giây cho mỗi tổ hợp, không chủ động gây outage. Các artifact nhất quán, nhưng có phát hiện từ oracle, lỗi Redis và request bị generator bỏ; không dùng bộ này như benchmark chính thức. Ma trận rộng phục vụ kiểm tra cấu hình; nghiên cứu chọn phép so sánh phù hợp với từng RQ.
 
@@ -60,7 +60,7 @@ Mỗi lượt chạy cần lưu cấu hình, version code/policy, `run_id`, requ
 
 ## Quyết định tiếp theo
 
-Prototype đã chọn client key, policy và quy tắc thời gian, vị trí limiter, Redis Lua, fail policy và stack; xem [thiết kế](../IMPLEMENTATION.md). Lượt smoke ban đầu đã chạy. Các mục dưới đây là câu hỏi trong bản thiết kế lịch sử, không phải trạng thái công việc hiện tại. Protocol nghiên cứu đã khóa ở v1.2 cùng phụ lục v1.3; T09 hoàn tất, T10 chưa bắt đầu và không được chạy thêm tải. Xem [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md):
+Prototype đã chọn client key, policy và quy tắc thời gian, vị trí limiter, Redis Lua, fail policy và stack; xem [thiết kế](../IMPLEMENTATION.md). Lượt smoke ban đầu đã chạy. Các mục dưới đây là câu hỏi trong bản thiết kế lịch sử, không phải trạng thái công việc hiện tại. Protocol nghiên cứu v1.2 cùng phụ lục v1.3 đã được dùng cho T09; T10 đã phân tích offline. Xem [kết quả T10](../analysis/T10_RESULTS.md) và [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md):
 
 1. Analyzer độc lập đã có kiểm tra trace FW/TB và phân pha outage/recovery; xem [hợp đồng phân tích](ANALYSIS.md). Còn phải xác định mức quan sát cho cửa sổ đầy đủ và vi phạm quota khi fail-open có quyết định không rõ; không coi trạng thái `inconclusive` (chưa đủ bằng chứng kết luận) là pass.
 2. Dùng các lượt calibration đã có để chốt ngưỡng backend, mức tải, làm nóng, số lần lặp, số API instance, cửa sổ Redis outage và cách đo tài nguyên.

@@ -2,7 +2,7 @@
 
 ## Bối cảnh và cách đọc
 
-Muốn xem cách diễn giải biểu đồ và ký hiệu trục, mở [hướng dẫn đọc T10](READING_GUIDE.md).
+Muốn xem cách diễn giải biểu đồ và ký hiệu trục, mở [Cách đọc bảng và hình](#cách-đọc-bảng-và-hình).
 
 Một đợt bán hàng tăng đột biến có thể làm backend quá tải, kéo dài độ trễ và làm khách hợp lệ gặp lỗi. Yêu cầu kỹ thuật là so sánh limiter Fixed Window (FW) và Token Bucket (TB), local state và Redis shared state, đo ảnh hưởng lên backend dưới tải hỗn hợp/burst, xem scaling theo topology, và quan sát fail-open/fail-closed khi Redis outage.
 
@@ -11,6 +11,14 @@ T09 dùng workload và topology mô phỏng theo protocol khóa, không đo doan
 Trạng thái task hiện hành nằm trong [kế hoạch phần việc còn lại](../REMAINING_WORK_PLAN.md); điều kiện cho phép đo nằm trong [readiness protocol](../experiments/PROTOCOL_READINESS.md). Đây là phân tích offline của evidence T09 hiện có, không mở lại phép đo.
 
 Các con số báo cáo median và min–max trên ba lượt riêng. Goodput mỗi lượt là số legitimate request thành công chia cho `elapsed_seconds_including_drain`; `run-evidence.csv` giữ tử số và thời lượng mẫu cho từng lượt. p50/p95/p99 là percentile từng lượt rồi tổng hợp, không phải percentile của trace gộp. Bảng và `retry-history.json` giữ trạng thái correctness, lượt không hợp lệ cùng lý do. Không có kiểm định ý nghĩa thống kê.
+
+## Cách đọc bảng và hình
+
+Mỗi ô có ba repetition; `median (min–max)` là trung vị và khoảng quan sát giữa ba lượt, không phải confidence interval hay kiểm định ý nghĩa. p50/p95/p99 được tính riêng mỗi lượt rồi mới tóm tắt; p95 trên hình là median của ba p95, không phải p95 của trace gộp. Offered RPS là tải dự kiến; goodput là legitimate request thành công chia cho thời gian thực gồm drain. Backend overload là số request, không phải latency hay tỷ lệ; arrivals đã chứa success và overload. Chỉ so sánh các contrast giữ workload, policy và topology cố định.
+
+Đọc các hình theo RQ: mixed overload so sánh số backend overload giữa none/local/Redis; burst goodput là legitimate success mỗi giây và no-limiter lặp lại làm mốc; outage availability chỉ bao phủ phase Redis pause, còn stable recovery tách riêng first success. Hình scaling giữ mode cố định, trục X là 1/2/4 API và legend là 50/180/250 RPS; ở 250 RPS backend mô phỏng là bottleneck, nên goodput gần 191/s không chứng minh API scaling. Hình latency dùng p95 theo từng run. Redis CPU là cores trung bình, không phải peak hay chi phí Lua; memory là snapshot cuối lượt, không phải peak. Outage không có resource sample nên khoảng trống không phải zero.
+
+Các hình dùng median với thanh min–max; trục Y có thể bị thu hẹp nên đọc số trục và bảng, không so độ cao ảnh đơn thuần. `e` là ký hiệu khoa học: `1e-2 = 0.01`, `1e-6 = 0.000001`, `1e+6 = 1,000,000`. CPU `0.011` core tương đương khoảng 1.1% một core; mixed `0.031–0.032` là 3.1–3.2%, burst `0.016` là 1.6%. Memory `1.285` tại mốc `1e6` là 1,285,000 bytes (xấp xỉ 1.285 MB thập phân). Goodput normal có offset `+1.999e1`: nhãn `0.0076` biểu diễn `19.9976 request/s`; offset là phép cộng. Xem số chính xác cùng [bảng](../worklog/2026-10-20-t10/T10_TABLES.md), [traceability](../worklog/2026-10-20-t10/traceability.csv) và [provenance](../worklog/2026-10-20-t10/provenance.json).
 
 ## RQ1 — FW so với TB trong normal, burst và mixed
 

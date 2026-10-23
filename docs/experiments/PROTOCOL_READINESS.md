@@ -4,7 +4,7 @@
 
 **Mốc baseline (22/10/2026):** Các hướng dẫn chạy pilot bên dưới là ghi nhận lịch sử, không cấp quyền chạy thêm tải. T11 đã tích hợp kết quả T10 vào báo cáo; T12 đã đóng gói và kiểm tra demo/source, T13 có nội dung nháp nhưng chưa dựng được PowerPoint qua Canva (HTTP 429). [Kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md) ghi trạng thái task; không có phép đo mới được cho phép.
 
-**Nhánh P2 (23/10/2026):** mới hoàn tất [kế hoạch monitoring/demo và học tập](../monitoring/PHASE2_PLAN.md), chưa triển khai stack hoặc tạo tải. Cổng P2 phân biệt sửa code, smoke runtime, demo tải và outage; quyền phải dựa vào yêu cầu tiếp tục thực tế, không xuất phát từ tài liệu này. Telemetry P2 về sau là dữ liệu demo riêng, không mở lại T09/T10, không sửa protocol/ngưỡng đã khóa hoặc đổi `inconclusive` thành đạt. Nghiên cứu/đo overhead mới cần phạm vi và protocol riêng.
+**Nhánh P2 (23/10/2026):** P2-00 là kế hoạch; P2-01 hiện đã triển khai `GET /metrics/prometheus` và focused checks. Compose overlay, Prometheus/Grafana/Alloy/Loki, provisioning và runtime scrape vẫn chưa có/được kiểm chứng; trạng thái chi tiết, các gate và điểm tiếp theo P2-02 nằm trong [kế hoạch P2](../monitoring/PHASE2_PLAN.md). Tài liệu này không cấp quyền runtime/load/outage. Telemetry demo riêng không mở lại T09/T10, không sửa protocol/ngưỡng đã khóa hoặc đổi `inconclusive` thành đạt. Nghiên cứu/đo overhead mới cần phạm vi và protocol riêng.
 
 **Cập nhật 19/10/2026 (ghi nhận lịch sử):** T01 ổn định trong phiên làm việc khi đó. Observer không ghi nhận bước nhảy trên 5 ms; bounded gate T03 hoàn tất sáu lượt normal/mixed, không có cờ chất lượng hay request bị generator bỏ. Xem [worklog T02/T03](../worklog/2026-10-19-measurement-gate/README.md). Oracle Fixed Window ở trạng thái `inconclusive` (chưa đủ bằng chứng kết luận) vì chỉ quan sát một phần window. T04 calibration normal/burst, T05 calibration scaling, T06 kiểm thử atomicity, T07 calibration recovery capacity10 và kiểm tra smoke của exporter cũng đã hoàn tất. Các lần hiệu chỉnh không thay benchmark chính thức; T08 khóa protocol v1 như ghi bên dưới.
 
@@ -33,6 +33,10 @@
 | Protocol/manifest đã khóa | **v1.2 và phụ lục một slot dự kiến v1.3:** [protocol v1.2](protocol-v1.2/protocol.md), [manifest](protocol-v1.2/manifest.json), [phụ lục v1.3](protocol-v1.3/protocol.md). Ma trận/ngưỡng v1.2 không đổi. Lượt v1.3 được phép đã đạt; cả 138 slot dự kiến được chấp nhận và 46 cấu hình được tổng hợp. Archive/checksum và dọn dẹp đã được kiểm chứng. |
 
 Các bước nhảy clock lịch sử ảnh hưởng deadline Redis; server cũng dùng wall time cho quota, còn trace dùng timestamp để chia pha và phát lại quyết định. Sửa deadline socket không tự làm môi trường clock ổn định. Không tăng ngưỡng 5 ms sau khi thấy bước nhảy 2,6 giây, không chọn riêng lượt đẹp và không đổi trạng thái `inconclusive` thành đạt.
+
+### T03 pilot gate — cấu hình và thủ tục lịch sử
+
+Đây là thủ tục pilot đã chạy, không phải protocol khóa hay quyền chạy lại. PRESET là Redis Fixed Window, 2 API, 5 legitimate keys, `Q=B=20`, `W=1000 ms`, refill `20/s`, backend capacity `4`/service `50 ms`, fail-closed, fresh state mỗi lượt và Redis bounds `100 ms`; chạy normal `20 RPS × 3`, rồi mixed tổng `120 RPS`/legitimate `20 RPS × 3`, mỗi lượt `30 giây`. Trước gate cần observer `90 giây`, `clock_steps_above_5ms` rỗng; từng lượt còn phải qua clock residual/quality checks. Gate dùng timeout `240 giây` mỗi lượt gồm build/start/load/cleanup, dừng chuỗi khi cờ chất lượng lặp lại và giữ các lượt invalid/log trong output mới. Trước remediation, observer ngày 19/10 ghi ba bước realtime khoảng 2.93–2.96 giây/90 giây ([worklog clock](../worklog/2026-10-19-clock/README.md)); các lần gate đạt sau đó không chứng minh clock ổn định ngoài khoảng quan sát hay mở quyền đo hiện tại. Lệnh và kết quả gate: [worklog T02/T03](../worklog/2026-10-19-measurement-gate/README.md).
 
 ## Trạng thái hiện tại và điểm dừng
 

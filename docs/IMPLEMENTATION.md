@@ -2,7 +2,7 @@
 
 Đây là thiết kế kỹ thuật của lượt triển khai được ủy quyền ngày 11/10/2026. Phạm vi nguồn vẫn theo [SOURCE_INDEX](context/SOURCE_INDEX.md); tham số dưới đây chỉ là mặc định pilot.
 
-**Trạng thái hiện tại (20/10/2026):** T09 hoàn tất; protocol v1.2 cùng phụ lục một slot dự kiến v1.3 đã được thực thi. T10 chưa bắt đầu, chưa có kết luận RQ và không được chạy thêm tải. Xem [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md).
+**Mục đích và trạng thái:** tài liệu ghi quyết định triển khai prototype; đây không phải nơi quản lý task hoặc cổng đo. T09 và phân tích offline T10 đã hoàn tất; kết quả/giới hạn ở [T10_RESULTS.md](analysis/T10_RESULTS.md), task baseline ở [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md), cổng đo ở [readiness](experiments/PROTOCOL_READINESS.md). Tài liệu thiết kế ban đầu bên dưới không tự cấp quyền chạy tải.
 
 ```mermaid
 flowchart LR
@@ -54,8 +54,8 @@ Clock wall time vẫn có thể nhảy (đặc biệt FW). Môi trường thí n
 - HTTP: reject không gọi backend; phân biệt fail-open/fail-closed, overload, transport failure.
 - Smoke Compose: load balancer → 2 API → backend; lưu thô requests/config/summary/metrics và outage events.
 
-Xem [hồ sơ từng bước](worklog/2026-10-11-bootstrap/README.md) để biết phép nào thực sự đã chạy. Các mục benchmark lặp, oracle đầy đủ trên trace, kiểm định generator và ngưỡng recovery mô tả công việc nghiên cứu tiếp theo trong hồ sơ ban đầu. Trạng thái hiện tại được ghi ở đầu tài liệu và trong [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md).
+Xem [hồ sơ từng bước](worklog/2026-10-11-bootstrap/README.md) để biết phép nào thực sự đã chạy. Danh sách benchmark lặp, oracle đầy đủ trên trace, kiểm định generator và ngưỡng recovery trong hồ sơ ban đầu là ghi chép lịch sử; T10 đã phân tích offline RQ1–RQ5, với giới hạn được giữ nguyên trong kết quả. Trạng thái task hiện tại ở [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md).
 
 ## Bổ sung công cụ đo vòng 2
 
-Đã có profile normal/burst/concurrent, topology 1/2/4 và [analyzer trace độc lập](experiments/ANALYSIS.md). [Hồ sơ vòng đo](worklog/2026-10-11-measurement/README.md) ghi pilot thực, các lượt generator không đạt tải và hiệu chỉnh. T09 đã hoàn tất theo protocol v1.2 cùng phụ lục v1.3; T10 chưa bắt đầu và chưa có kết luận RQ1–RQ5. Analyzer giữ trạng thái oracle `inconclusive` (chưa đủ bằng chứng kết luận) khi độ phủ cửa sổ/trạng thái không đủ.
+Đã có profile normal/burst/concurrent, topology 1/2/4 và [analyzer trace độc lập](experiments/ANALYSIS.md). [Hồ sơ vòng đo](worklog/2026-10-11-measurement/README.md) ghi pilot thực, các lượt generator không đạt tải và hiệu chỉnh. T09 hoàn tất theo protocol v1.2 cùng phụ lục v1.3; T10 đã phân tích offline RQ1–RQ5. Một số oracle vẫn `inconclusive` (chưa đủ bằng chứng kết luận) khi độ phủ cửa sổ/trạng thái không đủ; xem [kết quả T10](analysis/T10_RESULTS.md).

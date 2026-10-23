@@ -1,14 +1,14 @@
 # Runbook dự kiến cho demo monitoring
 
-**Chưa phải hướng dẫn đã chạy thành công.** Ngày 23/10/2026 mới chuẩn bị tài liệu; file Compose/config P2 chưa được tạo. Chỉ dùng các bước runtime sau khi task và quyền tương ứng trong [kế hoạch P2](PHASE2_PLAN.md) được tiếp tục. [Thiết kế](DESIGN.md) quy định metrics/labels; [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý việc baseline, [readiness](../experiments/PROTOCOL_READINESS.md) vẫn quản lý phép đo nghiên cứu.
+**Runbook này vẫn là quy trình dự kiến, chưa được chạy thành công.** P2-01 đã thêm exposition endpoint và qua focused checks; file Compose/config P2, provisioning và xác minh runtime chưa có. Task/gate và điểm tiếp theo P2-02 ở [kế hoạch P2](PHASE2_PLAN.md); [thiết kế](DESIGN.md) quy định metrics/labels, [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý baseline, [readiness](../experiments/PROTOCOL_READINESS.md) quản lý phép đo nghiên cứu. Ví dụ command chỉ là tài liệu tham khảo, không tự cấp quyền runtime.
 
-## 1. Trước khi sửa hoặc chạy
+## 1. Trước khi chạy
 
-1. Xác nhận task đang làm, phạm vi người dùng đã yêu cầu và điểm dừng. Không tự chạy Docker/load vì thấy command trong tài liệu.
-2. Kiểm tra working tree; giữ file người dùng, template HUST, ignored artifacts, T12 bundle và measurement evidence. Không prune Docker hoặc xóa thư mục chưa xác minh ownership.
-3. Khi cần runtime, kiểm tra Docker/Compose, Go, browser, port và tài nguyên máy; ghi version thực tế. Không cài tool hoặc pull image trong phiên chỉ làm tài liệu.
-4. Project demo dự kiến `project3-monitoring-demo`; research project `project3-research-lab` và project mặc định `project3-rate-limiter` không được điều khiển nhầm. Khác project vẫn xung đột cổng app `8080`, `18081`, `18082`, `18083`, `16379`.
-5. Không chạy load/observer nghiên cứu khác cùng lúc; chỉ dừng process thuộc phiên hoặc được người dùng cho phép. Không sửa clock/NTP, protocol hoặc dataset để phục vụ demo.
+1. Xác nhận task/gate được người dùng tiếp tục trong [kế hoạch P2](PHASE2_PLAN.md). Commands dưới đây không tự cấp quyền runtime, tải hay outage.
+2. Kiểm tra working tree và giữ file người dùng, template HUST, ignored artifacts, T12 bundle, evidence và volumes. Không prune Docker hoặc xóa dữ liệu chưa xác minh ownership.
+3. Trước runtime, ghi version Docker/Compose, Go, browser, ports và tài nguyên máy. Không pull/cài tool trong phiên tài liệu.
+4. Demo dùng project riêng `project3-monitoring-demo`; không điều khiển nhầm `project3-research-lab` hay `project3-rate-limiter`. Project khác vẫn có thể xung đột ports `8080`, `18081`, `18082`, `18083`, `16379`.
+5. Không chạy đồng thời research load/observer; không sửa clock/NTP, protocol hoặc dataset để phục vụ demo.
 
 ## 2. Kiểm tra trước runtime
 
@@ -24,9 +24,7 @@ docker compose -p project3-monitoring-demo \
   -f compose.yaml -f compose.observability.yaml config
 ```
 
-Compose config không thay validator Prometheus/Loki/Alloy hoặc browser check. Dùng validator sẵn có/đi kèm image đã pin theo đúng version; không ghi pass nếu validator chưa chạy. Kiểm tra JSON dashboard parse và UID/datasource bằng cấu hình, rồi xác nhận runtime ở bước sau.
-
-Focused checks cho P2-01 phải kiểm tra escaping, counter semantics, JSON endpoint và scrape không tính như `/work`. Khi đổi code mới chạy checks phù hợp; tài liệu-only không cần code suite/live run. Không chạy cả research matrix để kiểm tra một endpoint.
+Compose config chỉ xác nhận cấu hình hợp nhất; nó không thay validator Prometheus/Loki/Alloy hoặc browser check. P2-01 đã có focused handler checks; `promtool` không sẵn có và scrape runtime chưa được kiểm chứng. Ghi đúng checks chạy được, không tuyên bố stack pass từ config.
 
 ## 3. Start và smoke có giới hạn — G2
 
@@ -60,31 +58,15 @@ curl --max-time 5 -i -X POST -H 'X-Client-ID: demo-buyer-1' \
 - Khi P2-04 đã triển khai: thấy log startup thật từ service allowlist trong Loki/Grafana; ghi source timestamp, ingestion delay và labels. Không gây outage ở G2 chỉ để có warning.
 - Ghi kiểm tra reset/restart/positions đã làm và chưa làm. Nếu restart cần thêm request vượt ngân sách thì ghi phạm vi mới trước khi tiếp tục.
 
-## 4. Diễn tập tải — G3
+## 4. Demo tải — G3
 
-Không chạy các script pilot/research/outage lịch sử như shortcut để tạo dashboard. Loadgen hiện có được dùng trực tiếp trên ingress stack P2 sau khi kiểm tra flags, identity/key distribution và timeout.
+Chỉ tiếp tục theo P2-06 sau khi gate G3 được cho phép. Không dùng pilot/research/outage scripts để tạo dashboard. Trước batch, lưu `scenario-plan.md` với mode/policy/topology/backend, workload/key, offered load/duration/bounds, drain/reset, time range và attempt budget theo registry. Kiểm tra flags/key distribution; dùng loadgen trực tiếp trên ingress P2.
 
-Trước mỗi batch, ghi `scenario-plan.md` gồm: câu hỏi demo; mode/algorithm/policy; API count; backend capacity/service time; workload/keys; RPS/duration/request bound; cách drain/reset; time range và attempt budget. Ngân sách khởi đầu đề xuất ở P2-06, không phải quyền chạy hiện tại.
+Mỗi case: xác minh resolved config/image identity và namespace Redis riêng; ghi UTC start sau khi healthy/sample nền; chạy trong ngân sách cố định; lưu command/summary/trace/sent/drops/errors; drain, ghi UTC end và query/time range; giữ mọi attempt, kể cả lỗi hoặc thiếu mẫu. Không suy client goodput từ backend counters, không retry/chọn lượt đẹp nếu phạm vi không cho phép.
 
-Trình tự một case:
+## 5. Redis outage — G4
 
-1. Xác minh env/Compose resolved và image identities thực tế. Tách namespace Redis cho demo; không FLUSHDB.
-2. Start/recreate đúng case, chờ healthy và đủ sample nền, ghi UTC start; không đổi cấu hình trong case.
-3. Chạy load có thời hạn; lưu command, summary/trace và sent/drops/errors. Dừng khi quá ngân sách, process lỗi hoặc máy có vấn đề; không nới tải/thời gian để tạo hình đẹp.
-4. Drain request, ghi UTC end, chọn khoảng dashboard không cắt qua mode transition; lưu query/time range/screenshot.
-5. Đọc request API, reject, backend arrivals/success/overload; nói rõ dữ liệu client-class/goodput nằm ở summary nếu đã lấy đúng, không suy từ backend.
-6. Giữ attempt dù kết quả khác kỳ vọng; ghi chưa thấy khác biệt hoặc chưa đủ mẫu. Chỉ retry khi phạm vi thực tế cho phép, không tự chọn lượt đẹp.
-
-## 5. Redis outage — chỉ G4
-
-Không có lệnh pause thực thi sẵn ở đây vì cần xác minh ownership và cleanup của gói P2-07 trước. Trước khi thao tác phải có:
-
-- Case/healthy reference cùng workload/policy/backend/topology được ghi trước, thời điểm pause và budget cụ thể.
-- Redis container ID thuộc **đúng** `project3-monitoring-demo`; không nhầm Redis host hoặc research stack.
-- Cleanup trap/watchdog unpause đã kiểm tra, kể cả khi loadgen hoặc terminal lỗi; giới hạn pause đề xuất 2s/case chưa phải thao tác đã được phép.
-- Sau sự cố: xác nhận unpaused, requests đã drain, trạng thái cuối và process còn lại; ghi trường hợp không khôi phục được, không âm thầm rời phiên.
-
-Đọc metrics/logs cùng nhau: `up=1` vẫn có thể đi với limiter errors; fail-open có thể tăng backend traffic; fail-closed 503 khác quota 429. Không gọi thời điểm request đầu tiên thành công là stable recovery theo protocol cũ.
+Chỉ thực hiện theo P2-07 sau khi gate G4 được cho phép. Trước thao tác, xác minh Redis container thuộc đúng project `project3-monitoring-demo`, ghi healthy reference/cấu hình và thời điểm/budget, kiểm tra cleanup trap/watchdog unpause. Không restart host Redis, `FLUSHDB`, đổi clock hoặc cấu hình hệ thống. Sau đó xác nhận unpaused, drain và cleanup; lưu thời điểm thực tế. `up=1` không chứng minh Redis khỏe; fail-open có thể tăng backend traffic, fail-closed 503 khác quota 429. First success không đồng nghĩa stable recovery.
 
 ## 6. Dừng và giữ dữ liệu
 
@@ -98,7 +80,7 @@ docker compose -p project3-monitoring-demo \
 
 Không dùng `down -v`, `docker system prune`, `volume prune` hoặc xóa artifact làm cleanup mặc định. Nếu cần reset dữ liệu demo, xác định chính xác volume/project, lưu phần cần giữ và áp dụng quyền xóa đã có; không suy dữ liệu ignored là có thể bỏ.
 
-Ghi trước/sau: containers/process nào do phiên tạo, paused state nếu có, host ports còn bind, volumes giữ lại, vị trí credentials. Nếu để stack chạy theo yêu cầu người dùng, ghi cách dừng và chi phí tài nguyên; không để background vô thời hạn mà không bàn giao.
+Giữ TSDB/chunks trên volume riêng của project; Prometheus khởi đầu đề xuất retention 24h kèm size budget; chốt storage/memory budget ở P2-02/P2-04 theo máy và image version, theo dõi dung lượng và bật Docker log rotation. Loki filesystem không tự reclaim theo dung lượng trống; cấu hình compactor/retention tương thích hoặc cleanup có scope rõ ràng. Không commit credentials; lọc env nhạy cảm khỏi `docker inspect` evidence. Nếu Alloy cần Docker socket, chỉ mount vào Alloy: `:ro` không làm Docker API read-only, không expose daemon TCP/`privileged`; lọc project `project3-monitoring-demo` và allowlist `api1`, `api2`, `backend`. Filter giới hạn logs thu, không phải security boundary. Ghi trước/sau containers/process, paused state, ports, volumes và vị trí credentials; bàn giao cách dừng nếu để stack chạy.
 
 ## 7. Bằng chứng và mẫu bàn giao
 
@@ -122,16 +104,15 @@ Sau khi artifact chốt, hash một lần; nếu sửa thì tạo bản mới ho
 
 Cuối mỗi phiên cập nhật [sổ task](PHASE2_PLAN.md) và [checkpoint](../context/SESSION_CHECKPOINT.md): task/substep, quyền đã dùng, files/commits, checks pass/fail/skip, revision/config/artifacts/hashes, process/volumes, giới hạn và việc tiếp theo. Không ghi root đã xác nhận runtime khi chỉ đọc báo cáo hoặc cấu hình.
 
-## 8. Tra lỗi theo lớp
+## 8. Tra lỗi
 
-| Hiện tượng | Kiểm tra đầu tiên | Điều không được kết luận vội |
+| Hiện tượng | Kiểm tra | Tránh kết luận |
 | --- | --- | --- |
-| Target DOWN | Service DNS/network, port/path, content type, timeout và response thật | Không tự gọi là Redis outage |
-| Target UP nhưng panel trống | Tên metric/labels, đúng role, đủ sample, datasource/time range | Không đổi null thành 0 để che lỗi |
-| none có allowed=0 | Semantics limiter và panel backend attempts | Không sửa counter cũ chỉ để đồ thị tăng |
-| Backend success khác API responses | Transport, overload, drain, từng nguồn counter | Không xem server success là client goodput |
-| Không có log Loki | Project/service filter, socket permissions, positions, Loki readiness và time range | Không tăng log mọi request trước khi tìm nguyên nhân |
-| Log lặp/sai thứ tự sau restart | Source timestamps, positions/storage và ingestion delay | Không cam kết exactly-once hoặc sửa raw timestamp |
-| Máy chậm/đĩa tăng | Containers/log rate/storage/retention và tải đang chạy | Không công bố overhead định lượng từ cảm nhận |
+| Target DOWN | DNS/network, port/path, content type, timeout, response | Không tự gọi là Redis outage |
+| Target UP, panel trống | metric/labels, role, sample, datasource/time range | Không đổi null thành 0 |
+| none có allowed=0 | semantics limiter, backend attempts | Không sửa counter |
+| Backend success khác API response | transport, overload, drain, nguồn counter | Không gọi server success là client goodput |
+| Loki thiếu/lặp log | project/service filter, socket, positions, readiness, timestamps | Không thu rộng hơn hoặc hứa exactly-once |
+| Máy chậm/đĩa tăng | containers, log rate, storage/retention, tải | Không định lượng overhead bằng cảm nhận |
 
-Nếu live demo chưa ổn, dùng [gói T12](../DEMO_PACKAGE.md) và [kịch bản hiện có](../DEMO_SCRIPT.md); ảnh/video P2 chỉ được dùng sau khi tạo và kiểm tra thật.
+Nếu live demo chưa ổn, dùng [kịch bản và fallback T12](../DEMO_SCRIPT.md); chỉ dùng ảnh/video P2 đã tạo và kiểm tra thật.
