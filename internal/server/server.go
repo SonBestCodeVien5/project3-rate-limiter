@@ -43,6 +43,7 @@ func NewHandler(cfg Config, l limiter.Limiter, logger *slog.Logger) *Handler {
 		writeJSON(w, http.StatusOK, map[string]string{"status": "ok", "role": cfg.Role, "instance_id": cfg.InstanceID})
 	})
 	h.mux.HandleFunc("GET /metrics", h.metrics)
+	h.mux.HandleFunc("GET /metrics/prometheus", h.prometheusMetrics)
 	if cfg.Role == "backend" {
 		h.mux.HandleFunc("GET /work", h.backend)
 		h.mux.HandleFunc("POST /work", h.backend)

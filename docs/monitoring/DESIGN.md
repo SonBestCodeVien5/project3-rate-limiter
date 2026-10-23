@@ -1,6 +1,6 @@
 # Thiết kế monitoring giai đoạn 2
 
-Đây là **hợp đồng triển khai dự kiến ngày 23/10/2026**, chưa phải stack đã hoạt động. Trạng thái và quyền thực hiện ở [kế hoạch P2](PHASE2_PLAN.md); việc baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), giới hạn nghiên cứu ở [readiness](../experiments/PROTOCOL_READINESS.md). Nguồn mô tả hiện trạng là code đã khảo sát, không phải phép đo mới.
+Đây là thiết kế monitoring lập ngày 23/10/2026. **P2-01 đã triển khai endpoint `GET /metrics/prometheus` và hợp đồng 14 counter**; stack Prometheus/Grafana/Alloy/Loki cùng provisioning và dashboard vẫn là kế hoạch, chưa được chạy. Trạng thái và quyền thực hiện ở [kế hoạch P2](PHASE2_PLAN.md); việc baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), giới hạn nghiên cứu ở [readiness](../experiments/PROTOCOL_READINESS.md). Phần hiện trạng ứng dụng phản ánh code đã khảo sát và kiểm tra handler cục bộ, không phải phép đo runtime stack.
 
 ## 1. Hai luồng dữ liệu
 
@@ -27,16 +27,16 @@ Giữ Console để đọc saved runs/artifact. Research runner của Console d�
 
 | Nơi | Hiện trạng | Hướng thay đổi giới hạn |
 | --- | --- | --- |
-| `internal/server/server.go` | Atomic counters; route JSON `/metrics` | Giữ nguyên; thêm `/metrics/prometheus` cùng nguồn counter |
-| `internal/server/server_test.go` | Test quota, fail policy, timeout/cancel, metrics backend | Thêm focused coverage cho mapping/format/escaping và JSON compatibility |
+| `internal/server/server.go` | Atomic counters; JSON `/metrics` và Prometheus `/metrics/prometheus` | Giữ nguyên schema JSON và nguồn counter; metrics và health không tăng counters `/work` |
+| `internal/server/server_test.go` | Test quota, fail policy, timeout/cancel, metrics backend và exposition | Focused checks cho mapping/format/escaping, role/mode families, zero values và JSON compatibility đã có; runtime scrape vẫn chờ G2 |
 | `internal/console/console.go` | Đọc JSON mặc định và qua Docker exec trong runner | Không đổi caller/schema để phục vụ Prometheus |
 | `scripts/research-pilot.sh` | Lưu JSON before/after của API/backend | Không đổi hoặc mở lại protocol |
 | `cmd/server/main.go` | JSON slog stdout, server-start config | Dùng lại; không thêm access log mọi request |
 | `compose.yaml` | API1/API2/backend/Redis/Nginx | Dùng làm nền; monitoring trong file bổ sung |
 
-Chưa có dependency Prometheus trong `go.mod`. Bản đầu ưu tiên xuất text từ các counter cố định bằng thư viện chuẩn, có escaping và focused checks. Không tạo registry/wrapper framework, exporter process hoặc instrumentation mọi handler cho nhu cầu này. Nếu chọn client library vì yêu cầu thực tế phát sinh, ghi tradeoff trong P2-01 và sửa hợp đồng trước khi thêm.
+Không có dependency Prometheus trong `go.mod`. P2-01 xuất text từ các counter cố định bằng thư viện chuẩn, có label escaping và focused checks. Không tạo registry/wrapper framework, exporter process hoặc instrumentation mọi handler cho nhu cầu này. Endpoint đã được kiểm tra trong process; scrape qua service/Prometheus vẫn chờ G2.
 
-## 3. Hợp đồng metrics dự kiến
+## 3. Hợp đồng metrics đã triển khai trong P2-01
 
 Endpoint: `GET /metrics/prometheus`; Prometheus text 0.0.4, `Content-Type: text/plain; version=0.0.4; charset=utf-8`, có `HELP`/`TYPE`, newline cuối, số không âm, **không gắn timestamp ứng dụng vào sample**. Prometheus lưu thời điểm scrape. Không thay số đo counter bằng rate phía app.
 
@@ -46,7 +46,7 @@ Các giá trị từ config như `instance_id` phải escape `\\`, `"`, newline 
 
 Tất cả metrics bên dưới là **counter**, tích lũy từ lúc tiến trình start. API chỉ xuất nhóm API/limiter; backend chỉ xuất nhóm backend. Xuất cả giá trị 0 của nhóm đúng role để truy vấn ổn định.
 
-| Metric dự kiến | JSON / nguồn hiện tại | Ý nghĩa và giới hạn |
+| Metric | JSON / nguồn hiện tại | Ý nghĩa và giới hạn |
 | --- | --- | --- |
 | `project3_api_requests_total` | `requests` | Request vào `/work`, tăng trước validation; bao gồm 400 do ID sai |
 | `project3_limiter_allowed_total` | `allowed` | Limiter quyết định allow; **mode none luôn 0**, không phải tổng request được proxy |
@@ -153,4 +153,4 @@ Tra tài liệu chính thức ngày 23/10/2026 qua web/Context7; không xác nh�
 - [Loki cardinality](https://grafana.com/docs/loki/latest/get-started/labels/cardinality/): labels và số stream.
 - [Loki filesystem storage](https://grafana.com/docs/loki/latest/operations/storage/filesystem/), [retention](https://grafana.com/docs/loki/latest/operations/storage/retention/): đĩa và compactor.
 
-Các cấu hình/metric names/UID/budgets trong tài liệu là thiết kế P2, chưa tồn tại trong sản phẩm. Ghi quyết định thực tế vào đúng phần khi triển khai; không biến thiết kế hoặc tài liệu vendor thành bằng chứng ứng dụng đã chạy đúng.
+Tên metric và endpoint ở mục 3 đã được triển khai trong P2-01; chúng chưa phải bằng chứng scrape/runtime thành công. Cấu hình stack, datasource, UID, dashboard và budget còn lại là thiết kế P2. Ghi quyết định thực tế vào đúng phần khi triển khai; không biến thiết kế hoặc tài liệu vendor thành bằng chứng stack đã chạy đúng.

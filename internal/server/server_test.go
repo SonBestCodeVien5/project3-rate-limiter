@@ -8,6 +8,9 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
+	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -208,6 +211,152 @@ func TestBackendCapacityAndMetrics(t *testing.T) {
 	if m["arrivals"] != float64(2) || m["overload"] != float64(1) || m["success"] != float64(1) {
 		t.Errorf("metrics=%v", m)
 	}
+}
+
+func TestPrometheusMetricsContract(t *testing.T) {
+	for _, mode := range []string{"none", "local", "redis"} {
+		t.Run(mode, func(t *testing.T) {
+			cfg := config(t)
+			cfg.Mode = mode
+			cfg.Policy.Algorithm = "token-bucket"
+			cfg.InstanceID = "api\\\"one\n\t\r"
+			h := NewHandler(cfg, nil, logger())
+			defer h.Close()
+			apiValues := map[string]uint64{
+				"project3_api_requests_total": 11, "project3_limiter_allowed_total": 12, "project3_limiter_rejected_total": 13,
+				"project3_limiter_errors_total": 14, "project3_limiter_fail_open_total": 15, "project3_limiter_fail_closed_total": 16,
+				"project3_api_backend_attempts_total": 17, "project3_api_backend_confirmed_arrivals_total": 18,
+				"project3_api_backend_errors_total": 19, "project3_api_limiter_canceled_total": 20,
+			}
+			if mode == "none" {
+				apiValues["project3_limiter_allowed_total"] = 0
+			}
+			seedCounters(&h.stats, map[string]uint64{"requests": 11, "allowed": apiValues["project3_limiter_allowed_total"], "rejected": 13, "limiterErrors": 14, "failOpen": 15, "failClosed": 16, "backendAttempts": 17, "backendConfirmedArrivals": 18, "backendErrors": 19, "canceled": 20})
+			w := httptest.NewRecorder()
+			h.ServeHTTP(w, httptest.NewRequest("GET", "/metrics/prometheus", nil))
+			if got := w.Header().Get("Content-Type"); got != "text/plain; version=0.0.4; charset=utf-8" {
+				t.Fatalf("content type=%q", got)
+			}
+			body := w.Body.String()
+			if !strings.HasSuffix(body, "\n") || strings.Contains(body, "\n\n") {
+				t.Fatalf("expected compact exposition ending in newline: %q", body)
+			}
+			labels := `role="api",instance_id="api\\\"one\n` + "\t\r" + `",mode="` + mode + `",algorithm="token-bucket"`
+			if !strings.Contains(body, labels) {
+				t.Fatalf("labels not escaped or incomplete:\n%s", body)
+			}
+			assertPrometheusSamples(t, body, labels, apiValues)
+			seedCounters(&h.stats, map[string]uint64{})
+			w = httptest.NewRecorder()
+			h.ServeHTTP(w, httptest.NewRequest("GET", "/metrics/prometheus", nil))
+			zeroValues := make(map[string]uint64, len(apiValues))
+			for name := range apiValues {
+				zeroValues[name] = 0
+			}
+			assertPrometheusSamples(t, w.Body.String(), labels, zeroValues)
+		})
+	}
+
+	cfg := config(t)
+	cfg.Role, cfg.InstanceID = "backend", "backend-\\\"\n\t\r"
+	h := NewHandler(cfg, nil, logger())
+	defer h.Close()
+	labels := `role="backend",instance_id="backend-\\\"\n` + "\t\r" + `"`
+	for _, values := range []map[string]uint64{{"arrivals": 21, "success": 22, "overload": 23, "canceled": 24}, {"arrivals": 0, "success": 0, "overload": 0, "canceled": 0}} {
+		seedCounters(&h.stats, values)
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, httptest.NewRequest("GET", "/metrics/prometheus", nil))
+		assertPrometheusSamples(t, w.Body.String(), labels, map[string]uint64{
+			"project3_backend_arrivals_total": values["arrivals"], "project3_backend_success_total": values["success"],
+			"project3_backend_overload_total": values["overload"], "project3_backend_canceled_total": values["canceled"],
+		})
+		if strings.Contains(w.Body.String(), "mode=") || strings.Contains(w.Body.String(), "algorithm=") || strings.Contains(w.Body.String(), "project3_api_") {
+			t.Fatalf("backend has API-only labels/families:\n%s", w.Body.String())
+		}
+	}
+}
+
+func TestScrapeAndHealthDoNotChangeWorkCountersOrJSONMetrics(t *testing.T) {
+	for _, role := range []string{"api", "backend"} {
+		t.Run(role, func(t *testing.T) {
+			cfg := config(t)
+			cfg.Role = role
+			h := NewHandler(cfg, nil, logger())
+			defer h.Close()
+			seedCounters(&h.stats, map[string]uint64{"requests": 11, "allowed": 12, "rejected": 13, "limiterErrors": 14, "failOpen": 15, "failClosed": 16, "backendAttempts": 17, "backendConfirmedArrivals": 18, "backendErrors": 19, "arrivals": 21, "success": 22, "overload": 23, "canceled": 24})
+			before := getJSONMetrics(t, h)
+			for _, path := range []string{"/metrics", "/metrics/prometheus", "/healthz"} {
+				h.ServeHTTP(httptest.NewRecorder(), httptest.NewRequest("GET", path, nil))
+			}
+			after := getJSONMetrics(t, h)
+			if !reflect.DeepEqual(before, after) {
+				t.Fatalf("metrics or health changed JSON metrics: before=%v after=%v", before, after)
+			}
+			want := map[string]any{"role": role, "instance_id": cfg.InstanceID, "mode": cfg.Mode, "algorithm": cfg.Policy.Algorithm,
+				"requests": float64(11), "allowed": float64(12), "rejected": float64(13), "limiter_errors": float64(14), "fail_open": float64(15), "fail_closed": float64(16),
+				"backend_attempts": float64(17), "backend_confirmed_arrivals": float64(18), "backend_errors": float64(19), "arrivals": float64(21), "success": float64(22), "overload": float64(23), "canceled": float64(24)}
+			if !reflect.DeepEqual(after, want) {
+				t.Fatalf("JSON schema/values changed: got=%v want=%v", after, want)
+			}
+		})
+	}
+}
+
+func seedCounters(c *counters, values map[string]uint64) {
+	c.requests.Store(values["requests"])
+	c.allowed.Store(values["allowed"])
+	c.rejected.Store(values["rejected"])
+	c.limiterErrors.Store(values["limiterErrors"])
+	c.failOpen.Store(values["failOpen"])
+	c.failClosed.Store(values["failClosed"])
+	c.backendAttempts.Store(values["backendAttempts"])
+	c.backendConfirmedArrivals.Store(values["backendConfirmedArrivals"])
+	c.backendErrors.Store(values["backendErrors"])
+	c.arrivals.Store(values["arrivals"])
+	c.success.Store(values["success"])
+	c.overload.Store(values["overload"])
+	c.canceled.Store(values["canceled"])
+}
+
+func assertPrometheusSamples(t *testing.T, body, labels string, values map[string]uint64) {
+	t.Helper()
+	lines := strings.Split(strings.TrimSuffix(body, "\n"), "\n")
+	if len(lines) != len(values)*3 {
+		t.Fatalf("got %d lines for %d counter families", len(lines), len(values))
+	}
+	for name, value := range values {
+		wantHelp := "# HELP " + name + " "
+		wantType := "# TYPE " + name + " counter"
+		wantSample := name + "{" + labels + "} " + strconv.FormatUint(value, 10)
+		foundHelp, foundType, foundSample := false, false, false
+		for _, line := range lines {
+			switch {
+			case strings.HasPrefix(line, wantHelp):
+				foundHelp = true
+			case line == wantType:
+				foundType = true
+			case strings.HasPrefix(line, name+"{"):
+				if line != wantSample {
+					t.Errorf("sample %s = %q, want %q", name, line, wantSample)
+				}
+				foundSample = true
+			}
+		}
+		if !foundHelp || !foundType || !foundSample {
+			t.Errorf("metric %s missing HELP/TYPE/sample: help=%v type=%v sample=%v", name, foundHelp, foundType, foundSample)
+		}
+	}
+}
+
+func getJSONMetrics(t *testing.T, h http.Handler) map[string]any {
+	t.Helper()
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/metrics", nil))
+	var got map[string]any
+	if err := json.Unmarshal(w.Body.Bytes(), &got); err != nil {
+		t.Fatal(err)
+	}
+	return got
 }
 
 func TestBackendCancellationReleasesCapacity(t *testing.T) {
