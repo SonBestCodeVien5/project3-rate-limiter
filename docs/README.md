@@ -1,6 +1,6 @@
 # Hướng dẫn đọc tài liệu Project 3
 
-Không cần đọc toàn bộ `docs/`. Mốc hiện tại (23/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-01 đã thêm endpoint Prometheus; P2-02 đã hoàn tất overlay/provisioning và kiểm tra tĩnh G1, chưa kiểm chứng runtime. P2-03 là gói kế tiếp, cần yêu cầu mới bao phủ dashboard và G2. Chi tiết ở [kế hoạch baseline](REMAINING_WORK_PLAN.md), [sổ P2](monitoring/PHASE2_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
+Không cần đọc toàn bộ `docs/`. Mốc hiện tại (23/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-03 đã kiểm chứng dashboard 7 panel và runtime G2 trên stack demo cố định, dùng 5/10 request `/work`; stack đã dừng, giữ named volumes. Dừng sau P2-03; P2-04 cần yêu cầu mới. Chi tiết và giới hạn ở [kế hoạch baseline](REMAINING_WORK_PLAN.md), [sổ P2](monitoring/PHASE2_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
 
 ## Chọn đường đọc
 

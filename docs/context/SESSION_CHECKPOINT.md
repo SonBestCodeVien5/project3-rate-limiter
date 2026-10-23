@@ -1,5 +1,89 @@
 # Session checkpoint
 
+## P2-03 complete within G2; stop before P2-04 — 2026-10-23
+
+The user resumed **P2-03 only**, authorizing dashboard implementation, focused
+checks, pinned image pulls, local application builds, the fixed
+`project3-monitoring-demo` stack and browser G2 smoke with at most **10 sequential
+`/work` requests** across this package. No demo load, Redis interruption, Console
+research run, T09/T10 rerun, Loki/Alloy or P2-04 was authorized or performed.
+Default delegation used one `gpt-6-luna` worker, reasoning `low`, `fork_turns=none`;
+the same worker handled the follow-up evidence/UI findings. Root integrated the
+reports, resolved named blockers and owns these task-state updates. Root did not
+repeat the runtime acceptance suite or issue any `/work` request.
+
+**Scoped commits:**
+
+- `bedb095826185734a330f70791ed68e9e67c601e`: dashboard plus related DESIGN/RUNBOOK.
+- `fb95afcce3ccb9ea684c47d3f9f1323930da1cda`: initial sanitized smoke evidence.
+- `6b0f2edcb87ea8716f820bbe4f0974207ebe5b1b`: corrected/full runtime evidence,
+  including raw snapshots, request chronology, all queries and rendered UI.
+- `e8201a5aa3bacd16d407320ed3341616014cde2d`: DESIGN/RUNBOOK runtime status.
+
+The seven-panel dashboard is
+`deploy/monitoring/grafana/dashboards/project3-overview.json`, dashboard UID
+`project3-monitoring-demo`, datasource UID `project3-prometheus`. It uses Vietnamese
+explanations, explicit new-demo labeling and request/s units, preserves missing
+data and counter semantics, and separates backend arrivals, successes and overload.
+It does not infer latency, legitimate goodput or correctness from counters.
+
+**Worker checks passed:** static dashboard assertions and merged Compose config;
+actual api1/api2/backend scrapes UP; JSON's existing 17-field schema and role-specific
+10 API/4 backend exposition counters; Grafana health/datasource/dashboard
+provisioning; all 11 dashboard expressions HTTP 200, successful and nonempty;
+local Chromium `149.0.7827.22` rendered all seven panel headings across scroll
+positions with five screenshots; api1 counter reset after restarting only api1.
+Host `promtool` was absent, but the pinned Prometheus image validator passed at
+2026-10-23T14:15:00Z–14:15:01Z in a labeled auto-removed container.
+
+**Request budget: 5/10 used**, all sequential, all HTTP 200. API deltas were +1;
+an isolated backend request measured +1 arrival/+1 success/0 overload. The initial
+backend +2 interval included two requests; the earlier delayed-response explanation
+was corrected using actual timestamps. Do not use that interval as a one-request
+check. See [request ledger](../../artifacts/monitoring/p2-03-g2/work-ledger.txt) and
+[reconstruction](../../artifacts/monitoring/p2-03-g2/backend-delta-reconstruction.md).
+No additional requests are authorized by the unused part of this completed package.
+
+**Evidence:** [checks](../../artifacts/monitoring/p2-03-g2/checks.md),
+[commands](../../artifacts/monitoring/p2-03-g2/commands.md),
+[image identities](../../artifacts/monitoring/p2-03-g2/images.txt),
+[UI results](../../artifacts/monitoring/p2-03-g2/browser-ui.md), and
+[SHA256SUMS](../../artifacts/monitoring/p2-03-g2/SHA256SUMS), covering 51 files.
+Manifest SHA-256: `d8f801687eb4f447700dd42d9388f3a58beaffe1b30c868d9b08fbc11a1bc96e`.
+Runtime source was `bedb095`; configuration was the unchanged base plus monitoring
+overlay. Initial request/metrics UTC bounds were 2026-10-23T13:57:24Z–13:58:56Z;
+the final UI-only start was 14:11:47Z and final stack cleanup was
+14:12:55Z–14:12:57Z. Validator timing is separate above. Actual image IDs/digests,
+per-request chronology, snapshot times, query results and failures are in evidence.
+
+**Failures and limits:** initial Docker socket access required sandbox escalation;
+one Prometheus query briefly failed at startup before succeeding. Automatic review
+rejected passing a local password as a browser-tool argument; no credential was
+transmitted by that action. A local Python/CDP path read the ignored credential
+file at runtime, corrected a WebSocket status-phrase check, and subsequently
+rendered the dashboard. Earlier login/CDP failures are retained and explicitly
+distinguished from successful UI captures. No secret was printed or committed.
+No application code changed, so no broad application suite was rerun. This small
+smoke does not verify sustained load, resource budgets, production resilience,
+client latency/goodput, quota correctness or user learning.
+
+Root's final integration checks passed: `git diff --check`, 117 local links in
+the four state/navigation documents, and read-only project-filtered `docker ps -a`
+(empty) plus `docker volume ls` (the two retained volumes). No runtime suite was
+repeated for these integration checks.
+
+**Cleanup and stop:** only demo containers/network were removed; no owned service
+remains running or paused, including the disposable validator. Retained volumes:
+`project3-monitoring-demo_grafana-data` and
+`project3-monitoring-demo_prometheus-data`. No `down -v` or prune; ignored artifacts,
+credentials, user files and research stacks/evidence were preserved. Completed
+work is committed; no push. Baseline measurement source remains
+`0291a80fb404fea0eafee8c3431acc3631bb423e` with unchanged T09/T10 conclusions.
+**Exact next prerequisite:** a new user request for **P2-04 — Alloy → Loki logs and
+datasource**, explicitly covering any runtime gate. Do not dispatch P2-04 from
+this stop or carry P2-03 G2 permission forward. G3/G4 remain unauthorized. Learning
+confirmation remains the user's separate action.
+
 ## P2-02 complete within G1; stop before P2-03 — 2026-10-23
 
 The user resumed **P2-02 only**, authorizing G1 implementation and focused static/local

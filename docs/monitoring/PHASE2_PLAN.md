@@ -2,7 +2,7 @@
 
 P2 là phần mở rộng local do người dùng chọn để học monitoring và cải thiện demo; không đổi yêu cầu hay bằng chứng baseline. Mục tiêu cơ bản là Prometheus, Grafana, Alloy, Loki, một dashboard, truy vấn metrics/logs và demo lặp lại được. Histogram, alerting, tracing, exporters hạ tầng, tự discovery mọi Console run và observability production là tùy chọn/ngoài scope.
 
-**Hiện trạng 23/10/2026:** P2-01 hoàn tất G1 ở commit `0bea7b2`; P2-02 hoàn tất triển khai và kiểm tra tĩnh G1 ở commit `d785529`. Dừng trước P2-03. `GET /metrics/prometheus` đã có, JSON `GET /metrics` giữ nguyên. Chưa có scrape/runtime stack, demo load hay outage. Chỉ thực hiện khi yêu cầu hiện hành bao phủ gói và cổng tương ứng.
+**Hiện trạng 23/10/2026:** P2-01 hoàn tất G1 ở commit `0bea7b2`; P2-02 hoàn tất triển khai G1 ở commit `d785529`; P2-03 đã kiểm chứng dashboard và runtime G2 trên stack cố định. Dashboard 7 panel ở commit `bedb095`; JSON `GET /metrics` giữ nguyên. Smoke dùng **5/10 request `/work` tuần tự**, không có demo load hay outage. Stack demo đã dừng, giữ named volumes. Dừng sau P2-03; gói kế tiếp cần yêu cầu mới.
 
 ## Cách tiếp tục
 
@@ -24,8 +24,8 @@ Chuỗi mặc định: `P2-01 → P2-02 → P2-03 → P2-04 → P2-05 → P2-06 
 | Cổng | Giới hạn | Trạng thái hiện tại |
 | --- | --- | --- |
 | G0 — tài liệu | Đọc, viết và kiểm tra tài liệu | P2-00 hoàn tất |
-| G1 — triển khai | Sửa code/config/test và focused checks; không start stack, loadgen hoặc outage | P2-01/P2-02 hoàn tất trong phạm vi được cấp riêng; dừng sau P2-02 |
-| G2 — runtime smoke | Stack demo đúng project; scrape/browser; tối đa **10 request `/work` tuần tự**; không pause Redis | Chưa được cấp |
+| G1 — triển khai | Sửa code/config/test và focused checks; không start stack, loadgen hoặc outage | P2-01/P2-02 và dashboard P2-03 hoàn tất trong phạm vi được cấp riêng |
+| G2 — runtime smoke | Stack demo đúng project; scrape/browser; tối đa **10 request `/work` tuần tự**; không pause Redis | Đã được cấp và dùng **chỉ cho P2-03**: 5/10 request; kết thúc tại điểm dừng P2-03, không chuyển quyền sang gói sau |
 | G3 — demo load | Chỉ scenario đã ghi theo P2-06; không chạy research matrix | Chưa được cấp |
 | G4 — Redis outage | Pause/unpause đúng Redis demo, cleanup và healthy reference theo P2-07 | Chưa được cấp |
 
@@ -39,8 +39,8 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 | --- | --- | --- | --- |
 | P2-00 | Kế hoạch, design, runbook, learning guide và routing | — | **Xong**; xem checkpoint |
 | P2-01 | Prometheus exposition, giữ JSON metrics | P2-00; G1 | **Xong**, `0bea7b2`; chi tiết tests/skips ở checkpoint |
-| P2-02 | Compose overlay, Prometheus/Grafana và provisioning | P2-01; G1 | **Xong G1**, `d785529`; runtime chưa kiểm chứng |
-| P2-03 | Dashboard metrics và runtime smoke | P2-02; G2 | **Chưa bắt đầu; gói kế tiếp**, cần yêu cầu mới bao phủ triển khai dashboard và G2 |
+| P2-02 | Compose overlay, Prometheus/Grafana và provisioning | P2-01; G1 | **Xong G1**, `d785529`; runtime được kiểm chứng trong P2-03 |
+| P2-03 | Dashboard metrics và runtime smoke | P2-02; G2 | **Xong kỹ thuật**; dashboard `bedb095`, evidence và giới hạn ở phần P2-03; học tập chưa xác nhận |
 | P2-04 | Alloy → Loki logs và datasource | P2-02; sau P2-03 theo mặc định | **Chưa bắt đầu** |
 | P2-05 | Kiểm chứng pipeline logs và vòng đời stack | P2-03/P2-04; G2 | **Chưa bắt đầu** |
 | P2-06 | Demo normal/mixed: none/local/Redis | P2-05; G3 | **Chưa bắt đầu** |
@@ -62,11 +62,17 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 
 Kết quả G1 (`d785529`): overlay project cố định; scrape ba service qua `/metrics/prometheus`; datasource UID `project3-prometheus`, provider/folder ổn định; named volumes, loopback, healthchecks, memory/retention budget và log rotation đã cấu hình. Image Prometheus `v3.15.0`/Grafana `12.4.11` được đối chiếu nguồn chính thức; digest và image thực tế chưa kiểm chứng.
 
-Kiểm tra đạt: base Compose độc lập và base+overlay resolve; YAML/PyYAML và assertions cho targets/labels, mount paths, ports, provisioning, healthchecks, logging, secret không lộ nội dung; `git diff --check`. Bảy host ports không có listener tại lúc kiểm tra. `promtool` không sẵn có; chưa chạy validator Prometheus, image, scrape hay UI. Chi tiết lệnh và file tạm ở [checkpoint](../context/SESSION_CHECKPOINT.md). Dashboard, Loki/Alloy chưa triển khai; xác nhận học tập còn riêng. **Điều kiện tiếp theo:** yêu cầu mới cho P2-03, bao phủ triển khai dashboard và G2 runtime smoke theo ngân sách; G3/G4 chưa được cấp.
+Kiểm tra tại điểm dừng P2-02: base Compose độc lập và base+overlay resolve; YAML/PyYAML và assertions cho targets/labels, mount paths, ports, provisioning, healthchecks, logging, secret không lộ nội dung; `git diff --check`. Bảy host ports không có listener tại lúc kiểm tra. Khi đó `promtool` không sẵn có; chưa chạy validator Prometheus, image, scrape hay UI. Chi tiết lệnh và file tạm ở [checkpoint](../context/SESSION_CHECKPOINT.md). Kết quả runtime/dashboard sau đó thuộc P2-03 bên dưới; Loki/Alloy và xác nhận học tập vẫn chưa hoàn tất.
 
 ### P2-03 — dashboard và smoke
 
 Tệp dashboard: `deploy/monitoring/grafana/dashboards/project3-overview.json`. Làm **6–8 panels** theo design, đơn vị/nhãn demo rõ; không giả lập p95/goodput từ counters hoặc gộp backend arrivals với successes. G2 smoke đối chiếu scrape với JSON/exposition trên cả hai API và backend; kiểm tra query/browser thật, thiếu mẫu phải hiện rõ. Hoàn tất khi targets, panels, restart semantics và JSON Console compatibility được kiểm tra runtime; ghi kết quả/cleanup.
+
+**Kết quả 23/10/2026:** 7 panel, dashboard UID `project3-monitoring-demo`, datasource UID `project3-prometheus`; giải thích tiếng Việt, đơn vị request/s và nhãn dữ liệu demo. Giữ gaps khi thiếu dữ liệu, `rate` trước `sum`; tách backend arrivals/success/overload. Cả ba target `api1`/`api2`/`backend` UP; 11 biểu thức PromQL trả kết quả thành công; Grafana API xác nhận provisioning và Chromium hiển thị đủ 7 panel qua các vị trí cuộn. JSON/exposition đã đối chiếu trên cả ba service; restart riêng `api1` reset counters. Không chạy Console research run.
+
+Smoke có 5 request tuần tự, đều HTTP 200; API deltas +1, backend kiểm tra riêng +1 arrival/+1 success/0 overload. Khoảng backend ban đầu có delta +2 vì chứa hai request, không phải phép kiểm tra một request. Snapshot nhiều counters không phải transaction; `rate`/`increase` không thay exact count. Không suy latency, legitimate goodput, correctness hoặc kết quả T09/T10 từ dashboard. Technical completion không xác nhận người dùng đã hiểu monitoring.
+
+Bằng chứng và lệnh đã loại secrets: [checks](../../artifacts/monitoring/p2-03-g2/checks.md), [request ledger](../../artifacts/monitoring/p2-03-g2/work-ledger.txt), [commands](../../artifacts/monitoring/p2-03-g2/commands.md), [ảnh UI và mô tả](../../artifacts/monitoring/p2-03-g2/browser-ui.md), [checksums](../../artifacts/monitoring/p2-03-g2/SHA256SUMS). Source chạy là `bedb095`; evidence hoàn chỉnh ở `6b0f2ed`, cập nhật design/runbook ở `e8201a5`. `promtool check config` đạt khi chạy từ pinned Prometheus image; bản host không có sẵn. UTC, image IDs/digests, lỗi ban đầu và cleanup được ghi trong evidence. Stack `project3-monitoring-demo` đã dừng/xóa containers và network, giữ hai named volumes; không còn service thuộc project chạy hoặc paused. **Điều kiện tiếp theo:** người dùng yêu cầu mới cho P2-04 (Alloy → Loki logs và datasource), nêu rõ gate được cấp; không tự dùng lại G2 của P2-03. G3/G4 chưa được cấp.
 
 ### P2-04 — Alloy/Loki
 
