@@ -1,0 +1,8 @@
+Actual /work requests (4 total; each sequential, recorded immediately before dispatch):
+1. API1 baseline/delta smoke: HTTP 200; later API1 request/allow/backend-attempt/confirmed-arrival each +1.
+2. API1 follow-up: HTTP 200. Its backend response arrived asynchronously after the backend baseline snapshot.
+3. API2 clean delta smoke: HTTP 200; request/allow/backend-attempt/confirmed-arrival each +1.
+4. Direct backend request: HTTP 200; snapshot delta was +2 arrivals and +2 success due the delayed response from request 2; overload remained +0. This is not treated as an exact single-request backend delta pass.
+
+Process restart check (no /work request): restarted only api1; request/allow/backend-attempt/confirmed-arrival counters reset to zero.
+Additional G2 runtime operation (no /work request): second project-only start for UI rendering retry after the first browser interaction was blocked. Browser rendering remained unavailable; see checks.md. Redis was never paused.
