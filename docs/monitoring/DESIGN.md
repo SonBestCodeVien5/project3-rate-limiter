@@ -1,6 +1,6 @@
 # Thiết kế monitoring giai đoạn 2
 
-Thiết kế monitoring lập ngày 23/10/2026. P2-01/P2-02 đã triển khai metrics và overlay; P2-03 đã thêm dashboard bảy panel và hoàn tất G2 runtime smoke cho project cố định. Ba scrape targets, JSON/exposition compatibility, datasource/dashboard provisioning, 11 PromQL expressions và dashboard UI đã được kiểm tra runtime. Alloy/Loki chưa được cấu hình. `docker compose config` chỉ xác nhận cấu hình hợp nhất, không thay các kiểm tra runtime. Task và giới hạn từng gói ở [kế hoạch P2](PHASE2_PLAN.md); kết quả và artifact P2-03 tại [G2 smoke evidence](../../artifacts/monitoring/p2-03-g2/checks.md); việc baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), giới hạn nghiên cứu ở [readiness](../experiments/PROTOCOL_READINESS.md).
+Thiết kế monitoring lập ngày 23/10/2026. P2-01/P2-02 đã triển khai metrics và overlay; P2-03 đã kiểm tra dashboard bảy panel và runtime G2 trên stack cố định. Ba scrape targets, JSON/exposition compatibility, datasource/dashboard provisioning, 11 PromQL expressions và UI đã được kiểm tra. Alloy/Loki chưa cấu hình. Console hiện có nút gửi một request mẫu qua ingress của stack cố định, nhưng **Chạy benchmark** vẫn dựng riêng `project3-research-lab` và không được scrape bởi dashboard. P2-03A đề xuất một luồng Console demo tải riêng; chưa triển khai/cấp quyền. `docker compose config` chỉ xác nhận cấu hình hợp nhất, không thay kiểm tra runtime. Task/gate ở [kế hoạch P2](PHASE2_PLAN.md); evidence P2-03 tại [G2 smoke](../../artifacts/monitoring/p2-03-g2/checks.md); baseline và protocol ở [kế hoạch chung](../REMAINING_WORK_PLAN.md) và [readiness](../experiments/PROTOCOL_READINESS.md).
 
 ## 1. Hai luồng dữ liệu
 
@@ -21,11 +21,11 @@ flowchart LR
 
 Mũi tên metrics mô tả hướng dữ liệu; **Prometheus chủ động scrape** API/backend. Alloy chỉ thu logs ở bản này. Grafana truy vấn hai datasource; không nằm trên đường xử lý request, không điều khiển policy/Redis. Không cần Pushgateway, tracing hoặc remote write.
 
-Giữ Console để đọc saved runs/artifact. Research runner của Console dùng `project3-research-lab` và Compose sinh theo case; không thuộc network/discovery của stack P2 cố định. Nếu sau này tích hợp runner, cần một gói thiết kế riêng.
+Console có hai luồng tách biệt: **Chạy benchmark** gọi research runner trên `project3-research-lab`, không hiện trên dashboard cố định; **Gửi một request mẫu** gọi ingress `127.0.0.1:8080` của stack cố định và counters của request đó nằm trên ba target đã provision. Nút mẫu chưa phải load demo. P2-03A đề xuất luồng **Demo có giám sát** riêng dùng loadgen hiện có trên ingress cố định; xem trạng thái, phụ thuộc và cổng ở registry, không suy rằng đã hoạt động.
 
 ## 2. Điểm tích hợp
 
-P2-01 xuất exposition từ atomic counters hiện có trong `internal/server/server.go`, không thêm dependency Prometheus. Giữ JSON `/metrics` cho `internal/console/console.go` và `scripts/research-pilot.sh`; metrics/health không tăng counter `/work`. Focused server checks/vet đạt, nhưng chưa có parser Prometheus độc lập hoặc scrape runtime. Logs JSON hiện có từ `cmd/server/main.go` là nguồn cho pipeline dự kiến; không cần access log từng request.
+P2-01 xuất exposition từ atomic counters hiện có trong `internal/server/server.go`, không thêm dependency Prometheus. Giữ JSON `/metrics` cho `internal/console/console.go` và `scripts/research-pilot.sh`; metrics/health không tăng counter `/work`. Luồng Console request mẫu gửi vào ingress base; `/metrics` hiện cho biết mode/algorithm nhưng không đủ policy/topology. P2-03A phải lấy effective mode, algorithm, policy/quota và topology từ trạng thái runtime đã xác minh trước khi phát tải; giá trị form không phải bằng chứng. Focused server checks/vet và scrape runtime P2-03 đạt; Alloy/Loki còn chờ. Logs JSON từ `cmd/server/main.go` là nguồn pipeline dự kiến; không cần access log từng request.
 
 ## 3. Hợp đồng metrics đã triển khai trong P2-01
 

@@ -1,6 +1,6 @@
 # Hướng dẫn đọc tài liệu Project 3
 
-Không cần đọc toàn bộ `docs/`. Mốc hiện tại (23/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-03 đã kiểm chứng dashboard 7 panel và runtime G2 trên stack demo cố định, dùng 5/10 request `/work`, khép gói bằng cleanup giữ named volumes. Sửa lỗi UID của trang danh sách Grafana sau đó được ghi trong [runbook](monitoring/RUNBOOK.md). Dừng triển khai sau P2-03; P2-04 cần yêu cầu mới. Chi tiết và giới hạn ở [kế hoạch baseline](REMAINING_WORK_PLAN.md), [sổ P2](monitoring/PHASE2_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
+Không cần đọc toàn bộ `docs/`. Mốc hiện tại (23/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-03 đã kiểm tra dashboard 7 panel trên stack cố định, dùng 5/10 request `/work`; sửa lỗi UID Grafana sau đó được ghi trong [runbook](monitoring/RUNBOOK.md). Console request mẫu có thể gửi tới cùng stack; nút **Chạy benchmark** vẫn chạy project research riêng. P2-03A là đề xuất ưu tiên trước P2-04 để có luồng demo tải riêng trên stack monitoring; chưa triển khai/cấp quyền. Xem [sổ P2](monitoring/PHASE2_PLAN.md) để biết trạng thái/gate, [kế hoạch baseline](REMAINING_WORK_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
 
 ## Chọn đường đọc
 
@@ -8,7 +8,7 @@ Không cần đọc toàn bộ `docs/`. Mốc hiện tại (23/10/2026): T09/T10
 - **Tài liệu tra theo nhu cầu:** [bối cảnh và tự kiểm tra](PROJECT_ROADMAP.md); [kết quả và cách đọc T10](analysis/T10_RESULTS.md); [nội dung slide](slides/project3-defense.md). Kịch bản demo chứa phần chuẩn bị kỹ thuật và câu hỏi bảo vệ.
 - **Tra công cụ:** [Console](CONSOLE.md) hướng dẫn giao diện/saved runs; [scripts README](../scripts/README.md) hướng dẫn runner, kiểm tra và exporter.
 - **Học monitoring:** bắt đầu ở [lộ trình học P2](monitoring/LEARNING_GUIDE.md); xem [sổ P2](monitoring/PHASE2_PLAN.md) để biết gói hiện hành, rồi tra phần liên quan trong [thiết kế](monitoring/DESIGN.md). Chỉ dùng [runbook](monitoring/RUNBOOK.md) cho hoạt động đã được cho phép.
-- **Tiếp tục công việc:** [kế hoạch baseline](REMAINING_WORK_PLAN.md) quản lý T01–T13/H01–H02; [sổ P2](monitoring/PHASE2_PLAN.md) quản lý P2-00–P2-08. Trạng thái đo và protocol hiện hành ở [readiness](experiments/PROTOCOL_READINESS.md).
+- **Tiếp tục công việc:** [kế hoạch baseline](REMAINING_WORK_PLAN.md) quản lý T01–T13/H01–H02; [sổ P2](monitoring/PHASE2_PLAN.md) quản lý P2-00–P2-08 và P2-03A. Trạng thái đo và protocol hiện hành ở [readiness](experiments/PROTOCOL_READINESS.md).
 
 Yêu cầu gốc: [Roadmap nguồn](context/sources/00_Project3_Roadmap.md) > [Proposal](context/sources/01_Project3_Proposal.md) > tài liệu bổ trợ; [chỉ mục nguồn](context/SOURCE_INDEX.md) dẫn tới bản Drive có thẩm quyền. Roadmap repo là lịch học đề xuất, không phải hạn chính thức.
 

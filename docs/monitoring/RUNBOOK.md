@@ -71,9 +71,13 @@ curl --max-time 5 -i -X POST -H 'X-Client-ID: demo-buyer-1' \
 - Khi P2-04 đã triển khai: thấy log startup thật từ service allowlist trong Loki/Grafana; ghi source timestamp, ingestion delay và labels. Không gây outage ở G2 chỉ để có warning.
 - Ghi kiểm tra reset/restart/positions đã làm và chưa làm. Nếu restart cần thêm request vượt ngân sách thì ghi phạm vi mới trước khi tiếp tục.
 
+**Luồng Console hiện có:** `Gửi một request mẫu` gọi `POST /work` qua `127.0.0.1:8080`, ingress của stack `project3-monitoring-demo`; request xuất hiện trong counters của api1/api2/backend sau scrape. Đây chỉ là một request, không phải load generator. Nút **Chạy benchmark** gọi research runner `project3-research-lab`, nên không xuất hiện ở dashboard này. P2-03A đề xuất nút **Demo có giám sát** riêng; chưa triển khai/cấp quyền. Không hướng người dùng dùng benchmark như monitored demo.
+
+Khi P2-03A được cấp và triển khai, chỉ bắt đầu case nếu ba targets đang `UP`, sample mới, hai API cùng khớp cấu hình hiệu lực, policy/quota và topology được xác minh từ runtime, và đúng scenario-plan P2-06. Không dựa vào lựa chọn form để báo cấu hình đang chạy. Nếu target thiếu/khác cấu hình, dừng trước khi phát tải. Mỗi case cần UTC bounds/query riêng; sau đổi policy phải có lifecycle owner recreate đúng project, chờ healthy và xác minh lại. Console chỉ sở hữu loadgen; cancel dừng generator, không dừng Compose. G2 request smoke mới và G3 bounded demo cần được cấp rõ; 5 request G2 đã dùng trong P2-03 không được tính lại.
+
 ## 4. Demo tải — G3
 
-Chỉ tiếp tục theo P2-06 sau khi gate G3 được cho phép. Không dùng pilot/research/outage scripts để tạo dashboard. Trước batch, lưu `scenario-plan.md` với mode/policy/topology/backend, workload/key, offered load/duration/bounds, drain/reset, time range và attempt budget theo registry. Kiểm tra flags/key distribution; dùng loadgen trực tiếp trên ingress P2.
+Chỉ tiếp tục theo P2-06 sau khi gate G3 được cho phép. Không dùng pilot/research/outage scripts hoặc nút Console **Chạy benchmark** để tạo dashboard. Trước batch, lưu `scenario-plan.md` với mode/policy/topology/backend, workload/key, offered load/duration/bounds, drain/reset, time range và attempt budget theo registry. Kiểm tra flags/key distribution; nếu P2-03A đã kiểm tra, dùng Console **Demo có giám sát** để gọi loadgen vào ingress P2; nếu chưa, dùng loadgen trực tiếp theo lệnh đã được cho phép. Xác minh cấu hình runtime thực tế trước khi chạy.
 
 Mỗi case: xác minh resolved config/image identity và namespace Redis riêng; ghi UTC start sau khi healthy/sample nền; chạy trong ngân sách cố định; lưu command/summary/trace/sent/drops/errors; drain, ghi UTC end và query/time range; giữ mọi attempt, kể cả lỗi hoặc thiếu mẫu. Không suy client goodput từ backend counters, không retry/chọn lượt đẹp nếu phạm vi không cho phép.
 

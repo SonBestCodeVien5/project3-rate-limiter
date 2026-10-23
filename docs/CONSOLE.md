@@ -2,7 +2,7 @@
 
 Console là giao diện local cho pilot, không thay đổi protocol hoặc phép đo của runner. Ba preset cố định là `mixed-none`, `mixed-local`, `mixed-redis` (tổng RPS 21..1000); chế độ `custom` cho phép chọn workload, mode, thuật toán, topology và policy trong các giới hạn bên dưới. Mỗi lượt chạy chọn một case, lặp 1..3 lượt. Roadmap/Proposal chỉ yêu cầu các thí nghiệm rate limiting; Console là lựa chọn kỹ thuật để trình bày demo.
 
-**Trạng thái hiện tại:** T09 và phân tích offline T10 đã hoàn tất; tài liệu này mô tả khả năng Console và các lệnh lịch sử, không cấp quyền tải mới. Saved-run UI xem/so sánh artifact pilot, không thay kết quả T10. Xem [kết quả T10](analysis/T10_RESULTS.md), [readiness đo](experiments/PROTOCOL_READINESS.md), [kế hoạch task](REMAINING_WORK_PLAN.md) và gói [demo/source T12](DEMO_SCRIPT.md#source-và-phiên-bản). Nhánh monitoring P2 có endpoint exposition trong P2-01; stack cố định chưa được cấu hình/kiểm chứng và không tự quan sát runner Console; xem [registry P2](monitoring/PHASE2_PLAN.md).
+**Trạng thái hiện tại:** T09 và phân tích offline T10 đã hoàn tất; tài liệu mô tả khả năng Console, không cấp quyền tải mới. Saved-run UI xem/so sánh artifact pilot, không thay kết quả T10. Stack monitoring cố định và dashboard đã được kiểm tra trong P2-03. Nút `Gửi một request mẫu` gửi đúng ingress `127.0.0.1:8080` của stack đó; đây là request đơn lẻ. Nút **Chạy benchmark** vẫn gọi research runner `project3-research-lab`, không được scrape bởi dashboard cố định. Chế độ Console chạy demo tải trên stack cố định là đề xuất P2-03A, chưa triển khai/cấp quyền. Xem [registry P2](monitoring/PHASE2_PLAN.md), [kết quả T10](analysis/T10_RESULTS.md), [readiness](experiments/PROTOCOL_READINESS.md), [kế hoạch task](REMAINING_WORK_PLAN.md) và [demo/source T12](DEMO_SCRIPT.md#source-và-phiên-bản).
 
 ## Chạy demo
 
@@ -13,7 +13,7 @@ go run ./cmd/console
 # Mở http://127.0.0.1:8090
 ```
 
-Phần **Stack mặc định** đọc các cổng loopback 8080/18081/18082/18083; nếu muốn dùng phần này, khởi động `docker compose up -d --build --wait` riêng. Nút request mẫu gửi một `POST /work` với client ID cố định `console-demo` vào stack mặc định. Phần benchmark gọi `scripts/research-pilot.sh` với một preset; runner dùng project `project3-research-lab` và cổng ingress 18080. Nó từ chối nếu project đã có container hoặc runner khác đang giữ khóa. Các lượt chạy nằm dưới `artifacts/console/<Run ID>/`, gồm request, trạng thái, log và `result/` của runner. CLI tương đương:
+Phần **Stack mặc định** đọc các cổng loopback 8080/18081/18082/18083; nếu muốn dùng request mẫu, khởi động đúng stack monitoring cố định theo [runbook](monitoring/RUNBOOK.md) (`project3-monitoring-demo`). Nút request mẫu gửi một `POST /work` với client ID cố định `console-demo` tới ingress đó; sau scrape, counter của cùng api1/api2/backend hiện trên dashboard. Compose base mặc định là Redis/Fixed Window. Giá trị **Không limiter, 120 RPS, 1 lượt** ở form benchmark là cấu hình cho một research run mới, không phải trạng thái stack đang chạy. Phần **Chạy benchmark** gọi `scripts/research-pilot.sh`; runner dùng project `project3-research-lab` và ingress 18080, nên traffic của nó không hiện trên dashboard cố định. Nó từ chối nếu project đã có container hoặc runner khác đang giữ khóa. Các lượt chạy nằm dưới `artifacts/console/<Run ID>/`, gồm request, trạng thái, log và `result/` của runner. CLI tương đương:
 
 ```bash
 MIXED_RPS=120 bash scripts/research-pilot.sh --case mixed-redis --repetitions 1 --analyze --output artifacts/example-new-dir
@@ -49,4 +49,4 @@ Phần **So sánh các lượt đã lưu** chọn ba lượt hoàn tất riêng 
 
 Biểu đồ artifact, preset khóa, tiến trình runner và outage UI là đề xuất tùy chọn; chưa phải tính năng hiện có hoặc yêu cầu baseline. Fault injection từ UI, history database và truy cập LAN hiện chưa có.
 
-Prometheus/Grafana/Alloy/Loki thuộc nhánh monitoring P2 riêng; stack cố định được lên kế hoạch nhưng chưa có cấu hình/runtime kiểm chứng và không tự quan sát research runner Console. Truy cập LAN cần thiết kế quyền điều khiển process riêng. Những mục này không thuộc bản Console local hiện tại.
+Prometheus/Grafana thuộc stack cố định P2 đã được kiểm tra; request mẫu trong Console đi qua đúng ingress stack này. Research runner Console vẫn dùng project riêng và không được scrape. Luồng Console chạy demo tải trên stack monitoring là đề xuất P2-03A, chưa triển khai/cấp quyền; theo registry P2 để biết gate. Alloy/Loki còn chờ. Truy cập LAN cần thiết kế quyền điều khiển process riêng.
