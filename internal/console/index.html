@@ -9,8 +9,9 @@
 header{background:#152a3a;color:white;padding:1.4rem max(1rem,calc((100vw - 1120px)/2))}
 header h1{margin:0;font-size:1.65rem}header p{margin:.25rem 0 0;color:#c4d3dc}
 header .hint{color:#c4d3dc}
-main{max-width:1120px;margin:1.3rem auto;padding:0 1rem 2rem;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:1rem;align-items:start}
+main{max-width:1120px;margin:1.3rem auto;padding:0 1rem 2rem;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:1rem;align-items:stretch}
 .card{min-width:0;background:white;border:1px solid #dce4e9;border-radius:12px;padding:1.25rem;box-shadow:0 2px 9px #18364a0a}
+#form-card{display:flex;flex-direction:column;min-height:0}
 h2{margin:0 0 .85rem;font-size:1.15rem}h3{margin:1.2rem 0 .6rem;font-size:.98rem}
 label{display:block;font-weight:650;margin:.85rem 0 .3rem}select,input,button{font:inherit;border-radius:7px}
 [hidden]{display:none!important}fieldset{border:1px solid #e0e8ed;border-radius:8px;margin:1rem 0;padding:.15rem .75rem .8rem;min-width:0}legend{font-weight:700;color:#36566b;padding:0 .3rem}
@@ -29,14 +30,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 details{border-top:1px solid #e6ebef;padding:.75rem 0}summary{cursor:pointer;font-weight:700;color:#36566b}
 pre{min-width:0;max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;max-height:310px;background:#f5f7f9;border:1px solid #e5eaee;border-radius:7px;padding:.8rem;font-size:.8rem}
 ul{padding-left:1.2rem;min-width:0}li{margin:.25rem 0;overflow-wrap:anywhere}
-#history{list-style:none;padding:0}#history button{display:block;width:100%;text-align:left;background:#f6f9fa;color:#244458;border:1px solid #e1e8ed;padding:.5rem .7rem;overflow-wrap:anywhere}
+#history{list-style:none;padding:0;margin-bottom:0;min-height:8rem;flex:1;contain:size;overflow-y:auto;overscroll-behavior:contain}#history button{display:block;width:100%;text-align:left;background:#f6f9fa;color:#244458;border:1px solid #e1e8ed;padding:.5rem .7rem;overflow-wrap:anywhere}
 #live .fact:only-child{grid-column:1/-1}
 #history button:hover{border-color:#70b5b7}.error{color:#a32424}.wide{grid-column:1/-1}a{color:#066d85}
-@media(max-width:760px){main{grid-template-columns:minmax(0,1fr)}.wide{grid-column:1}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){main{grid-template-columns:minmax(0,1fr)}#history{min-height:0;max-height:16rem;flex:initial;contain:none}.wide{grid-column:1}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 <header><div class="hint">PROJECT 3 / LOCAL PILOT</div><h1>Demo Console</h1><p>Quan sát rate limiting, concurrency và mức bảo vệ backend.</p></header>
 <main>
-<section class="card"><h2>Cấu hình lượt chạy</h2><form id="form">
+<section class="card" id="form-card"><h2>Cấu hình lượt chạy</h2><form id="form">
 <label for="preset">Preset</label><select id="preset"><option value="mixed-none">Không limiter</option><option value="mixed-local">State cục bộ</option><option value="mixed-redis">State Redis dùng chung</option><option value="custom">Tùy chỉnh</option></select>
 <div id="baseline"><label for="rps">Tổng tải (RPS)</label><input id="rps" type="number" min="21" max="1000" value="120" required><p class="hint">5 client hợp lệ, tổng 20 RPS hợp lệ; 2 API instances; Fixed Window. Các giá trị này là preset pilot.</p></div>
 <div id="customFields" hidden>
