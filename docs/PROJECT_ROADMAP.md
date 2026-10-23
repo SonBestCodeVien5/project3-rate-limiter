@@ -1,99 +1,47 @@
-# Lộ trình Project 3: từ bắt đầu đến bảo vệ
+# Lộ trình học Project 3 và chuẩn bị bảo vệ
 
-**Tình trạng hiện tại (20/10/2026):** T09 đã hoàn tất đo: 138/138 slot dự kiến dùng được, 46/46 cấu hình đã tổng hợp; checksum và archive đã bàn giao. T10 chưa bắt đầu; chưa có phân tích hay kết luận RQ1–RQ5. Không được chạy thêm tải; dừng trước T10. Mốc nộp tạm là giữa tháng 12/2026. Các đoạn bên dưới là kế hoạch/lịch sử, không phản ánh trạng thái thực thi mới nhất. Xem [kế hoạch phần việc còn lại](REMAINING_WORK_PLAN.md) và [checkpoint](context/SESSION_CHECKPOINT.md).
+> Đây là lộ trình học theo chủ đề, không phải trạng thái task hay lịch chính thức. Nguồn Roadmap gợi ý 10–11 tuần; mốc nộp tạm hiện là giữa tháng 12/2026, còn ngày chính thức và rubric chưa có. Xem [kế hoạch việc còn lại](REMAINING_WORK_PLAN.md) để biết task, [readiness](experiments/PROTOCOL_READINESS.md) để biết cổng đo, và [sổ P2](monitoring/PHASE2_PLAN.md) cho nhánh monitoring.
 
-**Lưu ý:** Đây là lịch đề xuất để thảo luận, không phải lịch chính thức đã được duyệt.
+## Bài toán cần giải thích
 
-**Vòng hoàn thiện mới ngày 13/10:** [calibration 14 lượt](worklog/2026-10-13-calibration/README.md) kiểm chứng local TB sau sửa và cấu hình normal/mixed; [deadline Redis](worklog/2026-10-13-redis-drops/README.md) đã sửa/test. [Gate 30 s](worklog/2026-10-13-postfix/README.md) thất bại do clock host nhảy; [observer độc lập](worklog/2026-10-13-clock/README.md) xác nhận bước nhảy realtime khoảng 2,6 s. UI so sánh dữ liệu thật và [report/biểu đồ pilot](worklog/2026-10-13-evaluation/README.md) đã có, nhưng [protocol/readiness](experiments/PROTOCOL_READINESS.md) chưa đủ để khóa/chạy benchmark chính thức. Ưu tiên tiếp theo là ổn định môi trường và hoàn tất calibration; không tăng tính năng để thay bằng chứng RQ1–RQ5.
+Giảng viên đã đồng ý hướng đề tài và yêu cầu thể hiện góc nhìn doanh nghiệp. Sản phẩm cần nộp gồm báo cáo, source, slides và demo. Mốc lập kế hoạch tạm là giữa tháng 12/2026; ngày chính thức và rubric chưa được xác nhận. T11 đã tích hợp bản nháp, còn định dạng/rubric; T13 chưa có deck hoặc rehearsal. H01/H02 còn chờ xác nhận của người học/giảng viên.
 
-**Cập nhật triển khai 13/10/2026:** prototype đã có code/test và smoke; vòng công cụ đo tiếp theo đã bổ sung workload, scaling và analyzer, với kết quả kiểm chứng ở [hồ sơ vòng đo](worklog/2026-10-11-measurement/README.md). Xem [trạng thái triển khai](IMPLEMENTATION_STATUS.md), [hồ sơ bootstrap](worklog/2026-10-11-bootstrap/README.md) và [đánh giá phạm vi/tiến độ](SCOPE_PROGRESS_2026-10-11.md). Bảng dưới phân biệt hoàn thành kỹ thuật với học, protocol và kết luận nghiên cứu; không dùng số tuần để tính phần trăm đồ án.
+Trong kịch bản flash sale giả định, nhiều API instance có thể nhận request của cùng client. Bộ đếm local riêng lẻ làm quota bị cộng dồn; thao tác Redis không atomic cũng có thể vượt quota khi requests concurrent. Traffic vượt kiểm soát có thể làm API/backend chậm hoặc lỗi, ảnh hưởng người mua hợp lệ và tạo rủi ro giao dịch; chưa có sự cố, doanh thu hay SLO của doanh nghiệp thật được đo.
 
-Console local và cấu hình tùy chỉnh đã có; [ma trận Console 84 lượt](worklog/2026-10-12-console-matrix/README.md) thực chạy ngày 12/10 với raw archive và bảng đối chiếu backend/API. Có 2 oracle findings, 19 Redis limiter errors và 5 generator drops; cần điều tra/hiệu chỉnh trước benchmark chính thức. Protocol và kết luận RQ1–RQ5 vẫn đang mở.
+Project đo Fixed Window và Token Bucket; local và Redis shared state; burst, concurrency, scaling; và mixed workload gồm client hợp lệ cùng client tạo traffic bất thường. So sánh none/local/Redis trên cùng workload/backend để đánh giá quota correctness, goodput và latency của client hợp lệ, backend arrivals, 429/timeout/5xx và Redis resources. Một Redis outage ngắn kiểm tra fail-open/fail-closed và recovery; đây không phải kiểm thử production HA.
 
-**Trạng thái:** kế hoạch đề xuất để thảo luận, chưa phải lịch chính thức. [Roadmap gốc](context/sources/00_Project3_Roadmap.md) định hướng Project 3 trong khoảng **10–11 tuần**, nhưng chưa nêu ngày nộp hoặc ngày bảo vệ. Dùng bảng dưới theo **tuần tương đối**; khi có lịch của trường và giảng viên hướng dẫn, đặt ngày thật và điều chỉnh. [Proposal](context/sources/01_Project3_Proposal.md) xác định câu hỏi nghiên cứu, còn [đặc tả thí nghiệm](experiments/EXPERIMENT_SPEC.md) hiện là bản nháp.
+Mạch báo cáo: **bài toán doanh nghiệp → pain point → tác động → yêu cầu kỹ thuật → giải pháp → thí nghiệm → đánh giá → hướng phát triển**. Tác động kinh doanh là giả định, chưa có doanh thu hay SLO doanh nghiệp được đo. Sliding Window, dashboard và tính năng gateway là mở rộng tùy chọn; không thay bằng chứng RQ1–RQ5.
 
-**Tiến độ cập nhật ngày 13/10/2026:** 🟢 phần triển khai có bằng chứng đạt; 🟡 có một phần, còn điều kiện chưa đạt; ⚪ chưa thực hiện đầu ra chính. Dấu 🟢 code/test không xác nhận người học đã nắm kiến thức. Đây là các mốc công việc, không phải các tuần cần chờ tuần tự sau khi có tự động hóa.
+## Học theo thứ tự
 
-**Thông tin mới từ bạn:** giảng viên đồng ý hướng đề tài và yêu cầu đề cương thể hiện rõ góc nhìn doanh nghiệp cùng vấn đề thực tế. Sản phẩm nộp gồm báo cáo, mã nguồn, slide và demo. Ngày 19/10, người dùng chọn mốc lập kế hoạch tạm **giữa tháng 12/2026**, thay cho ước lượng trước đó 2–3 tuần cuối tháng 12; đây chưa phải lịch chính thức. Chưa có ngày chính xác hoặc rubric chấm điểm chi tiết. Nếu mốc chính thức đến sớm hơn lịch 11 tuần, cần rút ngắn giai đoạn chuẩn bị, không cắt phần đo và bảo vệ.
+| Chặng | Học và tự làm | Có thể giải thích khi hoàn tất |
+| --- | --- | --- |
+| 1. Request và quota | Vẽ client → load balancer → API instance → limiter → backend; phân biệt reject với lỗi backend. | Vì sao cùng client gửi qua hai instance local có thể dùng gấp đôi quota? |
+| 2. FW và TB | Tính tay chuỗi request ở ranh giới Fixed Window; với Token Bucket tính token ban đầu, refill và burst. | Vì sao `B=Q` và `r=Q/W` không làm hai thuật toán có cùng burst semantics? |
+| 3. Shared state và concurrency | Vẽ local state/Redis state; xem Redis key/TTL, Lua atomic operation và read–decide–write không atomic. | Điều gì xảy ra khi request cùng key đồng thời gần hết quota? Atomic operation khắc phục phần nào? |
+| 4. Đo và outage | So sánh none/local/Redis trên cùng normal, burst và mixed workload; phân biệt offered load, sent/completed, allow/reject/error và legitimate goodput; đọc p50/p95/p99, backend arrivals, resource metrics; phân biệt wall clock và monotonic khi đo; giải thích fail-open/fail-closed. | Làm sao biết backend được bảo vệ mà client hợp lệ vẫn được phục vụ? Một lần pause Redis chứng minh được gì và chưa chứng minh được gì? |
+| 5. Kết quả và bảo vệ | Đối chiếu protocol, cấu hình, revision và từng run; trình bày kết quả cùng giới hạn. | Kết luận nào có dữ liệu hỗ trợ, cái gì `inconclusive`, và cần đo thêm gì? |
 
-## Mục tiêu cuối cùng
+Không cần học sâu Kubernetes, service mesh, cloud production hay authentication platform để hoàn tất phạm vi này. Tài liệu bổ trợ cho giai đoạn thuật toán là [Redis INCR](https://redis.io/docs/latest/commands/incr/) và [Redis Lua scripting](https://redis.io/docs/latest/develop/programmability/eval-intro/).
 
-Project cần giải thích được chuỗi: **traffic bất thường → nguy cơ quá tải backend nhiều instance → nhu cầu quota chung → limiter dùng Redis → client hợp lệ còn được phục vụ thế nào → thí nghiệm → kết quả và trade-off**. Sản phẩm để bảo vệ gồm prototype chạy được, mã/cấu hình tạo lại thí nghiệm, dữ liệu và biểu đồ, báo cáo, slide và khả năng giải thích các quyết định. Đây là nền tảng nghiên cứu, không phải API Gateway production.
+<a id="kiến-thức-nền-và-cách-tự-kiểm-tra-để-hoàn-tất-tuần-1"></a>
+## Bài tự kiểm tra nền tảng
 
-**Baseline theo tài liệu nguồn đã cập nhật:** nhiều API instance, load balancer, Redis shared state, Fixed Window, Token Bucket, workload bình thường/burst/concurrent, so sánh local và shared state, scaling, correctness/overshoot, latency, throughput, Redis CPU/memory, quyết định quota bằng atomic operation, workload hỗn hợp để đánh giá bảo vệ backend/client hợp lệ và Redis outage ngắn có kiểm soát. **Phần có thể bỏ nếu thiếu thời gian:** Sliding Window, dashboard, monitoring nâng cao, policy theo tier/endpoint, nhiều mức tải phụ và chức năng gateway. Không bỏ bằng chứng cho RQ1–RQ5.
+Giải thích bằng lời và vẽ sơ đồ; chưa cần framework hoặc code.
 
-## Lộ trình 11 tuần đề xuất
+1. Vẽ một HTTP request qua load balancer và API; chỉ ra limiter quyết định allow/reject ở đâu.
+2. Với quota 10 request/phút/client và hai API instance đếm local, giải thích vì sao hệ thống có thể nhận 20 request/phút. Nếu dùng quota chung, request thứ 11 ra sao?
+3. Nêu khác nhau giữa quota, client key, window và burst; tính một ví dụ Fixed Window và một ví dụ Token Bucket.
+4. Phân loại request bị limiter từ chối với request được cho qua nhưng backend lỗi. Vì sao phải ghi riêng hai kết quả?
 
-| Tuần | Làm gì | Học vừa đủ để làm | Quyết định và sản phẩm cần có | Tiến độ |
-| --- | --- | --- | --- | --- |
-| **1 — Định nghĩa bài toán** | Ghi phản hồi giảng viên, lịch dự kiến và sản phẩm phải nộp; đọc Roadmap/Proposal; chọn bối cảnh doanh nghiệp và hoàn thiện mô tả vấn đề; tự kiểm tra kiến thức nền ở dưới. | Đường đi HTTP request, API instance, load balancer, quota theo client; local state khi có nhiều instance; reject hợp lệ và lỗi backend. | **Đã chốt:** flash sale là kịch bản minh họa; Project 3 nghiên cứu limiter, không xây gateway. Có [bản mô tả doanh nghiệp](WEEK1_BUSINESS_CASE.md) và Proposal trên Drive đã bổ sung. **Còn thiếu:** xác nhận hiểu kiến thức nền qua bài tự kiểm tra. | 🟡 Framing xong; chưa xác nhận tự kiểm tra |
-| **2 — Nắm thuật toán và quy tắc đúng/sai** | Tự mô phỏng bằng bảng một chuỗi request cho Fixed Window và Token Bucket; thử request tại ranh giới cửa sổ và burst. Hoàn thiện phần policy của [đặc tả](experiments/EXPERIMENT_SPEC.md). | Counter, window, token refill, burst; đồng hồ và thứ tự request; vì sao Token Bucket không thể đo overshoot bằng quota của Fixed Window. | **Chốt policy thử nghiệm:** client key, `Q/W`, `B/r`, thời điểm tính, điều kiện allow/reject và oracle đối chiếu. Đặc tả hiện mới là nháp. | 🟡 Semantics và ca test có; tham số chính thức/học còn mở |
-| **3 — Thiết kế thí nghiệm và kiến trúc** | Vẽ luồng request và state; xác định biến độc lập, biến giữ cố định, workload hỗn hợp, fault injection và dữ liệu phải ghi. Chọn tech stack sau khi biết cần đo gì. | Local vs shared state, Redis key/TTL, atomic command và Lua Script, race condition, fail-open/fail-closed và cách kiểm soát biến. | **Chốt thiết kế:** vị trí limiter, atomic operation/đối chứng, hành vi khi Redis lỗi, backend giới hạn năng lực, cách chạy nhiều instance và công cụ tạo tải. Ghi lý do ngắn cho từng quyết định. | 🟡 Kiến trúc/stack có; protocol đang hoàn thiện |
-| **4 — Dựng baseline đo được** | Tạo API test nhỏ, chạy nhiều instance qua load balancer, tạo tải và thu log/metrics cơ bản; đo đường đi **chưa bật limiter** dưới tải bình thường và tải gây quá tải có kiểm soát. Kiểm tra load generator đạt tải đặt ra. | Latency end-to-end, throughput, p50/p95/p99, offered load vs completed load, backend arrivals, goodput client hợp lệ. | Có lệnh chạy lại baseline, ngưỡng năng lực backend và bản ghi cấu hình môi trường. Phân biệt lỗi do quá tải được tạo chủ đích với lỗi môi trường thí nghiệm. | 🟡 Baseline chạy được; đang hiệu chỉnh phép đo |
-| **5 — Fixed Window** | Triển khai cùng một policy ở local state và Redis shared state; kiểm tra quota, ranh giới cửa sổ, key độc lập và nhiều instance. | Counter, expiry/TTL, thao tác Redis atomic, quota toàn hệ thống. | Có kết quả kiểm tra đúng/sai và một bảng local–Redis ban đầu. Redis atomic phải giữ policy đã định trong bài test concurrent nhỏ. | 🟢 Triển khai local/Redis và test đạt |
-| **6 — Token Bucket** | Triển khai local và Redis; kiểm tra bucket ban đầu, refill, burst, thời gian trôi và reset state. Dùng cùng endpoint, key và đường đi đo như Fixed Window. | Token refill theo thời gian, sai số số học/thời gian, cách so sánh hai thuật toán có burst semantics khác nhau. | Cả hai thuật toán chạy được; có oracle hoặc bộ ca kiểm tra độc lập cho từng thuật toán. | 🟢 Triển khai local/Redis và test đạt |
-| **7 — Concurrent correctness và Redis outage** | Tạo request cùng key khi quota gần hết; so Redis atomic với biến thể không atomic **chỉ dùng làm đối chứng**. Thêm hành vi fail-open/fail-closed và một cách ngắt Redis có kiểm soát. | Race condition, read–modify–write, atomicity, quota violation và availability khi shared state unavailable. | Có bằng chứng trả lời RQ4 và thử nghiệm lỗi tối thiểu cho RQ5; không nhầm timeout/Redis error với reject hợp lệ. **Đóng phạm vi tính năng cốt lõi** sau tuần này. | 🟡 Có atomicity/outage smoke; chưa đánh giá RQ đầy đủ |
-| **8 — Pilot và khóa quy trình đo** | Chạy thử normal, burst, scaling, mixed overload và Redis outage; tìm tải gây quá tải backend có kiểm soát khi load generator vẫn ổn định. Sửa cách đo nếu dữ liệu thiếu hoặc nhiễu. | Warm-up, reset state, lặp thí nghiệm, phân phối latency, backend arrivals, cách phát hiện bottleneck và sai lệch đồng hồ. | Chốt RPS/concurrency, thời lượng, số lần lặp, số instance, cửa sổ ngắt Redis và định dạng dữ liệu. Ghi vào đặc tả; **khóa protocol** trước các lượt chính thức. | 🟡 Có pilot 84 tổ hợp; còn findings và protocol chưa khóa |
-| **9 — Chạy thí nghiệm chính thức** | Chạy các tổ hợp cần cho RQ1–RQ5, gồm no limiter/local/Redis shared trên cùng mixed workload và fail-open/fail-closed trong Redis outage; lưu raw data, cấu hình và kết quả từng lượt. Chạy lại lượt lỗi có lý do rõ. | Cách đọc p95/p99 của client hợp lệ, goodput, overshoot, 429/timeout/5xx, Redis CPU/memory; so sánh khi chỉ một biến đổi. | Bộ dữ liệu tái chạy được. Mỗi biểu đồ dự kiến đều truy về `run_id` và cấu hình. **Khóa dữ liệu** sau khi kiểm tra đầy đủ. | ⚪ Chưa chạy bộ benchmark chính thức |
-| **10 — Phân tích và viết báo cáo** | Tính chỉ số, tạo bảng/biểu đồ, trả lời từng RQ; giải thích backend protection, trade-off fail-open/fail-closed và giới hạn thí nghiệm. Hoàn thiện báo cáo, để thời gian sửa theo phản hồi giảng viên. | Trade-off correctness–latency–throughput–availability, cách viết phương pháp và giới hạn, phân biệt giả thuyết với kết luận có dữ liệu. | Báo cáo hoàn chỉnh và có thể tái tạo các hình từ dữ liệu. Nếu thiếu thời gian, cắt mở rộng trước khi cắt bằng chứng cho RQ1–RQ5. | 🟡 Có hồ sơ kỹ thuật; chưa báo cáo kết quả cuối |
-| **11 — Chuẩn bị và bảo vệ** | Nộp đúng định dạng/hạn; làm slide, demo ngắn và phương án dự phòng khi demo lỗi; tập trình bày có bấm giờ, tập hỏi đáp. Đóng băng code và kết quả theo hạn nộp. | Giải thích kiến trúc, thuật toán, atomicity, mức bảo vệ client hợp lệ, hành vi Redis outage, cách đo và giới hạn bằng ngôn ngữ ngắn gọn. | Có bộ nộp cuối, slide, bản demo và danh sách câu hỏi tự kiểm tra. Bảo vệ xong, lưu phản hồi và những hướng mở rộng cho đồ án tốt nghiệp. | ⚪ Chưa có bộ nộp và diễn tập bảo vệ |
+**Điều kiện tự xác nhận:** trả lời được bốn câu và nói trong 1–2 phút chuỗi flash sale → traffic tăng → local quota lệch → client hợp lệ bị ảnh hưởng → cần quota chung → cần đo correctness và backend protection. AI không tự xác nhận thay người học.
 
-### Đánh giá tuần 1
+## Cổng chất lượng của nghiên cứu
 
-- **Đã hoàn tất:** giảng viên đồng ý hướng đề tài; bốn sản phẩm phải nộp và hạn dự kiến đã được ghi lại; người học chọn flash sale; [mô tả vấn đề doanh nghiệp](WEEK1_BUSINESS_CASE.md) và [Proposal trên Drive](https://docs.google.com/document/d/1Z1N6JJPsmAolE4UiOvVVONA-g32LCQosSt7WlyvSwdE/edit) đã thể hiện bối cảnh → khó khăn nghiệp vụ → tác động → yêu cầu → giải pháp → đánh giá.
-- **Còn cần hoàn tất trong tuần 1:** học và tự kiểm tra bốn nhóm kiến thức nền ngay dưới đây. Chưa có bằng chứng để đánh dấu đã nắm vững.
-- **Theo dõi riêng:** ngày nộp/bảo vệ chính xác và rubric chi tiết khi trường công bố; hai thông tin này không chặn việc học.
-- **Kết luận:** framing đã hoàn tất, nhưng tự kiểm tra kiến thức tuần 1 chưa xác nhận. Semantics và prototype kỹ thuật của các mốc sau đã triển khai trước; việc học lại và khóa tham số thí nghiệm chính thức vẫn cần hoàn tất.
+Trước khi chốt kiến trúc, xác định policy, allow/reject oracle, backend workload và hành vi Redis lỗi. Trước phép đo chính thức, protocol phải khóa; generator đạt offered load; state được reset; cấu hình và raw evidence lưu được; outage tái lập được. Trước khi kết luận, nối kết quả với đúng run/configuration, giữ cả lượt không hợp lệ có lý do và không chọn riêng kết quả thuận lợi. `Inconclusive` không phải pass; pilot không phải benchmark chính thức. Chi tiết protocol và điều kiện hiện hành ở [readiness](experiments/PROTOCOL_READINESS.md).
 
-### Kiến thức nền và cách tự kiểm tra để hoàn tất tuần 1
+## Hồ sơ và câu hỏi khi bảo vệ
 
-Chỉ cần giải thích được bằng lời và vẽ sơ đồ đơn giản; chưa cần chọn framework, viết code hoặc học sâu thuật toán.
+Chuẩn bị prototype/lệnh tái tạo, sơ đồ, policy/ma trận đo, raw data và bảng/hình, báo cáo, slides và demo có fallback. Dùng [bản nháp báo cáo](REPORT_DRAFT.md), [hướng dẫn đọc T10](analysis/T10_RESULTS.md#cách-đọc-bảng-và-hình) và [kịch bản demo/bảo vệ](DEMO_SCRIPT.md). Trình bày `n=3`, median (min–max) không phải confidence interval; p95/p99 tính theo từng lượt rồi tổng hợp, không phải percentile trace gộp. T11 đã tích hợp bản nháp; định dạng/rubric còn chờ. T13 chưa có deck và chưa diễn tập. Xác nhận ngày chính thức và feedback với giảng viên.
 
-| Cần hiểu | Tự kiểm tra |
-| --- | --- |
-| HTTP request/response; luồng client → load balancer → một API instance → backend; quyết định allow/reject trước xử lý nghiệp vụ. | Vẽ luồng một request và chỉ ra limiter cần quyết định ở bước nào. Vị trí triển khai cụ thể sẽ chốt ở tuần 3. |
-| Nhiều API instance có bộ nhớ local riêng; load balancer có thể gửi cùng một client đến các instance khác nhau. | Nếu quota là 10 request/phút/client và 2 instance đều đếm local, giải thích vì sao hệ thống có thể nhận 20 request/phút của client đó. |
-| Các từ cơ bản: client key, quota, khoảng thời gian, allow, reject và burst. | Nói rõ quota áp dụng cho ai, trong bao lâu, và request thứ 11 sẽ ra sao trong ví dụ trên nếu dùng quota chung. Chi tiết Fixed Window/Token Bucket học ở tuần 2. |
-| Reject do limiter là một quyết định kiểm soát lưu lượng; lỗi backend là request không được xử lý thành công như mong đợi. | Phân loại một request bị limiter từ chối và một request được cho qua nhưng backend lỗi; giải thích vì sao khi đo phải ghi riêng. |
-
-**Điều kiện chốt tuần 1:** tự trả lời đúng bốn câu ở cột phải và giải thích được trong khoảng 1–2 phút chuỗi flash sale → lưu lượng tăng → local quota sai lệch → rủi ro cho client hợp lệ → cần quota chung → cần đo correctness và tác động lên backend. Ghi ngắn câu trả lời hoặc trao đổi trực tiếp rồi mới đổi trạng thái tuần 1 sang 🟢.
-
-Nếu chỉ có **10 tuần**, gộp phần kiến thức nền của tuần 2 vào tuần 1–3 và giữ nguyên thời gian cho thí nghiệm, phân tích, bảo vệ. Nếu ngày bảo vệ ở sau tuần 11, dùng phần dư để sửa báo cáo và tập trình bày; không tự động mở rộng tính năng. Dành một khoảng dự phòng cho lỗi môi trường và các lần chạy lại.
-
-**Nhịp theo dõi đề xuất:** cuối mỗi tuần ghi ngắn ba mục: đã hoàn thành gì, bằng chứng nằm ở đâu, quyết định/vướng mắc nào cần xử lý tuần tới. Mang bản này trao đổi với giảng viên hướng dẫn khi có buổi gặp. Nếu trễ tiến độ, ưu tiên giữ năm RQ và thời gian đo/viết; cắt phần mở rộng trước.
-
-## Những cổng cần qua trước khi chuyển giai đoạn
-
-1. **Trước khi chọn stack/code:** đã chốt policy, cách đo đúng/sai, vị trí limiter, hành vi khi Redis lỗi, backend workload và thí nghiệm nào trả lời RQ nào. Tech stack là phương tiện để chạy và đo các cấu hình đó.
-2. **Trước khi chạy số liệu chính thức:** có script/lệnh tạo lại môi trường, reset state, cấu hình tải, logs và cách tính metrics; pilot xác nhận generator đạt offered load, backend quá tải ở mức kiểm soát được và cửa sổ Redis outage lặp lại được.
-3. **Trước khi viết kết luận:** các lượt chạy có cấu hình và raw data, không chọn riêng một kết quả đẹp; phân biệt hành vi đúng của Token Bucket với overshoot của Fixed Window.
-4. **Trước khi nộp:** báo cáo, biểu đồ, slide và demo dùng cùng phiên bản code/dữ liệu; câu trả lời cho RQ1–RQ5 có bằng chứng và giới hạn rõ.
-
-## Học theo thứ tự, không học tràn lan
-
-| Chủ đề | Cần hiểu đến mức nào |
-| --- | --- |
-| HTTP, API, load balancer | Vẽ được một request đi qua các thành phần; biết allow/reject xảy ra trước phần xử lý backend. |
-| Fixed Window, Token Bucket | Tính tay kết quả cho một chuỗi request; giải thích ranh giới window và burst/refill. |
-| Redis shared state và atomicity | Giải thích vì sao local quota bị nhân lên ở nhiều instance và vì sao read–modify–write có race condition. |
-| Concurrency và thời gian | Hiểu request đồng thời có thể xen kẽ; xác định timestamp và thứ tự dùng để kiểm tra correctness. |
-| Load testing và metrics | Phân biệt tải gửi vào, request hoàn tất, allow/reject/error; đọc p50/p95/p99, legitimate goodput, backend arrivals và resource usage. |
-| Redis outage | Giải thích fail-open/fail-closed, quota violation và availability; hiểu vì sao một fault injection nhỏ không chứng minh HA production. |
-| Phương pháp thí nghiệm | Biết giữ biến khác cố định, warm-up, reset state, lặp lượt, lưu cấu hình và nêu giới hạn kết luận. |
-| Viết và bảo vệ | Trả lời được: vấn đề là gì, vì sao giải pháp hợp lý, đã so sánh công bằng chưa, kết quả nói gì và chưa nói gì. |
-
-Không cần học sâu Kubernetes, service mesh, cloud infrastructure hoặc xây authentication platform để hoàn thành Project 3.
-
-**Nguồn học bổ trợ khi đến tuần 3–7:** [Redis `INCR` và ví dụ rate limiter](https://redis.io/docs/latest/commands/incr/) cho counter, expiry và tình huống race; [Redis Lua scripting](https://redis.io/docs/latest/develop/programmability/eval-intro/) cho tính atomic của một script. Đây là tài liệu kỹ thuật bổ trợ; quyết định phạm vi vẫn theo tài liệu Project 3 trên Drive.
-
-## Bộ hồ sơ cần có lúc bảo vệ
-
-- **Mã và cách chạy:** prototype, cấu hình môi trường, hướng dẫn chạy một lượt test và tạo lại kết quả.
-- **Phương pháp:** policy/thuật toán, sơ đồ kiến trúc, ma trận thí nghiệm, định nghĩa metrics và các quyết định có lý do.
-- **Bằng chứng:** raw data, bảng/biểu đồ, tóm tắt theo RQ1–RQ5, giới hạn và kết quả không như dự đoán.
-- **Báo cáo:** bối cảnh doanh nghiệp → tác động → yêu cầu → giải pháp → thí nghiệm → đánh giá → hướng phát triển.
-- **Bảo vệ:** slide ngắn theo cùng mạch, demo có phương án dự phòng và phần trả lời câu hỏi.
-
-Trước buổi bảo vệ, tập trả lời bằng **số liệu hoặc hình cụ thể**: Vì sao nhiều instance với local state có thể vượt quota chung? Fixed Window và Token Bucket khác nhau ở burst thế nào? Redis shared state đã đủ để tránh race chưa? Atomic operation đổi kết quả ra sao? Khi thêm instance, bottleneck chuyển tới đâu? Client hợp lệ còn được phục vụ thế nào khi có tải bất thường? Khi Redis lỗi, fail-open/fail-closed đổi availability và quota ra sao? Kết luận nào dữ liệu hiện tại chưa chứng minh được?
-
-**Việc cần làm tiếp:** công cụ normal/burst/concurrent, scaling 1/2/4, analyzer và Console đã có. Điều tra hai oracle mismatch local Token Bucket và Redis I/O timeouts ở ma trận 84 lượt; hiệu chỉnh tải/generator, thiết kế lượt lặp rồi khóa protocol trước benchmark chính thức. Song song, người học dùng prototype để tự giải thích đường đi request, tính tay FW/TB, dự đoán local/shared quota và phân biệt reject/lỗi. Cập nhật lịch/rubric khi có; chưa mở rộng scope vì phần code đã chạy nhanh. Xem [đặc tả](experiments/EXPERIMENT_SPEC.md) và [lý do giữ phạm vi](SCOPE_PROGRESS_2026-10-11.md).
+Tập trả lời bằng số liệu/hình cụ thể: Vì sao local quota có thể bị vượt? FW và TB khác nhau ra sao ở burst? Redis shared state đã đủ đảm bảo atomicity chưa? Khi tăng API instance, bottleneck chuyển đi đâu? Mixed traffic ảnh hưởng legitimate goodput và backend thế nào? Fail-open/fail-closed đổi availability và quota ra sao? Kết luận nào dữ liệu hiện tại chưa chứng minh được?

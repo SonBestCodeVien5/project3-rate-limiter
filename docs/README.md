@@ -1,84 +1,37 @@
 # Hướng dẫn đọc tài liệu Project 3
 
-Đây là mục lục dành cho người học và người viết báo cáo. Phần giải thích trong các tài liệu hiện hành dùng tiếng Việt; tên thuật toán, lệnh, mã định danh và trường dữ liệu giữ nguyên để đối chiếu với mã nguồn. Không cần đọc toàn bộ thư mục `docs/` theo thứ tự tên tệp.
+Không cần đọc toàn bộ `docs/`. Mốc hiện tại (23/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-01 đã thêm endpoint Prometheus, P2-02 là gói kế tiếp nhưng chưa bắt đầu. Chi tiết ở [kế hoạch baseline](REMAINING_WORK_PLAN.md), [sổ P2](monitoring/PHASE2_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
 
-**Mốc đối chiếu 23/10/2026:** T09 có 138/138 lượt được chấp nhận trên 46/46 cấu hình; T10 phân tích offline RQ1–RQ5 đã xong và T11 đã tích hợp kết quả vào [bản nháp báo cáo](REPORT_DRAFT.md). Kết quả là của prototype/workload mô phỏng; FW oracle, backend và Redis counter có giới hạn được nêu rõ. T12 đã kiểm tra gói demo/source; T13 có nội dung nháp, lần nhập template vào Canva ngày 22/10 trả HTTP 429 nên chưa có PowerPoint; rubric, phản hồi giảng viên và ngày chính thức còn chờ. P2 mới có [bộ tài liệu chuẩn bị monitoring](monitoring/PHASE2_PLAN.md), chưa triển khai hoặc chạy tải. Trạng thái baseline ở [kế hoạch công việc](REMAINING_WORK_PLAN.md), cổng đo ở [readiness](experiments/PROTOCOL_READINESS.md).
+## Chọn đường đọc
 
-## Đọc lần đầu
+- **Đường đọc chính:** [lộ trình học và tự kiểm tra](PROJECT_ROADMAP.md) → [ngữ nghĩa triển khai](IMPLEMENTATION.md) → [kết quả trong bản nháp](REPORT_DRAFT.md) → [kịch bản trình bày](DEMO_SCRIPT.md).
+- **Tài liệu tra theo nhu cầu:** [bối cảnh và tự kiểm tra](PROJECT_ROADMAP.md); [kết quả và cách đọc T10](analysis/T10_RESULTS.md); [nội dung slide](slides/project3-defense.md). Kịch bản demo chứa phần chuẩn bị kỹ thuật và câu hỏi bảo vệ.
+- **Tra công cụ:** [Console](CONSOLE.md) hướng dẫn giao diện/saved runs; [scripts README](../scripts/README.md) hướng dẫn runner, kiểm tra và exporter.
+- **Học monitoring:** bắt đầu ở [lộ trình học P2](monitoring/LEARNING_GUIDE.md); xem [sổ P2](monitoring/PHASE2_PLAN.md) để biết gói hiện hành, rồi tra phần liên quan trong [thiết kế](monitoring/DESIGN.md). Chỉ dùng [runbook](monitoring/RUNBOOK.md) cho hoạt động đã được cho phép.
+- **Tiếp tục công việc:** [kế hoạch baseline](REMAINING_WORK_PLAN.md) quản lý T01–T13/H01–H02; [sổ P2](monitoring/PHASE2_PLAN.md) quản lý P2-00–P2-08. Trạng thái đo và protocol hiện hành ở [readiness](experiments/PROTOCOL_READINESS.md).
 
-1. [Bối cảnh doanh nghiệp](WEEK1_BUSINESS_CASE.md): vì sao cần đề tài, tác động giả định và ranh giới nghiên cứu.
-2. [Roadmap nguồn](context/sources/00_Project3_Roadmap.md), rồi [đề xuất đề tài](context/sources/01_Project3_Proposal.md): yêu cầu và câu hỏi nghiên cứu. Các bản trong repo là ghi chú rút gọn; [chỉ mục nguồn](context/SOURCE_INDEX.md) dẫn tới bản gốc trên Drive.
-3. [Lộ trình học và bảo vệ](PROJECT_ROADMAP.md): các mốc đề xuất và phần tự kiểm tra kiến thức; lịch này chưa phải hạn nộp chính thức.
-4. [Công việc còn lại](REMAINING_WORK_PLAN.md): trạng thái T01–T13/H01–H02, phụ thuộc và điểm dừng hiện tại. Giai đoạn 2 dùng [sổ task P2](monitoring/PHASE2_PLAN.md) riêng cho monitoring/demo và học tập. Các khối lệnh giao việc bằng tiếng Anh dành cho agent, có thể bỏ qua khi đọc.
+Yêu cầu gốc: [Roadmap nguồn](context/sources/00_Project3_Roadmap.md) > [Proposal](context/sources/01_Project3_Proposal.md) > tài liệu bổ trợ; [chỉ mục nguồn](context/SOURCE_INDEX.md) dẫn tới bản Drive có thẩm quyền. Roadmap repo là lịch học đề xuất, không phải hạn chính thức.
 
-## Chọn theo việc đang làm
+## Khi viết báo cáo
 
-| Nhu cầu | Tài liệu nên đọc | Dùng để làm gì |
-| --- | --- | --- |
-| Hiểu hệ thống và thuật toán | [Thiết kế triển khai](IMPLEMENTATION.md) | Đường đi yêu cầu, quy tắc quota, thời gian, tính atomic và giới hạn |
-| Hiểu phương pháp thí nghiệm | [Đặc tả](experiments/EXPERIMENT_SPEC.md) → [điều kiện đo hiện tại](experiments/PROTOCOL_READINESS.md) | Phân biệt yêu cầu, thiết kế ban đầu và quy trình đã khóa |
-| Hiểu số liệu có nghĩa gì | [Quy tắc phân tích](experiments/ANALYSIS.md) → [xuất số liệu báo cáo](experiments/REPORTING.md) | Cách kiểm chứng quota, mẫu số, tổng hợp lượt lặp và giới hạn diễn giải |
-| Đọc bảng và biểu đồ T10 | [Hướng dẫn đọc T10](analysis/READING_GUIDE.md) → [kết quả T10](analysis/T10_RESULTS.md) → [bảng chi tiết](worklog/2026-10-20-t10/T10_TABLES.md) | Hiểu cách đọc 11 biểu đồ, tổng hợp lượt và giới hạn; truy nguyên qua traceability/provenance |
-| Viết báo cáo | [Bản nháp báo cáo](REPORT_DRAFT.md), [kết quả T10](analysis/T10_RESULTS.md) và [bảng chi tiết](worklog/2026-10-20-t10/T10_TABLES.md) | T11 tích hợp RQ1–RQ5; định dạng cuối cần đối chiếu rubric/phản hồi khi có |
-| Chuẩn bị demo/source | [Gói demo T12](DEMO_PACKAGE.md) → [kịch bản demo](DEMO_SCRIPT.md) → [hướng dẫn Console](CONSOLE.md) | Source revision, dữ liệu pilot đã lưu, kết quả T10 ngoại tuyến và giới hạn kiểm tra |
-| Chuẩn bị thuyết trình | [Nội dung slide nháp](slides/project3-defense.md) → [chuẩn bị bảo vệ](DEFENSE_PREPARATION.md) | Nội dung từ báo cáo; template HUST đã nhận, bước dựng PowerPoint qua Canva còn chờ kết nối |
-| Tiếp tục triển khai giai đoạn 2 | [Kế hoạch và sổ task P2](monitoring/PHASE2_PLAN.md) → [thiết kế monitoring](monitoring/DESIGN.md) | Biết đang ở đâu, dependency, hợp đồng metrics/logs, dashboard và điều kiện hoàn thành; hiện mới là tài liệu chuẩn bị |
-| Chạy thử hoặc xử lý lỗi monitoring | [Runbook dự kiến P2](monitoring/RUNBOOK.md) | Scope runtime, ngân sách request, project/port, kiểm tra pipeline, artifact và cleanup; lệnh chưa phải kết quả đã chạy |
-| Học monitoring để bảo vệ và chuẩn bị đồ án tốt nghiệp | [Lộ trình học P2](monitoring/LEARNING_GUIDE.md) | Counter/labels, scrape/PromQL, logs/LogQL, diễn giải và tự kiểm tra; không tự đánh dấu người học đã hiểu |
-| Chạy hoặc sửa công cụ khi được yêu cầu | [README dự án](../README.md) → [hướng dẫn script](../scripts/README.md), [cổng kiểm tra chất lượng đo](experiments/MEASUREMENT_GATE.md) | Tra lệnh và điều kiện chạy; lệnh minh họa không cấp quyền chạy thí nghiệm |
+Giữ mạch **bài toán doanh nghiệp → pain point → tác động → yêu cầu kỹ thuật → giải pháp → thí nghiệm → đánh giá → hướng phát triển**. Flash sale là giả định, không phải thiệt hại đã đo. Tách yêu cầu nguồn, lựa chọn kỹ thuật và hướng mở rộng; phân biệt pilot với evidence chính thức và `inconclusive` với pass. Các kết luận RQ1–RQ5 cùng giới hạn nằm trong [T10 results](analysis/T10_RESULTS.md); truy nguyên số liệu qua protocol, revision và artifacts được dẫn ở đó.
 
-## Dùng tài liệu để viết báo cáo
+## Thuật ngữ cần phân biệt
 
-Viết theo mạch: vấn đề doanh nghiệp → khó khăn → tác động → yêu cầu kỹ thuật → giải pháp → thí nghiệm → đánh giá → hướng phát triển. Không chép toàn bộ nhật ký công việc thành chương báo cáo.
-
-| Phần báo cáo | Nơi lấy nội dung | Điều cần giữ rõ |
-| --- | --- | --- |
-| Bài toán, khó khăn, tác động | [Bối cảnh doanh nghiệp](WEEK1_BUSINESS_CASE.md) | Flash sale là kịch bản giả định; chưa có thiệt hại doanh nghiệp được đo |
-| Yêu cầu và câu hỏi nghiên cứu | [Roadmap nguồn](context/sources/00_Project3_Roadmap.md), [đề xuất](context/sources/01_Project3_Proposal.md) | Tách yêu cầu dự án khỏi lựa chọn kỹ thuật và hướng mở rộng |
-| Thiết kế giải pháp | [Thiết kế triển khai](IMPLEMENTATION.md) | Nêu quyết định triển khai, khác biệt giữa các nguồn và giới hạn mô hình |
-| Phương pháp và khả năng tái lập | [Điều kiện đo](experiments/PROTOCOL_READINESS.md), [quy tắc phân tích](experiments/ANALYSIS.md) | Dẫn đúng phiên bản quy trình/manifest đã khóa, revision và cấu hình thực chạy |
-| Bảng, hình và đánh giá RQ1–RQ5 | [Kết quả T10](analysis/T10_RESULTS.md), [hướng dẫn xuất số liệu](experiments/REPORTING.md), [bản nháp](REPORT_DRAFT.md) | Tích hợp T11 đã có; mỗi kết luận cần truy về lượt đo, bằng chứng và giới hạn |
-| Phụ lục và truy nguyên | Các hồ sơ `worklog/` được dẫn trong [điều kiện đo](experiments/PROTOCOL_READINESS.md) | Giữ mã lượt đo, checksum và bằng chứng gốc; không dùng pilot thay kết quả chính thức |
-| Phần mở rộng demo và học monitoring | [Thiết kế P2](monitoring/DESIGN.md), [lộ trình học](monitoring/LEARNING_GUIDE.md) | Hiện là kế hoạch; telemetry P2 về sau phải có nhãn demo, không thay kết quả hoặc giới hạn T10 |
-
-## Thuật ngữ dùng thống nhất
-
-Tên Fixed Window (FW), Token Bucket (TB), Redis, API, HTTP và Console giữ nguyên. Bảng dưới đây giải thích nghĩa để người đọc thống nhất cách hiểu; đây không phải quy tắc bắt buộc dịch mọi lần xuất hiện. Giữ các thuật ngữ kỹ thuật tiếng Anh quen thuộc khi câu văn tự nhiên; tên trường trong dữ liệu vẫn giữ nguyên. Dùng các cách nói tiếng Việt tự nhiên như độ trễ, thông lượng, bộ nhớ, bộ đếm, bằng chứng, cấu hình, lượt chạy và yêu cầu kỹ thuật.
-
-| Thuật ngữ | Cách hiểu trong tài liệu |
+| Thuật ngữ | Nghĩa trong dự án |
 | --- | --- |
-| rate limiter, quota | Cơ chế giới hạn lưu lượng; hạn mức yêu cầu được chấp nhận |
-| client, request, backend | Bên gửi yêu cầu; yêu cầu; thành phần xử lý phía sau bộ giới hạn |
-| API instance | Một tiến trình API đang chạy; nhiều instance có thể nằm trên cùng một máy |
-| local/shared state | Trạng thái cục bộ ở từng API / trạng thái dùng chung qua Redis |
-| atomic/atomicity, non-atomic | Tính nguyên tử của thao tác đọc–quyết định–ghi; non-atomic là thao tác không có bảo đảm này |
-| policy | Bộ quy tắc và tham số áp dụng cho quyết định quota |
-| workload, burst, concurrent, scaling | Mẫu tải; đợt yêu cầu dồn dập trong thời gian ngắn; đồng thời; mở rộng quy mô |
-| baseline, pilot, calibration, benchmark, offered load | Mốc đối chứng hoặc phạm vi tối thiểu tùy ngữ cảnh; lượt thử sơ bộ; hiệu chỉnh phép đo; phép đo để đánh giá hoặc so sánh; tải được đưa vào hệ thống |
-| cell, run, measurement slot | Một cấu hình thí nghiệm; một lượt chạy thực tế; một vị trí lượt đo dự kiến trong kế hoạch |
-| worker slot | Suất dành cho một agent làm việc đồng thời; không phải vị trí lượt đo |
-| goodput | Tốc độ yêu cầu hợp lệ được phục vụ thành công, theo mẫu số/thời gian đã định |
-| latency, throughput, p95/p99 | Độ trễ; thông lượng; phân vị 95/99 của độ trễ trong tập mẫu đã xác định |
-| oracle, inconclusive, observed_violations | Bộ quy tắc kiểm chứng tính đúng; chưa đủ bằng chứng kết luận, không phải đạt; số vi phạm quan sát được |
-| overshoot | Số yêu cầu được chấp nhận vượt hạn mức; có thể chỉ đo được cận dưới |
-| fail-open / fail-closed | Cho đi tiếp / từ chối khi không kiểm tra được quota do lỗi Redis |
-| outage, first success, stable recovery | Khoảng gián đoạn Redis; thành công đầu tiên sau gián đoạn; phục hồi ổn định theo tiêu chí đã khóa |
-| runner, analyzer, exporter | Công cụ chạy lượt đo; công cụ phân tích; công cụ xuất dữ liệu |
-| artifact, manifest, trace | Tệp bằng chứng; danh sách/cấu hình phép đo; dấu vết từng yêu cầu và quyết định để kiểm tra lại số đo |
-| revision, working tree, fingerprint | Phiên bản mã nguồn Git; trạng thái tệp trong thư mục làm việc Git; dấu nhận dạng dùng đối chiếu dữ liệu hoặc cấu hình |
-| pain point, bottleneck | Khó khăn nghiệp vụ; điểm nghẽn kỹ thuật làm hạn chế xử lý |
-| monitoring, instrumentation | Theo dõi hệ thống; phần mã xuất dữ liệu để quan sát hành vi |
-| metric, counter, gauge | Số đo; bộ đếm tích lũy tăng rồi reset khi tiến trình khởi động lại; giá trị trạng thái có thể tăng hoặc giảm |
-| scrape, time series | Lấy mẫu metrics từ endpoint; chuỗi sample theo thời gian với cùng tên metric và bộ labels |
-| labels, cardinality | Thuộc tính phân biệt chuỗi dữ liệu/log stream; số giá trị hoặc tổ hợp giá trị khác nhau |
-| PromQL, LogQL | Ngôn ngữ truy vấn metrics của Prometheus / logs của Loki |
-| provisioning, retention | Dựng datasource/dashboard bằng cấu hình; thời gian hoặc chính sách giữ dữ liệu |
+| local/shared state | Trạng thái riêng từng API / trạng thái dùng chung qua Redis |
+| atomicity | Thao tác quota không bị xen ngang thành chuỗi đọc–quyết định–ghi rời rạc |
+| offered load / goodput | Tải đưa vào / tốc độ phục vụ thành công cho client hợp lệ |
+| pilot / benchmark | Lượt thử sơ bộ / phép đo theo protocol đã khóa |
+| measurement slot / run | Vị trí lượt đo dự kiến / lượt chạy thực tế |
+| fail-open / fail-closed | Cho request đi tiếp / từ chối khi Redis không kiểm tra được quota |
+| inconclusive | Chưa đủ bằng chứng kết luận; không được tính là pass |
+| first success / stable recovery | Thành công đầu tiên / phục hồi đạt tiêu chí ổn định đã định |
 
-## Chỉ tra khi cần
+## Có thể bỏ qua khi đọc lần đầu
 
-Các tài liệu dưới đây không nằm trong lộ trình đọc thường xuyên và được phép giữ tiếng Anh. Giữ nguyên đường dẫn hiện có để các liên kết và bằng chứng vẫn truy nguyên được.
-
-- **Hướng dẫn và bộ nhớ cho agent:** [AGENTS.md](../AGENTS.md), [tóm tắt phiên](context/PROJECT_BRIEF.md), [checkpoint](context/SESSION_CHECKPOINT.md), `.agents/skills/`. Người học dùng kế hoạch công việc thay cho việc đọc toàn bộ checkpoint.
-- **Nguồn yêu cầu rút gọn:** [chỉ mục nguồn](context/SOURCE_INDEX.md) và `context/sources/`. Không dịch lại chỉ để đồng bộ ngôn ngữ; bản Drive là nguồn có thẩm quyền cho nguyên văn và chi tiết thiếu.
-- **Hồ sơ lịch sử:** [đánh giá phạm vi 08/10](SCOPE_REASSESSMENT_2026-10-08.md), [tiến độ 11/10](SCOPE_PROGRESS_2026-10-11.md), [kế hoạch Console cũ](DEMO_CONSOLE_PLAN.md), [trạng thái triển khai 13/10](IMPLEMENTATION_STATUS.md), [quy trình pilot cũ](experiments/PILOT_PROTOCOL.md), [bản quy trình ứng viên](experiments/PROTOCOL_CANDIDATE.md), cùng các nhật ký có ngày trong `worklog/`. Trạng thái trong đó chỉ đúng tại mốc đã ghi.
-- **Quy trình đã khóa và dữ liệu cho máy:** `experiments/protocol-v*/`, JSON/JSONL/CSV, checksum, log và kho bằng chứng. Không dịch hay sửa tại chỗ các tệp này; muốn giải thích cho báo cáo thì viết trong tài liệu hiện hành và dẫn về bản gốc.
+- **Tài liệu lịch sử:** các guide lịch sử đã loại khỏi luồng đọc; dated worklogs và evidence vẫn được giữ để truy nguyên. Không cần đọc khi bắt đầu.
+- **Nguồn yêu cầu:** [chỉ mục nguồn](context/SOURCE_INDEX.md) dẫn Roadmap trước, rồi các ghi chú rút gọn Roadmap/Proposal/Research Context/Positioning trong `context/sources/`. Drive là nguồn có thẩm quyền nếu cần nguyên văn, chi tiết thiếu hoặc freshness.
+- **Chỉ dành cho agent:** [AGENTS.md](../AGENTS.md), [brief hiện hành](context/PROJECT_BRIEF.md), [brief history](context/PROJECT_BRIEF_HISTORY.md), [checkpoint](context/SESSION_CHECKPOINT.md) và `.agents/skills/`. Người học không cần đọc nhóm này.
+- **Dữ liệu/archive:** protocol đã khóa, CSV/JSON, trace và checksum giữ nguyên để truy nguyên; đọc qua các hướng dẫn hiện hành, không sửa archive.

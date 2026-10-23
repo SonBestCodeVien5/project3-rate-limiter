@@ -1,3 +1,5 @@
+Lưu trữ: bản ứng viên T08 lịch sử, không phải protocol hiện hành và không cấp quyền chạy. Banner “Current protocol” trong nội dung gốc bên dưới cũng là ghi chú cũ; protocol đã khóa cho T09 là v1.2, với phụ lục v1.3 cho slot thiếu. Xem [mục lục hiện hành](../README.md), [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md) và [cổng đo hiện hành](PROTOCOL_READINESS.md).
+
 > **Current protocol:** this file is the preserved historical draft. The promoted, locked T08 plan is [Project 3 formal study protocol v1](protocol-v1/protocol.md), with its complete planned run manifest at [manifest.json](protocol-v1/manifest.json). The lock does not authorize T09 execution.
 
 # Protocol candidate — T08 draft v1

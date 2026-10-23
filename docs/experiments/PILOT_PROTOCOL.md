@@ -1,5 +1,7 @@
 # Giao thức pilot đo lường ứng viên (11/10/2026)
 
+Lưu trữ: giao thức ứng viên ngày 11/10/2026; không phải protocol đo hiện hành và không cấp quyền chạy. Mọi trạng thái/cấu hình đề xuất bên dưới chỉ thuộc bối cảnh lịch sử. Xem [mục lục hiện hành](../README.md), [kế hoạch việc còn lại](../REMAINING_WORK_PLAN.md) và [cổng đo hiện hành](PROTOCOL_READINESS.md).
+
 Đây là pilot kỹ thuật để chọn giao thức nghiên cứu về sau, chưa phải thí nghiệm đã khóa hay kết luận cho RQ1–RQ5. [Roadmap](../context/sources/00_Project3_Roadmap.md) và [Proposal](../context/sources/01_Project3_Proposal.md) xác định các phép so sánh thuật toán, state cục bộ/chung, số API instance, quyết định dưới tải concurrent, mức bảo vệ backend và Redis outage có giới hạn. Các con số bên dưới là mặc định để thử nghiệm; có thể điều chỉnh sau khi kiểm tra load generator có đạt tải đề ra và backend có quá tải như dự kiến. [Đặc tả thí nghiệm](EXPERIMENT_SPEC.md) vẫn là baseline rộng hơn.
 
 **Cập nhật hồ sơ 13/10/2026:** ngoài ma trận CLI 11 case dưới đây, [ma trận Console 84 tổ hợp](../worklog/2026-10-12-console-matrix/README.md) đã thực chạy ngày 12/10 với cấu hình custom, 3 giây/lượt, backend capacity10. Hai bộ có workload/thời lượng khác nhau; dùng request/policy/Compose resolved của mỗi Run ID làm bằng chứng cấu hình. Bộ custom không thay thế protocol chính thức và vẫn có các lượt cần điều tra.

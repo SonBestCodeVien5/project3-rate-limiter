@@ -1,150 +1,45 @@
-# Công việc còn lại và kế hoạch tiếp tục Project 3
+# Công việc còn lại và trạng thái Project 3
 
-**Điểm tiếp tục 23/10/2026:** người dùng chọn giai đoạn 2 để học monitoring và nâng cấp demo. Phiên này root tự chuẩn bị tài liệu, không worker, không triển khai/chạy stack. [Kế hoạch P2](monitoring/PHASE2_PLAN.md) là sổ trạng thái duy nhất của `P2-*`; P2-00 đã xong, gói tiếp theo là P2-01 khi được yêu cầu tiếp tục. Trạng thái T01–T13/H01–H02 dưới đây vẫn được giữ; chưa có tải hoặc phép đo mới được phép.
+**Hiện trạng 23/10/2026:** T09/T10 đã hoàn tất. T11 đã tích hợp bản nháp; định dạng cuối/rubric còn chờ. T12 demo/source đã kiểm tra; T13 chưa có PowerPoint. P2-01 hoàn tất; P2-02 là gói kế tiếp nhưng chưa được yêu cầu. Phiên hiện tại chỉ cho phép tài liệu: không có quyền chạy tải, stack, smoke runtime hay Redis outage.
 
-**Kế hoạch gốc 13/10/2026; mốc baseline 22/10/2026.** T01–T08 đã hoàn tất trong giới hạn đã ghi. T09 đã hoàn tất đo sau một lượt v1.3 được người dùng cho phép để bổ sung ô v1.2 còn thiếu duy nhất. Checker đạt (7.500/7.500 request đã gửi, không rơi request, 250 RPS, fingerprint khớp); dữ liệu dẫn xuất đã sửa có 138/138 slot dự kiến dùng được, tổng hợp 46/46 cấu hình, gồm cả bốn cấu hình outage. Manifest v1.2 và bằng chứng trước đó không đổi. Xem [phụ lục v1.3](experiments/protocol-v1.3/protocol.md); gói bàn giao archive/checksum đã hoàn tất tại [bằng chứng v1.3](worklog/2026-10-20-t09-v1.3/README.md) và [checksums](worklog/2026-10-20-t09-v1.3/SHA256SUMS). SHA-256 archive `c947c8b9633b82c71e49ee473255c6db1a2431909d0a6342fa23fd798ecb150c`; giải nén, kiểm tra checksum và dọn dẹp đều đạt. T10 đã hoàn tất phân tích offline RQ1–RQ5; xem [kết quả](analysis/T10_RESULTS.md) và [worklog tái lập, bảng/hình, checksum](worklog/2026-10-20-t10/README.md). Gói T11 tích hợp kết quả vào [bản nháp báo cáo](REPORT_DRAFT.md) đã hoàn tất theo yêu cầu tiếp tục ngày 21/10; rubric, phản hồi giảng viên và định dạng cuối còn chờ. Ngày 22/10 người dùng đã yêu cầu tiếp tục: gói demo/source T12 đã kiểm tra; nội dung T13 có bản nháp, nhưng nhập template HUST vào Canva bị HTTP 429 nên chưa có PowerPoint. Không chạy thêm tải. Các giới hạn về độ chính xác UTC/độ bền sau khởi động lại, backend mô phỏng và network counter tổng của T08 vẫn còn. Các dependency và quality gate được giữ nguyên; phần học do người dùng thực hiện với GPT. Đây là danh sách phần việc còn lại đã biết về nghiên cứu, mã đo lường, tài liệu, demo và việc người học cần làm. Người dùng chọn mốc nộp tạm **giữa tháng 12/2026** ngày 19/10; ngày nộp/bảo vệ chính thức, rubric và phản hồi tiếp theo của giảng viên chưa xác định đầy đủ, nên có thể phát sinh điều chỉnh. Không dùng số lượng checkbox để suy phần trăm hoàn thành.
+## Việc đang chờ
 
-Nguồn yêu cầu: [Roadmap](context/sources/00_Project3_Roadmap.md) > [Proposal](context/sources/01_Project3_Proposal.md). Kế hoạch đo v1.2 đã khóa là protocol kỹ thuật, không phải yêu cầu được giảng viên phê duyệt; các ví dụ khác dưới đây chỉ để lập kế hoạch, trừ khi v1.2 quy định khác. [Checkpoint](context/SESSION_CHECKPOINT.md) ghi phần đã xong; [readiness](experiments/PROTOCOL_READINESS.md) ghi điều kiện chưa đạt.
+| Việc | Trạng thái | Điều kiện tiếp theo |
+| --- | --- | --- |
+| T11 báo cáo | Bản nháp có kết quả RQ1–RQ5; chưa phải bản nộp cuối | Nhận rubric/feedback, hoàn tất nguồn và định dạng |
+| T13 slide/bảo vệ | Có nội dung slide; Canva trả HTTP 429, chưa có deck hoặc buổi diễn tập | Tạo deck theo template khi Canva/giải pháp dựng dùng được; kiểm tra format và diễn tập |
+| H01 kiến thức | Người học chưa xác nhận tự kiểm tra | Tự trả lời câu hỏi trong [lộ trình học/bảo vệ](PROJECT_ROADMAP.md) |
+| H02 hành chính | Ngày chính thức, rubric và yêu cầu hình thức còn chờ | Xác nhận với giảng viên; không suy đoán hoặc tự gửi liên hệ |
+| P2 | P2-01 xong; P2-02 chưa bắt đầu | Xem [sổ P2](monitoring/PHASE2_PLAN.md); cần yêu cầu mới cho G1. G2–G4 chưa được cấp |
 
-**Trạng thái lịch sử trước khi tiếp tục T09 (19/10):** T04 có 10 lượt normal/burst đạt quality; T05 có 27 cấu hình hợp lệ; T06 có các bài test Redis; T07 có bốn ca healthy/outage capacity10 và exporter smoke; T08 kiểm chứng sampler và khóa protocol v1. Việc dừng trước T09 khi đó là thông tin lịch sử; phép đo T09 hiện đã hoàn tất như ghi dưới đây. Xem [worklog T08](worklog/2026-10-19-t08-network/README.md).
+T09/T10 không có lượt đo nào đang mở. Đừng chạy lại hoặc ghép telemetry P2 vào bằng chứng nghiên cứu. Cổng và protocol đo ở [readiness](experiments/PROTOCOL_READINESS.md); chỉ mở [checkpoint](context/SESSION_CHECKPOINT.md) khi cần revision, artifact hoặc kiểm tra của phiên trước.
 
-**Cập nhật gate lịch sử (19/10):** T01 ổn định clock trong phiên, T02 vòng đời observer/runner/checker và gate normal/mixed có giới hạn của T03 đều đạt trong phạm vi ghi nhận. Độ chính xác UTC và độ bền sau restart/resume chưa được xác minh; oracle Fixed Window chưa kết luận được. T11 có bản nháp báo cáo; T12 đã chuẩn bị demo từ lượt đã lưu. Trạng thái chính thức hiện tại ghi ở phần trên và [checkpoint](context/SESSION_CHECKPOINT.md).
+## Baseline và bằng chứng theo task
 
-## Nhánh giai đoạn 2 — monitoring và học tập
+Giữ phạm vi: Fixed Window/Token Bucket; local/Redis shared state; concurrency và scaling; mixed legitimate/abusive traffic để đo backend protection; một Redis outage ngắn với fail-open/fail-closed. Sliding Window và dashboard là tùy chọn. Nguồn ưu tiên Roadmap > Proposal > Research Context > Positioning; protocol kỹ thuật không phải rubric của trường.
 
-- [Kế hoạch và sổ task P2](monitoring/PHASE2_PLAN.md): mục tiêu đủ Prometheus/Grafana/Alloy/Loki, gói P2-00–P2-08, dependency, acceptance checks và cổng triển khai/runtime/tải/outage. Chỉ cập nhật trạng thái chi tiết P2 ở đó.
-- [Thiết kế](monitoring/DESIGN.md): contract metrics/logs, giữ JSON `/metrics`, dashboard, Compose/network, cardinality và phân biệt telemetry demo với bằng chứng T10.
-- [Runbook dự kiến](monitoring/RUNBOOK.md): lệnh sau khi triển khai, phạm vi kiểm chứng, artifact và cleanup; chưa phải hướng dẫn runtime đã thử.
-- [Lộ trình học](monitoring/LEARNING_GUIDE.md): bài tập, mốc tự giải thích và kiến thức chuyển tiếp đồ án tốt nghiệp. Không tự đánh dấu người dùng đã hiểu.
-
-Đây là phần mở rộng do người dùng chọn, không thay yêu cầu nguồn hoặc hoàn tất các việc T13/H01/H02 còn mở. Phiên chuẩn bị chỉ có quyền tài liệu/commit; lần tiếp tục phải đọc yêu cầu thực tế để xác định phạm vi, không hỏi lại quyền đã được cấp và không tự chạy gói sau điểm dừng.
-
-## 1. Những phần đã xong, không cần làm lại
-
-- Prototype Go/API/backend/LB, local và Redis Lua cho FW/TB, topology 1/2/4, generator và analyzer đã có.
-- Lỗi float local TB và deadline Redis đã có sửa/test/evidence; không cần điều tra lại từ đầu nếu không có finding mới.
-- Console chọn lượt, hiển thị chất lượng và so sánh runtime content đã kiểm tra trên Docker thật và desktop/mobile.
-- Đã có archive/checksum, exporter CSV/Markdown, hình pilot và kịch bản demo. Kiểm tra cuối đã đạt; không chạy lại toàn suite chỉ để bắt đầu phiên.
-- Bối cảnh doanh nghiệp flash sale giả định đã chọn. Không mở lại lựa chọn stack/kiến trúc hoặc biến đồ án thành gateway/HA.
-
-**Trạng thái gate:** các gate T02/T03 và T09 đạt trong giới hạn đã ghi. T09 có 138/138 slot dùng được trên 46/46 cấu hình; T10 đã tạo kết quả offline cho RQ1–RQ5. FW oracle vẫn inconclusive; Redis traffic là tổng counter, outage không có resource sampling, UTC/restart-resume và khái quát hóa backend mô phỏng chưa xác minh. Không có tải mới được phép; T11 đã tích hợp báo cáo, T12 đã kiểm tra gói demo và T13 còn chờ Canva khả dụng.
-
-## 2. Toàn bộ todo theo thứ tự phụ thuộc
-
-| ID | Công việc còn lại | Phụ thuộc | Đầu ra / điều kiện hoàn thành |
+| ID | Phụ thuộc | Công việc và trạng thái | Bằng chứng, giới hạn hoặc bước tiếp theo |
 | --- | --- | --- | --- |
-| T01 | Xác định môi trường có clock ổn định; chẩn đoán read-only hoặc chuyển máy/môi trường đo | Không | **Đạt ổn định trong phiên hiện tại:** observer 90 giây sau remediation không ghi nhận step >5 ms. Độ chính xác UTC tuyệt đối (Windows lệch khoảng 4,05 giây) và độ bền sau restart/resume chưa xác minh. Live gate T02/T03 hoàn tất như [worklog](worklog/2026-10-19-measurement-gate/README.md). |
-| T02 | Chuẩn bị observer/gate tái chạy được, không phụ thuộc `/tmp` phiên cũ | Không, có thể chuẩn bị trước T01 | **Hoàn tất:** observer 90 giây mới và live runner/checker lifecycle tại revision cố định; raw output/checksum trong [T02/T03 worklog](worklog/2026-10-19-measurement-gate/README.md). |
-| T03 | Chạy lại gate normal/mixed sau sửa, kiểm chứng generator/clock/healthy Redis | T01–T02 | **Hoàn tất pilot gate:** 3 normal + 3 mixed × 30 giây đạt mọi quality check, không có drop. Oracle FW `inconclusive`; đây không phải correctness pass hoặc benchmark chính thức. |
-| T04 | Hiệu chỉnh phép so normal/burst FW/TB × local/Redis và baseline none | T03 | **Hoàn tất calibration có giới hạn:** 10 cấu hình × 1 lượt × 30 giây, 10.800 sent=scheduled, không drop/quality flag; cùng policy rate, workload/key/backend/topology, đã kiểm tra từng pha/class. Xem [T04 worklog](worklog/2026-10-19-calibration-next/README.md). FW inconclusive, một lượt không đủ kết luận so sánh hiệu năng; B=Q,r=Q/W không đồng nhất burst semantics. |
-| T05 | Hiệu chỉnh scaling 1/2/4 với tải dưới/gần/trên ngưỡng | T03 | **Hoàn tất calibration có giới hạn:** 27 cấu hình hợp lệ × 10 giây, 43.200 sent, không drop/quality flag trong các lượt hợp lệ; quota headroom, một replacement cùng cấu hình, giữ một lượt drop và ba lượt gián đoạn. Backend chung giới hạn khoảng 190 success/s ở 250 RPS; chưa chứng minh API scaling hoặc mode tốt hơn. [T05 worklog](worklog/2026-10-19-calibration-next/T05-README.md). |
-| T06 | Chốt bằng chứng concurrent/atomicity cho RQ4, gồm quota gần cạn | T03 | **Hoàn tất bằng chứng test có giới hạn:** shared quota và quota gần cạn FW/TB đạt trên Redis thật, kèm đối chứng non-atomic ép race; xem [T06 worklog](worklog/2026-10-19-atomicity/README.md). Không suy tần suất race tự nhiên hoặc hiệu năng HTTP từ test. |
-| T07 | Hoàn thiện schema/lifecycle runner outage và hiệu chỉnh recovery | T03 | **Hoàn tất bounded calibration:** 4 cases × 30s, 12.000 sent=scheduled, zero drops, healthy gates đạt; stable recovery 4s theo 1s/min5/3 windows, first success riêng. Exporter smoke 4/4 usable sau fix null resources riêng; FW vẫn inconclusive. [T07 recovery](worklog/2026-10-19-outage-recovery/README.md). |
-| T08 | Khóa protocol và manifest phiên bản cụ thể | T04–T07 | **Hoàn tất có giới hạn:** kiểm chứng sampler trực tiếp và khóa protocol v1 được ghi trong [worklog](worklog/2026-10-19-t08-network/README.md), [protocol](experiments/protocol-v1/protocol.md) và [manifest](experiments/protocol-v1/manifest.json). Chưa chạy benchmark chính thức. |
-| T09 | Chạy benchmark chính thức tuần tự và khóa dữ liệu | T08 | **Hoàn tất.** Một lượt v1.3 được người dùng cho phép đã bổ sung ô v1.2 còn thiếu duy nhất. Checker đã khóa đạt: 7.500/7.500 request đã gửi, không rơi request, 250 RPS, fingerprint khớp. Export dữ liệu dẫn xuất đã sửa: 138/138 slot dự kiến dùng được, tổng hợp 46/46 cấu hình, gồm cả bốn cấu hình outage. Manifest v1.2 và bằng chứng trước đó không đổi. Xem [phụ lục v1.3](experiments/protocol-v1.3/protocol.md), [bàn giao bằng chứng](worklog/2026-10-20-t09-v1.3/README.md) và [checksums](worklog/2026-10-20-t09-v1.3/SHA256SUMS); SHA-256 archive `c947c8b9633b82c71e49ee473255c6db1a2431909d0a6342fa23fd798ecb150c`, giải nén/checksum/dọn dẹp đều đã xác minh. Không chạy thêm tải; T10 sau đó được người dùng cho phép và hoàn tất như ghi tại kết quả T10. |
-| T10 | Phân tích và xuất bảng/hình trả lời RQ1–RQ5 | T09 | **Hoàn tất offline.** Phân tích 138 lượt hợp lệ/46 cấu hình; kết quả, bảng, dữ liệu run, traceability, tái lập và 11 hình SVG/PDF/PNG tại [T10_RESULTS.md](analysis/T10_RESULTS.md) và [worklog](worklog/2026-10-20-t10/README.md), có [SHA256SUMS](worklog/2026-10-20-t10/SHA256SUMS). Nguồn đo `0291a80fb404fea0eafee8c3431acc3631bb423e`. Xem các giới hạn trong kết quả; không chạy thêm tải. |
-| T11 | Hoàn thiện báo cáo và sửa theo phản hồi giảng viên | T10 | **Đã hoàn tất gói tích hợp T10 vào báo cáo ngày 21/10.** Có kết quả RQ1–RQ5, bảng/hình chọn lọc, caption và truy nguyên; rubric/phản hồi giảng viên, nguồn học thuật bổ sung và định dạng cuối còn chờ. Chưa xác nhận sẵn sàng nộp. Bối cảnh → khó khăn nghiệp vụ → tác động → yêu cầu → giải pháp → thí nghiệm → đánh giá → phát triển tương lai; không quy mô phỏng thành doanh thu thật. |
-| T12 | Đóng gói demo/source, restore saved runs và thử clean checkout | T09–T10 | **Hoàn tất gói kỹ thuật ngày 22/10:** build từ checkout sạch, restore ba pilot IDs với hash gốc, trình duyệt mở được saved runs và bảng so sánh; có source snapshot và fallback T10 ngoại tuyến. Xem [gói demo](DEMO_PACKAGE.md) và [kiểm tra/checksum V2](worklog/2026-10-22-t12/README.md). Source demo và revision đo được ghi riêng; chưa phải bộ nộp cuối đồng bộ slide. |
-| T13 | Hoàn thiện slide, diễn tập và bộ nộp | T10–T12 | **Đã có [nội dung nháp](slides/project3-defense.md), ghi chú và [checklist](DEFENSE_PREPARATION.md).** Template HUST đã nhận và sao lưu; người dùng chọn PowerPoint qua Canva, nhưng import trả HTTP 429 nên chưa có deck. Còn kiểm tra bố cục, diễn tập thực tế, rubric/định dạng/hạn nộp và bộ nộp cuối; chưa tạo tag cuối. |
-| H01 | Tự kiểm tra kiến thức nền/thuật toán/phương pháp đo | Song song mọi giai đoạn | Người học tự giải thích/tính tay; AI không tự đánh dấu đã hiểu. Dùng câu hỏi trong PROJECT_ROADMAP và DEMO_SCRIPT. |
-| H02 | Xác nhận ngày nộp/bảo vệ, rubric và yêu cầu hình thức với giảng viên | Song song; cần người học | Cập nhật kế hoạch khi có thông tin, không tự gửi email/tin nhắn hoặc suy rubric từ tài liệu dự án. |
+| T01 | — | Môi trường clock ổn định — **đạt trong phiên** | Observer sau remediation không ghi nhận step >5 ms; UTC accuracy và restart/resume durability chưa xác minh. [Gate T02/T03](worklog/2026-10-19-measurement-gate/README.md). |
+| T02 | Song song T01 | Observer/runner/checker lifecycle — **hoàn tất** | Revision, output và checksum trong [gate worklog](worklog/2026-10-19-measurement-gate/README.md). |
+| T03 | T01–T02 | Gate normal/mixed — **pilot gate đạt giới hạn** | FW oracle `inconclusive`, không phải correctness pass hay formal benchmark. Cùng [gate worklog](worklog/2026-10-19-measurement-gate/README.md). |
+| T04 | T03 | Hiệu chỉnh normal/burst FW/TB và none — **hoàn tất có giới hạn** | FW inconclusive, một lượt không kết luận hiệu năng. [Worklog](worklog/2026-10-19-calibration-next/README.md). |
+| T05 | T03 | Hiệu chỉnh scaling 1/2/4 — **hoàn tất có giới hạn** | Backend chung giới hạn suy luận; chưa chứng minh mode/API scaling nào tốt hơn. [Worklog](worklog/2026-10-19-calibration-next/T05-README.md). |
+| T06 | T03 | Atomicity/concurrency — **hoàn tất bằng tests** | Lua quota và non-atomic forced-race control; không suy tần suất race tự nhiên/performance HTTP. Test-source hash và uncommitted-patch caveat tại [T06 worklog](worklog/2026-10-19-atomicity/README.md) và [T10 results](analysis/T10_RESULTS.md). |
+| T07 | T03 | Redis outage runner/recovery — **bounded calibration hoàn tất** | Stable recovery 4s theo tiêu chí đã khóa; first success riêng, FW inconclusive. Không suy thành HA production. [Worklog](worklog/2026-10-19-outage-recovery/README.md). |
+| T08 | T04–T07 | Protocol/manifest — **khóa protocol v1** | T09 dùng [v1.2](experiments/protocol-v1.2/protocol.md) và [manifest](experiments/protocol-v1.2/manifest.json); [v1.3 addendum](experiments/protocol-v1.3/protocol.md) chỉ bổ sung slot thiếu được cho phép. [T08 worklog](worklog/2026-10-19-t08-network/README.md). |
+| T09 | T08 | Formal measurement — **hoàn tất** | 138/138 slot, 46/46 cấu hình; một lượt v1.3 bổ sung slot thiếu. Measurement source: `0291a80fb404fea0eafee8c3431acc3631bb423e`. [T09 evidence/checksums](worklog/2026-10-20-t09-v1.3/README.md). Không chạy thêm tải. |
+| T10 | T09 | Offline RQ1–RQ5 analysis — **hoàn tất** | 138 lượt/46 cấu hình, 11 hình. FW correctness inconclusive; Redis network counter là tổng traffic; outage không có resource sampling; backend mô phỏng; UTC accuracy/restart-resume và generalization chưa xác minh. [Kết quả](analysis/T10_RESULTS.md); [tái lập/checksum](worklog/2026-10-20-t10/README.md). |
+| T11 | T10 | Tích hợp kết quả vào báo cáo — **bản nháp hoàn tất** | Có bảng/hình chọn lọc, caption và traceability; rubric/feedback, nguồn bổ sung và format cuối còn chờ. Không xác nhận sẵn sàng nộp. [Bản nháp](REPORT_DRAFT.md). |
+| T12 | T09–T10 | Demo/source — **gói kỹ thuật hoàn tất** | Clean checkout, ba saved pilot IDs/hash, UI compare và fallback T10. Demo source khác measurement source; xem [gói](DEMO_SCRIPT.md) và [worklog/checksum](worklog/2026-10-22-t12/README.md). |
+| T13 | T10–T12 | Slide, diễn tập, bộ nộp — **đang chờ** | [Nội dung nháp](slides/project3-defense.md), [checklist](DEMO_SCRIPT.md); template HUST đã nhận, Canva import trả HTTP 429 trước design ID. Chưa có deck, rehearsal hoặc final tag. |
+| H01 | Song song | Người học tự kiểm tra kiến thức — **chờ người học** | Tự giải thích thuật toán, quota local/shared, atomicity, metrics và giới hạn; AI không tự đánh dấu đã hiểu. |
+| H02 | Người học/giảng viên | Ngày/rubric/yêu cầu hình thức — **chờ xác nhận** | Mốc giữa tháng 12/2026 chỉ là tạm tính; xác nhận ngày chính thức và rubric với giảng viên. |
 
-Các tính năng Sliding Window, dashboard lớn, xác thực/RBAC, Redis Cluster, Kubernetes, gateway và framework frontend bổ sung là **tùy chọn/ngoài phạm vi**, không thuộc danh sách việc cần hoàn tất cho baseline. Lỗi mới ảnh hưởng tính hợp lệ/tính đúng là việc cần xử lý khi phát sinh, không phải lý do tự mở rộng tính năng.
+## Khi tiếp tục
 
-## 3. Cách triển khai các phần kỹ thuật còn mở
+- Gói kỹ thuật P2 tiếp theo là **P2-02** (Compose overlay, Prometheus/Grafana, provisioning); cần yêu cầu mới bao phủ G1. Đọc [sổ P2](monitoring/PHASE2_PLAN.md) và đúng phần [design](monitoring/DESIGN.md), [runbook](monitoring/RUNBOOK.md) hoặc [learning guide](monitoring/LEARNING_GUIDE.md). Không tự bắt đầu sau điểm dừng.
+- Các hướng dẫn cũ cho T01–T10 không cần lặp lại. Nếu có finding mới, bắt đầu từ worklog được dẫn trong bảng và readiness; giữ raw evidence, manifest, checksum, revision và mọi lượt không hợp lệ.
+- Báo cáo giữ mạch bài toán doanh nghiệp → pain point → impact → yêu cầu → solution → experiment → evaluation → future work; tách giả định khỏi kết quả, pilot khỏi formal evidence, và `inconclusive` khỏi pass.
 
-### T01–T03: clock và gate
-
-Tái dùng [observer](worklog/2026-10-13-clock/observe.py), [PRESET](worklog/2026-10-13-postfix/PRESET.md) và [quality checker](worklog/2026-10-13-postfix/check-quality.py). Observer archival có đường dẫn `/tmp/project3-clock-observer` cố định; [run-gate](worklog/2026-10-13-postfix/run-gate.sh) còn gọi `/tmp/postfix-quality.py` và output cũ. Chúng là evidence cách chạy trước đây, **không chạy nguyên bản như portable runner**. Phiên tiếp theo sửa bản helper tối thiểu để lấy checker từ repo và dùng output mới; helper mới/sửa có self-check hoặc focused test, không thay raw archival.
-
-Gate chạy từng lượt (`--repetitions 1`), kiểm tra chất lượng rồi mới chạy lượt sau; theo dõi điều kiện chặn qua các lượt. Lệnh `--repetitions 3` hiện không tự kiểm tra chất lượng giữa các lượt để dừng sớm. Gate dự kiến giữ Q=B=20,W=1000ms,r=20/s; 2 API, 5 key client hợp lệ, backend capacity4/service50ms; normal20 RPS, mixed120/20; request/dial/pool100ms, generator2s/inflight200; sau health 1 giây không tải thì bắt đầu đo.
-
-Điều kiện đã đặt: 0 drops, raw/summary/counters reconcile, không healthy Redis errors, offered rate từng pha/class ±5%, p95 lag ≤10ms và ≤send interval; wall–monotonic residual cả scheduling và response latency ≤5ms. Normal không reject/overload. Overload chủ ý trong mixed và fallback chủ ý trong outage là outcome. FW partial-window `inconclusive` không tự làm lượt invalid, nhưng không là correctness pass. Không tăng ngưỡng clock hoặc sửa timestamp để che step.
-
-### T04–T07: calibration và bằng chứng đã hoàn tất
-
-**T04/T05 đã hoàn tất calibration, T06 đã chốt bằng chứng tests:** không chạy lại nếu không có finding/đổi code liên quan. T04/T05 đã tái dùng `research-pilot.sh --case custom`: topology1/2/4, duration3–30s, repetitions1–3, RPS≤1000 và 5 legitimate keys. Nếu giới hạn quota/key/backend chặn phép đo scaling, ghi lại và thiết kế workload headroom trước; không mở tải/config tùy ý chỉ để benchmark trông mạnh hơn. Burst sát biên FW chưa được runner đồng bộ server window; chỉ bổ sung nếu kết luận cần thí nghiệm đó.
-
-T06: tests Redis thật có Lua atomic và non-atomic control; batch HTTP hiện chưa có phase preconsume quota. Đã chọn bằng chứng invariants + tests quota gần cạn FW/TB, không thêm non-atomic HTTP service. Control có barrier chỉ chứng minh tình huống race được tạo, không suy tần suất race tự nhiên hoặc so performance HTTP từ test.
-
-T07: [redis-outage.sh](../scripts/redis-outage.sh) đã có policy/resolved JSON, counters trước/sau mọi API/backend, revision/images/inspect, unique IDs, parent metadata và analysis cho cả healthy/outage. Startup/cleanup hữu hạn và healthy gate có 4 mocks. Live capacity10/50ms, 100/20 RPS, 30s, pause4s/2s đã hoàn tất trên checkout sạch; recovery ổn định 4s theo tiêu chí cửa sổ, exporter smoke 4 cases usable. Null-resource exporter fix có 7 regression tests. Batch capacity4 overload/dirty status vẫn là evidence lịch sử, không sửa metadata cũ. Xem [worklog](worklog/2026-10-19-outage-recovery/README.md); không chạy lại khi chưa có finding mới.
-
-Outage cần lượt nền healthy với cùng workload/backend/topology/policy; ghi thời điểm yêu cầu và hoàn tất pause/unpause, tách giai đoạn chuyển trạng thái; chọn thời lượng đủ cho các cửa sổ đo sau sự cố. Tiêu chí recovery dự kiến là cửa sổ 1s, tối thiểu 5 mẫu client hợp lệ, 3 cửa sổ liên tiếp và ngưỡng lấy từ hiệu chỉnh healthy được ghi trước khi đo. Chỉ thêm outage Token Bucket nếu cần kết luận riêng về thuật toán này. Không biến việc pause Redis thành nghiên cứu HA, restart hay mất dữ liệu. Khi thiếu response/state, chỉ báo quota vi phạm là cận dưới hoặc chưa rõ; không kết luận đạt tuyệt đối.
-
-Nếu request bị rơi tái diễn khi clock ổn định, hãy so sánh sampler bật/tắt ở cùng mức tải trước khi sửa scheduler. Giữ cơ chế loại lịch gửi đã lỗi thời; không tăng timeout hoặc hạ tải chỉ để xóa cờ cảnh báo. Proposal có đề cập overhead mạng. T08 đã kiểm chứng trong giới hạn các bộ đếm delta/đơn vị/lấy mẫu mạng Redis; khi báo cáo, ghi tổng lưu lượng Redis cùng lưu ý về sampler, thao tác quản trị, health check và workload. Không quy thành byte/request chỉ của limiter và không tuyên bố đã hiệu chỉnh overhead.
-
-### T08–T10: protocol, thực chạy và đánh giá
-
-T08 đã hoàn tất. Protocol v1 và v1.1 là phiên bản lịch sử; T09 dùng [protocol v1.2](experiments/protocol-v1.2/protocol.md) và [manifest](experiments/protocol-v1.2/manifest.json) đã khóa, giữ ma trận 46 cấu hình/138 slot dự kiến và các ngưỡng. [Phụ lục v1.3](experiments/protocol-v1.3/protocol.md) được cho phép để bổ sung đúng slot dự kiến trước đó còn thiếu và đã đạt; xem [bằng chứng v1.3](worklog/2026-10-20-t09-v1.3/README.md) và [checksums](worklog/2026-10-20-t09-v1.3/SHA256SUMS), SHA-256 archive `c947c8b9633b82c71e49ee473255c6db1a2431909d0a6342fa23fd798ecb150c`; giải nén/checksum/dọn dẹp đều đạt. Kiểm chứng sampler trực tiếp được ghi trong [worklog T08](worklog/2026-10-19-t08-network/README.md). Phép đo T09 hoàn tất với 138/138 slot dự kiến dùng được và 46/46 cấu hình tổng hợp; T10 sau đó đã phân tích offline (xem [kết quả](analysis/T10_RESULTS.md)). Không chạy thêm tải; T11 đã tích hợp báo cáo và T12 đã đóng gói demo; T13 đang chờ kết nối Canva để dựng PowerPoint. Không lặp pilot đã hoàn tất nếu chưa có finding liên quan.
-
-Manifest v1.2 liệt kê rõ các cấu hình cần chạy, ánh xạ RQ, số lần lặp, cấu hình, thứ tự chạy, tài nguyên, độ trung thực, clock, quy tắc lượt không hợp lệ/thay thế và recovery. Ma trận đã khóa gồm 46 cấu hình, khác với ma trận trong bản nháp trước đó. Ghi chú cũ `3×30s` chỉ là phương án dự kiến, không phải yêu cầu được phê duyệt. Mọi thay đổi về sau cần có lý do và phiên bản riêng; không âm thầm gộp kết quả giữa các phiên bản.
-
-Exporter hiện kiểm tra tính nhất quán **trong từng cấu hình**, nhưng không tự chứng minh hai cấu hình là một phép so sánh có kiểm soát. Người phân tích phải đối chiếu các yếu tố giữ cố định: workload, key, thuật toán, state, topology, backend, revision và nội dung runtime. Báo cáo median và min–max của metric theo từng lượt, giữ lại mọi lượt không hợp lệ, không gọi median của p95 là p95 gộp. Các khẳng định về Lua/race, goodput/đuôi độ trễ của client hợp lệ, kết quả backend, CPU core/bộ nhớ/network Redis nếu có, availability/recovery khi outage đều cần bằng chứng tương ứng; không mặc định exporter đã xuất mọi biểu đồ/metric cuối.
-
-`plot-calibration.py` vẫn chỉ vẽ pilot mixed; các hình pilot là bằng chứng lịch sử. T10 đã tạo bảng/hình RQ1–RQ5 từ dữ liệu đã khóa, gồm 11 hình SVG/PDF/PNG; xem [T10_RESULTS.md](analysis/T10_RESULTS.md), [worklog tái lập](worklog/2026-10-20-t10/README.md) và [SHA256SUMS](worklog/2026-10-20-t10/SHA256SUMS).
-
-### T11–T13 và H01–H02: sản phẩm để nộp
-
-T10 đã cung cấp kết quả RQ1–RQ5 với các giới hạn được ghi rõ. T11 đã tích hợp kết quả vào [bản nháp báo cáo](REPORT_DRAFT.md), một bảng mixed và ba hình hiện có, cùng nguồn triển khai đã xác minh. Phần chỉnh theo rubric/phản hồi giảng viên và định dạng cuối còn chờ; gói hiện tại không xác nhận sẵn sàng nộp. T12 đã hoàn tất gói demo có giới hạn; T13 đã soạn nội dung nhưng chưa có deck do Canva trả HTTP 429. Cần tài liệu liên quan/trích dẫn phù hợp, giải thích policy/thời gian/atomicity/fail-open-fail-closed policy, mô tả máy đo và nguy cơ ảnh hưởng tính hợp lệ, phản hồi giảng viên và định dạng theo rubric khi có; không tạo nguồn trích dẫn hoặc số liệu giả.
-
-Đóng gói demo theo [DEMO_SCRIPT](DEMO_SCRIPT.md) và [gói T12 đã kiểm tra](DEMO_PACKAGE.md). Các lượt pilot đã lưu cuối cùng nằm trong archive [Console content](worklog/2026-10-13-console-content/README.md), trong thư mục có tiền tố theo mode; controller chỉ nạp `artifacts/console/<status.id>/status.json`. Khôi phục nguyên thư mục theo ID gốc vào một thư mục chưa tồn tại; không sửa metadata/checksum. Phải giữ cờ clock của lượt local. Hình trong hồ sơ pilot lấy từ calibration cũ; fallback T12 dùng bảng/hình T10 riêng, không ghép số liệu/revision với bộ ba lượt Console. Bản nộp cuối cần thống nhất phiên bản code/protocol/dataset và slide/demo; việc đó còn chờ T13 và yêu cầu nộp chính thức.
-
-H01 gồm tự tính FW/TB/burst/refill, quota local trên N instance, Lua atomic/race, 429 so với 5xx/timeout, offered load so với request đã gửi/hoàn tất/goodput, p95 trên mẫu thành công, clock/replay và recovery. H02 là người học xác nhận lịch/rubric; AI có thể ghi lại thông tin được cung cấp, nhưng không thay việc hiểu bài hoặc liên hệ giảng viên.
-
-## 4. Điều phối
-
-Theo quy trình chuẩn tại [AGENTS.md](../AGENTS.md): root điều phối và sau báo cáo cuối giao gói sẵn sàng tiếp theo theo dependency/gate; Luna mức low chỉ nhận ngữ cảnh tối thiểu, worker không tự tạo agent khác; chờ hoàn tất, không polling. Tối đa ba worker độc lập, theo khả năng xử lý đồng thời thực tế. Worker thực hiện thay đổi và kiểm tra cần thiết; root xử lý xung đột cụ thể, không lặp việc đã xong. Bàn giao nội bộ bằng English, gồm ID, file/kết quả, kiểm tra/lỗi/bỏ qua, giới hạn và điều kiện tiếp theo; root trả lời user bằng Vietnamese. Với phép đo, ghi thêm revision/cấu hình/checksum.
-
-Khi cần prompt giao việc cho agent, điền gói và phạm vi file theo mẫu:
-
-**Prompt chỉ dành cho agent; giữ nguyên bằng tiếng Anh:**
-
-Với đo live, worker dùng detached checkout sạch tại revision cố định; thay đổi docs/UI trong workspace chính không được làm bẩn checkout hoặc đổi revision đo. Build và lưu image inspect trước khi load. Không chạy test/build/plot nặng, cài tooling hay poll browser trong lúc đo overhead. Gắn nhãn riêng cho CLI measurement và UI integration. Lưu plan/script trong `artifacts/` hoặc `/tmp`, chỉ ghi worklog vào repo sau phép đo. Không chạy workload Docker đồng thời. Giữ metadata thực tế nguyên vẹn. Worker không commit hoặc chạm file ngoài ownership. Không lặp full checks nếu không có thay đổi mới, failure hay concern cụ thể. Archive/checksum một lần mỗi batch rồi tham chiếu manifest.
-
-```text
-Task IDs: <IDs>. Owned paths: <exact paths>.
-Read docs/context/PROJECT_BRIEF.md, then <minimum task-relevant notes>; follow AGENTS.md.
-Inspect relevant code before changes. Implement only the scoped requirement. Do not spawn agents,
-commit, or edit outside ownership. Perform necessary focused checks. For measurements preserve
-revision, config, raw artifacts, quality flags and checksums; use a new output path and retain
-invalid runs. Return a concise English handoff: IDs, changed files/result paths, checks and
-failures/skips, limits and next prerequisite. Include revision/config/artifact checksums for measurements.
-```
-
-## 5. Lệnh tham chiếu cho phiên sau — không chạy trong phiên lập kế hoạch
-
-Các đường dẫn `NEW` là chỗ thay bằng output mới; runner từ chối output có sẵn. Lệnh này chỉ chạy **một normal gate lượt**, không thay vòng gate/quality/stop rule:
-
-```bash
-export GOCACHE=/tmp/project3-resume-go-cache
-CUSTOM_PROFILE=normal CUSTOM_MODE=redis CUSTOM_ALGORITHM=fixed-window \
-CUSTOM_INSTANCES=2 CUSTOM_RPS=20 CUSTOM_LEGIT_RPS=20 CUSTOM_DURATION=30 \
-CUSTOM_LIMIT=20 CUSTOM_WINDOW_MS=1000 CUSTOM_CAPACITY=20 CUSTOM_RATE=20 \
-CUSTOM_BACKEND_CAPACITY=4 CUSTOM_BACKEND_SERVICE_MS=50 CUSTOM_FAIL_POLICY=closed \
-bash scripts/research-pilot.sh --case custom --repetitions 1 --analyze --output artifacts/gate-normal-NEW
-python3 docs/worklog/2026-10-13-postfix/check-quality.py artifacts/gate-normal-NEW/custom-repeat-1
-```
-
-Quality checker lưu trữ chỉ dành cho normal/mixed khi Redis khỏe và ghi `quality.json` trong thư mục kết quả mới; không áp nguyên quy tắc lỗi Redis khỏe cho outage hoặc dùng checker này cho burst/concurrent. Với Mixed, đổi profile thành `mixed`, tổng RPS120/client hợp lệ20; baseline none/local/Redis đổi mode trong cùng manifest/cấu hình kiểm soát. Chính sách khác tuân theo protocol đã chọn, không tự ghi đè chỉ vì lệnh ví dụ.
-
-```bash
-# Kiểm tra code khi có thay đổi; Redis integration cần instance test riêng:
-bash scripts/verify.sh
-REDIS_TEST_ADDR=127.0.0.1:TEST_PORT go test -race ./internal/limiter -count=1
-# Export sau freeze, dùng manifest thật, output mới:
-python3 scripts/report-study.py path/to/locked-manifest.json --output artifacts/report-NEW
-# Mở demo sau khi restore saved folders; không tự bắt đầu benchmark:
-go run ./cmd/console
-```
-
-`TEST_PORT` phải thay bằng port instance test do phiên sở hữu; không chạy test lên Redis đang đo, không `FLUSHDB`, prune hoặc xóa project khác. Quyền Docker/loopback có thể cần sandbox escalation; không suy permission denied là test logic failed. Khi code không đổi, ưu tiên chỉ kiểm chứng môi trường/gói đang làm thay vì chạy suite lại.
-
-## 6. Commit, checkpoint và điều kiện dừng
-
-Mỗi commit chỉ chứa một feature hoặc một fix cùng tests trực tiếp liên quan; không gộp nhiều thay đổi độc lập. Evidence calibration, protocol, dataset, analysis và checkpoint tiến độ có commit riêng. Đây là yêu cầu commit được người dùng làm rõ trong phiên 19/10. Code thay đổi sau protocol phải được ghi revision/version và pilot lại phần ảnh hưởng. Mã và kết quả không được trộn ngầm giữa revisions.
-
-Checkpoint cuối phiên chỉ cần cập nhật: ID đã xong/còn chờ, gate/điều kiện chặn tiếp theo, commit/revision, kết quả/manifest, kiểm tra đã chạy, phạm vi/checkout/process còn lại, lệnh tiếp theo và quyết định cần người học/giảng viên. Brief có liên kết tới checkpoint; không chép toàn bộ hội thoại vào docs hoặc lặp lại cùng worklog nhiều lần.
-
-Khi người dùng yêu cầu dừng hoặc hạn chế lượt làm việc: không giao việc mới, dừng tiến trình do phiên sở hữu và dọn đúng project, giữ lại artifacts chưa hoàn chỉnh, commit phần đã kiểm chứng hoặc ghi rõ phần chưa kiểm chứng. Không xóa file có sẵn để làm trạng thái đẹp hơn. Chỉ dọn worktree phụ sau khi lưu bằng chứng; chỉ push khi được yêu cầu.
-
-**Trạng thái hiện tại (22/10/2026):** T09 đã thu thập đủ dữ liệu: 138/138 slot dự kiến dùng được và 46/46 cấu hình được tổng hợp. T10 phân tích offline hoàn tất; [kết quả](analysis/T10_RESULTS.md), [bàn giao](worklog/2026-10-20-t10/README.md) và [checksums](worklog/2026-10-20-t10/SHA256SUMS) đã lưu. Gói tích hợp báo cáo T11 đã hoàn tất theo yêu cầu tiếp tục; rubric/phản hồi giảng viên và định dạng cuối còn chờ. T12 đã hoàn tất gói kỹ thuật; T13 còn chờ Canva khả dụng để dựng PowerPoint theo template HUST đã nhận. Không chạy thêm tải. Bằng chứng T04–T08 có giới hạn; không chạy lại nếu chưa có finding liên quan. Các mục todo mô tả phạm vi đã biết, không phải cam kết thời gian/chi phí hay rubric chưa được cung cấp.
+Lệnh chạy, setup demo và hướng dẫn runner nằm ở [DEMO_SCRIPT](DEMO_SCRIPT.md), [scripts README](../scripts/README.md) và [runbook P2](monitoring/RUNBOOK.md). Những ví dụ đó không cấp quyền chạy. Quy tắc phiên/commit ở [AGENTS.md](../AGENTS.md).

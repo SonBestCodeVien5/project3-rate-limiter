@@ -2,6 +2,8 @@
 
 > Bản nháp nội dung này được chuẩn bị từ [báo cáo](../REPORT_DRAFT.md). Template HUST đã nhận; yêu cầu nhập vào Canva bị chặn ở HTTP 429 trước khi có design ID. Chưa có deck PowerPoint. Nội dung sẵn sàng để áp dụng khi Canva khả dụng. Số liệu T10 chỉ áp dụng cho prototype/workload mô phỏng; mỗi cell có n=3 lượt và ghi median (min–max). Ngày chính thức, rubric, feedback và tài liệu học thuật cuối cùng đang chờ.
 
+Trạng thái T13 và các việc hành chính ở [kế hoạch còn lại](../REMAINING_WORK_PLAN.md); T09/T10 evidence gates ở [readiness](../experiments/PROTOCOL_READINESS.md). Đây là nội dung slide, không phải deck đã hoàn tất.
+
 ## 1. Kiểm soát traffic API khi flash sale
 
 - Project 3 nghiên cứu rate limiter phân tán trên nhiều API instance.
@@ -104,7 +106,7 @@
 ## 11. Demo và phương án ngoại tuyến
 
 - Kịch bản demo khoảng 6 phút: [DEMO_SCRIPT.md](../DEMO_SCRIPT.md).
-- Source snapshot, saved-run pilot UI và fallback T10: [DEMO_PACKAGE.md](../DEMO_PACKAGE.md).
+- Source snapshot, saved-run pilot UI và fallback T10: [setup và evidence T12](../DEMO_SCRIPT.md#source-và-phiên-bản).
 - UI saved-run là pilot 13/10, không phải benchmark chính thức. Nếu Docker/UI lỗi, mở kết quả, bảng và hình T10; không cần internet.
 - Không chạy workload trong phần trình bày.
 
