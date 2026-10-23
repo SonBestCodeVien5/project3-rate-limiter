@@ -9,7 +9,7 @@
 1. [Bối cảnh doanh nghiệp](WEEK1_BUSINESS_CASE.md): vì sao cần đề tài, tác động giả định và ranh giới nghiên cứu.
 2. [Roadmap nguồn](context/sources/00_Project3_Roadmap.md), rồi [đề xuất đề tài](context/sources/01_Project3_Proposal.md): yêu cầu và câu hỏi nghiên cứu. Các bản trong repo là ghi chú rút gọn; [chỉ mục nguồn](context/SOURCE_INDEX.md) dẫn tới bản gốc trên Drive.
 3. [Lộ trình học và bảo vệ](PROJECT_ROADMAP.md): các mốc đề xuất và phần tự kiểm tra kiến thức; lịch này chưa phải hạn nộp chính thức.
-4. [Công việc còn lại](REMAINING_WORK_PLAN.md): trạng thái T01–T13/H01–H02, phụ thuộc và điểm dừng hiện tại. Các khối lệnh giao việc bằng tiếng Anh ở đây dành cho agent, có thể bỏ qua khi đọc.
+4. [Công việc còn lại](REMAINING_WORK_PLAN.md): trạng thái T01–T13/H01–H02, phụ thuộc và điểm dừng hiện tại. Giai đoạn 2 dùng [sổ task P2](monitoring/PHASE2_PLAN.md) riêng cho monitoring/demo và học tập. Các khối lệnh giao việc bằng tiếng Anh dành cho agent, có thể bỏ qua khi đọc.
 
 ## Chọn theo việc đang làm
 
@@ -22,6 +22,9 @@
 | Viết báo cáo | [Bản nháp báo cáo](REPORT_DRAFT.md), [kết quả T10](analysis/T10_RESULTS.md) và [bảng chi tiết](worklog/2026-10-20-t10/T10_TABLES.md) | T11 tích hợp RQ1–RQ5; định dạng cuối cần đối chiếu rubric/phản hồi khi có |
 | Chuẩn bị demo/source | [Gói demo T12](DEMO_PACKAGE.md) → [kịch bản demo](DEMO_SCRIPT.md) → [hướng dẫn Console](CONSOLE.md) | Source revision, dữ liệu pilot đã lưu, kết quả T10 ngoại tuyến và giới hạn kiểm tra |
 | Chuẩn bị thuyết trình | [Nội dung slide nháp](slides/project3-defense.md) → [chuẩn bị bảo vệ](DEFENSE_PREPARATION.md) | Nội dung từ báo cáo; template HUST đã nhận, bước dựng PowerPoint qua Canva còn chờ kết nối |
+| Tiếp tục triển khai giai đoạn 2 | [Kế hoạch và sổ task P2](monitoring/PHASE2_PLAN.md) → [thiết kế monitoring](monitoring/DESIGN.md) | Biết đang ở đâu, dependency, hợp đồng metrics/logs, dashboard và điều kiện hoàn thành; hiện mới là tài liệu chuẩn bị |
+| Chạy thử hoặc xử lý lỗi monitoring | [Runbook dự kiến P2](monitoring/RUNBOOK.md) | Scope runtime, ngân sách request, project/port, kiểm tra pipeline, artifact và cleanup; lệnh chưa phải kết quả đã chạy |
+| Học monitoring để bảo vệ và chuẩn bị đồ án tốt nghiệp | [Lộ trình học P2](monitoring/LEARNING_GUIDE.md) | Counter/labels, scrape/PromQL, logs/LogQL, diễn giải và tự kiểm tra; không tự đánh dấu người học đã hiểu |
 | Chạy hoặc sửa công cụ khi được yêu cầu | [README dự án](../README.md) → [hướng dẫn script](../scripts/README.md), [cổng kiểm tra chất lượng đo](experiments/MEASUREMENT_GATE.md) | Tra lệnh và điều kiện chạy; lệnh minh họa không cấp quyền chạy thí nghiệm |
 
 ## Dùng tài liệu để viết báo cáo
@@ -36,6 +39,7 @@ Viết theo mạch: vấn đề doanh nghiệp → khó khăn → tác động �
 | Phương pháp và khả năng tái lập | [Điều kiện đo](experiments/PROTOCOL_READINESS.md), [quy tắc phân tích](experiments/ANALYSIS.md) | Dẫn đúng phiên bản quy trình/manifest đã khóa, revision và cấu hình thực chạy |
 | Bảng, hình và đánh giá RQ1–RQ5 | [Kết quả T10](analysis/T10_RESULTS.md), [hướng dẫn xuất số liệu](experiments/REPORTING.md), [bản nháp](REPORT_DRAFT.md) | Tích hợp T11 đã có; mỗi kết luận cần truy về lượt đo, bằng chứng và giới hạn |
 | Phụ lục và truy nguyên | Các hồ sơ `worklog/` được dẫn trong [điều kiện đo](experiments/PROTOCOL_READINESS.md) | Giữ mã lượt đo, checksum và bằng chứng gốc; không dùng pilot thay kết quả chính thức |
+| Phần mở rộng demo và học monitoring | [Thiết kế P2](monitoring/DESIGN.md), [lộ trình học](monitoring/LEARNING_GUIDE.md) | Hiện là kế hoạch; telemetry P2 về sau phải có nhãn demo, không thay kết quả hoặc giới hạn T10 |
 
 ## Thuật ngữ dùng thống nhất
 
@@ -63,6 +67,12 @@ Tên Fixed Window (FW), Token Bucket (TB), Redis, API, HTTP và Console giữ ng
 | artifact, manifest, trace | Tệp bằng chứng; danh sách/cấu hình phép đo; dấu vết từng yêu cầu và quyết định để kiểm tra lại số đo |
 | revision, working tree, fingerprint | Phiên bản mã nguồn Git; trạng thái tệp trong thư mục làm việc Git; dấu nhận dạng dùng đối chiếu dữ liệu hoặc cấu hình |
 | pain point, bottleneck | Khó khăn nghiệp vụ; điểm nghẽn kỹ thuật làm hạn chế xử lý |
+| monitoring, instrumentation | Theo dõi hệ thống; phần mã xuất dữ liệu để quan sát hành vi |
+| metric, counter, gauge | Số đo; bộ đếm tích lũy tăng rồi reset khi tiến trình khởi động lại; giá trị trạng thái có thể tăng hoặc giảm |
+| scrape, time series | Lấy mẫu metrics từ endpoint; chuỗi sample theo thời gian với cùng tên metric và bộ labels |
+| labels, cardinality | Thuộc tính phân biệt chuỗi dữ liệu/log stream; số giá trị hoặc tổ hợp giá trị khác nhau |
+| PromQL, LogQL | Ngôn ngữ truy vấn metrics của Prometheus / logs của Loki |
+| provisioning, retention | Dựng datasource/dashboard bằng cấu hình; thời gian hoặc chính sách giữ dữ liệu |
 
 ## Chỉ tra khi cần
 

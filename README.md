@@ -4,6 +4,8 @@ Prototype nghiên cứu rate limiter phân tán cho nhiều API instance: Fixed 
 
 Bắt đầu với [hướng dẫn đọc tài liệu](docs/README.md): lộ trình đọc, tài liệu hiện hành, thuật ngữ và cách dùng để viết báo cáo. Google Drive là nguồn yêu cầu; [thiết kế triển khai](docs/IMPLEMENTATION.md) ghi lựa chọn kỹ thuật. [Lộ trình](docs/PROJECT_ROADMAP.md) là lịch đề xuất; [đặc tả thí nghiệm](docs/experiments/EXPERIMENT_SPEC.md) giữ thiết kế ban đầu, còn [điều kiện đo hiện tại](docs/experiments/PROTOCOL_READINESS.md) dẫn tới quy trình đã khóa.
 
+**Giai đoạn 2 — học monitoring và nâng cấp demo:** bắt đầu từ [kế hoạch P2](docs/monitoring/PHASE2_PLAN.md), rồi đọc đúng phần [thiết kế](docs/monitoring/DESIGN.md), [runbook dự kiến](docs/monitoring/RUNBOOK.md) hoặc [lộ trình học](docs/monitoring/LEARNING_GUIDE.md). Hiện mới chuẩn bị tài liệu cho Prometheus/Grafana/Alloy/Loki; chưa có stack P2 để chạy. Đây là phần mở rộng do người dùng chọn, giữ riêng với kết quả nghiên cứu T09/T10.
+
 **Cập nhật 22/10/2026:** T09 đã thu thập đủ 138/138 lượt dự kiến trên 46/46 cấu hình; T10 đã phân tích offline RQ1–RQ5 và T11 đã tích hợp vào [bản nháp báo cáo](docs/REPORT_DRAFT.md). Gói demo/source T12 đã kiểm tra; T13 có nội dung nháp, bước dựng PowerPoint qua Canva còn bị chặn bởi HTTP 429. Xem [công việc còn lại](docs/REMAINING_WORK_PLAN.md); rubric, phản hồi giảng viên và định dạng cuối còn chờ. Không chạy thêm tải. Các lệnh bên dưới là hướng dẫn tham khảo khi có yêu cầu chạy phù hợp.
 
 [Giao diện demo Console](docs/CONSOLE.md) chạy trên máy, hỗ trợ cấu hình tùy chỉnh, chỉ số và tệp bằng chứng. [Ma trận 84 lượt thực chạy](docs/worklog/2026-10-12-console-matrix/README.md) giữ kho dữ liệu thô, checksum và bảng đối chiếu số đo để tham chiếu các lượt thử sơ bộ.

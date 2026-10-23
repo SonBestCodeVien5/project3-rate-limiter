@@ -2,6 +2,8 @@
 
 Đây là kịch bản demo prototype kèm kết quả T10 đã phân tích offline từ benchmark chính thức; saved-run UI dùng ba lượt pilot ngày 13/10. Không trình bày pilot UI như kết quả benchmark chính thức. Xem [kết quả T10](analysis/T10_RESULTS.md), [trạng thái sẵn sàng](experiments/PROTOCOL_READINESS.md) và [trạng thái công việc](REMAINING_WORK_PLAN.md). Chuẩn bị trước để không phụ thuộc tải trực tiếp trong buổi trình bày.
 
+**Nhánh giai đoạn 2 (23/10/2026):** [kế hoạch monitoring P2](monitoring/PHASE2_PLAN.md) đã được chuẩn bị để học Prometheus/Grafana/Alloy/Loki và bổ sung demo trực quan. Chưa có stack hoặc kịch bản live P2 được kiểm chứng; nội dung bên dưới vẫn là đường demo T12 hiện có. Chỉ tích hợp kịch bản P2 sau bước kiểm chứng/đóng gói P2-08; giữ riêng telemetry demo mới, pilot Console và kết quả T10.
+
 | Thời gian | Nội dung / thao tác |
 | --- | --- |
 | 0:00–0:45 | Flash sale giả định: traffic tăng, backend có năng lực giới hạn, người mua hợp lệ bị ảnh hưởng. Nêu rằng prototype mô phỏng API, không xây hệ thống bán hàng. |

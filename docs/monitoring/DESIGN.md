@@ -1,6 +1,6 @@
 # Thiết kế monitoring giai đoạn 2
 
-Đây là **hợp đồng triển khai dự kiến ngày 23/10/2026**, chưa phải stack đã hoạt động. Trạng thái và quyền thực hiện ở [kế hoạch P2](PHASE2_PLAN.md); giới hạn nghiên cứu ở [readiness](../experiments/PROTOCOL_READINESS.md). Nguồn mô tả hiện trạng là code đã khảo sát, không phải phép đo mới.
+Đây là **hợp đồng triển khai dự kiến ngày 23/10/2026**, chưa phải stack đã hoạt động. Trạng thái và quyền thực hiện ở [kế hoạch P2](PHASE2_PLAN.md); việc baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), giới hạn nghiên cứu ở [readiness](../experiments/PROTOCOL_READINESS.md). Nguồn mô tả hiện trạng là code đã khảo sát, không phải phép đo mới.
 
 ## 1. Hai luồng dữ liệu
 

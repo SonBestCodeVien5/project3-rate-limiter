@@ -1,6 +1,6 @@
 # Học monitoring từ prototype rate limiter
 
-Mục tiêu là tự giải thích và kiểm tra được pipeline monitoring trước bảo vệ, đồng thời có nền cho đồ án tốt nghiệp. **Chưa có xác nhận người học hoàn thành các nội dung dưới đây.** Task kỹ thuật ở [kế hoạch P2](PHASE2_PLAN.md), thiết kế ở [DESIGN.md](DESIGN.md), thao tác dự kiến ở [RUNBOOK.md](RUNBOOK.md); quy tắc đo nghiên cứu vẫn theo [readiness](../experiments/PROTOCOL_READINESS.md).
+Mục tiêu là tự giải thích và kiểm tra được pipeline monitoring trước bảo vệ, đồng thời có nền cho đồ án tốt nghiệp. **Chưa có xác nhận người học hoàn thành các nội dung dưới đây.** Task kỹ thuật ở [kế hoạch P2](PHASE2_PLAN.md), việc baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), thiết kế ở [DESIGN.md](DESIGN.md), thao tác dự kiến ở [RUNBOOK.md](RUNBOOK.md); quy tắc đo nghiên cứu vẫn theo [readiness](../experiments/PROTOCOL_READINESS.md).
 
 ## 1. Mạch học gắn với bài toán
 

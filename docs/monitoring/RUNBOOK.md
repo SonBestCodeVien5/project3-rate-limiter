@@ -1,6 +1,6 @@
 # Runbook dự kiến cho demo monitoring
 
-**Chưa phải hướng dẫn đã chạy thành công.** Ngày 23/10/2026 mới chuẩn bị tài liệu; file Compose/config P2 chưa được tạo. Chỉ dùng các bước runtime sau khi task và quyền tương ứng trong [kế hoạch P2](PHASE2_PLAN.md) được tiếp tục. [Thiết kế](DESIGN.md) quy định metrics/labels; [readiness](../experiments/PROTOCOL_READINESS.md) vẫn quản lý phép đo nghiên cứu.
+**Chưa phải hướng dẫn đã chạy thành công.** Ngày 23/10/2026 mới chuẩn bị tài liệu; file Compose/config P2 chưa được tạo. Chỉ dùng các bước runtime sau khi task và quyền tương ứng trong [kế hoạch P2](PHASE2_PLAN.md) được tiếp tục. [Thiết kế](DESIGN.md) quy định metrics/labels; [kế hoạch chung](../REMAINING_WORK_PLAN.md) quản lý việc baseline, [readiness](../experiments/PROTOCOL_READINESS.md) vẫn quản lý phép đo nghiên cứu.
 
 ## 1. Trước khi sửa hoặc chạy
 
