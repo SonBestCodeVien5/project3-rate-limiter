@@ -2,7 +2,7 @@
 
 Ngày lập: **23/10/2026**. Người dùng yêu cầu chuyển sang chuẩn bị giai đoạn 2 để học monitoring, nâng chất lượng demo và tạo nền kiến thức cho đồ án tốt nghiệp. Phiên lập kế hoạch do root tự thực hiện, không gọi worker.
 
-**Điểm dừng hiện tại: chỉ hoàn tất bộ tài liệu P2-00; chưa triển khai hoặc chạy stack mới.** Task tiếp theo là **P2-01**, khi người dùng yêu cầu tiếp tục triển khai. Việc có kế hoạch không cấp quyền chạy service, tạo tải hoặc ngắt Redis.
+**Điểm dừng ngày 23/10/2026: P2-01 đã xong kỹ thuật trong G1 triển khai và focused checks cục bộ.** Người dùng yêu cầu dừng sau P2-01; không bắt đầu P2-02, Docker/service, demo load, ngắt Redis hoặc chạy lại T09/T10. Việc có kế hoạch không cấp quyền runtime.
 
 ## 1. Đọc ít nhưng đủ để tiếp tục
 
@@ -31,11 +31,11 @@ T13, rubric/phản hồi giảng viên, định dạng báo cáo và H01/H02 v�
 
 ## 3. Hiện trạng và những gì còn thiếu
 
-Khảo sát tĩnh ngày 23/10; chưa chứng minh runtime mới:
+Hiện trạng ngày 23/10 sau P2-01; chưa chứng minh runtime stack mới:
 
 | Đã có | Thiếu / hệ quả | Nơi đối chiếu |
 | --- | --- | --- |
-| Bộ đếm atomic, JSON `GET /metrics`, API/backend | Chưa có Prometheus exposition; không đổi JSON mà Console/runner đang đọc | `internal/server/server.go`, `internal/console/console.go`, `scripts/research-pilot.sh` |
+| Bộ đếm atomic, JSON `GET /metrics` và Prometheus `GET /metrics/prometheus`, API/backend | P2-01 có focused checks; chưa có scrape qua Prometheus, giữ JSON mà Console/runner đang đọc | `internal/server/server.go`, `internal/console/console.go`, `scripts/research-pilot.sh` |
 | Hai API, backend, Redis, Nginx trong Compose | Chưa có bốn service monitoring hoặc cấu hình/provisioning | `compose.yaml`, `deploy/nginx.conf` |
 | JSON `slog` ra stdout | Log ứng dụng còn ít; cảnh báo Redis có thể phát theo từng request lỗi | `cmd/server/main.go`, `internal/server/server.go` |
 | Saved-run Console và fallback T10 | Runner Console tạo project riêng; monitoring của stack cố định không tự quan sát runner | [gói T12](../DEMO_PACKAGE.md), `internal/console/console.go` |
@@ -45,10 +45,10 @@ Khảo sát tĩnh ngày 23/10; chưa chứng minh runtime mới:
 
 ## 4. Quyền thực hiện và cổng chuyển bước
 
-| Cổng | Phạm vi | Trạng thái tại phiên lập kế hoạch |
+| Cổng | Phạm vi | Trạng thái quyền hiện tại |
 | --- | --- | --- |
 | G0 — tài liệu | Khảo sát read-only, viết plan/design/runbook/học, kiểm tra tài liệu và commit | Được người dùng yêu cầu; hoàn tất ở P2-00 |
-| G1 — triển khai | Sửa code/config/test theo gói, focused checks; không chạy stack hoặc load generator | Chờ người dùng tiếp tục triển khai |
+| G1 — triển khai | Sửa code/config/test theo gói, focused checks; không chạy stack hoặc load generator | Được phép riêng cho P2-01 trong phiên tiếp tục 23/10/2026 |
 | G2 — smoke runtime | Build/start đúng project demo, scrape, mở browser, tối đa 10 request `/work` tuần tự; không pause Redis | Chưa được phép trong phiên này |
 | G3 — demo tải giới hạn | Chạy cấu hình/thời lượng/RPS/case đã ghi trước theo P2-06; giữ mọi attempt, không chạy ma trận nghiên cứu | Chưa được phép trong phiên này |
 | G4 — outage có kiểm soát | Pause/unpause đúng Redis của project demo, có cleanup và healthy reference theo P2-07 | Chưa được phép trong phiên này |
@@ -64,8 +64,8 @@ Trạng thái dùng: **Xong**, **Chưa bắt đầu**, **Đang làm**, **Chờ �
 | ID | Gói việc | Phụ thuộc | Trạng thái / điểm nhận việc |
 | --- | --- | --- | --- |
 | P2-00 | Tài liệu nền, routing, checkpoint và commit | Không | **Xong** — bộ tài liệu được tạo trong phiên chuẩn bị 23/10/2026; xem checkpoint cho kiểm tra/commit |
-| P2-01 | Endpoint Prometheus và hợp đồng metrics | P2-00, G1 | **Chưa bắt đầu** — gói tiếp theo khi người dùng tiếp tục |
-| P2-02 | Compose bổ sung, Prometheus/Grafana và provisioning | P2-01, G1 | **Chưa bắt đầu** |
+| P2-01 | Endpoint Prometheus và hợp đồng metrics | P2-00, G1 | **Xong** — commit `0bea7b2`; focused server tests/vet đạt; chưa xác minh runtime stack |
+| P2-02 | Compose bổ sung, Prometheus/Grafana và provisioning | P2-01, G1 | **Chưa bắt đầu** — gói tiếp theo; cần người dùng yêu cầu tiếp tục và mở G1 cho gói này |
 | P2-03 | Dashboard metrics và smoke cơ bản | P2-02; G2 cho runtime | **Chưa bắt đầu** |
 | P2-04 | Loki/Alloy và datasource logs | P2-02; sau P2-03 theo mặc định | **Chưa bắt đầu** |
 | P2-05 | Kiểm chứng pipeline logs và vận hành stack đầy đủ | P2-03, P2-04; G2 | **Chưa bắt đầu** |
@@ -74,6 +74,12 @@ Trạng thái dùng: **Xong**, **Chưa bắt đầu**, **Đang làm**, **Chờ �
 | P2-08 | Đóng gói, tài liệu sử dụng và diễn tập | P2-06; ghi rõ P2-07 có/không | **Chưa bắt đầu** |
 
 ### P2-01 — xuất metrics, giữ tương thích
+
+**Kết quả 23/10/2026:** hoàn tất kỹ thuật ở `0bea7b2` với một worker `gpt-6-luna`, effort `low`; root tích hợp và kiểm tra staged diff. Endpoint xuất 10 counter API hoặc 4 counter backend từ atomic counters hiện có; giữ nguyên JSON, limiter, thời điểm tăng counter và bằng chứng nghiên cứu. Dùng thư viện chuẩn, không thêm dependency.
+
+**Kiểm tra:** focused exposition/JSON tests và toàn bộ `go test ./internal/server` đạt với `GOCACHE=/tmp/project3-p2-01-gocache`; `go vet ./internal/server`, gofmt, `git diff --check` và liên kết nội bộ tài liệu đạt. Test bao phủ mapping từng counter bằng giá trị riêng, HELP/TYPE, role/mode, zero values, escaping, content type, JSON schema/giá trị và metrics/health không tăng counters `/work`. Cache mặc định bị sandbox chặn; chuyển cache sang `/tmp`. Suite server ban đầu bị chặn socket loopback của `httptest`, sau đó đạt khi cấp quyền cho fixture test tạm thời. Đây là kiểm tra package/handler, không phải xác minh runtime stack.
+
+**Bỏ qua/giới hạn:** `promtool` không có sẵn; chưa dùng parser Prometheus độc lập, không tải tool/dependency mới. Scrape thực tế với công cụ/image phù hợp còn chờ P2-02/G2. Snapshot nhiều atomic counter không phải transaction. Không Docker/service ứng dụng, demo load, Redis outage, T09/T10 rerun hoặc P2-02; không tạo bằng chứng đo mới. Xác nhận học của người dùng vẫn riêng, chưa được ghi là hoàn tất. **Gói tiếp theo chính xác: P2-02**, cần yêu cầu tiếp tục mới; quyền G1 phiên này kết thúc ở P2-01.
 
 - Đọc `internal/server/server.go`, `internal/server/server_test.go`, `internal/server/config.go`; tìm mọi caller `/metrics` trước khi sửa. Đọc phần metrics trong [thiết kế](DESIGN.md).
 - Phạm vi file dự kiến: `internal/server/server.go`, `internal/server/metrics_prometheus.go` nếu tách giúp dễ đọc, focused tests trong `internal/server/`; cập nhật hợp đồng nếu cần. Không đổi limiter, runner, JSON schema, thời điểm tăng counter hay backend behavior.
@@ -145,8 +151,8 @@ Trạng thái dùng: **Xong**, **Chưa bắt đầu**, **Đang làm**, **Chờ �
 ```text
 Phase 2 resumption: read AGENTS.md and mandatory project sources, then the P2 task
 registry in docs/monitoring/PHASE2_PLAN.md. Take only the requested ready package.
-Current next package: P2-01 unless the registry has changed. Inspect its exact code
-and callers, read only the relevant DESIGN/RUNBOOK sections, and record the user's
+P2-01 is technically complete. Next package: P2-02, only after the user resumes
+that scope and authorizes its G1 work. Inspect its exact code and callers, read only the relevant DESIGN/RUNBOOK sections, and record the user's
 authorized gates. Planning is not permission for runtime, load or Redis outage.
 Preserve JSON /metrics, Console compatibility and all T09/T10 evidence. Use a named
 fixed demo stack; do not automatically integrate the Console research runner.

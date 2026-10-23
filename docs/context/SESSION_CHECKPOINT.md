@@ -1,5 +1,62 @@
 # Session checkpoint
 
+## P2-01 complete; stop before P2-02 — 2026-10-23
+
+The user resumed Phase 2 **P2-01 only**, authorizing G1 implementation and focused
+local checks. They prohibited Docker/application service startup, demo load, Redis
+interruption, T09/T10 reruns and proceeding to P2-02. Default delegation applied:
+one `gpt-6-luna` worker, reasoning `low`, fresh context, no worker spawning; root
+coordinated, resolved concrete staged-diff findings and committed. The prior
+root-only instruction applied to the preparation package, not this resumed scope.
+
+**Implementation commit:** `0bea7b2` (`feat(server): expose role-specific Prometheus counters`).
+Files: `internal/server/server.go`, new `internal/server/metrics_prometheus.go`,
+`internal/server/server_test.go`, and [metric contract](../monitoring/DESIGN.md).
+`GET /metrics/prometheus` emits 10 API or 4 backend counter families from existing
+atomic counters, role-specific labels, zero samples, HELP/TYPE, text 0.0.4 content
+type, final newline and no sample timestamps. Escaping covers backslash, quote and
+LF without Go-only escapes. No new dependency, limiter/backend behavior change,
+JSON schema change or counter-increment change. Console and shell metrics callers
+were inspected and kept on JSON `/metrics`.
+
+**Checks performed by worker:**
+
+- `GOCACHE=/tmp/project3-p2-01-gocache go test ./internal/server -run 'Test(PrometheusMetricsContract|ScrapeAndHealthDoNotChangeWorkCountersOrJSONMetrics)$'` — passed.
+- `GOCACHE=/tmp/project3-p2-01-gocache go test ./internal/server` — passed after
+  sandbox permission for temporary loopback `httptest` fixtures. The default Go
+  cache was read-only; `/tmp` cache was used. The initial sandboxed suite attempt
+  could not open the existing fixture socket; this was not an application failure.
+- `GOCACHE=/tmp/project3-p2-01-gocache go vet ./internal/server` — passed; gofmt
+  applied. Focused tests cover exact distinct-value mapping of every exported
+  counter, role/mode families, zero values, label escaping (including literal tab/CR),
+  HELP/TYPE, content type, exact samples without timestamps, full JSON schema and
+  values before/after metrics/health requests for both roles.
+- `git diff --check` — passed. Root inspected staged diffs before each commit and
+  checked local documentation links/whitespace; did not duplicate worker tests.
+
+**Skips and limitations:** `promtool` is unavailable; no independent Prometheus
+parser check, download or new tool/dependency. Actual scrape/parser acceptance
+remains for an appropriate pinned tool/image at P2-02/G2. Package/handler and
+fixture checks are not runtime stack verification. Multi-counter atomic snapshots
+remain nontransactional. No full-repository suite, Docker/application services,
+browser, demo/load generator, outage, measurement/analysis/plot regeneration,
+Drive reconnection or push. User learning confirmation remains pending separately
+from technical checks. Existing user files/ignored artifacts were preserved; no
+new measurement artifacts or owned long-lived services/processes were created.
+Temporary test fixtures exited; Go cache remains at `/tmp/project3-p2-01-gocache`.
+
+**State and exact next prerequisite:** [P2 registry](../monitoring/PHASE2_PLAN.md)
+records P2-01 technically complete. **P2-02 — Compose overlay, Prometheus/Grafana
+and provisioning** is next, only when the user requests resumption and covers its
+G1 scope. G2 runtime smoke, G3 demo load and G4 outage remain unauthorized. Stop
+here; do not dispatch P2-02. Registry/brief/checkpoint changes are committed
+separately from implementation. No push.
+
+T09 measurement source `0291a80fb404fea0eafee8c3431acc3631bb423e`, protocol/dataset,
+raw artifacts/checksums, T10 conclusions and all research limitations are unchanged.
+T12/T13, rubric/feedback/date and H01/H02 retain their prior status. Phase 2 remains
+an optional local monitoring/demo learning extension, not a new research result.
+
 ## Phase 2 monitoring preparation complete; stop before P2-01 — 2026-10-23
 
 The user explicitly requested a full detailed plan and supporting docs for Phase 2,
