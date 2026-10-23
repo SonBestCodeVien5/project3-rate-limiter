@@ -1,0 +1,30 @@
+# HELP project3_api_requests_total Requests received by the API /work endpoint.
+# TYPE project3_api_requests_total counter
+project3_api_requests_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_limiter_allowed_total Requests allowed by the limiter.
+# TYPE project3_limiter_allowed_total counter
+project3_limiter_allowed_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_limiter_rejected_total Requests rejected by the limiter quota.
+# TYPE project3_limiter_rejected_total counter
+project3_limiter_rejected_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_limiter_errors_total Limiter Allow errors excluding canceled client contexts.
+# TYPE project3_limiter_errors_total counter
+project3_limiter_errors_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_limiter_fail_open_total Limiter errors handled with fail-open.
+# TYPE project3_limiter_fail_open_total counter
+project3_limiter_fail_open_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_limiter_fail_closed_total Limiter errors handled with fail-closed.
+# TYPE project3_limiter_fail_closed_total counter
+project3_limiter_fail_closed_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_api_backend_attempts_total Outbound backend requests attempted by the API.
+# TYPE project3_api_backend_attempts_total counter
+project3_api_backend_attempts_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_api_backend_confirmed_arrivals_total Backend responses confirming an arrival.
+# TYPE project3_api_backend_confirmed_arrivals_total counter
+project3_api_backend_confirmed_arrivals_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_api_backend_errors_total Backend request construction, transport, or 5xx errors.
+# TYPE project3_api_backend_errors_total counter
+project3_api_backend_errors_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0
+# HELP project3_api_limiter_canceled_total Limiter errors canceled by the client context.
+# TYPE project3_api_limiter_canceled_total counter
+project3_api_limiter_canceled_total{role="api",instance_id="api-1",mode="redis",algorithm="fixed-window"} 0

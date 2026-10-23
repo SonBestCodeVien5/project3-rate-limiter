@@ -1,0 +1,5 @@
+2026-10-23T14:15:00Z start
+Checking /etc/prometheus/prometheus.yml
+ SUCCESS: /etc/prometheus/prometheus.yml is valid prometheus config file syntax
+
+2026-10-23T14:15:01Z end

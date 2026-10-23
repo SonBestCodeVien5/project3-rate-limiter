@@ -1,0 +1,12 @@
+# HELP project3_backend_arrivals_total Requests received by the backend.
+# TYPE project3_backend_arrivals_total counter
+project3_backend_arrivals_total{role="backend",instance_id="backend-1"} 1
+# HELP project3_backend_success_total Backend requests completed successfully.
+# TYPE project3_backend_success_total counter
+project3_backend_success_total{role="backend",instance_id="backend-1"} 1
+# HELP project3_backend_overload_total Requests rejected because backend capacity was full.
+# TYPE project3_backend_overload_total counter
+project3_backend_overload_total{role="backend",instance_id="backend-1"} 0
+# HELP project3_backend_canceled_total Backend requests canceled during simulated service.
+# TYPE project3_backend_canceled_total counter
+project3_backend_canceled_total{role="backend",instance_id="backend-1"} 0

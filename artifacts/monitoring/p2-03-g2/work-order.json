@@ -1,0 +1,86 @@
+[
+  {
+    "request": 1,
+    "target": "api1:18081",
+    "client_id": "p203-smoke-1",
+    "response_capture_utc": "2026-10-23T13:57:24.890+00:00",
+    "status": 200,
+    "response_file": "work-1.json",
+    "delta": {
+      "requests": 1,
+      "allowed": 1,
+      "backend_attempts": 1,
+      "backend_confirmed_arrivals": 1
+    }
+  },
+  {
+    "request": 2,
+    "target": "api1:18081",
+    "client_id": "p203-smoke-2",
+    "response_capture_utc": "2026-10-23T13:58:24.789+00:00",
+    "status": 200,
+    "response_file": "work-2.json",
+    "metrics_before": "api1-before.json (2026-10-23T13:58:18.805Z; requests=1)",
+    "metrics_after": "api1-after.json (2026-10-23T13:58:24.797Z; requests=2)",
+    "delta": {
+      "requests": 1,
+      "allowed": 1,
+      "backend_attempts": 1,
+      "backend_confirmed_arrivals": 1
+    }
+  },
+  {
+    "request": 3,
+    "target": "backend:18083",
+    "client_id": "p203-smoke-backend",
+    "response_capture_utc": "2026-10-23T13:58:31.905+00:00",
+    "status": 200,
+    "response_file": "work-4.json",
+    "metrics_interval": {
+      "before_utc": "2026-10-23T13:58:18.821Z",
+      "before": {
+        "arrivals": 1,
+        "success": 1,
+        "overload": 0
+      },
+      "after_utc": "2026-10-23T13:58:31.909Z",
+      "after": {
+        "arrivals": 3,
+        "success": 3,
+        "overload": 0
+      }
+    },
+    "interval_note": "Interval contains API1 request 2 and this direct backend request; +2/+2 is the observed two-request total, not one-request exact delta."
+  },
+  {
+    "request": 4,
+    "target": "api2:18082",
+    "client_id": "p203-smoke-3",
+    "response_capture_utc": "2026-10-23T13:58:40.715+00:00",
+    "status": 200,
+    "response_file": "work-3.json",
+    "metrics_before": "api2-before-clean.json",
+    "metrics_after": "api2-after-clean.json",
+    "delta": {
+      "requests": 1,
+      "allowed": 1,
+      "backend_attempts": 1,
+      "backend_confirmed_arrivals": 1
+    }
+  },
+  {
+    "request": 5,
+    "target": "backend:18083",
+    "client_id": "p203-backend-exact-5",
+    "command_file": "backend-request-command.txt",
+    "status": 200,
+    "response_file": "backend-response.json",
+    "metrics_before": "backend-before.json",
+    "metrics_after": "backend-after.json",
+    "delta": {
+      "arrivals": 1,
+      "success": 1,
+      "overload": 0
+    }
+  }
+]

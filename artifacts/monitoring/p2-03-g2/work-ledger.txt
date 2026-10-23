@@ -1,8 +1,9 @@
-Actual /work requests (4 total; each sequential, recorded immediately before dispatch):
-1. API1 baseline/delta smoke: HTTP 200; later API1 request/allow/backend-attempt/confirmed-arrival each +1.
-2. API1 follow-up: HTTP 200. Its backend response arrived asynchronously after the backend baseline snapshot.
-3. API2 clean delta smoke: HTTP 200; request/allow/backend-attempt/confirmed-arrival each +1.
-4. Direct backend request: HTTP 200; snapshot delta was +2 arrivals and +2 success due the delayed response from request 2; overload remained +0. This is not treated as an exact single-request backend delta pass.
+Sequential /work requests: 5 total (within the 10-request ceiling); each attempt was recorded before dispatch.
+1. 2026-10-23T13:57:24.890Z api1: HTTP 200; response body in `work-1.json`.
+2. 2026-10-23T13:58:24.789Z api1: HTTP 200; response body in `work-2.json`.
+3. 2026-10-23T13:58:31.905Z backend direct: HTTP 200; response body in `work-4.json`.
+4. 2026-10-23T13:58:40.715Z api2: HTTP 200; response body in `work-3.json`.
+5. Final isolated backend direct request: command/time/status in `backend-request-command.txt`, response in `backend-response.json`, before/after snapshots in `backend-before.json` and `backend-after.json`; HTTP 200, arrivals +1, success +1, overload +0.
 
-Process restart check (no /work request): restarted only api1; request/allow/backend-attempt/confirmed-arrival counters reset to zero.
-Additional G2 runtime operation (no /work request): second project-only start for UI rendering retry after the first browser interaction was blocked. Browser rendering remained unavailable; see checks.md. Redis was never paused.
+Counter reset event (no /work request): api1 restarted once; `api1-reset.json` records zero request/allow/backend-attempt/confirmed-arrival counters.
+Additional G2 UI-only stack starts/restarts sent no /work request. Redis was never paused; no demo load was sent.

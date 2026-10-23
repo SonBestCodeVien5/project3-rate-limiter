@@ -1,0 +1,327 @@
+{
+  "status": "success",
+  "dashboard": {
+    "annotations": {
+      "list": []
+    },
+    "id": 1442510460461056,
+    "panels": [
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "project3-prometheus"
+        },
+        "description": "up chỉ xác nhận scrape endpoint; không xác nhận Redis hoặc /work khỏe.",
+        "fieldConfig": {
+          "defaults": {
+            "max": 1,
+            "min": 0,
+            "unit": "short"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "expr": "up{job=\"project3-demo\"}",
+            "legendFormat": "{{service}}",
+            "refId": "A"
+          }
+        ],
+        "title": "Target scrape được (1 = có scrape thành công)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "project3-prometheus"
+        },
+        "description": "Counter /work tăng trước validation; gồm request 400 do ID sai. Mỗi API instance là một chuỗi riêng.",
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "unit": "reqps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "id": 2,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "expr": "sum by (service) (rate(project3_api_requests_total{job=\"project3-demo\"}[20s]))",
+            "legendFormat": "{{service}}",
+            "refId": "A"
+          }
+        ],
+        "title": "Request nhận tại API (/s)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "project3-prometheus"
+        },
+        "description": "Quota reject trả 429. Limiter errors, fail-open và fail-closed là các counter riêng; mode none có allowed=0 theo semantics.",
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "unit": "reqps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 7
+        },
+        "id": 3,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "expr": "sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-demo\"}[20s]))",
+            "legendFormat": "{{service}} quota reject",
+            "refId": "A"
+          },
+          {
+            "expr": "sum by (service) (rate(project3_limiter_errors_total{job=\"project3-demo\"}[20s]))",
+            "legendFormat": "{{service}} limiter error",
+            "refId": "B"
+          },
+          {
+            "expr": "sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-demo\"}[20s]))",
+            "legendFormat": "{{service}} fail-open",
+            "refId": "C"
+          },
+          {
+            "expr": "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-demo\"}[20s]))",
+            "legendFormat": "{{service}} fail-closed",
+            "refId": "D"
+          }
+        ],
+        "title": "Limiter: quota reject và lỗi (/s)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "project3-prometheus"
+        },
+        "description": "Outbound attempts phía API; không đồng nghĩa backend đã nhận hoặc trả thành công.",
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "unit": "reqps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 7
+        },
+        "id": 4,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "expr": "sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-demo\"}[20s]))",
+            "legendFormat": "{{service}}",
+            "refId": "A"
+          }
+        ],
+        "title": "Request API gửi tới backend (/s)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "project3-prometheus"
+        },
+        "description": "Arrivals tăng khi backend nhận /work, kể cả quá tải. Success tăng sau simulated service và trả 200; không phải client goodput.",
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "unit": "reqps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 14
+        },
+        "id": 5,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "expr": "rate(project3_backend_arrivals_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+            "legendFormat": "backend arrivals",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(project3_backend_success_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+            "legendFormat": "backend success",
+            "refId": "B"
+          }
+        ],
+        "title": "Backend arrivals và service thành công (/s)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "project3-prometheus"
+        },
+        "description": "Backend hết capacity và trả 503. Đây là overload counter, không phải quota reject 429.",
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "unit": "reqps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 14
+        },
+        "id": 6,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "expr": "rate(project3_backend_overload_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+            "legendFormat": "backend overload",
+            "refId": "A"
+          }
+        ],
+        "title": "Backend overload (/s)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "project3-prometheus"
+        },
+        "description": "Request construction, transport hoặc downstream 5xx. Fail-closed 503 tại API không nằm trong counter này.",
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "unit": "reqps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 21
+        },
+        "id": 7,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "expr": "sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-demo\"}[20s]))",
+            "legendFormat": "{{service}}",
+            "refId": "A"
+          }
+        ],
+        "title": "API backend errors (/s)",
+        "type": "timeseries"
+      }
+    ],
+    "refresh": "5s",
+    "schemaVersion": 39,
+    "tags": [
+      "project3",
+      "demo",
+      "monitoring"
+    ],
+    "time": {
+      "from": "now-5m",
+      "to": "now"
+    },
+    "timezone": "browser",
+    "title": "Project 3 — demo monitoring · dữ liệu minh họa mới",
+    "uid": "project3-monitoring-demo",
+    "version": 1
+  }
+}

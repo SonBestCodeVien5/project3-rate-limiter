@@ -1,16 +1,14 @@
 # P2-03 G2 smoke evidence
 
-- Source before implementation: `fc19f00f48feb181ca1ec2a6cf2e18a1cac47e28`; runtime source revision: implementation commit recorded in `source.txt` (dashboard/docs only; app source unchanged).
-- Config: `compose.yaml` + `compose.observability.yaml`, project `project3-monitoring-demo`, pinned overlay; resolved with `docker compose ... config -q`.
-- UTC smoke bounds: 2026-10-23T13:57:24Z–2026-10-23T13:58:56Z for initial metrics/request checks; a later UI-only restart/check followed and made no `/work` requests.
-- Host ports were free; no existing containers, volumes, or networks for this project before start. No foreign project was changed.
-- Static dashboard contract: PASS, seven panels; stable dashboard UID `project3-monitoring-demo`; datasource UID `project3-prometheus`; req/s units; backend arrival, success and overload are separate; no zero coercion or invented latency/goodput/correctness.
-- Runtime startup: pinned images pulled; api1, api2, backend images built; health checks passed.
-- Metrics compatibility: api1/api2 JSON each returned the existing 17 fields and exposition the expected 10 API counters; backend JSON returned the same schema and exposition the expected 4 backend counters.
-- Prometheus: api1, api2 and backend targets all `up`; `up{job="project3-demo"}` returned three values of 1. A follow-up query endpoint request briefly failed during startup; services stayed healthy and immediate repeat queries succeeded.
-- Grafana API: health 200; datasource UID `project3-prometheus` provisioned; dashboard UID `project3-monitoring-demo` provisioned with 7 panels. Browser connector reached Grafana login, but its auto-review rejected the password as a tool argument. Local Chromium was then started for a filesystem-backed credential read, but the bounded DevTools protocol connection failed before login. No credential was sent to browser tools or printed. Visual rendering remains unverified.
-- Four actual `/work` requests total, sequential and recorded before dispatch; details and statuses are in `work-ledger.txt`. Restart check was not a request. No demo load or Redis interruption.
-- API1 and API2 clean delta checks passed; direct backend snapshot was confounded by a delayed prior response and is not counted as an exact single-request delta pass. Restarting only api1 reset its process-local counters to zero.
-- `promtool` is unavailable. No authenticated browser UI check; no screenshots.
-- Images and actual local image IDs/digests are recorded in `images.txt`.
-- Final cleanup stopped/removed only project3-monitoring-demo containers and network; Prometheus/Grafana named volumes were retained. No `down -v` or prune.
+- Implementation/source revision: `bedb095826185734a330f70791ed68e9e67c601e`; config `compose.yaml` + `compose.observability.yaml`, project `project3-monitoring-demo`.
+- Initial metrics/request bounds: 2026-10-23T13:57:24Z–13:58:56Z. Final UI-only start is in `ui-final-start-utc.txt`; final cleanup ran 2026-10-23T14:12:55Z–14:12:57Z. Snapshot bounds and first cleanup are recorded in their UTC files.
+- Before start, host ports were free and the project had no containers, volumes or network. Pinned images pulled; api1/api2/backend built; health checks passed.
+- Static dashboard contract passed: seven panels; stable dashboard UID `project3-monitoring-demo`; datasource UID `project3-prometheus`; req/s units; backend arrivals, success and overload separate; no zero coercion or invented latency/goodput/correctness.
+- Runtime metrics contract passed: api1/api2 JSON each had the existing 17 fields and exposition had 10 API counters; backend JSON had the same schema and exposition had 4 backend counters. Timestamped final JSON and exposition snapshots are saved by service.
+- Prometheus targets api1/api2/backend were all `up`; the `up{job="project3-demo"}` result had three values of 1. All 11 unique dashboard PromQL expressions returned HTTP 200, `status=success`, and nonempty results; raw timestamped results are in `promql-results.json`.
+- Grafana API health returned 200; datasource UID `project3-prometheus` and dashboard UID `project3-monitoring-demo` were provisioned. The sanitized API response is `grafana-dashboard-api.json` with seven panel definitions.
+- Local Chromium successfully loaded the dashboard and, across five scroll positions, returned all seven panel headings. Actual Grafana viewport screenshots are `ui-scroll-2.png` through `ui-scroll-6.png`; rendered heading data is in `browser-ui-scroll-result.json`. `browser-login-failed.png` is a separate earlier failed-login capture, not dashboard evidence.
+- Five actual sequential `/work` requests, all HTTP 200; exact commands, order, output files, timestamps and deltas are in `commands.md` and `work-order.json`. The earlier backend +2 arrivals/+2 success interval is accounted for by two calls inside its baseline window: API1 request 2 completed at 13:58:24.789Z and direct backend request 3 at 13:58:31.905Z; baseline was 13:58:18.821Z and final snapshot 13:58:31.909Z. It was not treated as a one-request delta. Isolated request 5 measured arrivals +1, success +1, overload +0.
+- Restarting only api1 reset process-local counters to zero (`api1-reset.json`). No Redis interruption or demo load.
+- Host `promtool` binary is unavailable; pinned Prometheus image `v3.15.0` passed `promtool check config`. The labeled disposable validator container auto-removed. One startup follow-up Prometheus query briefly failed; immediate repeat succeeded while targets stayed healthy.
+- Final cleanup removed only project3-monitoring-demo containers/network and retained the two named volumes listed in `retained-volumes.txt`; no `down -v` or prune.

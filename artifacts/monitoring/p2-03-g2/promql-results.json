@@ -1,0 +1,313 @@
+[
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "up{job=\"project3-demo\"}",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "__name__": "up",
+          "instance": "api2:8080",
+          "job": "project3-demo",
+          "service": "api2"
+        },
+        "value": [
+          1792764398.551,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "up",
+          "instance": "api1:8080",
+          "job": "project3-demo",
+          "service": "api1"
+        },
+        "value": [
+          1792764398.551,
+          "1"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "up",
+          "instance": "backend:8080",
+          "job": "project3-demo",
+          "service": "backend"
+        },
+        "value": [
+          1792764398.551,
+          "1"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "sum by (service) (rate(project3_api_requests_total{job=\"project3-demo\"}[20s]))",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "service": "api2"
+        },
+        "value": [
+          1792764398.554,
+          "0"
+        ]
+      },
+      {
+        "metric": {
+          "service": "api1"
+        },
+        "value": [
+          1792764398.554,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-demo\"}[20s]))",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "service": "api2"
+        },
+        "value": [
+          1792764398.557,
+          "0"
+        ]
+      },
+      {
+        "metric": {
+          "service": "api1"
+        },
+        "value": [
+          1792764398.557,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "sum by (service) (rate(project3_limiter_errors_total{job=\"project3-demo\"}[20s]))",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "service": "api2"
+        },
+        "value": [
+          1792764398.56,
+          "0"
+        ]
+      },
+      {
+        "metric": {
+          "service": "api1"
+        },
+        "value": [
+          1792764398.56,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-demo\"}[20s]))",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "service": "api2"
+        },
+        "value": [
+          1792764398.562,
+          "0"
+        ]
+      },
+      {
+        "metric": {
+          "service": "api1"
+        },
+        "value": [
+          1792764398.562,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-demo\"}[20s]))",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "service": "api2"
+        },
+        "value": [
+          1792764398.565,
+          "0"
+        ]
+      },
+      {
+        "metric": {
+          "service": "api1"
+        },
+        "value": [
+          1792764398.565,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-demo\"}[20s]))",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "service": "api2"
+        },
+        "value": [
+          1792764398.567,
+          "0"
+        ]
+      },
+      {
+        "metric": {
+          "service": "api1"
+        },
+        "value": [
+          1792764398.567,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "rate(project3_backend_arrivals_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "instance": "backend:8080",
+          "instance_id": "backend-1",
+          "job": "project3-demo",
+          "role": "backend",
+          "service": "backend"
+        },
+        "value": [
+          1792764398.569,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "rate(project3_backend_success_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "instance": "backend:8080",
+          "instance_id": "backend-1",
+          "job": "project3-demo",
+          "role": "backend",
+          "service": "backend"
+        },
+        "value": [
+          1792764398.571,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "rate(project3_backend_overload_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "instance": "backend:8080",
+          "instance_id": "backend-1",
+          "job": "project3-demo",
+          "role": "backend",
+          "service": "backend"
+        },
+        "value": [
+          1792764398.575,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  },
+  {
+    "utc": "2026-10-23T14:06:38+00:00",
+    "query": "sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-demo\"}[20s]))",
+    "http_status": 200,
+    "status": "success",
+    "result_type": "vector",
+    "result": [
+      {
+        "metric": {
+          "service": "api2"
+        },
+        "value": [
+          1792764398.577,
+          "0"
+        ]
+      },
+      {
+        "metric": {
+          "service": "api1"
+        },
+        "value": [
+          1792764398.577,
+          "0"
+        ]
+      }
+    ],
+    "error": null
+  }
+]

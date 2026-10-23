@@ -1,0 +1,26 @@
+{
+  "targets.json": {
+    "captured_file_utc": "2026-10-23T14:09:28.955+00:00",
+    "bytes": 2194
+  },
+  "up.json": {
+    "captured_file_utc": "2026-10-23T14:09:28.956+00:00",
+    "bytes": 428
+  },
+  "promql-results.json": {
+    "captured_file_utc": "2026-10-23T14:06:38.579+00:00",
+    "bytes": 6519
+  },
+  "final-api1-json.json": {
+    "captured_file_utc": "2026-10-23T14:09:47.693+00:00",
+    "bytes": 288
+  },
+  "final-api2-json.json": {
+    "captured_file_utc": "2026-10-23T14:09:47.713+00:00",
+    "bytes": 288
+  },
+  "final-backend-json.json": {
+    "captured_file_utc": "2026-10-23T14:09:47.733+00:00",
+    "bytes": 296
+  }
+}

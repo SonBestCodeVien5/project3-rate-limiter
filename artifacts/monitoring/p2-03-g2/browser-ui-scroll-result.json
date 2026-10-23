@@ -1,0 +1,104 @@
+{
+  "url": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?orgId=1&from=now-5m&to=now&timezone=browser&refresh=5s",
+  "title": "Project 3 — demo monitoring · dữ liệu minh họa mới - Project 3 Demo - Dashboards - Grafana",
+  "steps": [
+    {
+      "tag": "HTML",
+      "cls": "",
+      "top": 0,
+      "max": 366,
+      "heads": [
+        "Target scrape được (1 = có scrape thành công)",
+        "Request nhận tại API (/s)",
+        "Limiter: quota reject và lỗi (/s)",
+        "Request API gửi tới backend (/s)",
+        "Backend arrivals và service thành công (/s)",
+        "Backend overload (/s)",
+        "API backend errors (/s)"
+      ]
+    },
+    {
+      "tag": "HTML",
+      "cls": "",
+      "top": 366,
+      "max": 366,
+      "heads": [
+        "Target scrape được (1 = có scrape thành công)",
+        "Request nhận tại API (/s)",
+        "Limiter: quota reject và lỗi (/s)",
+        "Request API gửi tới backend (/s)",
+        "Backend arrivals và service thành công (/s)",
+        "Backend overload (/s)",
+        "API backend errors (/s)"
+      ]
+    },
+    {
+      "tag": "HTML",
+      "cls": "",
+      "top": 366,
+      "max": 366,
+      "heads": [
+        "Target scrape được (1 = có scrape thành công)",
+        "Request nhận tại API (/s)",
+        "Limiter: quota reject và lỗi (/s)",
+        "Request API gửi tới backend (/s)",
+        "Backend arrivals và service thành công (/s)",
+        "Backend overload (/s)",
+        "API backend errors (/s)"
+      ]
+    },
+    {
+      "tag": "HTML",
+      "cls": "",
+      "top": 366,
+      "max": 366,
+      "heads": [
+        "Target scrape được (1 = có scrape thành công)",
+        "Request nhận tại API (/s)",
+        "Limiter: quota reject và lỗi (/s)",
+        "Request API gửi tới backend (/s)",
+        "Backend arrivals và service thành công (/s)",
+        "Backend overload (/s)",
+        "API backend errors (/s)"
+      ]
+    },
+    {
+      "tag": "HTML",
+      "cls": "",
+      "top": 366,
+      "max": 366,
+      "heads": [
+        "Target scrape được (1 = có scrape thành công)",
+        "Request nhận tại API (/s)",
+        "Limiter: quota reject và lỗi (/s)",
+        "Request API gửi tới backend (/s)",
+        "Backend arrivals và service thành công (/s)",
+        "Backend overload (/s)",
+        "API backend errors (/s)"
+      ]
+    }
+  ],
+  "uniqueHeadings": [
+    "Target scrape được (1 = có scrape thành công)",
+    "Request nhận tại API (/s)",
+    "Limiter: quota reject và lỗi (/s)",
+    "Request API gửi tới backend (/s)",
+    "Backend arrivals và service thành công (/s)",
+    "Backend overload (/s)",
+    "API backend errors (/s)"
+  ],
+  "captured_utc_by_screenshot": {
+    "ui-scroll-2.png": "2026-10-23T14:12:26.203+00:00",
+    "ui-scroll-3.png": "2026-10-23T14:12:27.784+00:00",
+    "ui-scroll-4.png": "2026-10-23T14:12:29.368+00:00",
+    "ui-scroll-5.png": "2026-10-23T14:12:30.985+00:00",
+    "ui-scroll-6.png": "2026-10-23T14:12:32.573+00:00"
+  },
+  "screenshots": [
+    "ui-scroll-2.png",
+    "ui-scroll-3.png",
+    "ui-scroll-4.png",
+    "ui-scroll-5.png",
+    "ui-scroll-6.png"
+  ]
+}
