@@ -1,6 +1,6 @@
 # Thiết kế monitoring giai đoạn 2
 
-Thiết kế monitoring lập ngày 23/10/2026; trạng thái P2 cập nhật 24/10/2026. P2-01–P2-03 đã triển khai/kiểm tra exposition, overlay, dashboard bảy panel và ba fixed targets. **Chạy benchmark** hiện tạo case trong `project3-research-lab`, còn Prometheus chỉ scrape `project3-monitoring-demo`; vì vậy run đó chưa được Grafana quan sát. P2-03A đề xuất opt-in scrape cho chính run Console hiện có bằng file_sd + network allowlist; chưa triển khai/cấp quyền. Nút gửi request mẫu vẫn chỉ đi vào fixed stack. Task/gate ở [registry P2](PHASE2_PLAN.md), evidence cố định ở [G2 smoke](../../artifacts/monitoring/p2-03-g2/checks.md); baseline/protocol ở [kế hoạch chung](../REMAINING_WORK_PLAN.md) và [readiness](../experiments/PROTOCOL_READINESS.md).
+Thiết kế monitoring lập ngày 23/10/2026; trạng thái P2 cập nhật 24/10/2026. P2-01–P2-03 đã triển khai/kiểm tra exposition, overlay, dashboard bảy panel và ba fixed targets; evidence này giữ nguyên và chỉ chứng minh fixed stack. **Chạy benchmark** tạo case riêng trong `project3-research-lab`, chưa được Prometheus scrape. P2-03A đề xuất opt-in scrape cho run Console hiện có bằng file_sd/network allowlist; P2-04/05 tương lai phải mở rộng Alloy/Loki và kiểm tra lifecycle cho chính các targets đã allowlist; chưa gói nào trong số này bắt đầu/cấp quyền. Task/gate ở [registry P2](PHASE2_PLAN.md), evidence cố định ở [G2 smoke](../../artifacts/monitoring/p2-03-g2/checks.md); baseline/protocol ở [kế hoạch chung](../REMAINING_WORK_PLAN.md) và [readiness](../experiments/PROTOCOL_READINESS.md).
 
 ## 1. Hai luồng dữ liệu
 
@@ -86,7 +86,7 @@ Tính `rate` **trước** `sum` để xử lý reset từng instance. `increase`
 
 ## 5. Hợp đồng logs
 
-Pipeline dự kiến: Docker discovery **lọc project `project3-monitoring-demo` và service `api1`, `api2`, `backend`** → Alloy đọc stdout → Loki → Grafana. Redis/Nginx và logs nội bộ monitoring chưa thu ở bản đầu; có thể xem bằng Compose logs khi troubleshooting. Nếu đổi project name phải đổi filter tương ứng và chứng minh không thu ngoài scope.
+Pipeline hiện mới thiết kế cho allowlist fixed `project3-monitoring-demo` services `api1`, `api2`, `backend`; chưa triển khai Alloy/Loki. P2-04 tương lai cần hỗ trợ thêm đúng opt-in research project `project3-research-lab` và allowlist `api1`…`api4`, `backend`, giữ fixed sources riêng. Không quét tùy tiện project/container, Redis, Nginx hoặc logs nội bộ monitoring. Nếu dùng Docker discovery, chỉ Alloy được cân nhắc nhận socket; Prometheus/Grafana không nhận socket. Filter không phải security boundary.
 
 Indexed labels tối thiểu: `project`, `service`; `role` nếu cần thì chỉ api/backend. Không dùng raw container ID/name có suffix, client/request ID, IP, timestamp, `error`, namespace/run ID. `level`, `msg`, `fail_policy` được parse tại query hoặc giữ trong JSON; không cần tăng số stream để lọc vài sự kiện.
 
@@ -96,11 +96,11 @@ Nguồn log app hiện có:
 - `limiter unavailable`, `error`, `fail_policy`: cảnh báo có thể xuất hiện mỗi request lỗi; không mặc định có một log cho mỗi incident.
 - `server stopped` khi lỗi: không bảo đảm shutdown bình thường luôn có log tương ứng.
 
-Truy vấn dự kiến, cần đối chiếu payload thực tế ở P2-05:
+Truy vấn dự kiến, cần đối chiếu payload thực tế ở P2-05; `project` phải chọn đúng fixed hoặc research source và không trộn project:
 
 ```logql
-{project="project3-monitoring-demo", service=~"api1|api2|backend"} | json
-{project="project3-monitoring-demo", service=~"api1|api2"} | json | msg="limiter unavailable"
+{project=~"project3-monitoring-demo|project3-research-lab", service=~"api1|api2|api3|api4|backend"} | json
+{project="project3-research-lab", service=~"api1|api2|api3|api4"} | json | msg="limiter unavailable"
 ```
 
 Log pipeline có buffering/độ trễ riêng; không dùng log count làm oracle exact request. Giữ timestamp nguồn nếu parser hỗ trợ đúng format đã quan sát; ghi timezone UTC của artifact và timezone dashboard, không sửa timestamp để làm khớp clock. Alloy cần state positions có ownership rõ; restart/replay/duplicate phải được quan sát, không hứa exactly-once.

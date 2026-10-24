@@ -2,13 +2,13 @@
 
 P2 là phần mở rộng local do người dùng chọn để học monitoring và cải thiện demo; không đổi yêu cầu hay bằng chứng baseline. Mục tiêu cơ bản là Prometheus, Grafana, Alloy, Loki, một dashboard, truy vấn metrics/logs và demo lặp lại được. Histogram, alerting, tracing, exporters hạ tầng, tự discovery mọi Console run và observability production là tùy chọn/ngoài scope.
 
-**Hiện trạng 23/10/2026:** P2-01 hoàn tất G1 ở commit `0bea7b2`; P2-02 hoàn tất triển khai G1 ở commit `d785529`; P2-03 đã kiểm chứng dashboard và runtime G2 trên stack cố định. Dashboard 7 panel ở commit `bedb095`; JSON `GET /metrics` giữ nguyên. Smoke dùng **5/10 request `/work` tuần tự**, không có demo load hay outage, khép gói bằng cleanup giữ named volumes. Sửa lỗi trang danh sách Grafana sau đó ở `9cecd15`, chi tiết bên dưới. Dừng sau P2-03. P2-03A hiện là đề xuất ưu tiên trước P2-04; chưa có quyền G1/G2/G3.
+**Hiện trạng 24/10/2026:** P2-01–P2-03 đã triển khai/kiểm tra cho metrics và fixed monitoring stack; P2-03 G2 dùng **5/10 request `/work` tuần tự**, không phải Console benchmark, demo load hay outage. Evidence G2/UID-fix giữ nguyên và chỉ chứng minh fixed stack. P2-03A, P2-04–P2-08 chưa bắt đầu; P2-03A là đề xuất trước logs và load. Không có quyền G1/G2/G3/G4 mới. Lịch sử kết quả, source revision và cleanup của P2-03 được ghi dưới đây/checkpoint.
 
 ## Cách tiếp tục
 
 Đọc đúng task đang làm trong sổ này, rồi phần liên quan của [DESIGN](DESIGN.md), [RUNBOOK](RUNBOOK.md) hoặc [LEARNING_GUIDE](LEARNING_GUIDE.md). Kiểm tra code/caller thuộc gói trước khi sửa. [AGENTS.md](../../AGENTS.md) quy định nguồn bắt buộc, ownership và commit. [Checkpoint](../context/SESSION_CHECKPOINT.md) ghi kiểm tra/giới hạn từng phiên.
 
-Thứ tự ưu tiên hiện hành: `P2-01 → P2-02 → P2-03 → P2-03A → P2-04 → P2-05 → P2-06 → P2-08`; P2-07 là nhánh có điều kiện. P2-03A là gói mới đề xuất, chưa được triển khai hay cấp quyền. Không tự giao hoặc khởi chạy task sau điểm dừng được yêu cầu.
+Thứ tự ưu tiên hiện hành: `P2-00 → P2-01 → P2-02 → P2-03 → P2-03A → P2-04 → P2-05 → P2-06 → P2-08`; P2-07 là nhánh có điều kiện sau P2-06. P2-00–P2-03 đã hoàn tất cho fixed stack; evidence giữ nguyên và chỉ chứng minh đúng phạm vi lịch sử đó. P2-03A trở đi là kế hoạch tích hợp/kiểm tra thêm cho run Console opt-in, chưa triển khai/cấp quyền. Không tự giao hoặc khởi chạy task sau điểm dừng được yêu cầu.
 
 ## Phạm vi và bảo toàn evidence
 
@@ -39,7 +39,7 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 
 | ID | Gói việc | Phụ thuộc/cổng | Trạng thái |
 | --- | --- | --- | --- |
-| P2-00 | Kế hoạch, design, runbook, learning guide và routing | — | **Xong**; xem checkpoint |
+| P2-00 | Kế hoạch, design, runbook, learning guide và routing | — | **Xong nền tảng; duy trì bản đồ tác động toàn P2 trong registry** |
 | P2-01 | Prometheus exposition, giữ JSON metrics | P2-00; G1 | **Xong**, `0bea7b2`; chi tiết tests/skips ở checkpoint |
 | P2-02 | Compose overlay, Prometheus/Grafana và provisioning | P2-01; G1 | **Xong G1**, `d785529`; runtime được kiểm chứng trong P2-03 |
 | P2-03 | Dashboard metrics và runtime smoke | P2-02; G2 | **Xong kỹ thuật**; dashboard `bedb095`, evidence và giới hạn ở phần P2-03; học tập chưa xác nhận |
@@ -50,15 +50,29 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 | P2-07 | Demo Redis outage fail-open/fail-closed | P2-06; G4 | **Chờ điều kiện**, tùy chọn |
 | P2-08 | Đóng gói, hướng dẫn và diễn tập | P2-06; ghi rõ có/không P2-07 | **Chưa bắt đầu** |
 
+### Bản đồ tác động toàn P2
+
+| Gói | Giữ lại | Điều chỉnh/kế hoạch tương lai |
+| --- | --- | --- |
+| P2-00 | Registry là chủ sở hữu trạng thái; design/runbook/learning guide là mô tả kỹ thuật và reader route | Đồng bộ các tài liệu hiện hành với luồng Console runner opt-in; không coi đề xuất là tính năng đã chạy. |
+| P2-01 | Prometheus exposition và JSON `/metrics` nguyên trạng, dùng được cho fixed và research targets | Không sửa counter semantics/schema để tích hợp dashboard. |
+| P2-02 | Stack, image pins, volumes, secrets, datasource UID `project3-prometheus`, loopback ownership | Đề xuất gắn Prometheus vào shared scrape network và mount allowlisted file_sd directory; giữ fixed service discovery/job. Chưa sửa cấu hình. |
+| P2-03 | Bảy panels, dashboard UID `project3-monitoring-demo`, folder UID `project3-monitoring-folder`, datasource, fixed-job query và toàn bộ evidence/UID-fix | Thêm chọn job/topology và UTC context cho research; regression cả fixed panels, target list, Grafana list/folder/dashboard. Evidence cũ chỉ hợp lệ cho fixed stack, không chứng minh Console integration. |
+| P2-03A | Nút, model, runner, generator, topology, lock/cancel/scoped cleanup hiện có | Opt-in file_sd/API-backend allowlist; là prerequisite metrics vertical slice trước P2-04/05, chưa bắt đầu. |
+| P2-04/05 | App JSON logs, Alloy/Loki local pipeline và fixed demo teaching path | Filter rõ fixed project + opted-in research services; P2-05 kiểm tra registration/log discovery/lifecycle/cancel/kill/stale manifest và dừng từng project đúng owner. Chỉ sau logs G2 mới hoàn tất full monitoring. |
+| P2-06 | Mức tải, số case và giới hạn đã nêu dưới đây | Toàn bộ suite cùng Console runner/topology/instrumentation; không trộn fixed demo, không lấy CLI/redis-outage.sh thay tương tác Console. |
+| P2-07 | G4 optional và ngân sách outage được khóa bên dưới | Chưa có đường fault hook an toàn cho Redis trong run research; không pause Redis fixed project khi load chạy ở research project. Chỉ thiết kế lại P2-07 để target/lifecycle hiện hữu nếu được cấp riêng; nếu không khớp, giữ blocked, không dùng workflow tải thứ hai. |
+| P2-08 | T12 bundle/T10 offline artifacts và learning checklist | Đóng gói hướng dẫn source hiện tại, opt-in path, exact UTC links, offline dashboard/log screenshots hoặc dữ liệu mẫu, recovery/cleanup; không tái sinh hay thay artifacts baseline. |
+
 ## Tiêu chí theo gói
 
 ### P2-01 — endpoint metrics (hoàn tất)
 
 `GET /metrics/prometheus` xuất 10 API counters hoặc 4 backend counters từ atomic counters hiện có; JSON schema, limiter và nghiên cứu không đổi. Focused/full server tests, vet, formatting đạt. `promtool` không có sẵn; chưa có parser độc lập hoặc runtime scrape. Xem commit/test/skips ở [checkpoint](../context/SESSION_CHECKPOINT.md); snapshot nhiều counter không phải transaction.
 
-### P2-02 — Prometheus/Grafana (hoàn tất G1)
+### P2-02 — Prometheus/Grafana (hoàn tất G1; research extension chưa làm)
 
-- Tệp triển khai: `compose.observability.yaml`, `deploy/monitoring/prometheus.yml`, `deploy/monitoring/grafana/provisioning/`. Giữ research runner Compose nguyên trạng.
+- Tệp hiện tại: `compose.observability.yaml`, `deploy/monitoring/prometheus.yml`, `deploy/monitoring/grafana/provisioning/`. Đây là fixed-stack implementation đã kiểm tra; không mô tả như đã có research discovery.
 - Dùng project `project3-monitoring-demo`; pin image versions (không dùng `latest`), provision datasource/provider với UID ổn định, không commit credentials; kiểm tra host-port conflicts.
 - Compose mount, scrape service DNS, retention/storage, loopback ports, healthcheck và cleanup theo [design](DESIGN.md)/[runbook](RUNBOOK.md). Static config pass không phải runtime pass.
 - Tiêu chí tĩnh: Compose resolve được, mounts/ports đúng và config được validator phù hợp kiểm tra khi có công cụ; không đánh dấu runtime đạt chỉ từ `compose config`.
@@ -97,11 +111,11 @@ Mỗi run được bật monitoring là telemetry demo mới, không phân loạ
 
 ### P2-04 — Alloy/Loki
 
-Tệp dự kiến: `deploy/monitoring/alloy/config.alloy`, `deploy/monitoring/loki.yml`, provisioning và Compose. Loki chạy một tiến trình local; Alloy chỉ đọc đúng project và allowlist service app. Không thu mọi container, thêm access log từng request, expose Docker daemon TCP hoặc dùng `privileged`. Xác minh Docker socket/API; `:ro` không làm Docker API read-only. Nếu không dùng được, ghi blocker hoặc thiết kế file input riêng, không mount host rộng.
+Tệp dự kiến: `deploy/monitoring/alloy/config.alloy`, `deploy/monitoring/loki.yml`, provisioning và Compose. Loki chạy một tiến trình local. Alloy giữ fixed-demo allowlist hiện có và thêm đúng project/service allowlist `project3-research-lab` `api1`…`api4`/`backend` cho run opt-in; không quét mọi project/container, Redis, Nginx hoặc access log từng request. Dùng labels ổn định `project`, `service`; không gắn Run ID. Xác minh Docker socket/API; `:ro` không làm Docker API read-only. Nếu không dùng được, ghi blocker hoặc chọn file input hẹp, không mount host rộng. Prometheus/Grafana không được mount Docker socket. Chỉ P2-04/05 đạt khi log pipeline đã kiểm chứng cho các nguồn được hỗ trợ; fixed-only evidence không chứng minh research logs.
 
 ### P2-05 — kiểm chứng logs/lifecycle
 
-Trong G2, kiểm tra log thật từ source tới Loki/Grafana, filter labels/container, delay/timezone/parse errors/positions/restart, datasource, permissions, health và disk. Ghi rõ không có exactly-once guarantee. Hoàn tất khi metrics và logs hoạt động cùng nhau, restart/cleanup không ảnh hưởng project khác.
+Trong G2, kiểm tra log thật từ cả fixed allowlist và run Console opt-in từ source tới Loki/Grafana, filter labels/container, delay/timezone/parse errors/positions/restart, datasource, permissions, health và disk. Kiểm tra runner đăng ký target/file, scrape/log startup trước/sau workload, cancel/SIGTERM cleanup và stale registration sau sự cố; không sửa ownership của stack fixed khi research runner dừng case riêng. Ghi rõ không có exactly-once guarantee. Hoàn tất khi metrics và logs hoạt động cùng nhau trên luồng đã chọn, restart/cleanup không ảnh hưởng project khác. G2 P2-03 fixed-only không được tính lại làm bằng chứng này.
 
 ### P2-06 — bounded demo load
 
@@ -109,8 +123,8 @@ Trước load, ghi đủ cấu hình/ngân sách vào `scenario-plan.md`; sau P2
 
 ### P2-07 — outage có điều kiện
 
-Chỉ chạy khi yêu cầu bao phủ G4. Ngân sách riêng: tối đa **4 case** healthy/outage × fail-open/fail-closed; **30 giây/case**, **20 RPS**, một attempt/case. Mỗi outage case pause đúng Redis demo **một lần 2 giây**, dự kiến tại giây 10; ghi thời điểm thực. Healthy references cùng config, không cộng ngầm vào P2-06. Trước đó kiểm chứng trap/watchdog unpause và resource ownership. Không restart host Redis, FLUSHDB hay sửa clock/system config. Báo kết quả như demo fault injection, không phải HA/correctness/recovery protocol pass.
+Chỉ chạy khi yêu cầu bao phủ G4. Ngân sách riêng giữ nguyên: tối đa **4 case** healthy/outage × fail-open/fail-closed; **30 giây/case**, **20 RPS**, một attempt/case. Mỗi outage case pause Redis target của chính run đã khai báo **một lần 2 giây**, dự kiến tại giây 10; ghi thời điểm thực. Healthy references cùng config, không cộng ngầm vào P2-06. Hiện `scripts/redis-outage.sh` dựng project `project3-outage-$$` và tự chạy load; không dùng làm G4 Console hoặc pause Redis thuộc `project3-monitoring-demo` khi request đi qua `project3-research-lab`. Trước bất kỳ G4 nào cần một fault hook/lifecycle owner hẹp trong run hiện tại, trap/watchdog unpause, target identity verification và evidence/cleanup; nếu không thể làm trong một load path duy nhất thì giữ P2-07 chưa khả thi/blocked ở thiết kế, không thêm workflow tải. Không restart host Redis, FLUSHDB hay sửa clock/system config. Báo kết quả như demo fault injection, không phải HA/correctness/recovery protocol pass.
 
 ### P2-08 — đóng gói
 
-Cập nhật runbook từ dự kiến thành đã thử, demo script, index và P2 source revision; giữ T12 bundle/IDs. Tạo offline fallback gắn case/config/time range/revision/giới hạn; kiểm tra fresh start, recovery và cleanup. Người dùng tự xác nhận learning checklist. P2 cơ bản chỉ hoàn tất khi P2-01–P2-06 và P2-08 có evidence, đủ bốn công cụ và fallback/recovery; ghi rõ trạng thái P2-07.
+Cập nhật runbook từ dự kiến thành đã thử, demo script, index và P2 source revision; giữ T12 bundle/IDs. Tạo offline fallback ghi riêng fixed P2-03 evidence và research opt-in case đã kiểm chứng: case/config/topology/revision, exact UTC load bounds, Grafana job/link, log query nếu P2-04/05 hoàn tất, limitations, recovery/cleanup. Kiểm tra fresh start/recovery bằng quyền tương ứng; người dùng tự xác nhận learning checklist. P2 cơ bản chỉ hoàn tất khi P2-01–P2-06 và P2-08 có evidence, đủ bốn công cụ, Console-run metrics/Grafana slice và offline fallback/recovery; logs pipeline phải hoàn tất để tuyên bố full monitoring. Ghi rõ trạng thái P2-07; G4 optional không phải điều kiện P2 cơ bản.
