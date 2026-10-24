@@ -2,7 +2,7 @@
 
 Đây là kịch bản demo prototype kèm kết quả T10 đã phân tích offline từ benchmark chính thức; saved-run UI dùng ba lượt pilot ngày 13/10. Không trình bày pilot UI như kết quả benchmark chính thức. Xem [kết quả T10](analysis/T10_RESULTS.md), [trạng thái sẵn sàng](experiments/PROTOCOL_READINESS.md) và [trạng thái công việc](REMAINING_WORK_PLAN.md). Chuẩn bị trước để không phụ thuộc tải trực tiếp. T13 chưa có deck: Canva import bị HTTP 429 trước design ID; chưa rehearsal thực tế. Rubric, feedback, ngày chính thức và nguồn học thuật cuối còn chờ.
 
-**Nhánh giai đoạn 2 (23/10/2026):** P2-03 đã kiểm tra stack monitoring cố định và dashboard. Nút Console `Gửi một request mẫu` đi qua cùng ingress; nút **Chạy benchmark** vẫn tạo project `project3-research-lab`, không hiện trên dashboard. Luồng Console chạy demo tải trên stack cố định là đề xuất P2-03A, chưa triển khai/cấp quyền. Xem [registry P2](monitoring/PHASE2_PLAN.md) trước khi thêm thao tác; giữ telemetry demo mới, pilot Console và kết quả T10 riêng biệt.
+**Nhánh giai đoạn 2 (24/10/2026):** P2-03 đã kiểm tra fixed stack/dashboard. Nút Console `Gửi một request mẫu` đi qua ingress fixed; nút **Chạy benchmark** tạo research case riêng và Prometheus hiện chưa scrape case đó. P2-03A đề xuất opt-in monitoring cho nút benchmark hiện có bằng registration target allowlist; chưa triển khai/cấp quyền. Sau tích hợp, dùng job/time range riêng cho run mới, giữ telemetry demo và pilot Console riêng khỏi kết quả T10. Xem [registry P2](monitoring/PHASE2_PLAN.md) và [runbook](monitoring/RUNBOOK.md).
 
 | Thời gian | Nội dung / thao tác |
 | --- | --- |

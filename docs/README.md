@@ -1,6 +1,6 @@
 # Hướng dẫn đọc tài liệu Project 3
 
-Không cần đọc toàn bộ `docs/`. Mốc hiện tại (23/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-03 đã kiểm tra dashboard 7 panel trên stack cố định, dùng 5/10 request `/work`; sửa lỗi UID Grafana sau đó được ghi trong [runbook](monitoring/RUNBOOK.md). Console request mẫu có thể gửi tới cùng stack; nút **Chạy benchmark** vẫn chạy project research riêng. P2-03A là đề xuất ưu tiên trước P2-04 để có luồng demo tải riêng trên stack monitoring; chưa triển khai/cấp quyền. Xem [sổ P2](monitoring/PHASE2_PLAN.md) để biết trạng thái/gate, [kế hoạch baseline](REMAINING_WORK_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
+Không cần đọc toàn bộ `docs/`. Mốc hiện tại (24/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-03 đã kiểm tra dashboard 7 panel trên fixed stack, dùng 5/10 request `/work`; sửa lỗi UID Grafana sau đó được ghi trong [runbook](monitoring/RUNBOOK.md). Nút Console request mẫu tới fixed stack; **Chạy benchmark** vẫn chạy research project riêng và chưa được Prometheus scrape. P2-03A đề xuất opt-in scrape cho run hiện tại trước P2-04; chưa triển khai/cấp quyền. Xem [sổ P2](monitoring/PHASE2_PLAN.md) để biết trạng thái/gate, [kế hoạch baseline](REMAINING_WORK_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
 
 ## Chọn đường đọc
 

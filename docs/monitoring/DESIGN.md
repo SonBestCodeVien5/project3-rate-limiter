@@ -1,17 +1,19 @@
 # Thiết kế monitoring giai đoạn 2
 
-Thiết kế monitoring lập ngày 23/10/2026. P2-01/P2-02 đã triển khai metrics và overlay; P2-03 đã kiểm tra dashboard bảy panel và runtime G2 trên stack cố định. Ba scrape targets, JSON/exposition compatibility, datasource/dashboard provisioning, 11 PromQL expressions và UI đã được kiểm tra. Alloy/Loki chưa cấu hình. Console hiện có nút gửi một request mẫu qua ingress của stack cố định, nhưng **Chạy benchmark** vẫn dựng riêng `project3-research-lab` và không được scrape bởi dashboard. P2-03A đề xuất một luồng Console demo tải riêng; chưa triển khai/cấp quyền. `docker compose config` chỉ xác nhận cấu hình hợp nhất, không thay kiểm tra runtime. Task/gate ở [kế hoạch P2](PHASE2_PLAN.md); evidence P2-03 tại [G2 smoke](../../artifacts/monitoring/p2-03-g2/checks.md); baseline và protocol ở [kế hoạch chung](../REMAINING_WORK_PLAN.md) và [readiness](../experiments/PROTOCOL_READINESS.md).
+Thiết kế monitoring lập ngày 23/10/2026; trạng thái P2 cập nhật 24/10/2026. P2-01–P2-03 đã triển khai/kiểm tra exposition, overlay, dashboard bảy panel và ba fixed targets. **Chạy benchmark** hiện tạo case trong `project3-research-lab`, còn Prometheus chỉ scrape `project3-monitoring-demo`; vì vậy run đó chưa được Grafana quan sát. P2-03A đề xuất opt-in scrape cho chính run Console hiện có bằng file_sd + network allowlist; chưa triển khai/cấp quyền. Nút gửi request mẫu vẫn chỉ đi vào fixed stack. Task/gate ở [registry P2](PHASE2_PLAN.md), evidence cố định ở [G2 smoke](../../artifacts/monitoring/p2-03-g2/checks.md); baseline/protocol ở [kế hoạch chung](../REMAINING_WORK_PLAN.md) và [readiness](../experiments/PROTOCOL_READINESS.md).
 
 ## 1. Hai luồng dữ liệu
 
 ```mermaid
 flowchart LR
-    C[Client / loadgen demo] --> N[Nginx]
+    C[Client / loadgen] --> N[Nginx]
     N --> A[api1 và api2 + limiter]
     A <--> R[(Redis)]
     A --> B[Backend giới hạn năng lực]
-    A -->|HTTP scrape| P[Prometheus]
-    B -->|HTTP scrape| P
+    A -->|HTTP scrape project3-demo| P[Prometheus]
+    B -->|HTTP scrape project3-demo| P
+    X[Console / research-pilot.sh] -->|khởi chạy loadgen hiện có| C
+    X -. đăng ký target khi opt-in .-> P
     A -->|stdout JSON qua Docker| O[Alloy]
     B -->|stdout JSON qua Docker| O
     O --> L[Loki]
@@ -19,19 +21,19 @@ flowchart LR
     L --> G
 ```
 
-Mũi tên metrics mô tả hướng dữ liệu; **Prometheus chủ động scrape** API/backend. Alloy chỉ thu logs ở bản này. Grafana truy vấn hai datasource; không nằm trên đường xử lý request, không điều khiển policy/Redis. Không cần Pushgateway, tracing hoặc remote write.
+Mũi tên metrics mô tả hướng dữ liệu; **Prometheus chủ động scrape** API/backend. Đường chấm là đề xuất P2-03A: Console runner đăng ký target allowlist của case hiện tại, không đổi đường request hoặc generator. Alloy chỉ thu logs ở bản này. Grafana truy vấn hai datasource; không nằm trên đường xử lý request, không điều khiển policy/Redis. Không cần Pushgateway, tracing hoặc remote write.
 
-Console có hai luồng tách biệt: **Chạy benchmark** gọi research runner trên `project3-research-lab`, không hiện trên dashboard cố định; **Gửi một request mẫu** gọi ingress `127.0.0.1:8080` của stack cố định và counters của request đó nằm trên ba target đã provision. Nút mẫu chưa phải load demo. P2-03A đề xuất luồng **Demo có giám sát** riêng dùng loadgen hiện có trên ingress cố định; xem trạng thái, phụ thuộc và cổng ở registry, không suy rằng đã hoạt động.
+Console có hai luồng hiện hữu: **Chạy benchmark** gọi runner trên `project3-research-lab`; **Gửi một request mẫu** gọi ingress `127.0.0.1:8080` của stack cố định. P2-03A giữ nguyên Chạy benchmark và chỉ đề xuất opt-in scrape target cho run hiện tại. Không tạo workflow/generator thứ hai. Xem registry để biết trạng thái và gate.
 
 ## 2. Điểm tích hợp
 
-P2-01 xuất exposition từ atomic counters hiện có trong `internal/server/server.go`, không thêm dependency Prometheus. Giữ JSON `/metrics` cho `internal/console/console.go` và `scripts/research-pilot.sh`; metrics/health không tăng counter `/work`. Luồng Console request mẫu gửi vào ingress base; `/metrics` hiện cho biết mode/algorithm nhưng không đủ policy/topology. P2-03A phải lấy effective mode, algorithm, policy/quota và topology từ trạng thái runtime đã xác minh trước khi phát tải; giá trị form không phải bằng chứng. Focused server checks/vet và scrape runtime P2-03 đạt; Alloy/Loki còn chờ. Logs JSON từ `cmd/server/main.go` là nguồn pipeline dự kiến; không cần access log từng request.
+P2-01 xuất exposition từ atomic counters hiện có trong `internal/server/server.go`, không thêm dependency Prometheus. Giữ JSON `/metrics` cho `internal/console/console.go` và `scripts/research-pilot.sh`; metrics/health không tăng counter `/work`. Research runner đã resolve `compose-resolved.json`, policy, topology, image IDs và revision vào artifacts; P2-03A dùng chính case đó để xác định target allowlist và ghi cờ monitoring, không suy cấu hình từ giá trị form. `GET /api/runs/{id}/metrics` hiện poll counters trực tiếp qua Compose exec; Prometheus scrape mới là đường quan sát time series. Không đổi contract `/metrics` hoặc đổi source đo T09/T10. Logs JSON từ `cmd/server/main.go` là nguồn pipeline dự kiến; không cần access log từng request.
 
 ## 3. Hợp đồng metrics đã triển khai trong P2-01
 
 Endpoint: `GET /metrics/prometheus`; Prometheus text 0.0.4, `Content-Type: text/plain; version=0.0.4; charset=utf-8`, có `HELP`/`TYPE`, newline cuối, số không âm, **không gắn timestamp ứng dụng vào sample**. Prometheus lưu thời điểm scrape. Không thay số đo counter bằng rate phía app.
 
-Labels app: `role`, `instance_id`; thêm `mode`, `algorithm` cho metrics API. Backend không mang policy labels không có ý nghĩa. Labels target do scrape config thêm: `job="project3-demo"`, còn `service` nhận một trong `api1`, `api2`, `backend`; `instance` là địa chỉ target do Prometheus quản lý, khác `instance_id` của app. Không dùng hai label cùng tên từ app và target.
+Labels app: `role`, `instance_id`; thêm `mode`, `algorithm` cho metrics API. Backend không mang policy labels không có ý nghĩa. Job fixed hiện tại là `project3-demo`, target `service` thuộc `api1`, `api2`, `backend`. Đề xuất job thứ hai `project3-console-run`, target `service` thuộc `api1`…`api4`, `backend`; label `topology` nhận 1/2/4 và `project` giữ giá trị ổn định `project3-research-lab`. `instance` là alias scrape ổn định theo service, khác `instance_id` app. Không gắn Run ID, case, revision hay UTC vào labels; tránh high-cardinality và giữ chúng trong artifact/link.
 
 Các giá trị từ config như `instance_id` phải escape `\\`, `"`, newline đúng định dạng, kể cả mặc định hiện tại đơn giản. Không đưa client ID, IP, request ID, namespace, run ID, timestamp hoặc error text thành metric label. Metadata lượt demo đặt trong artifact/annotation, tránh tạo series mới theo từng run.
 
@@ -60,7 +62,7 @@ Các target có thể `up=1` khi Redis lỗi hoặc API trả 503. `/healthz` l�
 
 ## 4. Scrape và dashboard
 
-Khoảng scrape **2s**, timeout **1s**, refresh **5s**, rate window **20s**, dashboard **5 phút gần nhất** là cấu hình demo. Không đủ phân giải để kiểm tra FW 1s hay quota từng request.
+Fixed stack giữ scrape **2s**, timeout **1s**, refresh **5s**, rate window **20s**, dashboard **5 phút gần nhất**. Đề xuất job research scrape **1s** để thấy case ngắn; dashboard dùng job selector để không gộp fixed traffic và rate window ngắn cho research. Console case 3s có thể chỉ tạo vài samples; chỉ G3 case tới **30s** dùng làm acceptance, ghi UTC baseline-after-scrape/end-after-final-scrape và không suy quota correctness từ dashboard.
 
 Prometheus dùng DNS trong cùng Compose network, không `localhost` trong container:
 
@@ -68,7 +70,7 @@ Prometheus dùng DNS trong cùng Compose network, không `localhost` trong conta
 | --- | --- |
 | `api1:8080`, `api2:8080`, `backend:8080` | `/metrics/prometheus` |
 
-Compose overlay dùng job `project3-demo`, label target `service` (`api1`, `api2`, `backend`) và scrape `/metrics/prometheus` qua DNS service nội bộ. Grafana datasource Prometheus đã provision với UID `project3-prometheus`; datasource Loki dự kiến UID `project3-loki`. Dashboard giữ UID `project3-monitoring-demo`; provider đặt dashboard vào folder **Project 3 Monitoring**, UID `project3-monitoring-folder`. Giữ UID dashboard và folder khác nhau: Grafana dashboard-list dùng UID để dò descendants, nên UID trùng giữa folder và dashboard tạo vòng lặp khi render lựa chọn trên cây. Dashboard có bảy panel: `up`, API requests/s, limiter quota reject/errors/fail-open/fail-closed, API backend attempts/s, backend arrivals và success/s, backend overload/s, API backend errors/s. `up=1` chỉ xác nhận scrape. Nhãn dashboard là **demo monitoring — dữ liệu minh họa mới**. Query giữ series thiếu là thiếu mẫu, không ép thành 0. Không dựng p95/p99, legitimate goodput hay correctness pass từ counter; dùng summary/trace/T10 riêng cho phía client.
+Compose overlay dùng `project3-demo` cho fixed service DNS. Đề xuất `file_sd_configs` allowlist với `refresh_interval: 1s`, đọc target file do runner hiện tại tạo trong mounted ignored directory; shared network `project3-monitoring-scrape` chỉ nối Prometheus với API/backend case đang chạy, không Redis/Nginx. Monitoring Compose sở hữu network và volume mount; runner chỉ sở hữu manifest của lượt đang giữ lock. Runner ghi file sau healthy, đợi target UP/baseline scrape, giữ tới final scrape, rồi gỡ trước Compose cleanup. Không mount Docker socket vào Prometheus/Grafana và không discovery tùy tiện. Grafana datasource Prometheus giữ UID `project3-prometheus`; Loki dự kiến `project3-loki`. Dashboard giữ UID `project3-monitoring-demo`; folder giữ UID `project3-monitoring-folder`, khác nhau. Thêm job selector `project3-demo` / `project3-console-run` và link từ Console gồm selector cùng UTC `from`/`to`; chỉ một job hiển thị mỗi lần. Các bảy panel hiện hành giữ nguyên semantics; `up=1` chỉ xác nhận scrape. Query thiếu mẫu không ép về 0. Không suy p95/p99, legitimate goodput hay correctness từ counters; dùng summary/trace riêng.
 
 PromQL mẫu bên dưới cũng là các query đã kiểm tra runtime ở G2:
 
@@ -105,8 +107,8 @@ Log pipeline có buffering/độ trễ riêng; không dùng log count làm oracl
 
 ## 6. Ranh giới vận hành
 
-Overlay `compose.observability.yaml` merge với base bằng project `project3-monitoring-demo`; Compose base và Console research stack không đổi, research stack không tự được scrape. Prometheus `v3.15.0` và Grafana `12.4.11` được pin; UI chỉ bind loopback (`19090`, `13000`). Named volumes tách riêng theo project. Prometheus retention đặt 24h và 512MB block-size budget; WAL có thể làm volume dùng nhiều hơn con số retention size. Prometheus và Grafana có memory limit 512 MiB mỗi service; log rotation là 10 MiB × 3 file/service. Đây là ngân sách cấu hình, chưa đo thực tế. Grafana admin password đọc từ Compose secret file cục bộ; không commit credentials. Redis/Nginx và logs nội bộ không thuộc allowlist logs ban đầu. Chi tiết credentials, storage, cleanup và giới hạn file secret nằm trong [runbook](RUNBOOK.md); không mount socket vào Grafana/app hay expose daemon TCP. P2-03 runtime result và giới hạn hiện hành được ghi trong [sổ task P2](PHASE2_PLAN.md) và [checkpoint](../context/SESSION_CHECKPOINT.md).
+Overlay `compose.observability.yaml` merge với base bằng project `project3-monitoring-demo`; P2-03A dự kiến chỉ gắn shared network vào Prometheus và các service API/backend allowlist của opt-in research case, không đổi base Compose hay traffic path. Prometheus `v3.15.0` và Grafana `12.4.11` được pin; UI chỉ bind loopback (`19090`, `13000`). Named volumes tách riêng theo project; TSDB giữ scrape samples trong retention 24h sau khi case kết thúc. Prometheus đặt 512MB block budget, nhưng WAL có thể làm volume dùng nhiều hơn; memory limit là 512 MiB/service; log rotation 10 MiB × 3/service. Đây là cấu hình, chưa đo thực tế. Grafana admin password đọc từ Compose secret file; không commit credentials. Không mount Docker socket vào Prometheus/Grafana hoặc expose daemon TCP. Chi tiết ownership/cleanup ở [runbook](RUNBOOK.md); trạng thái/evidence ở [sổ P2](PHASE2_PLAN.md) và [checkpoint](../context/SESSION_CHECKPOINT.md).
 
 ## 7. Tham chiếu và trạng thái
 
-Đối chiếu image [Prometheus `v3.15.0`](https://hub.docker.com/r/prom/prometheus/tags?name=v3.15.0) và [Grafana `12.4.11`](https://hub.docker.com/r/grafana/grafana/tags/); versioned sources gồm [Prometheus Dockerfile](https://github.com/prometheus/prometheus/blob/v3.15.0/Dockerfile), [Grafana Dockerfile](https://raw.githubusercontent.com/grafana/grafana/v12.4.11/Dockerfile) và [Grafana release](https://github.com/grafana/grafana/releases/tag/v12.4.11). Grafana Dockerfile cài `curl`; Prometheus image dùng BusyBox base cho healthcheck `wget`; Nginx Alpine image cũng dựa trên Alpine/BusyBox. Đây là đối chiếu source, không phải chạy executable trong image. Cấu hình đối chiếu [Prometheus scrape/retention](https://prometheus.io/docs/prometheus/latest/configuration/configuration/), [Prometheus storage/WAL](https://prometheus.io/docs/prometheus/latest/storage/) và [Grafana provisioning](https://grafana.com/docs/grafana/latest/administration/provisioning/). Tags được pin; actual image IDs/digests, Prometheus config validation bằng `promtool` trong pinned image, scrape/runtime và Grafana dashboard được ghi ở bằng chứng P2-03 G2. Pipeline tương lai dùng [Alloy Docker source](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.docker/), [Loki labels](https://grafana.com/docs/loki/latest/get-started/labels/cardinality/), [Loki filesystem](https://grafana.com/docs/loki/latest/operations/storage/filesystem/) và [Loki retention](https://grafana.com/docs/loki/latest/operations/storage/retention/). Task/gate ở [kế hoạch P2](PHASE2_PLAN.md).
+Đối chiếu image [Prometheus `v3.15.0`](https://hub.docker.com/r/prom/prometheus/tags?name=v3.15.0) và [Grafana `12.4.11`](https://hub.docker.com/r/grafana/grafana/tags/); versioned sources gồm [Prometheus Dockerfile](https://github.com/prometheus/prometheus/blob/v3.15.0/Dockerfile), [Grafana Dockerfile](https://raw.githubusercontent.com/grafana/grafana/v12.4.11/Dockerfile) và [Grafana release](https://github.com/grafana/grafana/releases/tag/v12.4.11). Cấu hình đối chiếu [Prometheus scrape/file SD](https://prometheus.io/docs/prometheus/latest/configuration/configuration/), [Prometheus file-based service discovery guide](https://prometheus.io/docs/guides/file-sd/), [Prometheus storage/WAL](https://prometheus.io/docs/prometheus/latest/storage/) và [Grafana provisioning](https://grafana.com/docs/grafana/latest/administration/provisioning/). `file_sd` cần refresh interval rõ để runner đăng ký target trước workload ngắn. Tags được pin; actual image IDs/digests, validator Prometheus, scrape/runtime và dashboard UI được ghi ở evidence P2-03 G2. Pipeline logs dùng [Alloy Docker source](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.docker/), [Loki labels](https://grafana.com/docs/loki/latest/get-started/labels/cardinality/) và [Loki retention](https://grafana.com/docs/loki/latest/operations/storage/retention/). Task/gate ở [registry P2](PHASE2_PLAN.md).

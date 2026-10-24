@@ -1,6 +1,6 @@
 # Học monitoring từ prototype rate limiter
 
-Mục tiêu là tự giải thích và kiểm tra được pipeline monitoring trước bảo vệ, đồng thời có nền cho đồ án tốt nghiệp. **P2-01–P2-03 đã triển khai/kiểm tra metrics, stack Prometheus/Grafana và dashboard cố định; Alloy/Loki chưa làm. Console có request mẫu tới đúng stack, còn tích hợp demo tải riêng P2-03A mới là đề xuất. Chưa có xác nhận người học hoàn thành các nội dung dưới đây.** Task/gate ở [kế hoạch P2](PHASE2_PLAN.md), baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), thiết kế ở [DESIGN.md](DESIGN.md), thao tác được cấp phép ở [RUNBOOK.md](RUNBOOK.md); quy tắc đo nghiên cứu ở [readiness](../experiments/PROTOCOL_READINESS.md).
+Mục tiêu là tự giải thích và kiểm tra được pipeline monitoring trước bảo vệ, đồng thời có nền cho đồ án tốt nghiệp. **P2-01–P2-03 đã kiểm tra metrics và Grafana fixed stack; Alloy/Loki chưa làm. Nút Console `Gửi một request mẫu` đi vào fixed stack; `Chạy benchmark` dùng research project riêng và hiện chưa được scrape. P2-03A đề xuất opt-in scrape cho chính run đó, chưa triển khai/cấp quyền. Chưa có xác nhận người học hoàn thành các nội dung dưới đây.** Task/gate ở [kế hoạch P2](PHASE2_PLAN.md), baseline ở [kế hoạch chung](../REMAINING_WORK_PLAN.md), thiết kế ở [DESIGN.md](DESIGN.md), thao tác được cấp phép ở [RUNBOOK.md](RUNBOOK.md); quy tắc đo nghiên cứu ở [readiness](../experiments/PROTOCOL_READINESS.md).
 
 ## 1. Mạch học gắn với bài toán
 
@@ -17,7 +17,7 @@ Chỉ người học xác nhận cột cuối bằng lời giải/thao tác th�
 | L1 — nguồn dữ liệu | P2-01 | Theo một request từ API tới backend; chỉ chính xác nơi tăng requests, rejected, attempts, arrivals và success | Chưa xác nhận |
 | L2 — metric types/labels | P2-01/P2-02 | Counter khác gauge thế nào? Khi restart thì sao? Vì sao client ID làm tăng số series? | Chưa xác nhận |
 | L3 — scrape và PromQL | P2-03 | Đọc `up`, viết rate theo API, tổng reject/s; giải thích vì sao rate trước sum và thiếu mẫu khác 0 | Chưa xác nhận |
-| L4 — dashboard kể chuyện | P2-03/P2-03A/P2-06 | Dùng Console gửi traffic vào stack cố định; chỉ ra request, 429, backend overload và time range; phân biệt quan sát với giả thuyết | Chưa xác nhận |
+| L4 — dashboard kể chuyện | P2-03/P2-03A/P2-06 | Chọn riêng fixed job hoặc Console research job; tìm API/backend series của cùng run và đúng UTC range; phân biệt scrape với kết luận | Chưa xác nhận |
 | L5 — logs và pipeline | P2-04/P2-05 | Từ stdout qua Alloy tới Loki; viết query theo service và message; giải thích indexed label so với JSON field | Chưa xác nhận |
 | L6 — chẩn đoán | P2-05/P2-07 nếu làm | Vì sao API UP khi Redis lỗi? Phân biệt lỗi app, lỗi dependency và lỗi telemetry | Chưa xác nhận |
 | L7 — vận hành/tái lập | P2-08 | Dựng bằng config repo, kiểm tra state/retention, dừng đúng project và giải thích quyền socket | Chưa xác nhận |
