@@ -3,7 +3,9 @@
 
 import importlib.util
 import json
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -81,6 +83,26 @@ class RendererTest(unittest.TestCase):
                                      "--output", str(output), "--instances", "2"], capture_output=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(marker.read_text(), "safe")
+
+    def test_fixed_monitoring_stack_keeps_apps_on_default_network(self):
+        root = SCRIPT.parent.parent
+        with tempfile.TemporaryDirectory() as temp:
+            secret = Path(temp) / "grafana-password"
+            secret.write_text("test-only")
+            env = {**os.environ, "GRAFANA_ADMIN_PASSWORD_FILE": str(secret)}
+            result = subprocess.run([
+                "docker", "compose", "-p", "project3-monitoring-test",
+                "-f", str(root / "compose.yaml"), "-f", str(root / "compose.observability.yaml"),
+                "config", "--format", "json",
+            ], cwd=root, env=env, check=True, capture_output=True, text=True)
+        services = json.loads(result.stdout)["services"]
+        for name in ("api1", "api2", "backend", "redis", "nginx"):
+            self.assertIn("default", services[name]["networks"])
+        for name, alias in (("api1", "fixed-api1"), ("api2", "fixed-api2"),
+                            ("backend", "fixed-backend")):
+            self.assertEqual(set(services[name]["networks"]), {"default"})
+            self.assertIn(alias, services[name]["networks"]["default"]["aliases"])
+        self.assertEqual(set(services["prometheus"]["networks"]), {"default", "monitoring-scrape"})
 
 
 if __name__ == "__main__":

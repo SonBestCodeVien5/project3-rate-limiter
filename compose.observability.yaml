@@ -10,17 +10,17 @@ services:
   backend:
     logging: *local-logs
     networks:
-      monitoring-scrape:
+      default:
         aliases: [fixed-backend]
   api1:
     logging: *local-logs
     networks:
-      monitoring-scrape:
+      default:
         aliases: [fixed-api1]
   api2:
     logging: *local-logs
     networks:
-      monitoring-scrape:
+      default:
         aliases: [fixed-api2]
   nginx:
     logging: *local-logs
