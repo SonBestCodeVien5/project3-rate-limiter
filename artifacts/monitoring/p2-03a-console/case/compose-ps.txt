@@ -1,0 +1,6 @@
+NAME                              IMAGE                           COMMAND                  SERVICE   CREATED         STATUS                   PORTS
+project3-research-lab-api1-1      project3-research-lab-api1      "/server"                api1      8 seconds ago   Up 4 seconds (healthy)   8080/tcp
+project3-research-lab-api2-1      project3-research-lab-api2      "/server"                api2      8 seconds ago   Up 4 seconds (healthy)   8080/tcp
+project3-research-lab-backend-1   project3-research-lab-backend   "/server"                backend   8 seconds ago   Up 6 seconds (healthy)   8080/tcp
+project3-research-lab-nginx-1     nginx:1.28.0-alpine             "/docker-entrypoint.…"   nginx     8 seconds ago   Up 1 second              80/tcp, 127.0.0.1:18080->8080/tcp
+project3-research-lab-redis-1     redis:7.4.2-alpine              "docker-entrypoint.s…"   redis     8 seconds ago   Up 6 seconds (healthy)   6379/tcp

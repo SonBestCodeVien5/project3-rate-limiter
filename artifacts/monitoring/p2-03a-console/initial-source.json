@@ -1,0 +1,19 @@
+{
+  "revision": "507257e58e580b3c28c39cd26cd50ccdf69ab301",
+  "working_tree": "",
+  "inspected_utc": "2026-10-24T14:16:39.146813+00:00",
+  "runtime_initial": {
+    "running_containers": 0,
+    "console_running": false,
+    "loadgen_running": false,
+    "relevant_ports": "free",
+    "preserved_volumes": [
+      "project3-monitoring-demo_grafana-data",
+      "project3-monitoring-demo_prometheus-data"
+    ],
+    "credentials": "existing local secret reused; content excluded",
+    "docker": "29.3.1",
+    "compose": "v5.1.1"
+  },
+  "inspection_limit": "Docker/socket and ss required escalation; initial sandbox probes were denied; read-only escalation succeeded"
+}

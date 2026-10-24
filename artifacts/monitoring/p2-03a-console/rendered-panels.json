@@ -1,0 +1,47 @@
+[
+  {
+    "mode": "fixed",
+    "url": "http://127.0.0.1:13000/d/project3-monitoring-demo/overview?var-job=project3-demo&var-rate_window=20s&from=now-5m&to=now",
+    "seen": [
+      {
+        "id": 1,
+        "title": "Target scrape được (1 = có scrape thành công)",
+        "visible": true
+      },
+      {
+        "id": 2,
+        "title": "Request nhận tại API (/s)",
+        "visible": true
+      },
+      {
+        "id": 3,
+        "title": "Limiter: quota reject và lỗi (/s)",
+        "visible": true
+      },
+      {
+        "id": 4,
+        "title": "Request API gửi tới backend (/s)",
+        "visible": true
+      },
+      {
+        "id": 5,
+        "title": "Backend arrivals và service thành công (/s)",
+        "visible": true
+      },
+      {
+        "id": 6,
+        "title": "Backend overload (/s)",
+        "visible": true
+      },
+      {
+        "id": 7,
+        "title": "API backend errors (/s)",
+        "visible": true
+      }
+    ],
+    "queryResponses": 14,
+    "hasNoData": false,
+    "hasQueryError": false,
+    "errors": []
+  }
+]

@@ -1,0 +1,63 @@
+Skip to main content
+Grafana
+
+Home
+
+Bookmarks
+
+Starred
+
+Dashboards
+
+Explore
+
+Drilldown
+
+Alerting
+
+Connections
+
+Administration
+
+Dashboards
+Project 3 Monitoring
+Project 3 — demo monitoring · dữ liệu minh họa mới
+Search...
+ctrl+k
+Edit
+Export 
+Share
+Last 5 minutes
+Refresh
+5s
+Nguồn telemetry
+project3-demo
+Cửa sổ rate
+20s
+Target scrape được (1 = có scrape thành công)
+api1
+api2
+backend
+Request nhận tại API (/s)
+api1
+api2
+Limiter: quota reject và lỗi (/s)
+api1 quota reject
+api2 quota reject
+api1 limiter error
+api2 limiter error
+api1 fail-open
+api2 fail-open
+api1 fail-closed
+api2 fail-closed
+Request API gửi tới backend (/s)
+api1
+api2
+Backend arrivals và service thành công (/s)
+backend arrivals
+backend success
+Backend overload (/s)
+backend overload
+API backend errors (/s)
+api1
+api2

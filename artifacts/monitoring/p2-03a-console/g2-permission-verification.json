@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-24T15:00:29.786981+00:00",
+  "source_revision": "b4b3f3c15d28209a6b3892a0e36f538058dd8d39",
+  "manifest_mode": "0o644",
+  "manifest_uid": 1000,
+  "prometheus_readable": true,
+  "test_manifest_deregistered": true,
+  "active_manifest_absent": true,
+  "scope": "G2 file publication/read permission only; .permission-check does not match *.json file_sd; no scrape registration/workload/retry",
+  "actual_load_attempts": 1,
+  "actual_loadgen_starts": 0
+}

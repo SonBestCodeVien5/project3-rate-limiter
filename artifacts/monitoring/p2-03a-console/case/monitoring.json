@@ -1,0 +1,44 @@
+{
+  "owner": "result-custom-1",
+  "registered_at": "2026-10-24T14:57:23.430Z",
+  "targets": [
+    {
+      "targets": [
+        "console-api1:8080"
+      ],
+      "labels": {
+        "service": "api1",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-api2:8080"
+      ],
+      "labels": {
+        "service": "api2",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-backend:8080"
+      ],
+      "labels": {
+        "service": "backend",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    }
+  ],
+  "services": [
+    "api1",
+    "api2",
+    "backend"
+  ],
+  "instances": 2,
+  "status": "incomplete",
+  "deregistered_at": "2026-10-24T14:57:23.553Z"
+}

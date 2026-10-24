@@ -1,0 +1,106 @@
+{
+  "folders": [
+    {
+      "title": "Project 3 Demo",
+      "uid": "project3-monitoring-demo",
+      "type": "dash-folder",
+      "url": "/dashboards/f/project3-monitoring-demo/project-3-demo",
+      "folderUid": null
+    },
+    {
+      "title": "Project 3 Monitoring",
+      "uid": "project3-monitoring-folder",
+      "type": "dash-folder",
+      "url": "/dashboards/f/project3-monitoring-folder/project-3-monitoring",
+      "folderUid": null
+    }
+  ],
+  "dashboards": [
+    {
+      "title": "Project 3 \u2014 demo monitoring \u00b7 d\u1eef li\u1ec7u minh h\u1ecda m\u1edbi",
+      "uid": "project3-monitoring-demo",
+      "type": "dash-db",
+      "url": "/d/project3-monitoring-demo/f67e2fb",
+      "folderUid": "project3-monitoring-folder"
+    }
+  ],
+  "datasources": [
+    {
+      "name": "Prometheus",
+      "uid": "project3-prometheus",
+      "type": "prometheus"
+    }
+  ],
+  "dashboard": {
+    "title": "Project 3 \u2014 demo monitoring \u00b7 d\u1eef li\u1ec7u minh h\u1ecda m\u1edbi",
+    "uid": "project3-monitoring-demo",
+    "folderUid": "project3-monitoring-folder",
+    "url": "/d/project3-monitoring-demo/f67e2fb",
+    "panel_count": 7,
+    "templating": [
+      {
+        "current": {
+          "text": "Fixed demo",
+          "value": "project3-demo"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Ngu\u1ed3n telemetry",
+        "multi": false,
+        "name": "job",
+        "options": [
+          {
+            "selected": true,
+            "text": "Fixed demo",
+            "value": "project3-demo"
+          },
+          {
+            "selected": false,
+            "text": "Console run",
+            "value": "project3-console-run"
+          }
+        ],
+        "query": "project3-demo,project3-console-run",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "20s \u00b7 fixed",
+          "value": "20s"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "C\u1eeda s\u1ed5 rate",
+        "multi": false,
+        "name": "rate_window",
+        "options": [
+          {
+            "selected": true,
+            "text": "20s \u00b7 fixed",
+            "value": "20s"
+          },
+          {
+            "selected": false,
+            "text": "4s \u00b7 Console",
+            "value": "4s"
+          }
+        ],
+        "query": "20s,4s",
+        "type": "custom"
+      }
+    ],
+    "panel_exprs": [
+      "up{job=\"$job\"}",
+      "sum by (service) (rate(project3_api_requests_total{job=\"$job\"}[$rate_window]))",
+      "sum by (service) (rate(project3_limiter_rejected_total{job=\"$job\"}[$rate_window]))",
+      "sum by (service) (rate(project3_limiter_errors_total{job=\"$job\"}[$rate_window]))",
+      "sum by (service) (rate(project3_limiter_fail_open_total{job=\"$job\"}[$rate_window]))",
+      "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"$job\"}[$rate_window]))",
+      "sum by (service) (rate(project3_api_backend_attempts_total{job=\"$job\"}[$rate_window]))",
+      "rate(project3_backend_arrivals_total{job=\"$job\",service=\"backend\"}[$rate_window])",
+      "rate(project3_backend_success_total{job=\"$job\",service=\"backend\"}[$rate_window])",
+      "rate(project3_backend_overload_total{job=\"$job\",service=\"backend\"}[$rate_window])",
+      "sum by (service) (rate(project3_api_backend_errors_total{job=\"$job\"}[$rate_window]))"
+    ]
+  }
+}

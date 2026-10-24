@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-24T14:57:01.778Z",
+  "valid": true,
+  "request": {
+    "case": "custom",
+    "repetitions": 1,
+    "mixed_rps": 0,
+    "monitoring": true,
+    "custom": {
+      "profile": "normal",
+      "mode": "redis",
+      "algorithm": "fixed-window",
+      "fail_policy": "closed",
+      "instances": 2,
+      "rps": 20,
+      "legitimate_rps": 20,
+      "duration_seconds": 30,
+      "limit": 20,
+      "window_ms": 1000,
+      "capacity": 20,
+      "refill_rate": 20,
+      "backend_capacity": 4,
+      "backend_service_ms": 50,
+      "burst_start_seconds": 2,
+      "burst_duration_seconds": 2,
+      "burst_rps": 200,
+      "concurrent_at_seconds": 2,
+      "concurrent_count": 100
+    }
+  }
+}

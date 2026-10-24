@@ -1,0 +1,504 @@
+{
+  "name": "project3-monitoring-demo",
+  "networks": {
+    "default": {
+      "name": "project3-monitoring-demo_default",
+      "ipam": {}
+    },
+    "monitoring-scrape": {
+      "name": "project3-monitoring-scrape",
+      "ipam": {}
+    }
+  },
+  "secrets": {
+    "grafana_admin_password": {
+      "name": "project3-monitoring-demo_grafana_admin_password",
+      "file": "/home/khanhson2005/projects/project3-rate-limiter/.secrets/grafana_admin_password"
+    }
+  },
+  "services": {
+    "api1": {
+      "build": {
+        "context": "/home/khanhson2005/projects/project3-rate-limiter",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "backend": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "redis": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "ALGORITHM": "fixed-window",
+        "BACKEND_TIMEOUT": "2s",
+        "BACKEND_URL": "http://backend:8080",
+        "CAPACITY": "20",
+        "FAIL_POLICY": "closed",
+        "INSTANCE_ID": "api-1",
+        "LIMIT": "20",
+        "MODE": "redis",
+        "NAMESPACE": "pilot",
+        "RATE": "20",
+        "REDIS_ADDR": "redis:6379",
+        "REDIS_TIMEOUT": "100ms",
+        "ROLE": "api",
+        "WINDOW": "1s"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-q",
+          "--spider",
+          "http://127.0.0.1:8080/healthz"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-file": "3",
+          "max-size": "10m"
+        }
+      },
+      "networks": {
+        "monitoring-scrape": {
+          "aliases": [
+            "fixed-api1"
+          ]
+        }
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "18081",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "api2": {
+      "build": {
+        "context": "/home/khanhson2005/projects/project3-rate-limiter",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "depends_on": {
+        "backend": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "redis": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "ALGORITHM": "fixed-window",
+        "BACKEND_TIMEOUT": "2s",
+        "BACKEND_URL": "http://backend:8080",
+        "CAPACITY": "20",
+        "FAIL_POLICY": "closed",
+        "INSTANCE_ID": "api-2",
+        "LIMIT": "20",
+        "MODE": "redis",
+        "NAMESPACE": "pilot",
+        "RATE": "20",
+        "REDIS_ADDR": "redis:6379",
+        "REDIS_TIMEOUT": "100ms",
+        "ROLE": "api",
+        "WINDOW": "1s"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-q",
+          "--spider",
+          "http://127.0.0.1:8080/healthz"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-file": "3",
+          "max-size": "10m"
+        }
+      },
+      "networks": {
+        "monitoring-scrape": {
+          "aliases": [
+            "fixed-api2"
+          ]
+        }
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "18082",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "backend": {
+      "build": {
+        "context": "/home/khanhson2005/projects/project3-rate-limiter",
+        "dockerfile": "Dockerfile"
+      },
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "BACKEND_CAPACITY": "10",
+        "BACKEND_SERVICE_TIME": "50ms",
+        "INSTANCE_ID": "backend-1",
+        "ROLE": "backend"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-q",
+          "--spider",
+          "http://127.0.0.1:8080/healthz"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-file": "3",
+          "max-size": "10m"
+        }
+      },
+      "networks": {
+        "monitoring-scrape": {
+          "aliases": [
+            "fixed-backend"
+          ]
+        }
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "18083",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "grafana": {
+      "command": null,
+      "depends_on": {
+        "prometheus": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "GF_SECURITY_ADMIN_PASSWORD__FILE": "/run/secrets/grafana_admin_password"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "curl",
+          "-fsS",
+          "http://127.0.0.1:3000/api/health"
+        ],
+        "timeout": "3s",
+        "interval": "10s",
+        "retries": 6,
+        "start_period": "10s"
+      },
+      "image": "grafana/grafana:12.4.11",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-file": "3",
+          "max-size": "10m"
+        }
+      },
+      "mem_limit": "536870912",
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 3000,
+          "published": "13000",
+          "protocol": "tcp"
+        }
+      ],
+      "secrets": [
+        {
+          "source": "grafana_admin_password",
+          "target": "/run/secrets/grafana_admin_password"
+        }
+      ],
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "grafana-data",
+          "target": "/var/lib/grafana",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/khanhson2005/projects/project3-rate-limiter/deploy/monitoring/grafana/provisioning",
+          "target": "/etc/grafana/provisioning",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/khanhson2005/projects/project3-rate-limiter/deploy/monitoring/grafana/dashboards",
+          "target": "/etc/grafana/dashboards",
+          "read_only": true,
+          "bind": {}
+        }
+      ]
+    },
+    "nginx": {
+      "command": null,
+      "depends_on": {
+        "api1": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "api2": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-q",
+          "--spider",
+          "http://127.0.0.1:8080/healthz"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "image": "nginx:1.28.0-alpine",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-file": "3",
+          "max-size": "10m"
+        }
+      },
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "8080",
+          "protocol": "tcp"
+        }
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/khanhson2005/projects/project3-rate-limiter/deploy/nginx.conf",
+          "target": "/etc/nginx/nginx.conf",
+          "read_only": true,
+          "bind": {}
+        }
+      ]
+    },
+    "prometheus": {
+      "command": [
+        "--config.file=/etc/prometheus/prometheus.yml",
+        "--storage.tsdb.path=/prometheus",
+        "--storage.tsdb.retention.time=24h",
+        "--storage.tsdb.retention.size=512MB"
+      ],
+      "depends_on": {
+        "api1": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "api2": {
+          "condition": "service_healthy",
+          "required": true
+        },
+        "backend": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-q",
+          "-O",
+          "/dev/null",
+          "http://127.0.0.1:9090/-/healthy"
+        ],
+        "timeout": "3s",
+        "interval": "10s",
+        "retries": 6,
+        "start_period": "10s"
+      },
+      "image": "prom/prometheus:v3.15.0",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-file": "3",
+          "max-size": "10m"
+        }
+      },
+      "mem_limit": "536870912",
+      "networks": {
+        "default": null,
+        "monitoring-scrape": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 9090,
+          "published": "19090",
+          "protocol": "tcp"
+        }
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/khanhson2005/projects/project3-rate-limiter/deploy/monitoring/prometheus.yml",
+          "target": "/etc/prometheus/prometheus.yml",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/khanhson2005/projects/project3-rate-limiter/artifacts/monitoring/console-targets",
+          "target": "/etc/prometheus/console-targets",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "volume",
+          "source": "prometheus-data",
+          "target": "/prometheus",
+          "volume": {}
+        }
+      ]
+    },
+    "redis": {
+      "command": [
+        "redis-server",
+        "--save",
+        "",
+        "--appendonly",
+        "no"
+      ],
+      "entrypoint": null,
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "redis-cli",
+          "ping"
+        ],
+        "timeout": "1s",
+        "interval": "2s",
+        "retries": 20
+      },
+      "image": "redis:7.4.2-alpine",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-file": "3",
+          "max-size": "10m"
+        }
+      },
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 6379,
+          "published": "16379",
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "volumes": {
+    "grafana-data": {
+      "name": "project3-monitoring-demo_grafana-data"
+    },
+    "prometheus-data": {
+      "name": "project3-monitoring-demo_prometheus-data"
+    }
+  },
+  "x-api": {
+    "build": ".",
+    "depends_on": {
+      "backend": {
+        "condition": "service_healthy"
+      },
+      "redis": {
+        "condition": "service_healthy"
+      }
+    },
+    "environment": {
+      "ALGORITHM": "fixed-window",
+      "BACKEND_TIMEOUT": "2s",
+      "BACKEND_URL": "http://backend:8080",
+      "CAPACITY": "20",
+      "FAIL_POLICY": "closed",
+      "LIMIT": "20",
+      "MODE": "redis",
+      "NAMESPACE": "pilot",
+      "RATE": "20",
+      "REDIS_ADDR": "redis:6379",
+      "REDIS_TIMEOUT": "100ms",
+      "ROLE": "api",
+      "WINDOW": "1s"
+    },
+    "healthcheck": {
+      "interval": "2s",
+      "retries": 20,
+      "test": [
+        "CMD",
+        "wget",
+        "-q",
+        "--spider",
+        "http://127.0.0.1:8080/healthz"
+      ],
+      "timeout": "1s"
+    }
+  }
+}

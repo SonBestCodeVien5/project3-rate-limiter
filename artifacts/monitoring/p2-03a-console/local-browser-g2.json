@@ -1,0 +1,10 @@
+{
+  "checked_utc": "2026-10-24T14:51:11.298Z",
+  "errors": [],
+  "folderText": "Skip to main content\nGrafana\n\nHome\n\nBookmarks\n\nStarred\n\nDashboards\n\nExplore\n\nDrilldown\n\nAlerting\n\nConnections\n\nAdministration\n\nDashboards\nProject 3 Monitoring\nSearch...\nctrl+k\nProject 3 Monitoring\nFolder actions\nNew\nManage folder dashboards and permissions\nDashboards\nPanels\nAlert rules\nFilter by tag\nStarred\nSort\nName\nTags\nProject 3 — demo monitoring · dữ liệu minh họa mới\ndemo\nmonitoring\nproject3",
+  "form": {
+    "monitoring": 1,
+    "runText": "Chạy benchmark"
+  },
+  "mcp_failure": "browser MCP stalled; local Playwright used; no workload submitted"
+}

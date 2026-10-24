@@ -1,0 +1,314 @@
+{
+  "utc": "2026-10-24T15:03:22.453570+00:00",
+  "source_revision": "30fb2234345a29650428f8e994f5cd2029c6458b",
+  "working_tree": " M README.md\n M docs/DEMO_SCRIPT.md\n M docs/README.md\n M docs/context/PROJECT_BRIEF.md\n M docs/monitoring/LEARNING_GUIDE.md\n M docs/monitoring/PHASE2_PLAN.md\n",
+  "monitoring_services": [
+    {
+      "Command": "\"/server\"",
+      "CreatedAt": "2026-10-24 22:03:11 +0700 +07",
+      "ExitCode": 0,
+      "Health": "healthy",
+      "ID": "663fb5cc9be0",
+      "Image": "project3-monitoring-demo-api1",
+      "Labels": "com.docker.compose.version=5.1.1,com.docker.compose.config-hash=cbe2bc197680091ed0f23d6d5c1b3d4e78da7ff006b67e4d4c4fe9b5d9765157,com.docker.compose.container-number=1,com.docker.compose.depends_on=redis:service_healthy:false,backend:service_healthy:false,com.docker.compose.image=sha256:8cb5c01837592cc837c0056acae04f9070e51fe385358c204fba3a93f4267c5b,com.docker.compose.oneoff=False,com.docker.compose.project=project3-monitoring-demo,com.docker.compose.project.config_files=/home/khanhson2005/projects/project3-rate-limiter/compose.yaml,/home/khanhson2005/projects/project3-rate-limiter/compose.observability.yaml,com.docker.compose.project.working_dir=/home/khanhson2005/projects/project3-rate-limiter,com.docker.compose.replace=api1-1,com.docker.compose.service=api1",
+      "LocalVolumes": "0",
+      "Mounts": "",
+      "Name": "project3-monitoring-demo-api1-1",
+      "Names": "project3-monitoring-demo-api1-1",
+      "Networks": "project3-monitoring-demo_default",
+      "Ports": "127.0.0.1:18081->8080/tcp",
+      "Project": "project3-monitoring-demo",
+      "Publishers": [
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 8080,
+          "PublishedPort": 18081,
+          "Protocol": "tcp"
+        }
+      ],
+      "RunningFor": "11 seconds ago",
+      "Service": "api1",
+      "Size": "0B",
+      "State": "running",
+      "Status": "Up 6 seconds (healthy)"
+    },
+    {
+      "Command": "\"/server\"",
+      "CreatedAt": "2026-10-24 22:03:11 +0700 +07",
+      "ExitCode": 0,
+      "Health": "healthy",
+      "ID": "272da800ef2e",
+      "Image": "project3-monitoring-demo-api2",
+      "Labels": "com.docker.compose.config-hash=68578e3b778598ed012c157f042bfc428acdae1fadea43880402239988696ca7,com.docker.compose.container-number=1,com.docker.compose.image=sha256:453a139592511004a2321711e4be8c4fea60fd10a8b8d6f405f2bc4dfa3e2f57,com.docker.compose.oneoff=False,com.docker.compose.project=project3-monitoring-demo,com.docker.compose.project.config_files=/home/khanhson2005/projects/project3-rate-limiter/compose.yaml,/home/khanhson2005/projects/project3-rate-limiter/compose.observability.yaml,com.docker.compose.replace=api2-1,com.docker.compose.version=5.1.1,com.docker.compose.depends_on=backend:service_healthy:false,redis:service_healthy:false,com.docker.compose.project.working_dir=/home/khanhson2005/projects/project3-rate-limiter,com.docker.compose.service=api2",
+      "LocalVolumes": "0",
+      "Mounts": "",
+      "Name": "project3-monitoring-demo-api2-1",
+      "Names": "project3-monitoring-demo-api2-1",
+      "Networks": "project3-monitoring-demo_default",
+      "Ports": "127.0.0.1:18082->8080/tcp",
+      "Project": "project3-monitoring-demo",
+      "Publishers": [
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 8080,
+          "PublishedPort": 18082,
+          "Protocol": "tcp"
+        }
+      ],
+      "RunningFor": "11 seconds ago",
+      "Service": "api2",
+      "Size": "0B",
+      "State": "running",
+      "Status": "Up 6 seconds (healthy)"
+    },
+    {
+      "Command": "\"/server\"",
+      "CreatedAt": "2026-10-24 22:03:10 +0700 +07",
+      "ExitCode": 0,
+      "Health": "healthy",
+      "ID": "7c5e8deb126d",
+      "Image": "project3-monitoring-demo-backend",
+      "Labels": "com.docker.compose.container-number=1,com.docker.compose.image=sha256:ffcbb11aed32d684e92b6c167a71c89f89383baab2b1a89c7696b0bcf86e3308,com.docker.compose.oneoff=False,com.docker.compose.project=project3-monitoring-demo,com.docker.compose.project.config_files=/home/khanhson2005/projects/project3-rate-limiter/compose.yaml,/home/khanhson2005/projects/project3-rate-limiter/compose.observability.yaml,com.docker.compose.project.working_dir=/home/khanhson2005/projects/project3-rate-limiter,com.docker.compose.replace=backend-1,com.docker.compose.service=backend,com.docker.compose.config-hash=bdc4e231db2a549631d8a920bac22021523330d273600a950c96438229bad72e,com.docker.compose.depends_on=,com.docker.compose.version=5.1.1",
+      "LocalVolumes": "0",
+      "Mounts": "",
+      "Name": "project3-monitoring-demo-backend-1",
+      "Names": "project3-monitoring-demo-backend-1",
+      "Networks": "project3-monitoring-demo_default",
+      "Ports": "127.0.0.1:18083->8080/tcp",
+      "Project": "project3-monitoring-demo",
+      "Publishers": [
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 8080,
+          "PublishedPort": 18083,
+          "Protocol": "tcp"
+        }
+      ],
+      "RunningFor": "12 seconds ago",
+      "Service": "backend",
+      "Size": "0B",
+      "State": "running",
+      "Status": "Up 8 seconds (healthy)"
+    },
+    {
+      "Command": "\"/run.sh\"",
+      "CreatedAt": "2026-10-24 21:29:57 +0700 +07",
+      "ExitCode": 0,
+      "Health": "healthy",
+      "ID": "86acfe9546c2",
+      "Image": "grafana/grafana:12.4.11",
+      "Labels": "com.docker.compose.config-hash=ffa6bc9ac3084f63b8ff258a4cee803ed9550982957b53bca7638444dc09e594,com.docker.compose.container-number=1,com.docker.compose.depends_on=prometheus:service_healthy:false,com.docker.compose.project=project3-monitoring-demo,com.docker.compose.service=grafana,com.docker.compose.image=sha256:3ea272e5cab64a4a62240c682e2c62433b25614d956d44c299a10cb6994f6f2e,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=/home/khanhson2005/projects/project3-rate-limiter/compose.yaml,/home/khanhson2005/projects/project3-rate-limiter/compose.observability.yaml,com.docker.compose.project.working_dir=/home/khanhson2005/projects/project3-rate-limiter,com.docker.compose.version=5.1.1,maintainer=Grafana Labs <hello@grafana.com>,org.opencontainers.image.source=https://github.com/grafana/grafana",
+      "LocalVolumes": "1",
+      "Mounts": "/home/khanhson\u2026,/home/khanhson\u2026,/home/khanhson\u2026,project3-monit\u2026",
+      "Name": "project3-monitoring-demo-grafana-1",
+      "Names": "project3-monitoring-demo-grafana-1",
+      "Networks": "project3-monitoring-demo_default",
+      "Ports": "127.0.0.1:13000->3000/tcp",
+      "Project": "project3-monitoring-demo",
+      "Publishers": [
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 3000,
+          "PublishedPort": 13000,
+          "Protocol": "tcp"
+        }
+      ],
+      "RunningFor": "33 minutes ago",
+      "Service": "grafana",
+      "Size": "0B",
+      "State": "running",
+      "Status": "Up 33 minutes (healthy)"
+    },
+    {
+      "Command": "\"/docker-entrypoint.\u2026\"",
+      "CreatedAt": "2026-10-24 22:03:12 +0700 +07",
+      "ExitCode": 0,
+      "Health": "healthy",
+      "ID": "a589a0189908",
+      "Image": "nginx:1.28.0-alpine",
+      "Labels": "com.docker.compose.replace=nginx-1,com.docker.compose.service=nginx,com.docker.compose.version=5.1.1,com.docker.compose.config-hash=0ec91fef6288adf770748bd4c445bd8189bb65b6ed15f33c912d13cfce2f6703,com.docker.compose.oneoff=False,com.docker.compose.project.working_dir=/home/khanhson2005/projects/project3-rate-limiter,maintainer=NGINX Docker Maintainers <docker-maint@nginx.com>,com.docker.compose.container-number=1,com.docker.compose.depends_on=api1:service_healthy:false,api2:service_healthy:false,com.docker.compose.image=sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284,com.docker.compose.project=project3-monitoring-demo,com.docker.compose.project.config_files=/home/khanhson2005/projects/project3-rate-limiter/compose.yaml,/home/khanhson2005/projects/project3-rate-limiter/compose.observability.yaml",
+      "LocalVolumes": "0",
+      "Mounts": "/home/khanhson\u2026",
+      "Name": "project3-monitoring-demo-nginx-1",
+      "Names": "project3-monitoring-demo-nginx-1",
+      "Networks": "project3-monitoring-demo_default",
+      "Ports": "80/tcp, 127.0.0.1:8080->8080/tcp",
+      "Project": "project3-monitoring-demo",
+      "Publishers": [
+        {
+          "URL": "",
+          "TargetPort": 80,
+          "PublishedPort": 0,
+          "Protocol": "tcp"
+        },
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 8080,
+          "PublishedPort": 8080,
+          "Protocol": "tcp"
+        }
+      ],
+      "RunningFor": "10 seconds ago",
+      "Service": "nginx",
+      "Size": "0B",
+      "State": "running",
+      "Status": "Up 3 seconds (healthy)"
+    },
+    {
+      "Command": "\"/bin/prometheus --c\u2026\"",
+      "CreatedAt": "2026-10-24 21:29:57 +0700 +07",
+      "ExitCode": 0,
+      "Health": "healthy",
+      "ID": "1e2bcb4bcd72",
+      "Image": "prom/prometheus:v3.15.0",
+      "Labels": "org.opencontainers.image.documentation=https://prometheus.io/docs,org.opencontainers.image.vendor=Prometheus,com.docker.compose.depends_on=backend:service_healthy:false,api1:service_healthy:false,api2:service_healthy:false,org.opencontainers.image.source=https://github.com/prometheus/prometheus,org.opencontainers.image.url=https://github.com/prometheus/prometheus,com.docker.compose.project=project3-monitoring-demo,com.docker.compose.project.config_files=/home/khanhson2005/projects/project3-rate-limiter/compose.yaml,/home/khanhson2005/projects/project3-rate-limiter/compose.observability.yaml,com.docker.compose.project.working_dir=/home/khanhson2005/projects/project3-rate-limiter,com.docker.compose.service=prometheus,org.opencontainers.image.licenses=Apache License 2.0,org.opencontainers.image.title=Prometheus,com.docker.compose.config-hash=2cd8edad5dea0ff98927d62a26974a13cd20924b1be1126a752b104973dd5d43,com.docker.compose.image=sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e,com.docker.compose.oneoff=False,com.docker.compose.version=5.1.1,org.opencontainers.image.authors=The Prometheus Authors,com.docker.compose.container-number=1,io.prometheus.image.variant=busybox,maintainer=The Prometheus Authors <prometheus-developers@googlegroups.com>,org.opencontainers.image.description=The Prometheus monitoring system and time series database",
+      "LocalVolumes": "1",
+      "Mounts": "/home/khanhson\u2026,project3-monit\u2026,/home/khanhson\u2026",
+      "Name": "project3-monitoring-demo-prometheus-1",
+      "Names": "project3-monitoring-demo-prometheus-1",
+      "Networks": "project3-monitoring-demo_default,project3-monitoring-scrape",
+      "Ports": "127.0.0.1:19090->9090/tcp",
+      "Project": "project3-monitoring-demo",
+      "Publishers": [
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 9090,
+          "PublishedPort": 19090,
+          "Protocol": "tcp"
+        }
+      ],
+      "RunningFor": "33 minutes ago",
+      "Service": "prometheus",
+      "Size": "0B",
+      "State": "running",
+      "Status": "Up 33 minutes (healthy)"
+    },
+    {
+      "Command": "\"docker-entrypoint.s\u2026\"",
+      "CreatedAt": "2026-10-24 21:29:57 +0700 +07",
+      "ExitCode": 0,
+      "Health": "healthy",
+      "ID": "8be2ce053153",
+      "Image": "redis:7.4.2-alpine",
+      "Labels": "com.docker.compose.oneoff=False,com.docker.compose.project=project3-monitoring-demo,com.docker.compose.project.config_files=/home/khanhson2005/projects/project3-rate-limiter/compose.yaml,/home/khanhson2005/projects/project3-rate-limiter/compose.observability.yaml,com.docker.compose.project.working_dir=/home/khanhson2005/projects/project3-rate-limiter,com.docker.compose.config-hash=b771d5d68aef4d7948b81ad25b1ce15a70798817d10dfefd399842e2a2a8463f,com.docker.compose.container-number=1,com.docker.compose.image=sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952,com.docker.compose.service=redis,com.docker.compose.version=5.1.1,com.docker.compose.depends_on=",
+      "LocalVolumes": "1",
+      "Mounts": "700b666091c693\u2026",
+      "Name": "project3-monitoring-demo-redis-1",
+      "Names": "project3-monitoring-demo-redis-1",
+      "Networks": "project3-monitoring-demo_default",
+      "Ports": "127.0.0.1:16379->6379/tcp",
+      "Project": "project3-monitoring-demo",
+      "Publishers": [
+        {
+          "URL": "127.0.0.1",
+          "TargetPort": 6379,
+          "PublishedPort": 16379,
+          "Protocol": "tcp"
+        }
+      ],
+      "RunningFor": "33 minutes ago",
+      "Service": "redis",
+      "Size": "0B",
+      "State": "running",
+      "Status": "Up 33 minutes (healthy)"
+    }
+  ],
+  "research_container_ids": [],
+  "targets": {
+    "status": "success",
+    "data": {
+      "activeTargets": [
+        {
+          "discoveredLabels": {
+            "__address__": "fixed-api1:8080",
+            "__always_scrape_classic_histograms__": "false",
+            "__convert_classic_histograms_to_nhcb__": "false",
+            "__metrics_path__": "/metrics/prometheus",
+            "__scheme__": "http",
+            "__scrape_interval__": "2s",
+            "__scrape_native_histograms__": "false",
+            "__scrape_timeout__": "1s",
+            "job": "project3-demo",
+            "service": "api1"
+          },
+          "labels": {
+            "instance": "fixed-api1:8080",
+            "job": "project3-demo",
+            "service": "api1"
+          },
+          "scrapePool": "project3-demo",
+          "scrapeUrl": "http://fixed-api1:8080/metrics/prometheus",
+          "globalUrl": "http://fixed-api1:8080/metrics/prometheus",
+          "lastError": "",
+          "lastScrape": "2026-10-24T15:03:21.137978485Z",
+          "lastScrapeDuration": 0.001034263,
+          "health": "up",
+          "scrapeInterval": "2s",
+          "scrapeTimeout": "1s"
+        },
+        {
+          "discoveredLabels": {
+            "__address__": "fixed-api2:8080",
+            "__always_scrape_classic_histograms__": "false",
+            "__convert_classic_histograms_to_nhcb__": "false",
+            "__metrics_path__": "/metrics/prometheus",
+            "__scheme__": "http",
+            "__scrape_interval__": "2s",
+            "__scrape_native_histograms__": "false",
+            "__scrape_timeout__": "1s",
+            "job": "project3-demo",
+            "service": "api2"
+          },
+          "labels": {
+            "instance": "fixed-api2:8080",
+            "job": "project3-demo",
+            "service": "api2"
+          },
+          "scrapePool": "project3-demo",
+          "scrapeUrl": "http://fixed-api2:8080/metrics/prometheus",
+          "globalUrl": "http://fixed-api2:8080/metrics/prometheus",
+          "lastError": "",
+          "lastScrape": "2026-10-24T15:03:21.704651192Z",
+          "lastScrapeDuration": 0.001482567,
+          "health": "up",
+          "scrapeInterval": "2s",
+          "scrapeTimeout": "1s"
+        },
+        {
+          "discoveredLabels": {
+            "__address__": "fixed-backend:8080",
+            "__always_scrape_classic_histograms__": "false",
+            "__convert_classic_histograms_to_nhcb__": "false",
+            "__metrics_path__": "/metrics/prometheus",
+            "__scheme__": "http",
+            "__scrape_interval__": "2s",
+            "__scrape_native_histograms__": "false",
+            "__scrape_timeout__": "1s",
+            "job": "project3-demo",
+            "service": "backend"
+          },
+          "labels": {
+            "instance": "fixed-backend:8080",
+            "job": "project3-demo",
+            "service": "backend"
+          },
+          "scrapePool": "project3-demo",
+          "scrapeUrl": "http://fixed-backend:8080/metrics/prometheus",
+          "globalUrl": "http://fixed-backend:8080/metrics/prometheus",
+          "lastError": "",
+          "lastScrape": "2026-10-24T15:03:21.570460575Z",
+          "lastScrapeDuration": 0.00167992,
+          "health": "up",
+          "scrapeInterval": "2s",
+          "scrapeTimeout": "1s"
+        }
+      ],
+      "droppedTargets": [],
+      "droppedTargetCounts": {
+        "project3-console-run": 0,
+        "project3-demo": 0
+      }
+    }
+  },
+  "active_manifest_absent": true
+}

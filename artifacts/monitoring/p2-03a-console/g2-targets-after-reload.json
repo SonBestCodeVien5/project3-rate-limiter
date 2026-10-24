@@ -1,0 +1,96 @@
+{
+  "status": "success",
+  "data": {
+    "activeTargets": [
+      {
+        "discoveredLabels": {
+          "__address__": "fixed-api2:8080",
+          "__always_scrape_classic_histograms__": "false",
+          "__convert_classic_histograms_to_nhcb__": "false",
+          "__metrics_path__": "/metrics/prometheus",
+          "__scheme__": "http",
+          "__scrape_interval__": "2s",
+          "__scrape_native_histograms__": "false",
+          "__scrape_timeout__": "1s",
+          "job": "project3-demo",
+          "service": "api2"
+        },
+        "labels": {
+          "instance": "fixed-api2:8080",
+          "job": "project3-demo",
+          "service": "api2"
+        },
+        "scrapePool": "project3-demo",
+        "scrapeUrl": "http://fixed-api2:8080/metrics/prometheus",
+        "globalUrl": "http://fixed-api2:8080/metrics/prometheus",
+        "lastError": "",
+        "lastScrape": "2026-10-24T14:56:39.704651192Z",
+        "lastScrapeDuration": 0.002257972,
+        "health": "up",
+        "scrapeInterval": "2s",
+        "scrapeTimeout": "1s"
+      },
+      {
+        "discoveredLabels": {
+          "__address__": "fixed-backend:8080",
+          "__always_scrape_classic_histograms__": "false",
+          "__convert_classic_histograms_to_nhcb__": "false",
+          "__metrics_path__": "/metrics/prometheus",
+          "__scheme__": "http",
+          "__scrape_interval__": "2s",
+          "__scrape_native_histograms__": "false",
+          "__scrape_timeout__": "1s",
+          "job": "project3-demo",
+          "service": "backend"
+        },
+        "labels": {
+          "instance": "fixed-backend:8080",
+          "job": "project3-demo",
+          "service": "backend"
+        },
+        "scrapePool": "project3-demo",
+        "scrapeUrl": "http://fixed-backend:8080/metrics/prometheus",
+        "globalUrl": "http://fixed-backend:8080/metrics/prometheus",
+        "lastError": "",
+        "lastScrape": "2026-10-24T14:56:39.570460575Z",
+        "lastScrapeDuration": 0.002560925,
+        "health": "up",
+        "scrapeInterval": "2s",
+        "scrapeTimeout": "1s"
+      },
+      {
+        "discoveredLabels": {
+          "__address__": "fixed-api1:8080",
+          "__always_scrape_classic_histograms__": "false",
+          "__convert_classic_histograms_to_nhcb__": "false",
+          "__metrics_path__": "/metrics/prometheus",
+          "__scheme__": "http",
+          "__scrape_interval__": "2s",
+          "__scrape_native_histograms__": "false",
+          "__scrape_timeout__": "1s",
+          "job": "project3-demo",
+          "service": "api1"
+        },
+        "labels": {
+          "instance": "fixed-api1:8080",
+          "job": "project3-demo",
+          "service": "api1"
+        },
+        "scrapePool": "project3-demo",
+        "scrapeUrl": "http://fixed-api1:8080/metrics/prometheus",
+        "globalUrl": "http://fixed-api1:8080/metrics/prometheus",
+        "lastError": "",
+        "lastScrape": "2026-10-24T14:56:39.137978485Z",
+        "lastScrapeDuration": 0.002721657,
+        "health": "up",
+        "scrapeInterval": "2s",
+        "scrapeTimeout": "1s"
+      }
+    ],
+    "droppedTargets": [],
+    "droppedTargetCounts": {
+      "project3-console-run": 0,
+      "project3-demo": 0
+    }
+  }
+}

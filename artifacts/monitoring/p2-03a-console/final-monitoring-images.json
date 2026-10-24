@@ -1,0 +1,152 @@
+[
+  {
+    "container": "/project3-monitoring-demo-nginx-1",
+    "service": "nginx",
+    "image_ref": "nginx:1.28.0-alpine",
+    "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+    "repo_digests": [
+      "nginx@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+    ],
+    "networks": {
+      "project3-monitoring-demo_default": {
+        "IPAddress": "172.20.0.6",
+        "Aliases": [
+          "project3-monitoring-demo-nginx-1",
+          "nginx"
+        ]
+      }
+    },
+    "state": "running",
+    "health": "healthy"
+  },
+  {
+    "container": "/project3-monitoring-demo-api2-1",
+    "service": "api2",
+    "image_ref": "project3-monitoring-demo-api2",
+    "image_id": "sha256:453a139592511004a2321711e4be8c4fea60fd10a8b8d6f405f2bc4dfa3e2f57",
+    "repo_digests": [
+      "project3-monitoring-demo-api2@sha256:453a139592511004a2321711e4be8c4fea60fd10a8b8d6f405f2bc4dfa3e2f57"
+    ],
+    "networks": {
+      "project3-monitoring-demo_default": {
+        "IPAddress": "172.20.0.4",
+        "Aliases": [
+          "project3-monitoring-demo-api2-1",
+          "api2",
+          "fixed-api2"
+        ]
+      }
+    },
+    "state": "running",
+    "health": "healthy"
+  },
+  {
+    "container": "/project3-monitoring-demo-api1-1",
+    "service": "api1",
+    "image_ref": "project3-monitoring-demo-api1",
+    "image_id": "sha256:8cb5c01837592cc837c0056acae04f9070e51fe385358c204fba3a93f4267c5b",
+    "repo_digests": [
+      "project3-monitoring-demo-api1@sha256:8cb5c01837592cc837c0056acae04f9070e51fe385358c204fba3a93f4267c5b"
+    ],
+    "networks": {
+      "project3-monitoring-demo_default": {
+        "IPAddress": "172.20.0.5",
+        "Aliases": [
+          "project3-monitoring-demo-api1-1",
+          "api1",
+          "fixed-api1"
+        ]
+      }
+    },
+    "state": "running",
+    "health": "healthy"
+  },
+  {
+    "container": "/project3-monitoring-demo-backend-1",
+    "service": "backend",
+    "image_ref": "project3-monitoring-demo-backend",
+    "image_id": "sha256:ffcbb11aed32d684e92b6c167a71c89f89383baab2b1a89c7696b0bcf86e3308",
+    "repo_digests": [
+      "project3-monitoring-demo-backend@sha256:ffcbb11aed32d684e92b6c167a71c89f89383baab2b1a89c7696b0bcf86e3308"
+    ],
+    "networks": {
+      "project3-monitoring-demo_default": {
+        "IPAddress": "172.20.0.2",
+        "Aliases": [
+          "project3-monitoring-demo-backend-1",
+          "backend",
+          "fixed-backend"
+        ]
+      }
+    },
+    "state": "running",
+    "health": "healthy"
+  },
+  {
+    "container": "/project3-monitoring-demo-grafana-1",
+    "service": "grafana",
+    "image_ref": "grafana/grafana:12.4.11",
+    "image_id": "sha256:3ea272e5cab64a4a62240c682e2c62433b25614d956d44c299a10cb6994f6f2e",
+    "repo_digests": [
+      "grafana/grafana@sha256:3ea272e5cab64a4a62240c682e2c62433b25614d956d44c299a10cb6994f6f2e"
+    ],
+    "networks": {
+      "project3-monitoring-demo_default": {
+        "IPAddress": "172.20.0.8",
+        "Aliases": [
+          "project3-monitoring-demo-grafana-1",
+          "grafana"
+        ]
+      }
+    },
+    "state": "running",
+    "health": "healthy"
+  },
+  {
+    "container": "/project3-monitoring-demo-prometheus-1",
+    "service": "prometheus",
+    "image_ref": "prom/prometheus:v3.15.0",
+    "image_id": "sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e",
+    "repo_digests": [
+      "prom/prometheus@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e"
+    ],
+    "networks": {
+      "project3-monitoring-demo_default": {
+        "IPAddress": "172.20.0.7",
+        "Aliases": [
+          "project3-monitoring-demo-prometheus-1",
+          "prometheus"
+        ]
+      },
+      "project3-monitoring-scrape": {
+        "IPAddress": "172.21.0.2",
+        "Aliases": [
+          "project3-monitoring-demo-prometheus-1",
+          "prometheus"
+        ]
+      }
+    },
+    "state": "running",
+    "health": "healthy"
+  },
+  {
+    "container": "/project3-monitoring-demo-redis-1",
+    "service": "redis",
+    "image_ref": "redis:7.4.2-alpine",
+    "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+    "repo_digests": [
+      "redis@sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+    ],
+    "networks": {
+      "project3-monitoring-demo_default": {
+        "IPAddress": "172.20.0.3",
+        "Aliases": [
+          "project3-monitoring-demo-redis-1",
+          "redis"
+        ]
+      }
+    },
+    "state": "running",
+    "health": "healthy"
+  }
+]

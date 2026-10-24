@@ -1,0 +1,4332 @@
+[
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "up{job=\"project3-demo\"}",
+          "legendFormat": "{{service}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "1A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854083469",
+      "to": "1792854383469"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: up{job=\"project3-demo\"}\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "up",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "__name__": "up",
+                      "instance": "fixed-api1:8080",
+                      "job": "project3-demo",
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "up",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "__name__": "up",
+                      "instance": "fixed-api2:8080",
+                      "job": "project3-demo",
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "up",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "__name__": "up",
+                      "instance": "fixed-backend:8080",
+                      "job": "project3-demo",
+                      "service": "backend"
+                    },
+                    "config": {
+                      "displayNameFromDS": "backend"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "rate(project3_backend_arrivals_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+          "legendFormat": "backend arrivals",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "5A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        },
+        {
+          "expr": "rate(project3_backend_success_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+          "legendFormat": "backend success",
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "5B",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854083469",
+      "to": "1792854383469"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: rate(project3_backend_arrivals_total{job=\"project3-demo\",service=\"backend\"}[20s])\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "instance": "fixed-backend:8080",
+                      "instance_id": "backend-1",
+                      "job": "project3-demo",
+                      "role": "backend",
+                      "service": "backend"
+                    },
+                    "config": {
+                      "displayNameFromDS": "backend arrivals"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "B": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "B",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: rate(project3_backend_success_total{job=\"project3-demo\",service=\"backend\"}[20s])\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "instance": "fixed-backend:8080",
+                      "instance_id": "backend-1",
+                      "job": "project3-demo",
+                      "role": "backend",
+                      "service": "backend"
+                    },
+                    "config": {
+                      "displayNameFromDS": "backend success"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "sum by (service) (rate(project3_api_requests_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "2A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854083469",
+      "to": "1792854383469"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_api_requests_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "4A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854083469",
+      "to": "1792854383469"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}} quota reject",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "3A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        },
+        {
+          "expr": "sum by (service) (rate(project3_limiter_errors_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}} limiter error",
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "3B",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        },
+        {
+          "expr": "sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}} fail-open",
+          "refId": "C",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "3C",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        },
+        {
+          "expr": "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}} fail-closed",
+          "refId": "D",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "3D",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854083469",
+      "to": "1792854383469"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1 quota reject"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2 quota reject"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "B": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "B",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_limiter_errors_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1 limiter error"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "B",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2 limiter error"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "C": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "C",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1 fail-open"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "C",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2 fail-open"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "D": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "D",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1 fail-closed"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "D",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2 fail-closed"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "rate(project3_backend_overload_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+          "legendFormat": "backend overload",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "6A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854083469",
+      "to": "1792854383469"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: rate(project3_backend_overload_total{job=\"project3-demo\",service=\"backend\"}[20s])\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "instance": "fixed-backend:8080",
+                      "instance_id": "backend-1",
+                      "job": "project3-demo",
+                      "role": "backend",
+                      "service": "backend"
+                    },
+                    "config": {
+                      "displayNameFromDS": "backend overload"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "7A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 1268
+        }
+      ],
+      "from": "1792854083469",
+      "to": "1792854383469"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "up{job=\"project3-demo\"}",
+          "legendFormat": "{{service}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "1A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854088624",
+      "to": "1792854388624"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: up{job=\"project3-demo\"}\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "up",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "__name__": "up",
+                      "instance": "fixed-api1:8080",
+                      "job": "project3-demo",
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "up",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "__name__": "up",
+                      "instance": "fixed-api2:8080",
+                      "job": "project3-demo",
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "up",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "__name__": "up",
+                      "instance": "fixed-backend:8080",
+                      "job": "project3-demo",
+                      "service": "backend"
+                    },
+                    "config": {
+                      "displayNameFromDS": "backend"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "sum by (service) (rate(project3_api_requests_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "2A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854088624",
+      "to": "1792854388624"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_api_requests_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}} quota reject",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "3A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        },
+        {
+          "expr": "sum by (service) (rate(project3_limiter_errors_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}} limiter error",
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "3B",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        },
+        {
+          "expr": "sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}} fail-open",
+          "refId": "C",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "3C",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        },
+        {
+          "expr": "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}} fail-closed",
+          "refId": "D",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "3D",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854088624",
+      "to": "1792854388624"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1 quota reject"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2 quota reject"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "B": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "B",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_limiter_errors_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1 limiter error"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "B",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2 limiter error"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "C": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "C",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1 fail-open"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "C",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2 fail-open"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "D": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "D",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1 fail-closed"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "D",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2 fail-closed"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "4A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854088624",
+      "to": "1792854388624"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "rate(project3_backend_arrivals_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+          "legendFormat": "backend arrivals",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "5A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        },
+        {
+          "expr": "rate(project3_backend_success_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+          "legendFormat": "backend success",
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "5B",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854088624",
+      "to": "1792854388624"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: rate(project3_backend_arrivals_total{job=\"project3-demo\",service=\"backend\"}[20s])\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "instance": "fixed-backend:8080",
+                      "instance_id": "backend-1",
+                      "job": "project3-demo",
+                      "role": "backend",
+                      "service": "backend"
+                    },
+                    "config": {
+                      "displayNameFromDS": "backend arrivals"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "B": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "B",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: rate(project3_backend_success_total{job=\"project3-demo\",service=\"backend\"}[20s])\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "instance": "fixed-backend:8080",
+                      "instance_id": "backend-1",
+                      "job": "project3-demo",
+                      "role": "backend",
+                      "service": "backend"
+                    },
+                    "config": {
+                      "displayNameFromDS": "backend success"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "rate(project3_backend_overload_total{job=\"project3-demo\",service=\"backend\"}[20s])",
+          "legendFormat": "backend overload",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "6A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 630
+        }
+      ],
+      "from": "1792854088624",
+      "to": "1792854388624"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: rate(project3_backend_overload_total{job=\"project3-demo\",service=\"backend\"}[20s])\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "instance": "fixed-backend:8080",
+                      "instance_id": "backend-1",
+                      "job": "project3-demo",
+                      "role": "backend",
+                      "service": "backend"
+                    },
+                    "config": {
+                      "displayNameFromDS": "backend overload"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "status": 200,
+    "request": {
+      "queries": [
+        {
+          "expr": "sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-demo\"}[20s]))",
+          "legendFormat": "{{service}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "project3-prometheus"
+          },
+          "exemplar": false,
+          "requestId": "7A",
+          "utcOffsetSec": 25200,
+          "interval": "",
+          "datasourceId": 1,
+          "intervalMs": 15000,
+          "maxDataPoints": 1268
+        }
+      ],
+      "from": "1792854088624",
+      "to": "1792854388624"
+    },
+    "response": {
+      "results": {
+        "A": {
+          "status": 200,
+          "frames": [
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "calculatedMinStep": 15000,
+                    "resultType": "matrix"
+                  },
+                  "executedQueryString": "Expr: sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-demo\"}[20s]))\nStep: 15s"
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api1"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api1"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            },
+            {
+              "schema": {
+                "refId": "A",
+                "meta": {
+                  "type": "timeseries-multi",
+                  "typeVersion": [
+                    0,
+                    1
+                  ],
+                  "custom": {
+                    "resultType": "matrix"
+                  }
+                },
+                "fields": [
+                  {
+                    "name": "Time",
+                    "type": "time",
+                    "typeInfo": {
+                      "frame": "time.Time"
+                    },
+                    "config": {
+                      "interval": 15000
+                    }
+                  },
+                  {
+                    "name": "Value",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "float64"
+                    },
+                    "labels": {
+                      "service": "api2"
+                    },
+                    "config": {
+                      "displayNameFromDS": "api2"
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "values": [
+                  [
+                    1792854075000,
+                    1792854090000,
+                    1792854105000,
+                    1792854120000,
+                    1792854135000,
+                    1792854150000,
+                    1792854165000,
+                    1792854180000,
+                    1792854195000,
+                    1792854210000,
+                    1792854225000,
+                    1792854240000,
+                    1792854255000,
+                    1792854270000,
+                    1792854285000,
+                    1792854300000,
+                    1792854315000,
+                    1792854330000,
+                    1792854345000,
+                    1792854360000,
+                    1792854375000
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]

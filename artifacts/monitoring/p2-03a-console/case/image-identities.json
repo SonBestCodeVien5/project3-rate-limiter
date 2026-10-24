@@ -1,0 +1,92 @@
+[
+  {
+    "id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+    "repo_tags": [
+      "redis:7.4.2-alpine"
+    ],
+    "repo_digests": [
+      "redis@sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "rootfs_layers": [
+      "sha256:08000c18d16dadf9553d747a58cf44023423a9ab010aab96cf263d2216b8b350",
+      "sha256:8e7fb94f38271eff7a7a7bdcc35bfe44bdafd6a3b8fb1440f08c1e118d16bde3",
+      "sha256:4364ea111b97ea1d2e09c0f8e560e024b48836eb31797e01fc2a1b258eee6e05",
+      "sha256:234600d36ef67257422e96836175d7442a3457bea0e5d8142e8c38f931101e75",
+      "sha256:def9013b2f988109b6afe46c1c6a4c7f71fb8c5e8839ef867e28ed58fa26dcc0",
+      "sha256:9854cb3a240e484a0f1013d5a3dce703dda3d38d964b7608964c27fd033b8fdd",
+      "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "sha256:a2d2f15d144d6d5beb84d80a7da0af41862298dfb3d9e7b4d7d73de55b9449f1"
+    ]
+  },
+  {
+    "id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+    "repo_tags": [
+      "nginx:1.28.0-alpine"
+    ],
+    "repo_digests": [
+      "nginx@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "rootfs_layers": [
+      "sha256:922ec217407c0fd31cb18b46090bf62e439fb53ecd01f09406d62e25a906e09b",
+      "sha256:412e147b334cddb83eedf352f7f2ea40844abceb3614a5d9c9726d076e5c3b6f",
+      "sha256:570a1c87f279a67fc5509cf76c4b57cf722c8de9f9cdaa214c787d0fb0e1e7a5",
+      "sha256:34034c5235653389adbf8982e9fc868561e62e5d88c58c878331ed89abfd1a6f",
+      "sha256:7d9abb9ab3b7a473c37818aee5eb0f4637716ef9d8b28989ebab09d29f987246",
+      "sha256:5f23a9cf34f1103f7564dfb3f036e877efedde5372cb2190285418008372fdde",
+      "sha256:a231a657395e32fc50a9dd243cbf8476a246468d0faf68dacfd9a9a1befbb456",
+      "sha256:90ec271303985395afe0c2966824bb392d291365e94b87df2c4582c30b0bc18a"
+    ]
+  },
+  {
+    "id": "sha256:b7ce173f9c4448c9af44940a426c76b11d252596a8afef66bded0a1f2af142db",
+    "repo_tags": [
+      "project3-research-lab-backend:latest"
+    ],
+    "repo_digests": [
+      "project3-research-lab-backend@sha256:b7ce173f9c4448c9af44940a426c76b11d252596a8afef66bded0a1f2af142db"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "rootfs_layers": [
+      "sha256:54ea9baa1bbd7651dbda5c61569dad60fa601c73e5b784e154e8ba0f314e84fd",
+      "sha256:490b833ef5dc98c3e91983432c5fff48b2b1a8f4cf5b0c778fee3b7e761f9815",
+      "sha256:c16185f272e9d6639178894c2cef665840d51a7e86dae02e33d9fc32a1f789ce"
+    ]
+  },
+  {
+    "id": "sha256:f37a12dfea3e09191143c26f3decc12f2cfbd3e69f4fa9b3c7d55cf2df64be7c",
+    "repo_tags": [
+      "project3-research-lab-api1:latest"
+    ],
+    "repo_digests": [
+      "project3-research-lab-api1@sha256:f37a12dfea3e09191143c26f3decc12f2cfbd3e69f4fa9b3c7d55cf2df64be7c"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "rootfs_layers": [
+      "sha256:54ea9baa1bbd7651dbda5c61569dad60fa601c73e5b784e154e8ba0f314e84fd",
+      "sha256:490b833ef5dc98c3e91983432c5fff48b2b1a8f4cf5b0c778fee3b7e761f9815",
+      "sha256:c16185f272e9d6639178894c2cef665840d51a7e86dae02e33d9fc32a1f789ce"
+    ]
+  },
+  {
+    "id": "sha256:fdafc61a095e066d9ba8295e95f8814e6adb31ce9cf82a37f39c9b30de8aa80d",
+    "repo_tags": [
+      "project3-research-lab-api2:latest"
+    ],
+    "repo_digests": [
+      "project3-research-lab-api2@sha256:fdafc61a095e066d9ba8295e95f8814e6adb31ce9cf82a37f39c9b30de8aa80d"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "rootfs_layers": [
+      "sha256:54ea9baa1bbd7651dbda5c61569dad60fa601c73e5b784e154e8ba0f314e84fd",
+      "sha256:490b833ef5dc98c3e91983432c5fff48b2b1a8f4cf5b0c778fee3b7e761f9815",
+      "sha256:c16185f272e9d6639178894c2cef665840d51a7e86dae02e33d9fc32a1f789ce"
+    ]
+  }
+]

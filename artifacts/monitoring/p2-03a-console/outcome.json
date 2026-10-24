@@ -1,0 +1,23 @@
+{
+  "attempts": 1,
+  "loadgen_starts": 0,
+  "acceptance": "incomplete",
+  "g3_run_id": "20261024T145701-272e462e6502",
+  "g3_state": "failed",
+  "g3_revision": "5862b90087f3e684a1ece7907fe2ba67d482d3a9",
+  "g3_dirty_state": "",
+  "ui_submitted_utc": "2026-10-24T14:57:01.783553281Z",
+  "run_finished_utc": "2026-10-24T14:57:26.260650641Z",
+  "registration_started_utc": "2026-10-24T14:57:23.430Z",
+  "registration_deregistered_utc": "2026-10-24T14:57:23.553Z",
+  "load_bounds_utc": null,
+  "drain_bounds_utc": null,
+  "final_scrapes_utc": null,
+  "grafana_case_url": null,
+  "sent": null,
+  "generator_drops": null,
+  "reason": "Manifest publication permission denied before loadgen; no retry",
+  "p2_06_coverage": "pending",
+  "fixed_dashboard": "7 panels,11 unique expressions; list/folder navigation pass",
+  "future_scope": "P2-03A needs new explicit G3 authorization; no P2-04+ or T09/T10 action"
+}

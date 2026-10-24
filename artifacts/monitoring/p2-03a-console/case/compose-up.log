@@ -1,0 +1,153 @@
+ Image project3-research-lab-api1 Building 
+ Image project3-research-lab-api2 Building 
+ Image project3-research-lab-backend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.55kB done
+#1 DONE 0.0s
+
+#2 [api2 internal] load build definition from Dockerfile
+#2 transferring dockerfile: 368B done
+#2 DONE 0.0s
+
+#3 [api2 internal] load metadata for docker.io/library/golang:1.26.1-alpine
+#3 ...
+
+#4 [api2 internal] load metadata for docker.io/library/alpine:3.23
+#4 DONE 2.8s
+
+#3 [api2 internal] load metadata for docker.io/library/golang:1.26.1-alpine
+#3 DONE 4.6s
+
+#5 [backend internal] load .dockerignore
+#5 transferring context: 91B done
+#5 DONE 0.0s
+
+#6 [backend internal] load build context
+#6 DONE 0.0s
+
+#7 [api2 build 1/7] FROM docker.io/library/golang:1.26.1-alpine@sha256:2389ebfa5b7f43eeafbd6be0c3700cc46690ef842ad962f6c5bd6be49ed82039
+#7 resolve docker.io/library/golang:1.26.1-alpine@sha256:2389ebfa5b7f43eeafbd6be0c3700cc46690ef842ad962f6c5bd6be49ed82039 0.1s done
+#7 resolve docker.io/library/golang:1.26.1-alpine@sha256:2389ebfa5b7f43eeafbd6be0c3700cc46690ef842ad962f6c5bd6be49ed82039 0.1s done
+#7 DONE 0.1s
+
+#8 [backend stage-1 1/3] FROM docker.io/library/alpine:3.23@sha256:ff7f0c727dd796aa36787bfcd9a64bf35a6ce72a73451b3359fde849b6703d63
+#8 resolve docker.io/library/alpine:3.23@sha256:ff7f0c727dd796aa36787bfcd9a64bf35a6ce72a73451b3359fde849b6703d63 0.1s done
+#8 DONE 0.1s
+
+#6 [api1 internal] load build context
+#6 transferring context: 1.24kB done
+#6 DONE 0.0s
+
+#9 [backend build 2/7] WORKDIR /src
+#9 CACHED
+
+#10 [backend build 3/7] COPY go.mod go.sum ./
+#10 CACHED
+
+#11 [backend build 4/7] RUN go mod download
+#11 CACHED
+
+#12 [backend build 5/7] COPY cmd/server ./cmd/server
+#12 CACHED
+
+#13 [backend stage-1 2/3] RUN adduser -D -u 10001 app
+#13 CACHED
+
+#14 [backend build 6/7] COPY internal ./internal
+#14 CACHED
+
+#15 [backend build 7/7] RUN CGO_ENABLED=0 go build -trimpath -o /server ./cmd/server
+#15 CACHED
+
+#16 [backend stage-1 3/3] COPY --from=build /server /server
+#16 CACHED
+
+#17 [api1] exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:9fd39f81f9cd901ca34354bf671c544ec34980ff4cc1257676f2f64d98b98d0d 0.1s done
+#17 exporting config sha256:47bba750ce0455379024a38998f7076774447070f05b7c543447d1ff8aef7ad2
+#17 exporting config sha256:47bba750ce0455379024a38998f7076774447070f05b7c543447d1ff8aef7ad2 0.1s done
+#17 exporting attestation manifest sha256:27d7f3412a56b6db26a873d86e308aa1c0bf545ac3adfa7246ecd740ae5d5887
+#17 exporting attestation manifest sha256:27d7f3412a56b6db26a873d86e308aa1c0bf545ac3adfa7246ecd740ae5d5887 0.2s done
+#17 exporting manifest list sha256:f37a12dfea3e09191143c26f3decc12f2cfbd3e69f4fa9b3c7d55cf2df64be7c
+#17 exporting manifest list sha256:f37a12dfea3e09191143c26f3decc12f2cfbd3e69f4fa9b3c7d55cf2df64be7c 0.1s done
+#17 naming to docker.io/library/project3-research-lab-api1:latest
+#17 naming to docker.io/library/project3-research-lab-api1:latest 0.0s done
+#17 unpacking to docker.io/library/project3-research-lab-api1:latest 0.0s done
+#17 DONE 0.7s
+
+#18 [backend] exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:6c039ebb9f2c61256b89db7b639e93fea54ead86db4e06b8a872a86fab14a8e5 0.1s done
+#18 exporting config sha256:fcbcab11102d2ce7704f226286abec475bd084873fa167d6f1eabfe10f5ca219 0.1s done
+#18 exporting attestation manifest sha256:f0aa2390b28e061a14399e4dbf0e683c63946bf57c7e2a37614dd2415d06b383 0.2s done
+#18 exporting manifest list sha256:b7ce173f9c4448c9af44940a426c76b11d252596a8afef66bded0a1f2af142db 0.1s done
+#18 naming to docker.io/library/project3-research-lab-backend:latest 0.0s done
+#18 unpacking to docker.io/library/project3-research-lab-backend:latest 0.0s done
+#18 DONE 0.7s
+
+#19 [api2] exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:0d21f97cc420ebd4edad167a5e3a2b9aaaa94ce40b7b52f959efa06042fce98e 0.1s done
+#19 exporting config sha256:6f86c4b3572d4217ab09ec747693b401f2a2a6a83b51aea3455c5c9756b05119 0.1s done
+#19 exporting attestation manifest sha256:c25cfca969623569ecc504d2c9c21619562b8ceca9e8a69d9c87825aecd197a3 0.2s done
+#19 exporting manifest list sha256:fdafc61a095e066d9ba8295e95f8814e6adb31ce9cf82a37f39c9b30de8aa80d 0.1s done
+#19 naming to docker.io/library/project3-research-lab-api2:latest 0.0s done
+#19 unpacking to docker.io/library/project3-research-lab-api2:latest 0.0s done
+#19 DONE 0.7s
+
+#20 [api1] resolving provenance for metadata file
+#20 DONE 0.2s
+
+#21 [api2] resolving provenance for metadata file
+#21 DONE 0.1s
+
+#22 [backend] resolving provenance for metadata file
+#22 DONE 0.0s
+ Image project3-research-lab-backend Built 
+ Image project3-research-lab-api2 Built 
+ Image project3-research-lab-api1 Built 
+ Network project3-research-lab_default Creating 
+ Network project3-research-lab_default Created 
+ Container project3-research-lab-backend-1 Creating 
+ Container project3-research-lab-redis-1 Creating 
+ Container project3-research-lab-backend-1 Created 
+ Container project3-research-lab-redis-1 Created 
+ Container project3-research-lab-api1-1 Creating 
+ Container project3-research-lab-api2-1 Creating 
+ Container project3-research-lab-api1-1 Created 
+ Container project3-research-lab-api2-1 Created 
+ Container project3-research-lab-nginx-1 Creating 
+ Container project3-research-lab-nginx-1 Created 
+ Container project3-research-lab-redis-1 Starting 
+ Container project3-research-lab-backend-1 Starting 
+ Container project3-research-lab-redis-1 Started 
+ Container project3-research-lab-backend-1 Started 
+ Container project3-research-lab-backend-1 Waiting 
+ Container project3-research-lab-redis-1 Waiting 
+ Container project3-research-lab-redis-1 Waiting 
+ Container project3-research-lab-backend-1 Waiting 
+ Container project3-research-lab-backend-1 Healthy 
+ Container project3-research-lab-redis-1 Healthy 
+ Container project3-research-lab-redis-1 Healthy 
+ Container project3-research-lab-backend-1 Healthy 
+ Container project3-research-lab-api2-1 Starting 
+ Container project3-research-lab-api1-1 Starting 
+ Container project3-research-lab-api2-1 Started 
+ Container project3-research-lab-api1-1 Started 
+ Container project3-research-lab-api1-1 Waiting 
+ Container project3-research-lab-api2-1 Waiting 
+ Container project3-research-lab-api1-1 Healthy 
+ Container project3-research-lab-api2-1 Healthy 
+ Container project3-research-lab-nginx-1 Starting 
+ Container project3-research-lab-nginx-1 Started 
+ Container project3-research-lab-backend-1 Waiting 
+ Container project3-research-lab-nginx-1 Waiting 
+ Container project3-research-lab-redis-1 Waiting 
+ Container project3-research-lab-api1-1 Waiting 
+ Container project3-research-lab-api2-1 Waiting 
+ Container project3-research-lab-redis-1 Healthy 
+ Container project3-research-lab-nginx-1 Healthy 
+ Container project3-research-lab-api2-1 Healthy 
+ Container project3-research-lab-api1-1 Healthy 
+ Container project3-research-lab-backend-1 Healthy 

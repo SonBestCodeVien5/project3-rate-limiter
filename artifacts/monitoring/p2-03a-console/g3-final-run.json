@@ -1,0 +1,57 @@
+{
+  "analyses": {},
+  "phase": "failed",
+  "resolved_backend": {
+    "BACKEND_CAPACITY": "4",
+    "BACKEND_SERVICE_TIME": "50ms",
+    "INSTANCE_ID": "backend-1",
+    "ROLE": "backend"
+  },
+  "resolved_policy": {
+    "algorithm": "fixed-window",
+    "capacity": 20,
+    "fail_policy": "closed",
+    "limit": 20,
+    "mode": "redis",
+    "namespace": "research-20261024T145703-107318-custom-1",
+    "rate_per_sec": 20,
+    "schema_version": 1,
+    "state_reset": true,
+    "window_ms": 1000
+  },
+  "run": {
+    "id": "20261024T145701-272e462e6502",
+    "request": {
+      "case": "custom",
+      "repetitions": 1,
+      "mixed_rps": 0,
+      "monitoring": true,
+      "custom": {
+        "mode": "redis",
+        "algorithm": "fixed-window",
+        "profile": "normal",
+        "fail_policy": "closed",
+        "instances": 2,
+        "rps": 20,
+        "legitimate_rps": 20,
+        "duration_seconds": 30,
+        "limit": 20,
+        "window_ms": 1000,
+        "capacity": 20,
+        "refill_rate": 20,
+        "backend_capacity": 4,
+        "backend_service_ms": 50,
+        "burst_start_seconds": 2,
+        "burst_duration_seconds": 2,
+        "burst_rps": 200,
+        "concurrent_at_seconds": 2,
+        "concurrent_count": 100
+      }
+    },
+    "state": "failed",
+    "started_at": "2026-10-24T14:57:01.783553281Z",
+    "finished_at": "2026-10-24T14:57:26.260650641Z",
+    "error": "exit status 1"
+  },
+  "summaries": {}
+}

@@ -1,0 +1,1 @@
+kill -TERM -- -$(cat artifacts/monitoring/p2-03a-console/console.pid)

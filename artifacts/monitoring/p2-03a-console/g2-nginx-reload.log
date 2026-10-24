@@ -1,0 +1,2 @@
+2026/10/24 14:59:47 [emerg] 5133#5133: host not found in upstream "api1:8080" in /etc/nginx/nginx.conf:5
+nginx: [emerg] host not found in upstream "api1:8080" in /etc/nginx/nginx.conf:5

@@ -1,0 +1,130 @@
+{
+  "checked_at_utc": "2026-10-24T14:30:56.807653+00:00",
+  "endpoints": {
+    "prometheus_health": {
+      "status": 200,
+      "body": "Prometheus Server is Healthy.\n"
+    },
+    "prometheus_ready": {
+      "status": 200,
+      "body": "Prometheus Server is Ready.\n"
+    },
+    "grafana_health": {
+      "status": 200,
+      "body": "{\n  \"database\": \"ok\",\n  \"version\": \"12.4.11\",\n  \"commit\": \"96836a94cb5e2e1e196bacd76edfa6d25673d4b4\"\n}"
+    },
+    "api1": {
+      "json": {
+        "status": 200,
+        "content_type": "application/json",
+        "keys": [
+          "algorithm",
+          "allowed",
+          "arrivals",
+          "backend_attempts",
+          "backend_confirmed_arrivals",
+          "backend_errors",
+          "canceled",
+          "fail_closed",
+          "fail_open",
+          "instance_id",
+          "limiter_errors",
+          "mode",
+          "overload",
+          "rejected",
+          "requests",
+          "role",
+          "success"
+        ]
+      },
+      "prometheus": {
+        "status": 200,
+        "content_type": "text/plain; version=0.0.4; charset=utf-8",
+        "sample_lines": 10,
+        "samples_present": true
+      }
+    },
+    "api2": {
+      "json": {
+        "status": 200,
+        "content_type": "application/json",
+        "keys": [
+          "algorithm",
+          "allowed",
+          "arrivals",
+          "backend_attempts",
+          "backend_confirmed_arrivals",
+          "backend_errors",
+          "canceled",
+          "fail_closed",
+          "fail_open",
+          "instance_id",
+          "limiter_errors",
+          "mode",
+          "overload",
+          "rejected",
+          "requests",
+          "role",
+          "success"
+        ]
+      },
+      "prometheus": {
+        "status": 200,
+        "content_type": "text/plain; version=0.0.4; charset=utf-8",
+        "sample_lines": 10,
+        "samples_present": true
+      }
+    },
+    "backend": {
+      "json": {
+        "status": 200,
+        "content_type": "application/json",
+        "keys": [
+          "algorithm",
+          "allowed",
+          "arrivals",
+          "backend_attempts",
+          "backend_confirmed_arrivals",
+          "backend_errors",
+          "canceled",
+          "fail_closed",
+          "fail_open",
+          "instance_id",
+          "limiter_errors",
+          "mode",
+          "overload",
+          "rejected",
+          "requests",
+          "role",
+          "success"
+        ]
+      },
+      "prometheus": {
+        "status": 200,
+        "content_type": "text/plain; version=0.0.4; charset=utf-8",
+        "sample_lines": 4,
+        "samples_present": true
+      }
+    }
+  },
+  "targets": [
+    {
+      "job": "project3-demo",
+      "service": "api1",
+      "health": "up",
+      "lastScrape": "2026-10-24T14:30:55.776402397Z"
+    },
+    {
+      "job": "project3-demo",
+      "service": "api2",
+      "health": "up",
+      "lastScrape": "2026-10-24T14:30:56.69923351Z"
+    },
+    {
+      "job": "project3-demo",
+      "service": "backend",
+      "health": "up",
+      "lastScrape": "2026-10-24T14:30:54.872015156Z"
+    }
+  ]
+}
