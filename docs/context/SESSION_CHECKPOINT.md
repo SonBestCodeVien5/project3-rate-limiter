@@ -1,6 +1,54 @@
 # Session checkpoint
 
-## P2-03A implemented; sole Console acceptance attempt failed before load — 2026-10-24
+## P2-03A closeout: Console → Grafana acceptance passed — 2026-10-24
+
+The user resumed the interrupted closeout for the already successful run only. No
+new load, POST, `/work`, browser/UI script, P2-04, outage, push, or credential
+mutation was performed. No code suite was run. The successful run used clean source
+revision `1687a61672b54a258afa78c52c93fc4cfcaf013b`; selected evidence and concise
+acceptance record are in [p2-03a-console-recheck](../../artifacts/monitoring/p2-03a-console-recheck/checks.md).
+
+**Acceptance evidence:** run `20261024T152427-65c5e2bc4341`, one Console submit,
+custom normal/all legitimate, Redis/FW/fail-closed, 2 API, Q20/1s, backend 4/50ms,
+20 RPS/30s/1 repeat, monitoring enabled. Summary: 600 scheduled/sent, 600 HTTP
+2xx, 600 legitimate successes, 0 drops. Load UTC
+`2026-10-24T15:24:53.378456510Z`–`2026-10-24T15:25:23.378000000Z`; source metadata
+`+07:00` timestamps normalize to these UTC bounds. Drain was
+`2026-10-24T15:25:23.383030760Z`; final API1/API2/backend scrape was
+`2026-10-24T15:25:24.493Z`, strictly after drain. The requested
+Prometheus/Grafana range is millisecond precision, flooring start to `15:24:53.378Z`
+(about 0.456510 ms before metadata start) and ending `15:25:23.378Z`. In that
+requested range, query_range has 31 one-second evaluation points per target, all
+`up=1`; these are not asserted to be distinct raw scrape samples. Final counters
+match summary: 300 requests at each API, 600 backend arrivals and successes.
+Console link uses `project3-console-run`, `4s`, and the matching time range.
+Grafana identity matches; 7/7 panels visible, 14 query responses HTTP 200, zero
+query errors and no No data. These pilot counters do not prove limiter
+correctness, latency or goodput. The 1s/4s timing was checked only on this 30s
+case. P2-06 suite coverage and user learning confirmation remain pending.
+
+Source checks: saved JSON cross-checks for run/source/config, summary, metadata UTC
+bounds, millisecond Grafana/query range, evaluation points, counter snapshots,
+Grafana link/browser and cleanup;
+existing `SHA256SUMS` verified 38/38 from its declared evidence paths, manifest
+SHA256 `fcd0c780d944e8ce2a30a5d5e59690cda40518a6a5768833b8ac95e827b5002b`. This
+38-file manifest describes the full local capture. The separately committed files
+(including checks.md) are listed in [SELECTED_SHA256SUMS](../../artifacts/monitoring/p2-03a-console-recheck/SELECTED_SHA256SUMS); its paths are repository-root-relative; selected manifest SHA256 is
+`3ada2c6f58141fb5f5843df0bf904b22b4d67d72178b17010789eb196c03bfeb`.
+Selected evidence commit: `935d740`; reader docs/registry commit: `0fe2eb6`. No credentials,
+UI submit scripts, request captures or form screenshots were selected. The older
+failed attempt and evidence commit `0230a01` remain unchanged. Credential
+tool-echo disclosure remains unrotated; rotation is a separate prerequisite.
+
+Root's separate current read-only resource check: no `project3-research-lab`
+containers; all seven `project3-monitoring-demo` containers are `Exited (0)`;
+`artifacts/monitoring/console-targets/*.json` is empty. Listener/Console state
+was not established: sandbox endpoint reads were denied before connection. No
+restart/stop/mutation occurred. This is current state,
+not the saved successful-run state. Stop at P2-03A; new selected scope is required
+for P2-04 or further load. No push.
+
+## Historical: P2-03A implemented; sole Console acceptance attempt failed before load — 2026-10-24
 
 The user resumed **P2-03A only**, explicitly authorizing G1 implementation, G2
 owned inspection/build/start/reload/health/scrape/browser, and exactly **one G3
