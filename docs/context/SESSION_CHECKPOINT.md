@@ -1,5 +1,60 @@
 # Session checkpoint
 
+## Console-to-Grafana workflow planned; stop before P2-03A implementation — 2026-10-24
+
+The user explicitly requested **documentation and planning only**, delegated to a
+worker, after finding that Console's benchmark traffic does not appear in the
+fixed Grafana dashboard. This turn resumed the interrupted documentation task;
+it does not authorize implementing the integration or operating the running stack.
+One fresh `gpt-6-luna` worker (`low`, `fork_turns=none`) inspected the relevant
+Console/controller, research runner, Compose and metrics paths and updated docs.
+Root integrated the handoff and updates the active brief/checkpoint separately.
+
+**Planning commits:** `edbddaf` updates PHASE2_PLAN, DESIGN, RUNBOOK,
+LEARNING_GUIDE, CONSOLE, docs index and demo script; `713d1ed` fixes root README's
+stale opening, labels its unchanged example base-only, and clarifies gate bundling.
+No new guide, code, config or evidence archive was added. Existing P2-01–P2-03,
+the UID fix, Console changes and formal research evidence remain intact.
+
+**Recommended next package: P2-03A**, before P2-04/05. Add a separate clearly
+labeled monitored-demo flow in Console, reusing `cmd/loadgen` on fixed ingress
+`127.0.0.1:8080` of `project3-monitoring-demo`. Keep research benchmark behavior
+(`POST /api/runs` → `scripts/research-pilot.sh` → `project3-research-lab`) distinct.
+The current sample-request button sends one request to the monitored stack; it is
+not an implemented Console load mode. This is an engineering recommendation in
+the plan, not approval to implement or a claim that the integration already works.
+
+The [P2-03A package](../monitoring/PHASE2_PLAN.md#p2-03a--console-demo-có-giám-sát-đề-xuất-chưa-được-cấp)
+owns dependencies, file touchpoints, gates and acceptance. It covers verified
+effective mode/policy/quota/topology (not form defaults), project/port ownership,
+allowlisted runtime configuration, one generator at a time, cancellation without
+tearing down the user's monitoring stack, UTC/config/revision artifacts, stable
+UIDs, missing targets and incomplete attempts. No run-ID metric labels, latency,
+legitimate goodput or correctness claims are invented from counters.
+
+**Gates and completion:** G1 implementation/focused checks, new G2 Console smoke
+and bounded G3 end-to-end acceptance are distinct scopes; a single explicit user
+request may cover all three, without repeated per-command permission questions.
+G2's one-request smoke alone does not complete the workflow. G3 must run one
+predeclared Console load case whose traffic is visible on both API series and the
+backend in the fixed Grafana dashboard. That case consumes one of the existing
+P2-06 six-case budget (normal/mixed × none/local/Redis, up to 30s/case, 120 RPS,
+one attempt/case); after that attempt at most five other case slots remain. No
+case has been consumed by this planning task. No hidden retry or extra budget.
+Logs/lifecycle completion still follows P2-04/05; the metrics workflow no longer
+waits on adding Loki/Alloy. G4 and T09/T10 remain outside this scope.
+
+Worker Markdown link/whitespace checks passed. No application suite, Docker,
+browser, request, load, restart, stop, Drive sync or push was performed. Existing
+commands and locked evidence were preserved. The demo was last reported running
+on 2026-10-23; this documentation-only session did not recheck or change it.
+
+**Exact next prerequisite:** a new request for P2-03A implementation with explicit
+G1 scope (and G2/G3 only if also requested with their bounded budgets). Resume from
+PROJECT_BRIEF, AGENTS, SOURCE_INDEX/Roadmap and the P2-03A package, then inspect its
+code paths. Do not resume blindly at P2-04 or treat this planning continuation as
+authorization to implement, load-test or reopen baseline research.
+
 ## Grafana dashboard-list UID collision fixed; guided stack stays running — 2026-10-23
 
 The user manually restarted the fixed demo following the runbook, opened Console,
