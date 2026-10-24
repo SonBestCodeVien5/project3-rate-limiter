@@ -1,0 +1,49 @@
+{
+  "run_id": "custom-repeat-1",
+  "started_at": "2026-10-24T22:24:53.37845651+07:00",
+  "ended_at": "2026-10-24T22:25:23.38303076+07:00",
+  "elapsed_seconds_including_drain": 30.00457422,
+  "scheduled": 600,
+  "generator_dropped": 0,
+  "sent": 600,
+  "http_completed": 600,
+  "http_2xx": 600,
+  "http_429": 0,
+  "http_5xx": 0,
+  "transport_errors": 0,
+  "timeouts": 0,
+  "backend_confirmed_arrivals": 600,
+  "legitimate_sent": 600,
+  "legitimate_successful": 600,
+  "legitimate_goodput_per_second": 19.99695098489553,
+  "sent_per_second": 19.99695098489553,
+  "completed_per_second": 19.99695098489553,
+  "sent_latency": {
+    "p50_ms": 53.432574,
+    "p95_ms": 54.530331,
+    "p99_ms": 55.643345
+  },
+  "legitimate_success_latency": {
+    "p50_ms": 53.432574,
+    "p95_ms": 54.530331,
+    "p99_ms": 55.643345
+  },
+  "schedule_lag": {
+    "p50_ms": 0.729803,
+    "p95_ms": 1.18001,
+    "p99_ms": 1.31388
+  },
+  "latency_by_decision": {
+    "allow": {
+      "p50_ms": 53.432574,
+      "p95_ms": 54.530331,
+      "p99_ms": 55.643345
+    }
+  },
+  "decisions": {
+    "allow": 600
+  },
+  "drop_reasons": {},
+  "canceled": false,
+  "notes": "Pilot observations only; rates use elapsed time including final drain. Zero percentile with no samples means unavailable. Transport errors include response-body errors; timeouts are a subset. HTTP status counts may overlap body-read errors. Backend arrivals are confirmed response headers, not authoritative backend counters. No quota oracle or overshoot inference. Mode/algorithm/policy are user-supplied labels, not server verification."
+}

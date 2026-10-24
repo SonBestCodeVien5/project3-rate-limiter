@@ -1,0 +1,465 @@
+{
+  "checked_utc": "2026-10-24T15:27:49.800Z",
+  "timezone": "UTC",
+  "url": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?var-job=project3-console-run&var-rate_window=4s&from=1792855493378&to=1792855523378",
+  "visiblePanels": [
+    {
+      "id": 1,
+      "title": "Target scrape được (1 = có scrape thành công)",
+      "visible": true
+    },
+    {
+      "id": 2,
+      "title": "Request nhận tại API (/s)",
+      "visible": true
+    },
+    {
+      "id": 3,
+      "title": "Limiter: quota reject và lỗi (/s)",
+      "visible": true
+    },
+    {
+      "id": 4,
+      "title": "Request API gửi tới backend (/s)",
+      "visible": true
+    },
+    {
+      "id": 5,
+      "title": "Backend arrivals và service thành công (/s)",
+      "visible": true
+    },
+    {
+      "id": 6,
+      "title": "Backend overload (/s)",
+      "visible": true
+    },
+    {
+      "id": 7,
+      "title": "API backend errors (/s)",
+      "visible": true
+    }
+  ],
+  "queryResponses": [
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "up{job=\"project3-console-run\"}"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate(project3_api_requests_total{job=\"project3-console-run\"}[4s]))"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-console-run\"}[4s]))"
+        },
+        {
+          "refId": "B",
+          "expr": "sum by (service) (rate(project3_limiter_errors_total{job=\"project3-console-run\"}[4s]))"
+        },
+        {
+          "refId": "C",
+          "expr": "sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-console-run\"}[4s]))"
+        },
+        {
+          "refId": "D",
+          "expr": "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-console-run\"}[4s]))"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-console-run\"}[4s]))"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "rate(project3_backend_arrivals_total{job=\"project3-console-run\",service=\"backend\"}[4s])"
+        },
+        {
+          "refId": "B",
+          "expr": "rate(project3_backend_success_total{job=\"project3-console-run\",service=\"backend\"}[4s])"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "rate(project3_backend_overload_total{job=\"project3-console-run\",service=\"backend\"}[4s])"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-console-run\"}[4s]))"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "up{job=\"project3-console-run\"}"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate(project3_api_requests_total{job=\"project3-console-run\"}[4s]))"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-console-run\"}[4s]))"
+        },
+        {
+          "refId": "B",
+          "expr": "sum by (service) (rate(project3_limiter_errors_total{job=\"project3-console-run\"}[4s]))"
+        },
+        {
+          "refId": "C",
+          "expr": "sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-console-run\"}[4s]))"
+        },
+        {
+          "refId": "D",
+          "expr": "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-console-run\"}[4s]))"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-console-run\"}[4s]))"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "rate(project3_backend_arrivals_total{job=\"project3-console-run\",service=\"backend\"}[4s])"
+        },
+        {
+          "refId": "B",
+          "expr": "rate(project3_backend_success_total{job=\"project3-console-run\",service=\"backend\"}[4s])"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "rate(project3_backend_overload_total{job=\"project3-console-run\",service=\"backend\"}[4s])"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    },
+    {
+      "status": 200,
+      "range": {
+        "from": "1792855493378",
+        "to": "1792855523378"
+      },
+      "queries": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-console-run\"}[4s]))"
+        }
+      ],
+      "frames": [
+        {
+          "fields": 2,
+          "points": 2
+        },
+        {
+          "fields": 2,
+          "points": 2
+        }
+      ],
+      "errorCount": 0
+    }
+  ],
+  "queryErrors": 0,
+  "allQueriesUseConsoleJob": true,
+  "hasNoData": false,
+  "hasQueryError": false,
+  "pageErrors": []
+}

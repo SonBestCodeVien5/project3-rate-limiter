@@ -1,0 +1,68 @@
+{
+  "checked_utc": "2026-10-24T15:24:23.984Z",
+  "revision": "1687a61672b54a258afa78c52c93fc4cfcaf013b",
+  "tracked_worktree_clean": true,
+  "prior_today_run": {
+    "id": "20261024T145701-272e462e6502",
+    "state": "failed",
+    "started_at": "2026-10-24T14:57:01.783553281Z"
+  },
+  "today_run_count": 1,
+  "target_directory": {
+    "uid": 1000,
+    "gid": 1000,
+    "mode": "0755"
+  },
+  "active_manifest": false,
+  "research_containers": [],
+  "monitoring_containers": [
+    {
+      "name": "project3-monitoring-demo-nginx-1",
+      "status": "Up 21 minutes (healthy)"
+    },
+    {
+      "name": "project3-monitoring-demo-api2-1",
+      "status": "Up 21 minutes (healthy)"
+    },
+    {
+      "name": "project3-monitoring-demo-api1-1",
+      "status": "Up 21 minutes (healthy)"
+    },
+    {
+      "name": "project3-monitoring-demo-backend-1",
+      "status": "Up 21 minutes (healthy)"
+    },
+    {
+      "name": "project3-monitoring-demo-grafana-1",
+      "status": "Up 54 minutes (healthy)"
+    },
+    {
+      "name": "project3-monitoring-demo-prometheus-1",
+      "status": "Up 54 minutes (healthy)"
+    },
+    {
+      "name": "project3-monitoring-demo-redis-1",
+      "status": "Up 54 minutes (healthy)"
+    }
+  ],
+  "fixed_targets": [
+    {
+      "service": "api2",
+      "address": "http://fixed-api2:8080/metrics/prometheus",
+      "health": "up"
+    },
+    {
+      "service": "backend",
+      "address": "http://fixed-backend:8080/metrics/prometheus",
+      "health": "up"
+    },
+    {
+      "service": "api1",
+      "address": "http://fixed-api1:8080/metrics/prometheus",
+      "health": "up"
+    }
+  ],
+  "research_targets_before": 0,
+  "fixed_up_series": 3,
+  "research_up_series": 0
+}

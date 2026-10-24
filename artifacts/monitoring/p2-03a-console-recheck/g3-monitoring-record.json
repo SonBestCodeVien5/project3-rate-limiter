@@ -1,0 +1,65 @@
+{
+  "owner": "result-custom-1",
+  "registered_at": "2026-10-24T15:24:47.446Z",
+  "targets": [
+    {
+      "targets": [
+        "console-api1:8080"
+      ],
+      "labels": {
+        "service": "api1",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-api2:8080"
+      ],
+      "labels": {
+        "service": "api2",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-backend:8080"
+      ],
+      "labels": {
+        "service": "backend",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    }
+  ],
+  "services": [
+    "api1",
+    "api2",
+    "backend"
+  ],
+  "instances": 2,
+  "baseline_scrapes_utc": {
+    "api1": "2026-10-24T15:24:48.335Z",
+    "backend": "2026-10-24T15:24:48.335Z",
+    "api2": "2026-10-24T15:24:48.335Z"
+  },
+  "lookback_started_at": "2026-10-24T15:24:48.336Z",
+  "lookback_finished_at": "2026-10-24T15:24:52.339Z",
+  "post_lookback_scrapes_utc": {
+    "api1": "2026-10-24T15:24:52.338Z",
+    "backend": "2026-10-24T15:24:52.338Z",
+    "api2": "2026-10-24T15:24:52.338Z"
+  },
+  "status": "complete",
+  "load_started_at": "2026-10-24T22:24:53.37845651+07:00",
+  "load_ended_at": "2026-10-24T22:25:23.378+07:00",
+  "generator_drained_at": "2026-10-24T22:25:23.38303076+07:00",
+  "final_scrapes_utc": {
+    "api1": "2026-10-24T15:25:24.493Z",
+    "backend": "2026-10-24T15:25:24.493Z",
+    "api2": "2026-10-24T15:25:24.493Z"
+  },
+  "grafana_url": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?var-job=project3-console-run&var-rate_window=4s&from=1792855493378&to=1792855523378",
+  "deregistered_at": "2026-10-24T15:25:24.494Z"
+}

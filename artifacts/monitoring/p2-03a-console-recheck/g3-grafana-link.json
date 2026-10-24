@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?var-job=project3-console-run&var-rate_window=4s&from=1792855493378&to=1792855523378",
+  "job": "project3-console-run",
+  "rate_window": "4s",
+  "from": "1792855493378",
+  "to": "1792855523378",
+  "load_started_at": "2026-10-24T22:24:53.37845651+07:00",
+  "load_ended_at": "2026-10-24T22:25:23.378+07:00",
+  "generator_drained_at": "2026-10-24T22:25:23.38303076+07:00",
+  "final_scrapes_utc": {
+    "api1": "2026-10-24T15:25:24.493Z",
+    "backend": "2026-10-24T15:25:24.493Z",
+    "api2": "2026-10-24T15:25:24.493Z"
+  }
+}

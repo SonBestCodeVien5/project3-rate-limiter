@@ -1,0 +1,12 @@
+{
+  "id": "20261024T152427-65c5e2bc4341",
+  "stateText": "20261024T152427-65c5e2bc4341 · custom · completed (completed) · Mở metrics của run trong Grafana",
+  "links": [
+    {
+      "href": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?var-job=project3-console-run&var-rate_window=4s&from=1792855493378&to=1792855523378",
+      "text": "Mở metrics của run trong Grafana"
+    }
+  ],
+  "blockedPosts": 0,
+  "summaryText": ""
+}

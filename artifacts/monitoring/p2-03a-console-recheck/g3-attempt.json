@@ -1,0 +1,24 @@
+{
+  "attempt": 2,
+  "failed_prior_attempt": "20261024T145701-272e462e6502",
+  "new_attempts_allowed": 1,
+  "recorded_before_submit_utc": "2026-10-24T15:24:27.526Z",
+  "action": "one click on existing Console Chạy benchmark UI",
+  "configuration": {
+    "preset": "custom",
+    "profile": "normal",
+    "mode": "redis",
+    "algorithm": "fixed-window",
+    "failPolicy": "closed",
+    "instances": "2",
+    "totalRps": "20",
+    "duration": "30",
+    "limit": "20",
+    "windowMs": "1000",
+    "backendCapacity": "4",
+    "backendService": "50",
+    "repetitions": "1",
+    "monitoring": true
+  },
+  "no_retry": true
+}

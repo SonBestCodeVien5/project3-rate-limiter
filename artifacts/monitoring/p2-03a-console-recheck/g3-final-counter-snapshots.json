@@ -1,0 +1,38 @@
+{
+  "source": "runner after snapshots following final scrape and generator drain",
+  "counters": {
+    "api1": {
+      "requests": 300,
+      "allowed": 300,
+      "rejected": 0,
+      "backend_attempts": 300,
+      "backend_confirmed_arrivals": 300,
+      "backend_errors": 0,
+      "arrivals": 0,
+      "success": 0,
+      "overload": 0
+    },
+    "api2": {
+      "requests": 300,
+      "allowed": 300,
+      "rejected": 0,
+      "backend_attempts": 300,
+      "backend_confirmed_arrivals": 300,
+      "backend_errors": 0,
+      "arrivals": 0,
+      "success": 0,
+      "overload": 0
+    },
+    "backend": {
+      "requests": 0,
+      "allowed": 0,
+      "rejected": 0,
+      "backend_attempts": 0,
+      "backend_confirmed_arrivals": 0,
+      "backend_errors": 0,
+      "arrivals": 600,
+      "success": 600,
+      "overload": 0
+    }
+  }
+}

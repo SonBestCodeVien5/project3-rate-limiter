@@ -1,0 +1,96 @@
+{
+  "name": "project3-research-lab",
+  "networks": {
+    "default": {
+      "name": "project3-research-lab_default",
+      "ipam": {}
+    },
+    "monitoring-scrape": {
+      "name": "project3-monitoring-scrape",
+      "ipam": {},
+      "external": true
+    }
+  },
+  "services": {
+    "api1": {
+      "environment": {
+        "ALGORITHM": "fixed-window",
+        "BACKEND_TIMEOUT": "2s",
+        "BACKEND_URL": "http://backend:8080",
+        "CAPACITY": "20",
+        "FAIL_POLICY": "closed",
+        "INSTANCE_ID": "api-1",
+        "LIMIT": "20",
+        "MODE": "redis",
+        "NAMESPACE": "research-20261024T152429-195612-custom-1",
+        "RATE": "20",
+        "REDIS_ADDR": "redis:6379",
+        "REDIS_TIMEOUT": "100ms",
+        "ROLE": "api",
+        "WINDOW": "1000ms"
+      },
+      "networks": {
+        "default": null,
+        "monitoring-scrape": {
+          "aliases": [
+            "console-api1"
+          ]
+        }
+      }
+    },
+    "api2": {
+      "environment": {
+        "ALGORITHM": "fixed-window",
+        "BACKEND_TIMEOUT": "2s",
+        "BACKEND_URL": "http://backend:8080",
+        "CAPACITY": "20",
+        "FAIL_POLICY": "closed",
+        "INSTANCE_ID": "api-2",
+        "LIMIT": "20",
+        "MODE": "redis",
+        "NAMESPACE": "research-20261024T152429-195612-custom-1",
+        "RATE": "20",
+        "REDIS_ADDR": "redis:6379",
+        "REDIS_TIMEOUT": "100ms",
+        "ROLE": "api",
+        "WINDOW": "1000ms"
+      },
+      "networks": {
+        "default": null,
+        "monitoring-scrape": {
+          "aliases": [
+            "console-api2"
+          ]
+        }
+      }
+    },
+    "backend": {
+      "environment": {
+        "BACKEND_CAPACITY": "4",
+        "BACKEND_SERVICE_TIME": "50ms",
+        "INSTANCE_ID": "backend-1",
+        "ROLE": "backend"
+      },
+      "networks": {
+        "default": null,
+        "monitoring-scrape": {
+          "aliases": [
+            "console-backend"
+          ]
+        }
+      }
+    },
+    "redis": {
+      "image": "redis:7.4.2-alpine",
+      "networks": {
+        "default": null
+      }
+    },
+    "nginx": {
+      "image": "nginx:1.28.0-alpine",
+      "networks": {
+        "default": null
+      }
+    }
+  }
+}

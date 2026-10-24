@@ -1,0 +1,19 @@
+{
+  "checked_utc": "2026-10-24T15:27:36.974Z",
+  "active_research_targets": [],
+  "fixed_targets": [
+    {
+      "service": "backend",
+      "health": "up"
+    },
+    {
+      "service": "api1",
+      "health": "up"
+    },
+    {
+      "service": "api2",
+      "health": "up"
+    }
+  ],
+  "research_up_query": 0
+}

@@ -1,0 +1,30 @@
+{
+  "config": {
+    "target": "http://127.0.0.1:18080/work",
+    "run_id": "custom-repeat-1",
+    "profile": "normal",
+    "duration_ns": 30000000000,
+    "rps": 20,
+    "legitimate_rps": 20,
+    "legitimate_clients": 5,
+    "max_inflight": 200,
+    "timeout_ns": 2000000000,
+    "max_schedule_lag_ns": 100000000,
+    "burst_start_ns": 0,
+    "burst_duration_ns": 0,
+    "burst_rps": 0,
+    "concurrent_at_ns": 0,
+    "concurrent_count": 0,
+    "mode_label": "redis",
+    "algorithm_label": "fixed-window",
+    "fail_policy_label": "closed"
+  },
+  "git_revision": "1687a61672b54a258afa78c52c93fc4cfcaf013b",
+  "git_status_porcelain": "",
+  "go_version": "go1.26.1",
+  "os": "linux",
+  "arch": "amd64",
+  "cpu_count": 12,
+  "gomaxprocs": 12,
+  "recorded_at": "2026-10-24T15:24:53.377609754Z"
+}

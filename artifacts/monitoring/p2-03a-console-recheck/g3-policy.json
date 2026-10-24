@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "mode": "redis",
+  "algorithm": "fixed-window",
+  "fail_policy": "closed",
+  "namespace": "research-20261024T152429-195612-custom-1",
+  "limit": 20,
+  "window_ms": 1000,
+  "capacity": 20,
+  "rate_per_sec": 20,
+  "state_reset": true
+}

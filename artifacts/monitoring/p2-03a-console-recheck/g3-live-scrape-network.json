@@ -1,0 +1,9 @@
+{
+  "name": "project3-monitoring-scrape",
+  "attached_containers": [
+    "project3-monitoring-demo-prometheus-1",
+    "project3-research-lab-api1-1",
+    "project3-research-lab-api2-1",
+    "project3-research-lab-backend-1"
+  ]
+}
