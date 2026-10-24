@@ -3,6 +3,7 @@
 
 import importlib.util
 import json
+from datetime import datetime
 from pathlib import Path
 import tempfile
 import time
@@ -57,6 +58,20 @@ class ConsoleMonitoringTest(unittest.TestCase):
         self.assertTrue(self.path.exists())
         self.assertEqual(json.loads(self.record.read_text())["owner"], "run2")
 
+    def test_replaced_manifest_is_never_removed(self):
+        self.register()
+        replacement = [{"targets": ["someone-elses-api:8080"]}]
+        self.path.write_text(json.dumps(replacement))
+        module.remove(type("Args", (), {"path": self.path, "record": self.record, "owner": "run1"})())
+        self.assertEqual(json.loads(self.path.read_text()), replacement)
+        args = type("Args", (), {"path": self.path, "record": self.record, "owner": "run1",
+                                  "prometheus": "mock://prometheus", "timeout": 0,
+                                  "load_start": "2026-10-24T01:02:03Z", "load_end": "2026-10-24T01:02:33Z",
+                                  "drain_end": "2026-10-24T01:02:34Z"})()
+        with self.assertRaisesRegex(RuntimeError, "ownership mismatch"):
+            module.finish(args)
+        self.assertEqual(json.loads(self.path.read_text()), replacement)
+
     def test_final_scrape_keeps_exact_load_bounds_and_url_then_deregisters(self):
         self.register()
         start, end = "2026-10-24T01:02:03.123Z", "2026-10-24T01:02:33.456Z"
@@ -82,6 +97,21 @@ class ConsoleMonitoringTest(unittest.TestCase):
         self.assertEqual(query["var-rate_window"], ["4s"])
         self.assertFalse(self.path.exists())
 
+    def test_final_scrape_must_be_after_generator_drain(self):
+        self.register()
+        drain = "2026-10-24T01:02:34Z"
+        at_drain = datetime.fromisoformat(drain.replace("Z", "+00:00")).timestamp()
+        stamps = [{"metric": {"service": service}, "value": ["now", str(at_drain)]}
+                  for service in ("api1", "api2", "backend")]
+        args = type("Args", (), {"path": self.path, "record": self.record, "owner": "run1",
+                                  "prometheus": "mock://prometheus", "timeout": 0.01,
+                                  "load_start": "2026-10-24T01:02:03Z", "load_end": drain,
+                                  "drain_end": drain})()
+        with patch.object(module, "query", return_value=stamps):
+            with self.assertRaisesRegex(RuntimeError, "final scrape missing"):
+                module.finish(args)
+        self.assertTrue(self.path.exists())
+
     def test_baseline_and_lookback_are_recorded(self):
         self.register()
         stamps = [{"metric": {"service": service}, "value": ["now", str(time.time())]}
@@ -95,6 +125,17 @@ class ConsoleMonitoringTest(unittest.TestCase):
         self.assertIn("lookback_started_at", record)
         self.assertIn("lookback_finished_at", record)
         sleep.assert_called_once_with(4)
+
+    def test_targets_must_still_be_up_after_lookback(self):
+        self.register()
+        stamps = [{"metric": {"service": service}, "value": ["now", str(time.time())]}
+                  for service in ("api1", "api2", "backend")]
+        args = type("Args", (), {"path": self.path, "record": self.record, "owner": "run1",
+                                  "prometheus": "mock://prometheus", "timeout": 0.01, "lookback": 0})()
+        with patch.object(module, "query", side_effect=[stamps, []]), patch.object(module.time, "sleep"), \
+                patch.object(module.time, "monotonic", side_effect=[0, 0, 0, 0, 0.02]):
+            with self.assertRaisesRegex(RuntimeError, "not UP after lookback"):
+                module.wait_for_targets(args)
 
 
 if __name__ == "__main__":

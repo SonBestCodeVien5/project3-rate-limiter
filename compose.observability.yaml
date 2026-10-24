@@ -9,10 +9,19 @@ services:
         max-file: "3"
   backend:
     logging: *local-logs
+    networks:
+      monitoring-scrape:
+        aliases: [fixed-backend]
   api1:
     logging: *local-logs
+    networks:
+      monitoring-scrape:
+        aliases: [fixed-api1]
   api2:
     logging: *local-logs
+    networks:
+      monitoring-scrape:
+        aliases: [fixed-api2]
   nginx:
     logging: *local-logs
     healthcheck:

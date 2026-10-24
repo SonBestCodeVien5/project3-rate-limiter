@@ -186,11 +186,6 @@ for case_name in "${SELECTED[@]}"; do
     LAB_COMPOSE_FILE="$case_dir/topology/compose.json"
     cp "$case_dir/topology/policy.json" "$case_dir/policy.json"
     compose_timeout 15s config --format json >"$case_dir/compose-resolved.json"
-    if ((MONITORING)); then
-      monitoring_record="$case_dir/monitoring.json"
-      monitoring_owner="$(basename "$LAB_OUTPUT")-$case_name-$repeat"
-      python3 "$LAB_ROOT/scripts/console-monitoring.py" register --path "$monitoring_path" --record "$monitoring_record" --owner "$monitoring_owner" --instances "$INSTANCES"
-    fi
     LAB_OWNED=1
     compose_timeout 180s up -d --build --force-recreate --wait --wait-timeout 120 >"$case_dir/compose-up.log" 2>&1
     compose_timeout 10s ps >"$case_dir/compose-ps.txt"
@@ -211,6 +206,9 @@ PY
       compose_timeout 10s exec -T "api$api" wget -q -O - http://127.0.0.1:8080/metrics >"$case_dir/api$api-before.json"
     done
     if ((MONITORING)); then
+      monitoring_record="$case_dir/monitoring.json"
+      monitoring_owner="$(basename "$LAB_OUTPUT")-$case_name-$repeat"
+      python3 "$LAB_ROOT/scripts/console-monitoring.py" register --path "$monitoring_path" --record "$monitoring_record" --owner "$monitoring_owner" --instances "$INSTANCES"
       python3 "$LAB_ROOT/scripts/console-monitoring.py" wait --path "$monitoring_path" --record "$monitoring_record" --owner "$monitoring_owner"
     fi
     sleep 1

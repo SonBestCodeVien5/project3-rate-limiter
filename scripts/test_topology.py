@@ -55,8 +55,8 @@ class RendererTest(unittest.TestCase):
                                  {"name": "project3-monitoring-scrape", "external": True})
                 self.assertEqual(set(config["services"]), {"backend", "redis", "nginx", *(f"api{i}" for i in range(1, count + 1))})
                 for i in range(1, count + 1):
-                    self.assertIn(f"api{i}", config["services"][f"api{i}"]["networks"]["monitoring-scrape"]["aliases"])
-                self.assertEqual(config["services"]["backend"]["networks"]["monitoring-scrape"]["aliases"], ["backend"])
+                    self.assertIn(f"console-api{i}", config["services"][f"api{i}"]["networks"]["monitoring-scrape"]["aliases"])
+                self.assertEqual(config["services"]["backend"]["networks"]["monitoring-scrape"]["aliases"], ["console-backend"])
                 self.assertNotIn("monitoring-scrape", config["services"]["redis"].get("networks", {}))
                 self.assertNotIn("monitoring-scrape", config["services"]["nginx"].get("networks", {}))
 

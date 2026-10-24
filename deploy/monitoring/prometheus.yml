@@ -6,13 +6,13 @@ scrape_configs:
   - job_name: project3-demo
     metrics_path: /metrics/prometheus
     static_configs:
-      - targets: [api1:8080]
+      - targets: [fixed-api1:8080]
         labels:
           service: api1
-      - targets: [api2:8080]
+      - targets: [fixed-api2:8080]
         labels:
           service: api2
-      - targets: [backend:8080]
+      - targets: [fixed-backend:8080]
         labels:
           service: backend
   - job_name: project3-console-run

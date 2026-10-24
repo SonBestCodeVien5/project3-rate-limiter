@@ -4,7 +4,9 @@
 import argparse
 from datetime import datetime, timedelta, timezone
 import json
+import os
 from pathlib import Path
+import tempfile
 import time
 from urllib.parse import urlencode
 from urllib.request import urlopen
@@ -33,12 +35,13 @@ def query(prometheus, expression):
     return data["data"]["result"]
 
 
-def fresh_scrapes(prometheus, expected):
-    cutoff = time.time() - 2
+def fresh_scrapes(prometheus, expected, after=None):
+    cutoff = max(time.time() - 2, after.timestamp() if after else 0)
     stamps = query(prometheus, 'timestamp(up{job="project3-console-run"} == 1)')
     return {item["metric"].get("service"): datetime.fromtimestamp(float(item["value"][1]), timezone.utc)
             for item in stamps if item["metric"].get("service") in expected
-            and float(item["value"][1]) >= cutoff}
+            and float(item["value"][1]) >= cutoff
+            and (after is None or float(item["value"][1]) > after.timestamp())}
 
 
 def scrape_record(scrapes):
@@ -55,18 +58,29 @@ def register(args):
             raise RuntimeError("previous Console scrape series remain visible; refusing a potentially mixed time window")
         time.sleep(0.25)
     services = [*(f"api{i}" for i in range(1, args.instances + 1)), "backend"]
-    targets = [{"targets": [f"{service}:8080"], "labels": {"service": service,
+    targets = [{"targets": [f"console-{service}:8080"], "labels": {"service": service,
                "topology": str(args.instances), "project": "project3-research-lab"}} for service in services]
     record = {"owner": args.owner, "registered_at": utc(), "targets": targets,
               "services": services, "instances": args.instances}
     atomic_json(args.record, record)
-    atomic_json(args.path, targets)
+    args.path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(mode="w", dir=args.path.parent, prefix=".console-targets-", delete=False) as manifest:
+        tmp = Path(manifest.name)
+        manifest.write(json.dumps(targets, indent=2) + "\n")
+    try:
+        os.link(tmp, args.path)
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+def verify_manifest(args, record):
+    if record.get("owner") != args.owner or not args.path.exists() or read(args.path) != record.get("targets"):
+        raise RuntimeError("target manifest ownership mismatch")
 
 
 def wait_for_targets(args):
     record = read(args.record)
-    if record["owner"] != args.owner:
-        raise RuntimeError("target manifest ownership mismatch")
+    verify_manifest(args, record)
     expected = set(record["services"])
     deadline = time.monotonic() + args.timeout
     while time.monotonic() < deadline:
@@ -80,18 +94,28 @@ def wait_for_targets(args):
     record["lookback_started_at"] = utc()
     atomic_json(args.record, record)
     time.sleep(args.lookback)
+    deadline = time.monotonic() + args.timeout
+    while time.monotonic() < deadline:
+        scrapes = fresh_scrapes(args.prometheus, expected)
+        if expected <= scrapes.keys():
+            break
+        time.sleep(0.25)
+    else:
+        raise RuntimeError("allowlisted targets are not UP after lookback")
+    verify_manifest(args, record)
     record["lookback_finished_at"] = utc()
+    record["post_lookback_scrapes_utc"] = scrape_record(scrapes)
     atomic_json(args.record, record)
 
 
 def finish(args):
     record = read(args.record)
-    if record["owner"] != args.owner:
-        raise RuntimeError("target manifest ownership mismatch")
+    verify_manifest(args, record)
     expected = set(record["services"])
+    drained = datetime.fromisoformat(args.drain_end.replace("Z", "+00:00"))
     deadline = time.monotonic() + args.timeout
     while time.monotonic() < deadline:
-        scrapes = fresh_scrapes(args.prometheus, expected)
+        scrapes = fresh_scrapes(args.prometheus, expected, drained)
         if expected <= scrapes.keys():
             break
         time.sleep(0.25)
@@ -107,6 +131,7 @@ def finish(args):
     record["grafana_url"] = ("http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?" + urlencode({
         "var-job": "project3-console-run", "var-rate_window": "4s", "from": from_ms, "to": to_ms}))
     atomic_json(args.record, record)
+    verify_manifest(args, record)
     args.path.unlink()
     record["status"] = "complete"
     record["deregistered_at"] = utc()
@@ -119,7 +144,10 @@ def remove(args):
     record = read(args.record)
     if record.get("owner") != args.owner:
         return
-    args.path.unlink(missing_ok=True)
+    if args.path.exists():
+        if read(args.path) != record.get("targets"):
+            return
+        args.path.unlink()
     if record.get("status") != "complete":
         record["status"] = "incomplete"
         record["deregistered_at"] = utc()
