@@ -47,6 +47,19 @@ class RendererTest(unittest.TestCase):
                 self.assertEqual(policy["window_ms"], 1000)
                 self.assertTrue(policy["state_reset"])
 
+    def test_monitoring_allowlist_for_one_two_four(self):
+        for count in (1, 2, 4):
+            with self.subTest(count=count), tempfile.TemporaryDirectory() as temp:
+                config, _, _ = module.render(self.base, count, Path(temp), 18080, monitoring=True)
+                self.assertEqual(config["networks"]["monitoring-scrape"],
+                                 {"name": "project3-monitoring-scrape", "external": True})
+                self.assertEqual(set(config["services"]), {"backend", "redis", "nginx", *(f"api{i}" for i in range(1, count + 1))})
+                for i in range(1, count + 1):
+                    self.assertIn(f"api{i}", config["services"][f"api{i}"]["networks"]["monitoring-scrape"]["aliases"])
+                self.assertEqual(config["services"]["backend"]["networks"]["monitoring-scrape"]["aliases"], ["backend"])
+                self.assertNotIn("monitoring-scrape", config["services"]["redis"].get("networks", {}))
+                self.assertNotIn("monitoring-scrape", config["services"]["nginx"].get("networks", {}))
+
     def test_invalid_count_and_no_unproved_reset(self):
         with tempfile.TemporaryDirectory() as temp:
             for count in (0, 3, 5):

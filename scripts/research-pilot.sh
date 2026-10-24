@@ -7,13 +7,14 @@ LAB_COMPOSE_FILE=
 LAB_HOST_PORT=${LAB_HOST_PORT:-18080}
 REPETITIONS=1
 RUN_ANALYSIS=0
+MONITORING=0
 MIXED_RPS=${MIXED_RPS:-300}
 SELECTED=()
 LAB_OUTPUT=
 
 usage() {
   cat <<'EOF'
-Usage: bash scripts/research-pilot.sh [--output NEW_DIR] [--repetitions 1..3]
+Usage: bash scripts/research-pilot.sh [--output NEW_DIR] [--repetitions 1..3] [--monitoring]
        [--case NAME]... [--analyze] [--host-port 1024..65535]
 Cases: normal, burst-fw, burst-tb, concurrent-local, concurrent-redis,
        scale-1, scale-2, scale-4, mixed-none, mixed-local, mixed-redis, custom.
@@ -32,6 +33,7 @@ while (($#)); do
       esac
       shift 2 ;;
     --analyze) RUN_ANALYSIS=1; shift ;;
+    --monitoring) MONITORING=1; shift ;;
     --help|-h) usage; exit 0 ;;
     *) usage >&2; exit 2 ;;
   esac
@@ -113,7 +115,17 @@ LAB_OUTPUT=$(cd "$LAB_OUTPUT" && pwd)
 
 compose() { docker compose --project-directory "$LAB_ROOT" -f "$LAB_COMPOSE_FILE" -p "$LAB_PROJECT" "$@"; }
 compose_timeout() { local limit=$1; shift; timeout "$limit" docker compose --project-directory "$LAB_ROOT" -f "$LAB_COMPOSE_FILE" -p "$LAB_PROJECT" "$@"; }
-trap lab_cleanup EXIT
+monitoring_path="$LAB_ROOT/artifacts/monitoring/console-targets/active.json"
+monitoring_record=
+monitoring_owner=
+research_cleanup() {
+  local result=$?
+  if ((MONITORING)) && [[ -n "$monitoring_record" ]]; then
+    python3 "$LAB_ROOT/scripts/console-monitoring.py" remove --path "$monitoring_path" --record "$monitoring_record" --owner "$monitoring_owner" || true
+  fi
+  lab_cleanup "$result"
+}
+trap research_cleanup EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 command -v docker >/dev/null
@@ -168,10 +180,17 @@ for case_name in "${SELECTED[@]}"; do
     export FAIL_POLICY
     # Compose performs interpolation and default resolution before topology generation.
     timeout 15s docker compose --project-directory "$LAB_ROOT" -f "$LAB_ROOT/compose.yaml" -p "$LAB_PROJECT" config --format json >"$case_dir/base-resolved.json"
-    timeout 10s python3 "$LAB_ROOT/scripts/render-topology.py" --base-config "$case_dir/base-resolved.json" --output "$case_dir/topology" --instances "$INSTANCES" --host-port "$LAB_HOST_PORT" --fresh-state
+    topology_args=(--base-config "$case_dir/base-resolved.json" --output "$case_dir/topology" --instances "$INSTANCES" --host-port "$LAB_HOST_PORT" --fresh-state)
+    if ((MONITORING)); then topology_args+=(--monitoring); fi
+    timeout 10s python3 "$LAB_ROOT/scripts/render-topology.py" "${topology_args[@]}"
     LAB_COMPOSE_FILE="$case_dir/topology/compose.json"
     cp "$case_dir/topology/policy.json" "$case_dir/policy.json"
     compose_timeout 15s config --format json >"$case_dir/compose-resolved.json"
+    if ((MONITORING)); then
+      monitoring_record="$case_dir/monitoring.json"
+      monitoring_owner="$(basename "$LAB_OUTPUT")-$case_name-$repeat"
+      python3 "$LAB_ROOT/scripts/console-monitoring.py" register --path "$monitoring_path" --record "$monitoring_record" --owner "$monitoring_owner" --instances "$INSTANCES"
+    fi
     LAB_OWNED=1
     compose_timeout 180s up -d --build --force-recreate --wait --wait-timeout 120 >"$case_dir/compose-up.log" 2>&1
     compose_timeout 10s ps >"$case_dir/compose-ps.txt"
@@ -191,6 +210,9 @@ PY
     for ((api=1; api<=INSTANCES; api++)); do
       compose_timeout 10s exec -T "api$api" wget -q -O - http://127.0.0.1:8080/metrics >"$case_dir/api$api-before.json"
     done
+    if ((MONITORING)); then
+      python3 "$LAB_ROOT/scripts/console-monitoring.py" wait --path "$monitoring_path" --record "$monitoring_record" --owner "$monitoring_owner"
+    fi
     sleep 1
     lab_sample "$case_dir"
     args=(-target "http://127.0.0.1:$LAB_HOST_PORT/work" -duration "${DURATION}s" -rps "$RPS" -legitimate-rps "$LEGIT_RPS" -legitimate-clients 5 -max-inflight 200 -timeout 2s -run-id "$case_name-repeat-$repeat" -out "$case_dir/load" -mode "$MODE" -algorithm "$ALGORITHM" -fail-policy "$FAIL_POLICY" -profile "$PROFILE")
@@ -198,6 +220,22 @@ PY
     if [[ "$PROFILE" == concurrent ]]; then args+=(-concurrent-at "${CONCURRENT_AT}s" -concurrent-count "$CONCURRENT_COUNT"); fi
     timeout "$((DURATION + 15))s" "$LAB_OUTPUT/loadgen" "${args[@]}" >"$case_dir/loadgen.log" 2>&1
     lab_stop_sample
+    if ((MONITORING)); then
+      read -r load_start load_end drain_end < <(python3 - "$case_dir/load/summary.json" "$case_dir/load/metadata.json" <<'PY'
+from datetime import datetime, timedelta
+import json, sys
+s=json.load(open(sys.argv[1]))
+m=json.load(open(sys.argv[2]))
+start=datetime.fromisoformat(s['started_at'].replace('Z','+00:00'))
+duration=m['config']['duration_ns']
+load_end=(start+timedelta(microseconds=duration//1000)).isoformat(timespec='milliseconds').replace('+00:00','Z')
+print(s['started_at'], load_end, s['ended_at'])
+PY
+)
+      python3 "$LAB_ROOT/scripts/console-monitoring.py" finish --path "$monitoring_path" --record "$monitoring_record" --owner "$monitoring_owner" --load-start "$load_start" --load-end "$load_end" --drain-end "$drain_end"
+      monitoring_record=
+      monitoring_owner=
+    fi
     compose_timeout 10s exec -T backend wget -q -O - http://127.0.0.1:8080/metrics >"$case_dir/backend-after.json"
     for ((api=1; api<=INSTANCES; api++)); do
       compose_timeout 10s exec -T "api$api" wget -q -O - http://127.0.0.1:8080/metrics >"$case_dir/api$api-after.json"

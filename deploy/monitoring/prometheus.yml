@@ -15,3 +15,9 @@ scrape_configs:
       - targets: [backend:8080]
         labels:
           service: backend
+  - job_name: project3-console-run
+    scrape_interval: 1s
+    metrics_path: /metrics/prometheus
+    file_sd_configs:
+      - files: [/etc/prometheus/console-targets/*.json]
+        refresh_interval: 1s

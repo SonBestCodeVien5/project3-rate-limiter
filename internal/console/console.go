@@ -27,6 +27,7 @@ type Request struct {
 	Case        string        `json:"case"`
 	Repetitions int           `json:"repetitions"`
 	MixedRPS    int           `json:"mixed_rps"`
+	Monitoring  bool          `json:"monitoring,omitempty"`
 	Custom      *CustomConfig `json:"custom,omitempty"`
 }
 
@@ -336,6 +337,9 @@ func (c *Controller) start(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	cmd := exec.Command("bash", c.script, "--output", filepath.Join(dir, "result"), "--case", config.Case, "--repetitions", strconv.Itoa(config.Repetitions), "--analyze")
+	if config.Monitoring {
+		cmd.Args = append(cmd.Args, "--monitoring")
+	}
 	cmd.Dir, cmd.Stdout, cmd.Stderr = c.root, log, log
 	cmd.Env = append(os.Environ(), "MIXED_RPS="+strconv.Itoa(config.MixedRPS))
 	if config.Custom != nil {
@@ -574,7 +578,7 @@ func (c *Controller) metrics(w http.ResponseWriter, req *http.Request) {
 	jsonResponse(w, 200, map[string]any{"sampled_at": time.Now().UTC(), "source": "Docker exec /metrics; cumulative counters since container start", "samples": samples})
 }
 
-var caseArtifacts = []string{"image-inspect.json", "topology/nginx.conf", "images.json", "base-image-digests.txt", "compose-resolved.json", "policy.json", "load/summary.json", "load/metadata.json", "load/requests.jsonl", "analysis.json", "analysis.md", "compose.log", "redis-resources.log", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "api3-before.json", "api3-after.json", "api4-before.json", "api4-after.json", "backend-before.json", "backend-after.json"}
+var caseArtifacts = []string{"image-inspect.json", "topology/nginx.conf", "images.json", "base-image-digests.txt", "compose-resolved.json", "policy.json", "monitoring.json", "load/summary.json", "load/metadata.json", "load/requests.jsonl", "analysis.json", "analysis.md", "compose.log", "redis-resources.log", "api1-before.json", "api1-after.json", "api2-before.json", "api2-after.json", "api3-before.json", "api3-after.json", "api4-before.json", "api4-after.json", "backend-before.json", "backend-after.json"}
 
 func (c *Controller) artifactPaths(r *Run) map[string]string {
 	paths := map[string]string{}

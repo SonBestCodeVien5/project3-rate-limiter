@@ -11,7 +11,7 @@ LAB_SAMPLE_PID=
 compose() { docker compose --project-directory "$LAB_ROOT" -f "$LAB_ROOT/compose.yaml" -p "$LAB_PROJECT" "$@"; }
 compose_timeout() { local limit=$1; shift; timeout "$limit" docker compose --project-directory "$LAB_ROOT" -f "$LAB_ROOT/compose.yaml" -p "$LAB_PROJECT" "$@"; }
 lab_cleanup() {
-  local result=$?
+  local result=${1:-$?}
   trap - EXIT INT TERM
   if [[ -n "$LAB_SAMPLE_PID" ]]; then kill "$LAB_SAMPLE_PID" 2>/dev/null || true; wait "$LAB_SAMPLE_PID" 2>/dev/null || true; fi
   if [[ "$LAB_PAUSED" == 1 ]]; then compose_timeout 10s unpause redis >/dev/null 2>&1 || true; fi

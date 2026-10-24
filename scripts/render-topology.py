@@ -9,7 +9,7 @@ import re
 import sys
 
 
-def render(base, instances, output, host_port, fresh_state=False):
+def render(base, instances, output, host_port, fresh_state=False, monitoring=False):
     if instances not in (1, 2, 4):
         raise ValueError("instances must be 1, 2, or 4")
     if not 1024 <= host_port <= 65535:
@@ -30,7 +30,12 @@ def render(base, instances, output, host_port, fresh_state=False):
         api = copy.deepcopy(api_template)
         api["environment"]["INSTANCE_ID"] = f"api-{number}"
         api.pop("ports", None)
+        if monitoring:
+            api.setdefault("networks", {}).setdefault("monitoring-scrape", {"aliases": []})["aliases"].append(f"api{number}")
         config["services"][f"api{number}"] = api
+    if monitoring:
+        config["services"]["backend"].setdefault("networks", {}).setdefault("monitoring-scrape", {"aliases": []})["aliases"].append("backend")
+        config.setdefault("networks", {})["monitoring-scrape"] = {"name": "project3-monitoring-scrape", "external": True}
     nginx = config["services"]["nginx"]
     nginx["ports"] = [{"mode": "ingress", "target": 8080, "published": str(host_port),
                        "protocol": "tcp", "host_ip": "127.0.0.1"}]
@@ -79,13 +84,14 @@ def main():
     parser.add_argument("--host-port", type=int, default=18080)
     parser.add_argument("--fresh-state", action="store_true",
                         help="assert that the caller creates fresh containers and a new namespace")
+    parser.add_argument("--monitoring", action="store_true", help="attach allowlisted API/backend services to the monitoring scrape network")
     args = parser.parse_args()
     try:
         output = args.output.resolve()
         if output.exists():
             raise ValueError(f"output already exists: {output}")
         base = json.loads(args.base_config.read_text())
-        config, nginx, policy = render(base, args.instances, output, args.host_port, args.fresh_state)
+        config, nginx, policy = render(base, args.instances, output, args.host_port, args.fresh_state, args.monitoring)
         output.mkdir(parents=True, exist_ok=False)
         (output / "compose.json").write_text(json.dumps(config, indent=2) + "\n")
         (output / "nginx.conf").write_text(nginx)

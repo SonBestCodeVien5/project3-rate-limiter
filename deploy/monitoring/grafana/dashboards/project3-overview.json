@@ -15,7 +15,7 @@
       "description": "up chỉ xác nhận scrape endpoint; không xác nhận Redis hoặc /work khỏe.",
       "datasource": {"type": "prometheus", "uid": "project3-prometheus"},
       "gridPos": {"h": 7, "w": 12, "x": 0, "y": 0},
-      "targets": [{"expr": "up{job=\"project3-demo\"}", "legendFormat": "{{service}}", "refId": "A"}],
+      "targets": [{"expr": "up{job=\"$job\"}", "legendFormat": "{{service}}", "refId": "A"}],
       "fieldConfig": {"defaults": {"unit": "short", "min": 0, "max": 1}, "overrides": []},
       "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi", "sort": "none"}}
     },
@@ -24,7 +24,7 @@
       "description": "Counter /work tăng trước validation; gồm request 400 do ID sai. Mỗi API instance là một chuỗi riêng.",
       "datasource": {"type": "prometheus", "uid": "project3-prometheus"},
       "gridPos": {"h": 7, "w": 12, "x": 12, "y": 0},
-      "targets": [{"expr": "sum by (service) (rate(project3_api_requests_total{job=\"project3-demo\"}[20s]))", "legendFormat": "{{service}}", "refId": "A"}],
+      "targets": [{"expr": "sum by (service) (rate(project3_api_requests_total{job=\"$job\"}[$rate_window]))", "legendFormat": "{{service}}", "refId": "A"}],
       "fieldConfig": {"defaults": {"unit": "reqps", "min": 0}, "overrides": []},
       "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi", "sort": "none"}}
     },
@@ -34,10 +34,10 @@
       "datasource": {"type": "prometheus", "uid": "project3-prometheus"},
       "gridPos": {"h": 7, "w": 12, "x": 0, "y": 7},
       "targets": [
-        {"expr": "sum by (service) (rate(project3_limiter_rejected_total{job=\"project3-demo\"}[20s]))", "legendFormat": "{{service}} quota reject", "refId": "A"},
-        {"expr": "sum by (service) (rate(project3_limiter_errors_total{job=\"project3-demo\"}[20s]))", "legendFormat": "{{service}} limiter error", "refId": "B"},
-        {"expr": "sum by (service) (rate(project3_limiter_fail_open_total{job=\"project3-demo\"}[20s]))", "legendFormat": "{{service}} fail-open", "refId": "C"},
-        {"expr": "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"project3-demo\"}[20s]))", "legendFormat": "{{service}} fail-closed", "refId": "D"}
+        {"expr": "sum by (service) (rate(project3_limiter_rejected_total{job=\"$job\"}[$rate_window]))", "legendFormat": "{{service}} quota reject", "refId": "A"},
+        {"expr": "sum by (service) (rate(project3_limiter_errors_total{job=\"$job\"}[$rate_window]))", "legendFormat": "{{service}} limiter error", "refId": "B"},
+        {"expr": "sum by (service) (rate(project3_limiter_fail_open_total{job=\"$job\"}[$rate_window]))", "legendFormat": "{{service}} fail-open", "refId": "C"},
+        {"expr": "sum by (service) (rate(project3_limiter_fail_closed_total{job=\"$job\"}[$rate_window]))", "legendFormat": "{{service}} fail-closed", "refId": "D"}
       ],
       "fieldConfig": {"defaults": {"unit": "reqps", "min": 0}, "overrides": []},
       "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi", "sort": "none"}}
@@ -47,7 +47,7 @@
       "description": "Outbound attempts phía API; không đồng nghĩa backend đã nhận hoặc trả thành công.",
       "datasource": {"type": "prometheus", "uid": "project3-prometheus"},
       "gridPos": {"h": 7, "w": 12, "x": 12, "y": 7},
-      "targets": [{"expr": "sum by (service) (rate(project3_api_backend_attempts_total{job=\"project3-demo\"}[20s]))", "legendFormat": "{{service}}", "refId": "A"}],
+      "targets": [{"expr": "sum by (service) (rate(project3_api_backend_attempts_total{job=\"$job\"}[$rate_window]))", "legendFormat": "{{service}}", "refId": "A"}],
       "fieldConfig": {"defaults": {"unit": "reqps", "min": 0}, "overrides": []},
       "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi", "sort": "none"}}
     },
@@ -57,8 +57,8 @@
       "datasource": {"type": "prometheus", "uid": "project3-prometheus"},
       "gridPos": {"h": 7, "w": 12, "x": 0, "y": 14},
       "targets": [
-        {"expr": "rate(project3_backend_arrivals_total{job=\"project3-demo\",service=\"backend\"}[20s])", "legendFormat": "backend arrivals", "refId": "A"},
-        {"expr": "rate(project3_backend_success_total{job=\"project3-demo\",service=\"backend\"}[20s])", "legendFormat": "backend success", "refId": "B"}
+        {"expr": "rate(project3_backend_arrivals_total{job=\"$job\",service=\"backend\"}[$rate_window])", "legendFormat": "backend arrivals", "refId": "A"},
+        {"expr": "rate(project3_backend_success_total{job=\"$job\",service=\"backend\"}[$rate_window])", "legendFormat": "backend success", "refId": "B"}
       ],
       "fieldConfig": {"defaults": {"unit": "reqps", "min": 0}, "overrides": []},
       "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi", "sort": "none"}}
@@ -68,7 +68,7 @@
       "description": "Backend hết capacity và trả 503. Đây là overload counter, không phải quota reject 429.",
       "datasource": {"type": "prometheus", "uid": "project3-prometheus"},
       "gridPos": {"h": 7, "w": 12, "x": 12, "y": 14},
-      "targets": [{"expr": "rate(project3_backend_overload_total{job=\"project3-demo\",service=\"backend\"}[20s])", "legendFormat": "backend overload", "refId": "A"}],
+      "targets": [{"expr": "rate(project3_backend_overload_total{job=\"$job\",service=\"backend\"}[$rate_window])", "legendFormat": "backend overload", "refId": "A"}],
       "fieldConfig": {"defaults": {"unit": "reqps", "min": 0}, "overrides": []},
       "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi", "sort": "none"}}
     },
@@ -77,9 +77,10 @@
       "description": "Request construction, transport hoặc downstream 5xx. Fail-closed 503 tại API không nằm trong counter này.",
       "datasource": {"type": "prometheus", "uid": "project3-prometheus"},
       "gridPos": {"h": 7, "w": 24, "x": 0, "y": 21},
-      "targets": [{"expr": "sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-demo\"}[20s]))", "legendFormat": "{{service}}", "refId": "A"}],
+      "targets": [{"expr": "sum by (service) (rate(project3_api_backend_errors_total{job=\"$job\"}[$rate_window]))", "legendFormat": "{{service}}", "refId": "A"}],
       "fieldConfig": {"defaults": {"unit": "reqps", "min": 0}, "overrides": []},
       "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "multi", "sort": "none"}}
     }
-  ]
+  ],
+  "templating": {"list":[{"name":"job","label":"Nguồn telemetry","type":"custom","query":"project3-demo,project3-console-run","options":[{"text":"Fixed demo","value":"project3-demo","selected":true},{"text":"Console run","value":"project3-console-run","selected":false}],"current":{"text":"Fixed demo","value":"project3-demo"},"hide":0,"includeAll":false,"multi":false},{"name":"rate_window","label":"Cửa sổ rate","type":"custom","query":"20s,4s","options":[{"text":"20s · fixed","value":"20s","selected":true},{"text":"4s · Console","value":"4s","selected":false}],"current":{"text":"20s · fixed","value":"20s"},"hide":0,"includeAll":false,"multi":false}]}
 }

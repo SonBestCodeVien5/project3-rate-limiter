@@ -63,7 +63,7 @@ func TestRunLifecycleAndArtifacts(t *testing.T) {
 	if got := request(t, h, "GET", "/api/runs/"+run.ID+"/artifacts/request.json", ""); got.Code != 200 {
 		t.Fatalf("artifact: %d", got.Code)
 	}
-	for _, name := range []string{"images.json", "image-inspect.json", "base-image-digests.txt", "topology/nginx.conf"} {
+	for _, name := range []string{"images.json", "image-inspect.json", "base-image-digests.txt", "topology/nginx.conf", "monitoring.json"} {
 		path := filepath.Join(c.runDir(run.ID), "result", "mixed-redis-repeat-1", name)
 		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
 			t.Fatal(err)
@@ -97,6 +97,50 @@ func TestRunLifecycleAndArtifacts(t *testing.T) {
 	loaded, err := New(root)
 	if err != nil || loaded.runs[run.ID].State != "canceled" {
 		t.Fatalf("persisted state: %v %+v", err, loaded)
+	}
+}
+
+func TestMonitoringOptInIsPassedToExistingRunner(t *testing.T) {
+	root := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(root, "scripts"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	capture := filepath.Join(root, "args.txt")
+	script := filepath.Join(root, "scripts", "research-pilot.sh")
+	if err := os.WriteFile(script, []byte("#!/bin/bash\nprintf '%s\\n' \"$@\" >\"$CAPTURE\"\nmkdir -p \"$2\"\nsleep 30\n"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	bin := t.TempDir()
+	if err := os.WriteFile(filepath.Join(bin, "docker"), []byte("#!/bin/sh\nexit 0\n"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	t.Setenv("CAPTURE", capture)
+	c, err := New(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := request(t, c.Handler(), "POST", "/api/runs", `{"case":"mixed-redis","repetitions":1,"mixed_rps":120,"monitoring":true}`)
+	if w.Code != 201 {
+		t.Fatalf("start: %d %s", w.Code, w.Body.String())
+	}
+	deadline := time.Now().Add(2 * time.Second)
+	for time.Now().Before(deadline) {
+		if _, err := os.Stat(capture); err == nil {
+			break
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	args, err := os.ReadFile(capture)
+	if err != nil || !strings.Contains(string(args), "--monitoring") {
+		t.Fatalf("runner args %q, error %v", args, err)
+	}
+	var run Run
+	if err := json.NewDecoder(bytes.NewReader(w.Body.Bytes())).Decode(&run); err != nil {
+		t.Fatal(err)
+	}
+	if got := request(t, c.Handler(), "POST", "/api/runs/"+run.ID+"/cancel", `{}`); got.Code != 202 {
+		t.Fatalf("cancel: %d %s", got.Code, got.Body.String())
 	}
 }
 
