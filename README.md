@@ -4,11 +4,11 @@ Project nghiên cứu Fixed Window và Token Bucket trên nhiều API instance, 
 
 Bắt đầu ở [hướng dẫn đọc tài liệu](docs/README.md). Tài liệu nguồn trên Drive là căn cứ yêu cầu; [thiết kế triển khai](docs/IMPLEMENTATION.md) ghi lựa chọn kỹ thuật. [Roadmap](docs/PROJECT_ROADMAP.md) là lộ trình học đề xuất. Trạng thái task ở [kế hoạch còn lại](docs/REMAINING_WORK_PLAN.md); cổng đo ở [readiness](docs/experiments/PROTOCOL_READINESS.md).
 
-**Trạng thái 23/10/2026:** T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng/rubric chờ. T12 gói demo/source đã kiểm tra; T13 chưa có deck PowerPoint. P2-01 thêm `GET /metrics/prometheus`, giữ JSON `GET /metrics`; P2-02 là bước kế tiếp. Chưa có scrape/runtime stack. G2–G4 chưa được cấp quyền.
+**Trạng thái 24/10/2026:** T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng/rubric chờ. T12 gói demo/source đã kiểm tra; T13 chưa có deck PowerPoint. P2-03 metrics/Grafana trên stack cố định đã được kiểm tra; Console gửi một request mẫu tới stack này, nhưng nút **Chạy benchmark** vẫn chạy project research riêng. P2-03A là đề xuất chưa triển khai cho luồng Console chạy demo tải và quan sát trên cùng dashboard. Xem [sổ P2](docs/monitoring/PHASE2_PLAN.md) để biết trạng thái/gate. Nếu cần chạy app cùng monitoring, theo [runbook monitoring](docs/monitoring/RUNBOOK.md).
 
-## Chạy prototype
+## Chạy prototype (base Compose, không gồm monitoring)
 
-Cần Go 1.26.1 trở lên, Docker Compose, Bash, curl và GNU `timeout`.
+Các lệnh dưới đây chỉ chạy prototype bằng base Compose; chúng không khởi động Prometheus/Grafana. Muốn chạy app cùng monitoring, dùng riêng [runbook monitoring](docs/monitoring/RUNBOOK.md). Cần Go 1.26.1 trở lên, Docker Compose, Bash, curl và GNU `timeout`.
 
 ```bash
 docker compose up -d --build --wait

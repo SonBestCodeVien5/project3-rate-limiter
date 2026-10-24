@@ -31,6 +31,8 @@ Thứ tự ưu tiên hiện hành: `P2-01 → P2-02 → P2-03 → P2-03A → P2-
 
 Đọc yêu cầu hiện hành để xác định các cổng đã được bao phủ. Nếu người dùng đã cho phép một hành động trong giới hạn cụ thể, không hỏi lại cho từng lệnh trong phạm vi đó. Nếu yêu cầu chỉ bao phủ tài liệu hoặc code, dừng trước runtime tương ứng. Kế hoạch không tự cấp quyền.
 
+Người dùng có thể cấp G1, G2 và G3 cùng lúc trong một yêu cầu rõ ràng, kèm phạm vi và ngân sách cần thiết; khi các bước đã nằm trong phạm vi đó, không hỏi lại cho từng thao tác. Hiện P2-03A chưa được cấp gate nào; nội dung kế hoạch không tự cấp quyền runtime.
+
 ## Task registry
 
 Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không thay xác nhận học.
