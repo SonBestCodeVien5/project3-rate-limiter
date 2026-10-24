@@ -1,6 +1,6 @@
 # Session checkpoint
 
-## P2-03A redirected to existing Console benchmark monitoring; docs only — 2026-10-24
+## Whole-P2 plan aligned with existing Console benchmark monitoring; docs only — 2026-10-24
 
 The user challenged the proposed second monitored-demo flow: the intended outcome
 is to monitor the **existing Console benchmark**, not introduce another run path.
@@ -12,6 +12,22 @@ documentation-only scope. The separate-demo recommendation in `edbddaf` and
 
 **Planning revisions:** `96e832c` updates the registry, design, runbook, learning
 guide, Console/demo guides and navigation; `12c2c90` corrects scrape timing bounds.
+At the user's explicit request to review **all P2**, `ad8ca22` adds the registry's
+[whole-P2 impact map](../monitoring/PHASE2_PLAN.md#bản-đồ-tác-động-toàn-p2) and aligns
+DESIGN, RUNBOOK and LEARNING_GUIDE. P2-01 metrics/schema are reused unchanged;
+P2-02 stack/provisioning and P2-03 seven panels/UIDs are retained with planned
+network/target/query/context extensions. Their original evidence proves only the
+fixed stack and is not invalidated or relabeled as Console integration evidence.
+The review found and corrected downstream fixed-only log filters in P2-04/05 and
+the wrong Redis ownership assumption in P2-07. `scripts/redis-outage.sh` creates
+its own `project3-outage-$$` and load path, so it cannot be used as-is for the
+Console-run outage case. P2-07 stays optional/blocked pending a safe same-runner
+fault hook; its four cases/30s/20RPS/one-attempt/one-2s-pause bounds are unchanged.
+P2-08 now distinguishes fixed and research fallbacks, run/UTC context, recovery
+and cleanup. Alloy/Loki and full monitoring are not implemented by these docs.
+Worker checked links including fragments, whitespace and staged diffs. The docs
+are a scoped implementation handoff; unverified timing/network/lifecycle choices
+still require G1 focused checks and authorized G2/G3 verification, not blind use.
 P2-03A stays proposed/not started and prioritized before P2-04/05. It keeps the
 current Console run controls, research
 runner, generator, traffic path and monitoring-off behavior. The recommendation
