@@ -4,7 +4,7 @@ Project nghiên cứu Fixed Window và Token Bucket trên nhiều API instance, 
 
 Bắt đầu ở [hướng dẫn đọc tài liệu](docs/README.md). Tài liệu nguồn trên Drive là căn cứ yêu cầu; [thiết kế triển khai](docs/IMPLEMENTATION.md) ghi lựa chọn kỹ thuật. [Roadmap](docs/PROJECT_ROADMAP.md) là lộ trình học đề xuất. Trạng thái task ở [kế hoạch còn lại](docs/REMAINING_WORK_PLAN.md); cổng đo ở [readiness](docs/experiments/PROTOCOL_READINESS.md).
 
-**Trạng thái 24/10/2026:** T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng/rubric chờ. T12 gói demo/source đã kiểm tra; T13 chưa có deck PowerPoint. P2-03 metrics/Grafana trên fixed stack đã được kiểm tra; Console request mẫu tới stack này, còn **Chạy benchmark** chạy project research riêng và chưa được scrape. P2-03A đề xuất opt-in scrape cho chính nút **Chạy benchmark** hiện có, chưa triển khai/cấp quyền. Xem [sổ P2](docs/monitoring/PHASE2_PLAN.md) để biết trạng thái/gate. Nếu cần chạy app cùng monitoring, theo [runbook monitoring](docs/monitoring/RUNBOOK.md).
+**Trạng thái 24/10/2026:** T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng/rubric chờ. T12 gói demo/source đã kiểm tra; T13 chưa có deck PowerPoint. P2-03 fixed metrics/Grafana đã kiểm tra. P2-03A đã có monitoring opt-in trên **Chạy benchmark**, nhưng attempt G3 duy nhất thất bại trước loadgen; Console→Grafana acceptance và P2-06 coverage còn pending, không retry trong phiên. Xem [sổ P2](docs/monitoring/PHASE2_PLAN.md) để biết trạng thái/gate. Nếu cần chạy app cùng monitoring, theo [runbook monitoring](docs/monitoring/RUNBOOK.md).
 
 ## Chạy prototype (base Compose, không gồm monitoring)
 

@@ -1,5 +1,91 @@
 # Session checkpoint
 
+## P2-03A implemented; sole Console acceptance attempt failed before load — 2026-10-24
+
+The user resumed **P2-03A only**, explicitly authorizing G1 implementation, G2
+owned inspection/build/start/reload/health/scrape/browser, and exactly **one G3
+attempt through the existing Console benchmark UI**. No `/work` probes or setup
+workloads, retry, additional case, P2-04 onward, Loki/Alloy, Redis outage, T09/T10
+rerun or push were authorized or performed. Stop here with acceptance incomplete.
+
+**Code commits:** `18f4e287` (Luna G1 opt-in Console/runner/file_sd/dashboard),
+`5862b90` (Luna target aliases, safe publication/ownership, registration after
+healthy, post-lookback UP and strictly post-drain scrape), `b4b3f3c` (Luna manifest
+0644 + preflight/runbook after the failed attempt), and `30fb223` (Luna fixed
+API/backend restored to default network with unique fixed aliases). No second
+load workflow was introduced. JSON `/metrics`, opt-out, runner lock/cancel/cleanup
+and stable dashboard/folder/datasource UIDs remain. Focused worker checks passed:
+Console Go, JS 6/6, final lifecycle 9/9, final topology/static merged Compose 5/5,
+shell syntax, Python compile, relevant links/whitespace/config. Root did not repeat
+the worker code suite. Default Go cache/mock listener sandbox failures and skips
+are recorded in evidence.
+
+**Actual G3:** Run `20261024T145701-272e462e6502`, clean source
+`5862b90087f3e684a1ece7907fe2ba67d482d3a9`, one UI click/POST, HTTP 201. Request
+and effective config match custom normal/all legitimate, Redis shared state,
+Fixed Window/fail-closed, 2 API, quota 20/1s, backend capacity 4/service 50ms,
+20 RPS/30s/1 repeat. Submit `2026-10-24T14:57:01.783553281Z`; registration record
+`14:57:23.430Z`, incomplete/deregistered `14:57:23.553Z`; failed/cleanup completed
+`14:57:26.260650641Z`. Publishing manifest failed because its directory belonged
+to UID 65534 rather than runner UID 1000. **Loadgen never started.** No summary,
+trace, sent/drop result, research API/backend samples, load/drain/final-scrape
+bounds or completed-case Grafana link exist. Do not substitute zero drops or setup
+UTC for load UTC. No retry was made; P2-06 coverage remains pending.
+
+**G2 and recovery:** The original runtime worker became unresponsive in Playwright
+MCP; root verified even tab listing stalled and interrupted it, confirmed today
+run count 0/read-only and no research containers, then explicitly took over browser
+integration using already-installed local Playwright/Chromium. A distinct narrow
+Luna repair worker handled concrete code/config defects; root integrated runtime.
+Local browser verified dashboard list, folder navigation and seven fixed panels;
+11 unique expressions returned data, no query/JavaScript errors or No data. Initial
+login hydration/selector timeouts occurred before any benchmark submission.
+Promtool config syntax passed, warning only that no active file_sd JSON existed.
+Fixed JSON endpoint retains 17 fields, final `/work` counters 0.
+
+After the failed attempt, root repaired **only** the task's registration directory
+to 1000:1000/0755. Code creates 0644 manifests; Prometheus successfully read a helper
+publication at `.permission-check`, outside the `*.json` discovery glob, then the
+owned test file was removed. This was G2 file-permission verification, not target
+registration or a second workload. Intermediate alias config accidentally removed
+fixed apps from default network; Nginx health 502/DNS reload failure was diagnosed,
+fixed by `30fb223`, then root recreated only the four fixed app/Nginx services.
+Final seven monitoring services healthy, three fixed scrape targets UP. Research
+queries remain empty; research panels, UTC link and 1s/4s timing candidates are
+**not runtime-accepted**. Actual cancel/kill/stale recovery remained mock-only.
+
+**Evidence commit:** `0230a01`, [checks](../../artifacts/monitoring/p2-03a-console/checks.md),
+[outcome](../../artifacts/monitoring/p2-03a-console/outcome.json),
+[commands](../../artifacts/monitoring/p2-03a-console/commands.md),
+[checksums](../../artifacts/monitoring/p2-03a-console/SHA256SUMS).
+The 70 selected checksums verified. Manifest SHA-256:
+`cb8d773a28962201ec79eb012e9fcf72ca3529cfef7fc5daf39aa57553b50bee`.
+Source/dirty state, actual image IDs/digests, effective config/topology, screenshots,
+UTC bounds, failure and cleanup are retained. Raw Docker trailing whitespace and
+images JSON terminal newline are preserved; prose/code whitespace checks pass.
+Unselected exploratory files and private MCP originals remain ignored. No T09/T10
+artifact, source revision or conclusion was changed.
+
+**Credential incident:** MCP form-fill echoed the reused Grafana password in a tool
+result. Root informed the user, did not repeat it, did not change credentials, and
+verified no exact-password match in selected evidence or task diff. Temporary local
+browser auth state was removed, never committed. Rotate the password separately
+after this session; do not claim the tool disclosure never occurred.
+
+**Remaining resources:** `project3-monitoring-demo` Redis/backend/api1/api2/Nginx/
+Prometheus/Grafana, default + monitoring-owned scrape network, both original named
+volumes preserved. Console from this task remains on 127.0.0.1:8090; Grafana 13000,
+Prometheus 19090. No research containers or active target manifest remain. Stop
+Console with the recorded [process-group SIGTERM command](../../artifacts/monitoring/p2-03a-console/console-stop-command.txt).
+Stop monitoring from repo root with the existing secret-file env and
+`docker compose -p project3-monitoring-demo -f compose.yaml -f compose.observability.yaml down`;
+keep volumes; no `-v`, prune or FLUSHDB. Unrelated resources were preserved.
+
+**Exact next prerequisite:** a new explicit G3 scope/attempt for **P2-03A** using the
+fixed code and existing Console UI. G1 and fixed G2 do not satisfy Console→Grafana
+acceptance. Do not proceed to P2-04 or retry under this exhausted budget. Technical
+checks do not confirm user learning. Baseline limitations remain unchanged.
+
 ## Whole-P2 plan aligned with existing Console benchmark monitoring; docs only — 2026-10-24
 
 The user challenged the proposed second monitored-demo flow: the intended outcome
