@@ -27,6 +27,25 @@ export GRAFANA_ADMIN_PASSWORD_FILE="$PWD/.secrets/grafana_admin_password"
 
 Lệnh sau resolve base và overlay, không khởi động service. Khai báo biến password file theo bước trên trước khi chạy.
 
+### Quyền thư mục `file_sd`
+
+Trước khi bật Compose monitoring, tạo và kiểm tra thư mục host được mount vào Prometheus. File target chỉ chứa alias và labels, nhưng Prometheus chạy với UID `nobody` nên manifest cần quyền đọc cho mọi user. Runner cũng kiểm tra thư mục do user hiện tại sở hữu, đọc/ghi/traverse được trước khi khởi chạy research resources; khi monitoring tắt, bước này không chạy.
+
+```bash
+target_dir=artifacts/monitoring/console-targets
+mkdir -p "$target_dir"
+stat -c '%U:%G %a %n' "$target_dir"
+test -O "$target_dir" && test -r "$target_dir" && test -w "$target_dir" && test -x "$target_dir"
+```
+
+Nếu thư mục cụ thể này bị Docker tạo thành `root`-owned, trước hết xác nhận không có runner đang hoạt động và không còn `active.json`; chỉ sửa quyền sở hữu chính thư mục đó, không dùng `-R` hoặc chmod/chown thư mục cha:
+
+```bash
+sudo chown "$(id -u):$(id -g)" artifacts/monitoring/console-targets
+```
+
+Không xóa hoặc đổi quyền một manifest còn hoạt động. Runner từ chối khởi chạy opt-in nếu ownership/quyền không đạt; thông báo lỗi trỏ về mục này.
+
 ```bash
 # Xem trạng thái nguồn trước khi sửa hoặc chụp evidence.
 git status --short

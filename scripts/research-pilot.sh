@@ -110,12 +110,19 @@ flock -n 9 || { echo 'research pilot already running' >&2; exit 1; }
 
 if [[ -z "$LAB_OUTPUT" ]]; then LAB_OUTPUT="$LAB_ROOT/artifacts/research-pilot-$(date -u +%Y%m%dT%H%M%S)-$$"; fi
 [[ ! -e "$LAB_OUTPUT" ]] || { echo "output already exists: $LAB_OUTPUT" >&2; exit 2; }
+monitoring_path="$LAB_ROOT/artifacts/monitoring/console-targets/active.json"
+if ((MONITORING)); then
+  monitoring_dir=$(dirname "$monitoring_path")
+  if ! mkdir -p "$monitoring_dir" || [[ ! -O "$monitoring_dir" || ! -r "$monitoring_dir" || ! -w "$monitoring_dir" || ! -x "$monitoring_dir" ]]; then
+    echo "monitoring target directory must be owned by this user and readable/writable; see docs/monitoring/RUNBOOK.md#file_sd-directory-permissions" >&2
+    exit 1
+  fi
+fi
 mkdir -p "$LAB_OUTPUT"
 LAB_OUTPUT=$(cd "$LAB_OUTPUT" && pwd)
 
 compose() { docker compose --project-directory "$LAB_ROOT" -f "$LAB_COMPOSE_FILE" -p "$LAB_PROJECT" "$@"; }
 compose_timeout() { local limit=$1; shift; timeout "$limit" docker compose --project-directory "$LAB_ROOT" -f "$LAB_COMPOSE_FILE" -p "$LAB_PROJECT" "$@"; }
-monitoring_path="$LAB_ROOT/artifacts/monitoring/console-targets/active.json"
 monitoring_record=
 monitoring_owner=
 research_cleanup() {

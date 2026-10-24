@@ -68,6 +68,7 @@ def register(args):
         tmp = Path(manifest.name)
         manifest.write(json.dumps(targets, indent=2) + "\n")
     try:
+        tmp.chmod(0o644)
         os.link(tmp, args.path)
     finally:
         tmp.unlink(missing_ok=True)

@@ -5,6 +5,7 @@ import importlib.util
 import json
 from datetime import datetime
 from pathlib import Path
+import stat
 import tempfile
 import time
 from unittest.mock import patch
@@ -38,6 +39,10 @@ class ConsoleMonitoringTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "stale or active"):
             self.register()
         self.assertEqual(json.loads(self.path.read_text()), [{"stale": True}])
+
+    def test_registered_file_sd_manifest_is_readable_by_prometheus(self):
+        self.register()
+        self.assertEqual(stat.S_IMODE(self.path.stat().st_mode), 0o644)
 
     def test_previous_scrape_series_block_registration(self):
         args = type("Args", (), {"path": self.path, "record": self.record, "owner": "run1",
