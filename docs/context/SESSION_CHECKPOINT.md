@@ -1,5 +1,54 @@
 # Session checkpoint
 
+## P2-03A redirected to existing Console benchmark monitoring; docs only — 2026-10-24
+
+The user challenged the proposed second monitored-demo flow: the intended outcome
+is to monitor the **existing Console benchmark**, not introduce another run path.
+Root confirmed there is no technical requirement to clone the workflow: the
+current obstacle is fixed Prometheus targets/network versus per-case research
+stack lifecycle. The same Luna planning worker revised docs within the existing
+documentation-only scope. The separate-demo recommendation in `edbddaf` and
+`713d1ed` and the earlier checkpoint section below is superseded by this section.
+
+**Planning revisions:** `96e832c` updates the registry, design, runbook, learning
+guide, Console/demo guides and navigation; `12c2c90` corrects scrape timing bounds.
+P2-03A stays proposed/not started and prioritized before P2-04/05. It keeps the
+current Console run controls, research
+runner, generator, traffic path and monitoring-off behavior. The recommendation
+adds explicit monitoring opt-in for new runs, allowlisted API/backend `file_sd`
+registration and a monitoring-owned scrape network. Prometheus/Grafana receive no
+Docker socket or broad automatic project discovery. Dashboard selection separates
+fixed job `project3-demo` from research job `project3-console-run`; stable dashboard,
+folder and datasource UIDs are preserved. Lifecycle hooks register the exact case,
+observe baseline/final samples, deregister targets and retain runner-owned cleanup.
+Artifacts record UTC load bounds separately from telemetry observation, effective
+config/topology, source/dirty state, images and instrumentation changes. Exact UTC
+load bounds stay in Grafana links; proposed no-work pre-observation isolates the
+rate lookback before load and is recorded separately from benchmark duration.
+Old runs and T09/T10 evidence are not retroactively monitored or reclassified.
+
+The proposed G3 acceptance must start a monitored run using the **existing Console
+benchmark action** and verify its API/backend metrics in Grafana, including case
+selection, cancellation and cleanup. One request to the fixed stack is insufficient.
+Future P2-06 uses the same monitored runner/topology for a consistent suite of at
+most six normal/mixed × none/local/Redis cases, up to 30s/case and 120 RPS, one
+attempt each. G3 counts toward that suite only when its declared configuration,
+workload, source, topology and instrumentation match; otherwise it is not a
+comparable cell and coverage remains pending, without an automatic seventh run.
+
+G1/G2/G3 are explicit scopes and may be authorized together once; none is granted
+by this documentation correction. All numerical timing candidates still require
+verification; short runs can lack rate samples and missing data stays missing.
+No code/config changes, tests, Docker/browser actions, requests, load, service
+changes, evidence rewrite, Drive sync or push were performed. Worker checked
+Markdown links, whitespace and staged diffs. Existing runtime state was not
+rechecked; preserve the user's running stack until asked to operate it.
+
+**Next prerequisite:** request P2-03A G1 implementation against the revised
+existing-runner plan; include bounded G2/G3 only if runtime is also requested.
+Resume from PROJECT_BRIEF and the active P2 registry/design/runbook, not the
+superseded separate-demo proposal. Stop after this docs-only correction.
+
 ## Console-to-Grafana workflow planned; stop before P2-03A implementation — 2026-10-24
 
 The user explicitly requested **documentation and planning only**, delegated to a
@@ -24,7 +73,7 @@ The current sample-request button sends one request to the monitored stack; it i
 not an implemented Console load mode. This is an engineering recommendation in
 the plan, not approval to implement or a claim that the integration already works.
 
-The [P2-03A package](../monitoring/PHASE2_PLAN.md#p2-03a--console-demo-có-giám-sát-đề-xuất-chưa-được-cấp)
+The [P2-03A package](../monitoring/PHASE2_PLAN.md)
 owns dependencies, file touchpoints, gates and acceptance. It covers verified
 effective mode/policy/quota/topology (not form defaults), project/port ownership,
 allowlisted runtime configuration, one generator at a time, cancellation without
