@@ -34,6 +34,18 @@ Roadmap minh họa một lớp kiểm soát lưu lượng trước backend; Prop
 
 Sliding Window, dashboard/quản trị policy, Redis Cluster, gateway hoàn chỉnh, service mesh, Kubernetes/cloud production và hệ thống sẵn sàng cao không thuộc phạm vi cần để trả lời câu hỏi hiện tại. Có thể xem xét như hướng phát triển sau khi baseline được đánh giá.
 
+### Cơ sở lý thuyết và công trình liên quan
+
+**Token Bucket và burst.** RFC 3290, phụ lục A.2, mô tả traffic phù hợp bucket bằng cận `B + R × t` trong khoảng thời gian `t`. Project chuyển đơn vị từ lượng dữ liệu sang request, với chi phí mỗi request bằng 1; đây là lựa chọn mô hình của prototype. Cận này giải thích vì sao TB có thể nhận burst mà vẫn bị giới hạn theo tốc độ dài hạn. RFC thuộc loại Informational, không phải tiêu chuẩn bắt buộc cho API. [Bernet và cộng sự, 2002](https://www.rfc-editor.org/rfc/rfc3290.html#appendix-A.2)
+
+**Fixed Window trong prototype.** Theo [policy triển khai](IMPLEMENTATION.md#policy), mỗi key được nhận tối đa Q request trong từng cửa sổ epoch dài W. Suy ra, nếu Q request đến ngay trước biên và Q request đến ngay sau biên, có thể nhận 2Q trong một khoảng ngắn cắt qua biên mà không vi phạm policy FW. Đây là ví dụ suy luận từ định nghĩa, không phải kết quả T09. Vì vậy, đặt `B=Q` và `r=Q/W` chỉ khớp tốc độ dài hạn mục tiêu; không đồng nhất burst semantics của FW và TB.
+
+**Quota chung trên nhiều nơi xử lý.** Raghavan và cộng sự nghiên cứu các limiter phối hợp để áp một giới hạn băng thông toàn cục, với đánh đổi giữa chi phí trao đổi thông tin, độ chính xác và scaling. Công trình đặt nền cho câu hỏi local/shared state của dự án. Project 3 dùng Redis shared state cho quota request trên một host; không tái triển khai các thuật toán điều phối băng thông của bài báo hoặc so sánh trực tiếp số đo giữa hai hệ thống. [Raghavan và cộng sự, SIGCOMM 2007, mục 1–3](https://cseweb.ucsd.edu/~kvishwanath/papers/fp076-raghavan.pdf)
+
+**Độ trễ ở phần đuôi phân phối.** Dean và Barroso chỉ ra biến thiên độ trễ có thể ảnh hưởng mạnh tới dịch vụ lớn, đặc biệt khi một request chờ nhiều thành phần. Điều này hỗ trợ việc quan sát p95/p99 bên cạnh thông lượng; không chứng minh limiter của Project 3 cải thiện độ trễ. Prototype không có topology fan-out của bài báo. RQ5 phải đọc latency của successful legitimate requests cùng goodput và lỗi, vì request thất bại không thuộc tập percentile đó. [Dean và Barroso, 2013, tr. 74–76](https://www.barroso.org/publications/TheTailAtScale.pdf)
+
+Từ các cơ sở trên, đóng góp của Project 3 là bộ đối chứng thực nghiệm có thể truy nguyên cho FW/TB, local/Redis và backend protection trong testbed giới hạn. Lua là lựa chọn để thực hiện quyết định quota atomic; độ đúng của policy, hành vi outage và hiệu năng vẫn cần evidence riêng. Tài liệu bên ngoài giải thích khái niệm và cách đặt câu hỏi, không thay kết quả T06/T09/T10.
+
 ## 4. Giải pháp và mô hình thử nghiệm
 
 Prototype gồm load generator, Nginx phân phối vòng tròn, hai API instance, Redis shared state và backend mô phỏng có giới hạn xử lý đồng thời. Chế độ `none` làm baseline; `local` và `redis` lần lượt biểu diễn local state của từng API instance và shared state. Hai thuật toán có cách hoạt động khác nhau: Fixed Window đặt lại quota ở ranh giới cửa sổ; Token Bucket cho phép tải đột biến tối đa theo dung lượng bucket và được nạp lại theo thời gian. Cấu hình pilot mặc định không làm cho hai thuật toán có cách xử lý tải đột biến tương đương.
@@ -106,18 +118,21 @@ FW correctness oracle còn inconclusive; Redis network là tổng traffic chứ 
 
 Trong phạm vi prototype, kết quả mixed cho thấy các cấu hình limiter đo được giảm backend overload và tăng goodput khách hợp lệ so với none; kết quả 250 RPS bị giới hạn bởi backend mô phỏng, và FW correctness chưa được xác nhận. Các số này không xác lập lựa chọn phổ quát giữa thuật toán hoặc state mode.
 
-Hướng phát triển là hoàn tất tài liệu tham khảo học thuật và chỉnh báo cáo theo rubric/phản hồi khi được cung cấp; giữ rõ giới hạn correctness, outage, clock và backend. Sliding Window, dashboard hoặc nền tảng kiểm soát lưu lượng rộng hơn là tùy chọn sau baseline, không phải kết luận bắt buộc từ dữ liệu này.
+Bản nháp đã bổ sung cơ sở lý thuyết và công trình liên quan; bước hoàn thiện là đối chiếu rubric/phản hồi khi được cung cấp và giữ rõ giới hạn correctness, outage, clock và backend. Sliding Window, dashboard hoặc nền tảng kiểm soát lưu lượng rộng hơn là tùy chọn sau baseline, không phải kết luận bắt buộc từ dữ liệu này.
 
 ## 7. Việc còn lại cho bản nộp
 
 - Đối chiếu yêu cầu hình thức/rubric và phản hồi giảng viên khi được cung cấp; xác nhận ngày nộp/bảo vệ. Không suy đoán rubric hoặc ngày chính thức.
-- Bổ sung nguồn học thuật đã đọc và xác minh cho phần nền tảng; H01 phần tự kiểm tra kiến thức do người học hoàn tất.
+- Người học đọc các mục nguồn được dẫn trong phần cơ sở lý thuyết, tự giải thích liên hệ và giới hạn; H01 vẫn cần người học xác nhận. Hoàn thiện định dạng trích dẫn theo yêu cầu nộp.
 - Đồng bộ báo cáo với slide/demo sau các phần việc được phép tiếp tục; xem [kế hoạch còn lại](REMAINING_WORK_PLAN.md).
 
 ## Tài liệu tham khảo
 
-Các khái niệm rate limiting và lý do chọn các biến đo cần gắn với nguồn học thuật sau khi người viết đã đọc và xác định đúng ấn phẩm. Tài liệu Redis dưới đây chỉ hỗ trợ tuyên bố semantics triển khai; không thay thế nguồn học thuật hoặc kết quả thí nghiệm.
+Các nguồn dưới đây đã được đối chiếu ở những mục được viện dẫn ngày 25/10/2026. Hai bài báo cung cấp bối cảnh nghiên cứu; RFC cung cấp mô hình Token Bucket; tài liệu Redis giải thích semantics triển khai. Không dùng số đo của các nguồn làm bằng chứng cho prototype.
 
-1. Redis, [“Scripting with Lua”](https://redis.io/docs/latest/develop/programmability/eval-intro/). Tài liệu chính thức mô tả script atomic và blocking; đây là nguồn cho semantics được viện dẫn ở phần lựa chọn kỹ thuật, không phải bằng chứng thực nghiệm của dự án.
+1. Yoram Bernet, Steven Blake, Daniel Grossman và Andrew Smith. *An Informal Management Model for Diffserv Routers*. RFC 3290, Informational, tháng 5/2002, phụ lục A.2. [Bản RFC](https://www.rfc-editor.org/rfc/rfc3290.html#appendix-A.2).
+2. Barath Raghavan, Kashi Vishwanath, Sriram Ramabhadran, Kenneth Yocum và Alex C. Snoeren. *Cloud Control with Distributed Rate Limiting*. ACM SIGCOMM, 2007, mục 1–3. [Bản tác giả](https://cseweb.ucsd.edu/~kvishwanath/papers/fp076-raghavan.pdf).
+3. Jeffrey Dean và Luiz André Barroso. *The Tail at Scale*. Communications of the ACM, 56(2), 2013, tr. 74–80. DOI: `10.1145/2408776.2408794`. [Bản tác giả](https://www.barroso.org/publications/TheTailAtScale.pdf).
+4. Redis. *Scripting with Lua*. Tài liệu chính thức, phần mở đầu về atomic/blocking execution. [Tài liệu](https://redis.io/docs/latest/develop/programmability/eval-intro/).
 
-Danh mục này còn sơ bộ; bổ sung nguồn thuật toán/queueing chỉ khi phần tổng quan thực sự dùng các khẳng định cần trích dẫn, và hoàn thiện định dạng theo rubric khi được cung cấp.
+Định dạng danh mục còn chờ rubric; việc đối chiếu nguồn trong bản nháp không thay xác nhận kiến thức H01 của người học.
