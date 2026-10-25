@@ -1,5 +1,20 @@
 # Session checkpoint
 
+## Proposal Drive/repo comparison — 2026-10-25
+
+User asked whether the repository proposal matches the Drive submission copy.
+Read Drive metadata and full readable text for `1Z1N6JJPsmAolE4UiOvVVONA-g32LCQosSt7WlyvSwdE`.
+Sections 1–11 equal `docs/PROPOSAL.md` after normalizing Markdown, whitespace
+and link markup (8,886 characters each); introductory draft notes differ slightly.
+Personal fields remain blank. Earlier suggested submission polish has not been
+applied to either proposal; report references are separate from this document.
+
+Drive modified time is `2026-10-25T03:11:43.526Z`, newer than the indexed
+`03:05:39.620Z`. Applied sync-project-context to correct only this source time;
+no changed requirements, abridged-note content, active brief or experiment-spec
+changes needed. Other sources were not fetched again. No Drive writes, sharing
+changes, export or submission; PDF pagination was not checked. No tests needed.
+
 ## P2-05 technically complete: Console lifecycle and cancellation fix — 2026-10-25
 
 User requested completing the remaining P2-05 criteria after normal-run,
