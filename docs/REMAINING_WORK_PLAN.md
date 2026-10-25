@@ -1,6 +1,6 @@
 # Công việc còn lại và trạng thái Project 3
 
-**Hiện trạng 23/10/2026:** T09/T10 đã hoàn tất. T11 đã tích hợp bản nháp; định dạng cuối/rubric còn chờ. T12 demo/source đã kiểm tra; T13 chưa có PowerPoint. P2-01 hoàn tất; P2-02 là gói kế tiếp nhưng chưa được yêu cầu. Phiên hiện tại chỉ cho phép tài liệu: không có quyền chạy tải, stack, smoke runtime hay Redis outage.
+**Hiện trạng baseline 25/10/2026:** T09/T10 đã hoàn tất. T11 đã tích hợp bản nháp; định dạng cuối/rubric còn chờ. T12 demo/source đã kiểm tra; T13 chưa có PowerPoint. Trạng thái, gói tiếp theo và cổng quyền của monitoring chỉ được quản lý tại [sổ P2](monitoring/PHASE2_PLAN.md). Tài liệu này không cấp quyền chạy tải, stack, smoke runtime hay Redis outage.
 
 ## Việc đang chờ
 
@@ -10,7 +10,7 @@
 | T13 slide/bảo vệ | Có nội dung slide; Canva trả HTTP 429, chưa có deck hoặc buổi diễn tập | Tạo deck theo template khi Canva/giải pháp dựng dùng được; kiểm tra format và diễn tập |
 | H01 kiến thức | Người học chưa xác nhận tự kiểm tra | Tự trả lời câu hỏi trong [lộ trình học/bảo vệ](PROJECT_ROADMAP.md) |
 | H02 hành chính | Ngày chính thức, rubric và yêu cầu hình thức còn chờ | Xác nhận với giảng viên; không suy đoán hoặc tự gửi liên hệ |
-| P2 | P2-01 xong; P2-02 chưa bắt đầu | Xem [sổ P2](monitoring/PHASE2_PLAN.md); cần yêu cầu mới cho G1. G2–G4 chưa được cấp |
+| P2 | Nhánh monitoring/demo riêng; trạng thái tại [sổ P2](monitoring/PHASE2_PLAN.md) | Chọn gói và cổng quyền theo registry cùng yêu cầu hiện hành; không suy quyền từ kế hoạch baseline |
 
 T09/T10 không có lượt đo nào đang mở. Đừng chạy lại hoặc ghép telemetry P2 vào bằng chứng nghiên cứu. Cổng và protocol đo ở [readiness](experiments/PROTOCOL_READINESS.md); chỉ mở [checkpoint](context/SESSION_CHECKPOINT.md) khi cần revision, artifact hoặc kiểm tra của phiên trước.
 
@@ -38,7 +38,7 @@ Giữ phạm vi: Fixed Window/Token Bucket; local/Redis shared state; concurrenc
 
 ## Khi tiếp tục
 
-- Gói kỹ thuật P2 tiếp theo là **P2-02** (Compose overlay, Prometheus/Grafana, provisioning); cần yêu cầu mới bao phủ G1. Đọc [sổ P2](monitoring/PHASE2_PLAN.md) và đúng phần [design](monitoring/DESIGN.md), [runbook](monitoring/RUNBOOK.md) hoặc [learning guide](monitoring/LEARNING_GUIDE.md). Không tự bắt đầu sau điểm dừng.
+- Với P2, chọn gói tiếp theo và kiểm tra quyền trong [sổ P2](monitoring/PHASE2_PLAN.md), rồi đọc đúng phần [design](monitoring/DESIGN.md), [runbook](monitoring/RUNBOOK.md) hoặc [learning guide](monitoring/LEARNING_GUIDE.md). Không tự bắt đầu sau điểm dừng.
 - Các hướng dẫn cũ cho T01–T10 không cần lặp lại. Nếu có finding mới, bắt đầu từ worklog được dẫn trong bảng và readiness; giữ raw evidence, manifest, checksum, revision và mọi lượt không hợp lệ.
 - Báo cáo giữ mạch bài toán doanh nghiệp → pain point → impact → yêu cầu → solution → experiment → evaluation → future work; tách giả định khỏi kết quả, pilot khỏi formal evidence, và `inconclusive` khỏi pass.
 
