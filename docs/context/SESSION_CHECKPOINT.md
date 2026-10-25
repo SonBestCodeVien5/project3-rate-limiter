@@ -1,5 +1,85 @@
 # Session checkpoint
 
+## P2-04 G1 static implementation complete; runtime pending — 2026-10-25
+
+The user resumed **P2-04 only**, authorizing G1 implementation and focused static
+checks. Starting HEAD was `f38d42b`, initially clean. One scoped
+`gpt-6-luna` worker implemented and checked the package; root integrated it and
+inspected staged diffs, resolving fixed-source filtering, persistent storage
+path and duplicate-attribute findings before committing. No P2-05/P2-06 work,
+container startup/restart, image pull, benchmark, `/work`, load, outage, push,
+credential change or volume mutation was performed.
+
+**Implementation commit:** `6d90a43` (`feat(monitoring): add scoped local Alloy Loki pipeline`).
+Changed files: `compose.observability.yaml`,
+`deploy/monitoring/alloy/config.alloy`, `deploy/monitoring/loki.yml`,
+`deploy/monitoring/grafana/provisioning/datasources/loki.yml`,
+`scripts/render-topology.py`, `scripts/test_topology.py`,
+`scripts/check_alloy_allowlist.py`, `docs/README.md` and
+`docs/monitoring/{DESIGN,RUNBOOK,PHASE2_PLAN}.md`.
+
+Alloy `v1.21.2` and Loki `3.7.0` were checked against official sources linked in
+[DESIGN](../monitoring/DESIGN.md). Docker discovery keeps fixed project
+`project3-monitoring-demo` services `api1`/`api2`/`backend`; research project
+`project3-research-lab` services `api1`–`api4`/`backend` additionally require
+`project3.monitoring.logs=true`, added only by the existing monitoring opt-in
+renderer. Indexed labels are stable `project`/`service`; no Run ID label.
+Metrics, Console workflow, runner ownership and cleanup remain unchanged.
+Loki uses local filesystem storage with configured retention 168h; Alloy stores
+positions under `/var/lib/alloy/data` on its separate named volume. These are
+configuration facts, not runtime acceptance or exactly-once guarantees.
+
+**Focused static checks (worker):**
+
+- `python3 scripts/check_alloy_allowlist.py`: 1 test passed; reads actual keep
+  rules, rejects duplicate attributes and checks allowed/denied project,
+  service and opt-in combinations.
+- `python3 scripts/test_topology.py`: 6 tests passed, including 1/2/4-instance
+  opt-in topology, excluded services and opt-out labels.
+- `GRAFANA_ADMIN_PASSWORD_FILE=<temporary-empty-file> docker compose -f compose.yaml -f compose.observability.yaml config --format json`:
+  passed; no service started and no real credential read into output.
+- `git diff --check`: passed. Working-tree local Markdown link check: 67
+  relative links passed across the touched reader guides.
+- **SKIPPED:** native Alloy and Loki validators unavailable on host. No
+  container-based validator was run because runtime was not authorized.
+
+Root inspected the staged diff and `git diff --cached --check` before the
+implementation commit; did not duplicate the worker's code tests.
+
+**Read-only resource check (root, current session):** separate Docker project
+queries confirmed all seven monitoring containers `Exited (0)` (about 11 hours),
+no research containers, and no active target JSON files. Docker daemon `29.3.1`,
+API `1.54`, minimum `1.40`; socket mode `0660`, UID/GID `65534`. Initial sandbox
+Docker reads were denied; scoped read-only escalation succeeded. Listener check
+was denied by the sandbox; listener/Console state remains unestablished.
+No runtime state was changed. Prometheus/Grafana never receive the socket.
+
+**Socket/API limitation:** Alloy alone mounts `/var/run/docker.sock:ro`; this
+still grants Docker API mutation capabilities and is not a read-only security
+boundary. Compose uses UID/GID `473:473` and supplementary GID `65534` for the
+observed local socket; pinned Dockerfile confirms storage ownership. This GID
+is host-specific. Actual socket access, API negotiation, image IDs/digests,
+config parsing by native tools, Loki ingestion/query, datasource readiness,
+timestamps, discovery delay, restart/positions/replay and lifecycle remain
+unverified. Do not infer them from static Compose success.
+
+P2-03A success/evidence commit `935d740` and prior failure `0230a01` are
+preserved; touched guides now reflect successful run
+`20261024T152427-65c5e2bc4341`. T09/T10 source, artifacts and conclusions remain
+unchanged. Existing Grafana credential disclosure remains unrotated.
+
+**Concurrent unrelated changes:** during this package, edits appeared in
+`docs/context/sources/01_Project3_Proposal.md`, new `docs/PROPOSAL.md` and a
+proposal navigation line in `docs/README.md`. Neither root nor the worker made
+these edits. They were preserved and excluded from the P2-04 commit, including
+selectively unstaging the proposal navigation line. Therefore the full shared
+worktree may remain dirty; do not discard or silently commit this separate work.
+
+**Exact stop/next prerequisite:** G1 implementation is complete; pipeline/runtime
+acceptance is pending, learner confirmation is pending, and P2-05/P2-06 were not
+started. A new explicit runtime scope is required to validate the pipeline and
+continue lifecycle work; no load budget is implied. No push.
+
 ## P2-03A closeout: Console → Grafana acceptance passed — 2026-10-24
 
 The user resumed the interrupted closeout for the already successful run only. No
