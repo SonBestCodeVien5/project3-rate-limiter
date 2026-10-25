@@ -4,7 +4,7 @@ Project nghiên cứu Fixed Window và Token Bucket trên nhiều API instance, 
 
 Bắt đầu ở [hướng dẫn đọc tài liệu](docs/README.md). Tài liệu nguồn trên Drive là căn cứ yêu cầu; [thiết kế triển khai](docs/IMPLEMENTATION.md) ghi lựa chọn kỹ thuật. [Roadmap](docs/PROJECT_ROADMAP.md) là lộ trình học đề xuất. Trạng thái task ở [kế hoạch còn lại](docs/REMAINING_WORK_PLAN.md); cổng đo ở [readiness](docs/experiments/PROTOCOL_READINESS.md).
 
-**Trạng thái 24/10/2026:** T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng/rubric chờ. T12 gói demo/source đã kiểm tra; T13 chưa có deck PowerPoint. P2-03A đã kiểm chứng Console→Grafana qua benchmark opt-in hiện có: 600/600 HTTP 2xx, 0 drops, đúng source/UTC interval và 7 panel render. P2-06 coverage, P2-04+ và xác nhận học còn pending. Xem [sổ P2](docs/monitoring/PHASE2_PLAN.md) để biết trạng thái/gate. Nếu cần chạy app cùng monitoring, theo [runbook monitoring](docs/monitoring/RUNBOOK.md).
+**Theo dõi tiến độ:** [Kế hoạch baseline](docs/REMAINING_WORK_PLAN.md) quản lý T01–T13/H01–H02; [sổ P2](docs/monitoring/PHASE2_PLAN.md) quản lý trạng thái/gate monitoring và phần acceptance còn thiếu. Nếu cần chạy app cùng monitoring, theo [runbook monitoring](docs/monitoring/RUNBOOK.md) trong phạm vi đã được cho phép.
 
 ## Chạy prototype (base Compose, không gồm monitoring)
 
