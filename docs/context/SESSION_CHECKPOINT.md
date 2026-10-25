@@ -1,5 +1,37 @@
 # Session checkpoint
 
+## Audit follow-up / T11 reference grounding — 2026-10-25
+
+User authorized the review follow-up: complete verifier coverage, resolve stale
+status routing, and ground the report in primary literature. Root owned plans,
+architecture and report prose; reused one `gpt-6-luna` low-effort worker for the
+verifier only. Starting HEAD was `ff17594`, clean, including the separate
+monitoring session's P2-05 no-load evidence. No monitoring runtime, workload,
+Docker operation, baseline rerun or T10 reanalysis occurred in this follow-up.
+
+**Changes:** `f161032` adds six existing offline checks to `scripts/verify.sh`;
+`7b25c7a` removes stale P2-02 next-task claims and corrects the historical
+P2-03A failure wording; `1a06769` routes both reader entrypoints to task owners.
+`e746bac` adds report Token Bucket/FW reasoning, distributed-rate-limiting positioning
+and tail-latency motivation with RFC 3290 Appendix A.2, Raghavan et al. SIGCOMM
+2007 sections 1–3, Dean/Barroso CACM 2013 pp. 74–76, and Redis Lua documentation.
+Primary sources were consulted for the cited claims; this does not certify the
+learner's understanding or complete the final rubric-dependent bibliography.
+
+**Checks:** worker reports all 57 focused tests passed: measurement gate 4,
+study coordinator 24, study quality 14, T10 analyzer 5, Console monitoring 9,
+Alloy allowlist 1; fixtures/mocks only. `bash -n scripts/verify.sh` and whitespace
+checks passed. Root checked 156 local file-link targets in six edited reader
+documents, unchanged existing fenced commands, and byte-identical report
+section 5 (results and limitations). Every staged diff was inspected. Full
+`verify.sh`, Go/Redis integration and runtime acceptance were not rerun to
+avoid interfering with the separate monitoring work. No new dependency.
+
+**Stop:** the accepted audit fixes are complete. P2 status/authorization remains
+owned by its registry; P2-05 runner lifecycle and P2-06+ are not opened here.
+T09/T10 source, protocol, evidence, numbers and inconclusive limits remain
+unchanged. H01/H02 and final submission formatting remain pending. No push.
+
 ## P2-05 G2 no-load runtime closeout; full acceptance pending — 2026-10-25
 
 User resumed P2-05 only with G2 and focused G1 fixes; explicitly no `/work`,
