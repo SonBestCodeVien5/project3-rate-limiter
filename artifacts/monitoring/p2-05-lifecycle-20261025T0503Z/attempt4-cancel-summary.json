@@ -72,5 +72,5 @@
   },
   "monitoring_status": "incomplete",
   "final_scrapes_after_cancel": false,
-  "interpretation": "Pass: the Console UI canceled during an observed active /work request; loadgen summary records canceled=true and ended 1.534s after start (well before the 30s duration). One transport error occurred at cancellation; no HTTP 429/5xx or timeout. Monitoring was owner-cleaned as incomplete and has no post-cancel final scrape."
+  "interpretation": "Pass: the Console UI canceled during an observed active /work request; loadgen summary records canceled=true and ended 1.534s after start (well before the 30s duration). The summary records one transport error, no HTTP 429/5xx, and no timeout. Monitoring was owner-cleaned as incomplete and has no post-cancel final scrape."
 }
