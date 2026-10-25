@@ -1,5 +1,83 @@
 # Session checkpoint
 
+## P2-05 G2 no-load runtime closeout; full acceptance pending — 2026-10-25
+
+User resumed P2-05 only with G2 and focused G1 fixes; explicitly no `/work`,
+Console benchmark, loadgen, workload or Redis outage. One scoped `gpt-6-luna`
+worker performed implementation and runtime checks. Root integrated completion
+reports/status documents; did not duplicate runtime tests. Starting HEAD
+`6ad7fbd822da319c0e9fcd36c9375f73702b1525`, clean. Proposal work and historical
+P2-03A success `20261024T152427-65c5e2bc4341` / `935d740`, earlier failure,
+T09/T10 source/artifacts/conclusions are unchanged. No push.
+
+**Commits:** `65393c0` fixes Loki's impossible distroless `wget` healthcheck
+(explicit external `/ready` required) and Alloy's actual mounted socket GID
+`1001`; `713c4fd` enables Loki graceful WAL flush; `37b19c3` updates operating
+instructions; `b5d4ef0` adds runtime evidence; `96e38ec` finalizes selected
+manifest/resource notes. Runtime exercised initially dirty config contents later
+committed in the two fixes, not a clean initial HEAD alone. Config fingerprints,
+pinned and actual image identities are recorded in the batch. No image upgrades:
+only missing pinned Alloy `v1.21.2`/Loki `3.7.0` pulled. Socket is `0660`,
+`65534:65534` in worker namespace but `0:1001` in container; Alloy `473:473`
+with supplementary `1001` accesses Docker 29.3.1/API 1.54 (minimum 1.40).
+Only Alloy receives the Unix socket; `:ro` is not an API read-only boundary.
+Credentials preserved; no rotation or secret contents in selected evidence.
+
+**Worker verification:** Compose and pinned native promtool/Loki/Alloy
+validators pass (promtool unmatched inactive file_sd glob warning). Loki,
+Alloy, Grafana and Prometheus readiness pass. Fixed 3/3 and 4-API research
+5/5 targets `UP`; existing JSON `/metrics` parses unchanged, request counter
+remains 0. Research used existing renderer, opt-in labels, registration owner
+record and `.research-pilot.lock`; no new benchmark workflow. Live opt-out and
+third-project backend negative control yielded zero entries in exact ranges;
+Redis/Nginx/monitoring services absent from runtime stream service values.
+Indexed labels `project`, `service`, stable `service_name`; no Run/container ID.
+22 startup JSON entries in UTC 04:00–04:30, zero parse failures; maximum observed
+Docker/app timestamp delta 1.847 ms. Four-API baseline scrape +1.098s from
+registration; all five logs visible on first query by +6.940s registration /
+≤13.340s from earliest source event (upper bounds, not SLA). Grafana exact UTC
+04:10–04:25 displayed 11:10–11:25 Asia/Bangkok; dashboard 17/17 and Explore
+2/2 queries HTTP 200, no query/console errors. Initial relative time picker
+Moment warning retained separately.
+
+**Restart limitations:** Alloy positions persist in named volume, mode `0600`;
+bounded restart ready in 2s with recent log set unchanged. Final Loki graceful
+recreate ready in 19s, same volume and fixed UTC 04:00–04:25 query retained
+12 entries across six streams. An initial rolling-query discrepancy did not
+capture exact bounds and cannot support quantitative loss or root-cause claims.
+A trial YAML nesting error was rejected by native validator before applying.
+Old Docker startup entries were rejected by Loki HTTP 400 `entry too far behind`;
+context-canceled tailer warnings occurred during restart/removal. No exactly-once
+claim; crash/SIGKILL, retention expiry/disk-pressure behavior untested.
+
+**Evidence:** [checks](../../artifacts/monitoring/p2-05-runtime-20261025T041553Z/checks.md),
+[pending](../../artifacts/monitoring/p2-05-runtime-20261025T041553Z/pending.md),
+[42-file selected manifest](../../artifacts/monitoring/p2-05-runtime-20261025T041553Z/SELECTED_SHA256SUMS).
+Manifest SHA-256: `e25d0b9c1d49e001a5060859bcfd6034b29a72228af3308dcbef9f7ca17b2010`.
+Root checked manifest/file integrity, status-doc links and staged whitespace;
+worker owns runtime claims. Selected evidence excludes raw browser output,
+credentials, TSDB/chunks. Automatic approval review refused deletion of generated
+`.playwright-mcp/`; after closing Grafana, all generated raw output was instead
+preserved unchanged under ignored batch `browser-raw/`, excluded from Git/hashes.
+No deletion workaround was used.
+
+**Final resources (worker):** nine `project3-monitoring-demo` containers Exited
+(0); original seven identities retained plus newly created Alloy/Loki. Original
+Prometheus/Grafana and new Alloy/Loki volumes (four total), both original networks
+retained. Research/sentinel containers and active target manifest absent; lock
+released and browser closed. Original stopped state restored; collected data
+intentionally retained. Worktree clean before root status integration; final
+progress commit follows evidence separately.
+
+**Acceptance/next prerequisite:** P2-04 G2 startup pipeline is verified for fixed
+and no-load research opt-in; **full P2-05 technical acceptance cannot be marked
+complete**. Pending actual Console/runner lifecycle: registration before workload,
+logs during/after workload, final scrape after drain, cancel/SIGTERM cleanup and
+stale-manifest recovery after incident. Next work requires an explicit bounded
+Console/runner lifecycle scope, G3 permission and workload/attempt budget where
+needed; do not infer permission from this checkpoint. Learner confirmation is
+separate and unconfirmed. Stop before P2-06/P2-07/P2-08.
+
 ## Proposal-only review and Drive synchronization — 2026-10-25
 
 The user requested reviewing and editing the proposal in the repo and Drive,

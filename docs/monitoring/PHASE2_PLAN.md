@@ -2,13 +2,13 @@
 
 P2 là phần mở rộng local do người dùng chọn để học monitoring và cải thiện demo; không đổi yêu cầu hay bằng chứng baseline. Mục tiêu cơ bản là Prometheus, Grafana, Alloy, Loki, một dashboard, truy vấn metrics/logs và demo lặp lại được. Histogram, alerting, tracing, exporters hạ tầng, tự discovery mọi Console run và observability production là tùy chọn/ngoài scope.
 
-**Hiện trạng 25/10/2026:** **P2-03A đã đạt acceptance kỹ thuật Console→Grafana** sau yêu cầu tiếp tục riêng của người dùng. Run `20261024T152427-65c5e2bc4341` qua nút **Chạy benchmark** gửi 600 request, 600 HTTP 2xx, 0 generator drops; API1/API2/backend mỗi target có 31 `query_range` evaluation points trên range đã làm tròn xuống millisecond ở đầu tải; link đúng source/interval; 7 panel render không lỗi/No data. Attempt thất bại trước đó giữ nguyên evidence; không retry dưới ngân sách cũ. P2-04 G1 đã xong ở mức cấu hình tĩnh; G2 pipeline/runtime, P2-05–P2-08 và xác nhận học vẫn pending. Xem [evidence mới](../../artifacts/monitoring/p2-03a-console-recheck/checks.md) và selected manifest [SELECTED_SHA256SUMS](../../artifacts/monitoring/p2-03a-console-recheck/SELECTED_SHA256SUMS).
+**Hiện trạng 25/10/2026:** **P2-03A đã đạt acceptance kỹ thuật Console→Grafana** sau yêu cầu tiếp tục riêng của người dùng. Run `20261024T152427-65c5e2bc4341` qua nút **Chạy benchmark** gửi 600 request, 600 HTTP 2xx, 0 generator drops; API1/API2/backend mỗi target có 31 `query_range` evaluation points trên range đã làm tròn xuống millisecond ở đầu tải; link đúng source/interval; 7 panel render không lỗi/No data. Attempt thất bại trước đó giữ nguyên evidence; không retry dưới ngân sách cũ. P2-04 G2 đã kiểm chứng pipeline fixed/research opt-in không tải; P2-05 đã kiểm tra runtime/restart/cleanup nhưng chưa hoàn tất lifecycle của Console runner. P2-06–P2-08 và xác nhận học vẫn pending. Xem [evidence mới](../../artifacts/monitoring/p2-03a-console-recheck/checks.md) và selected manifest [SELECTED_SHA256SUMS](../../artifacts/monitoring/p2-03a-console-recheck/SELECTED_SHA256SUMS).
 
 ## Cách tiếp tục
 
 Đọc đúng task đang làm trong sổ này, rồi phần liên quan của [DESIGN](DESIGN.md), [RUNBOOK](RUNBOOK.md) hoặc [LEARNING_GUIDE](LEARNING_GUIDE.md). Kiểm tra code/caller thuộc gói trước khi sửa. [AGENTS.md](../../AGENTS.md) quy định nguồn bắt buộc, ownership và commit. [Checkpoint](../context/SESSION_CHECKPOINT.md) ghi kiểm tra/giới hạn từng phiên.
 
-Thứ tự ưu tiên hiện hành: `P2-00 → P2-01 → P2-02 → P2-03 → P2-03A → P2-04 → P2-05 → P2-06 → P2-08`; P2-07 là nhánh có điều kiện sau P2-06. P2-00–P2-03 đã hoàn tất cho fixed stack; evidence giữ nguyên và chỉ chứng minh đúng phạm vi lịch sử đó. P2-03A đã hoàn tất kỹ thuật; P2-04 G1 đã hoàn tất tĩnh, còn G2/runtime acceptance pending. Gói sau điểm dừng vẫn cần quyền rõ. Không tự giao hoặc khởi chạy task sau điểm dừng được yêu cầu.
+Thứ tự ưu tiên hiện hành: `P2-00 → P2-01 → P2-02 → P2-03 → P2-03A → P2-04 → P2-05 → P2-06 → P2-08`; P2-07 là nhánh có điều kiện sau P2-06. P2-00–P2-03 đã hoàn tất cho fixed stack; evidence giữ nguyên và chỉ chứng minh đúng phạm vi lịch sử đó. P2-03A đã hoàn tất kỹ thuật; P2-04 G2 pipeline đã kiểm chứng không tải; P2-05 còn các tiêu chí lifecycle pending. Gói sau điểm dừng vẫn cần quyền rõ. Không tự giao hoặc khởi chạy task sau điểm dừng được yêu cầu.
 
 ## Phạm vi và bảo toàn evidence
 
@@ -25,7 +25,7 @@ Thứ tự ưu tiên hiện hành: `P2-00 → P2-01 → P2-02 → P2-03 → P2-0
 | --- | --- | --- |
 | G0 — tài liệu | Đọc, viết và kiểm tra tài liệu | P2-00 hoàn tất |
 | G1 — triển khai | Sửa code/config/test và focused checks; runtime cần gate riêng | P2-01–P2-03 và code P2-03A đã triển khai; chi tiết acceptance bên dưới |
-| G2 — runtime smoke | Đúng project; health/scrape/config/browser; `/work` probe chỉ khi được cấp riêng | Lịch sử P2-03: 5/10 probe. P2-03A: cấp G2 riêng, **không `/work` probe**, fixed/config/browser/permissions đạt; research acceptance đã kiểm chứng trong scope tiếp tục riêng |
+| G2 — runtime smoke | Đúng project; health/scrape/config/browser; `/work` probe chỉ khi được cấp riêng | Lịch sử P2-03: 5/10 probe. P2-03A: cấp G2 riêng, **không `/work` probe**, fixed/config/browser/permissions đạt; research acceptance đã kiểm chứng trong scope tiếp tục riêng. P2-05: G2 logs/restart/cleanup không tải đã kiểm tra, lifecycle runner còn pending |
 | G3 — demo load | Chỉ scenario được cấp rõ; không chạy research matrix | Scope đầu: 1/1 attempt lỗi trước loadgen. Scope tiếp tục riêng: **1/1 attempt thành công**; không còn budget tải |
 | G4 — Redis outage | Pause/unpause đúng Redis demo, cleanup và healthy reference theo P2-07 | Chưa được cấp |
 
@@ -44,8 +44,8 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 | P2-02 | Compose overlay, Prometheus/Grafana và provisioning | P2-01; G1 | **Xong G1**, `d785529`; runtime được kiểm chứng trong P2-03 |
 | P2-03 | Dashboard metrics và runtime smoke | P2-02; G2 | **Xong kỹ thuật**; dashboard `bedb095`, evidence và giới hạn ở phần P2-03; học tập chưa xác nhận |
 | P2-03A | Scrape các run Chạy benchmark hiện có khi bật monitoring | P2-03; G1/G2/G3 theo phạm vi được cấp | **Xong kỹ thuật G1/G2/G3**; run `20261024T152427-65c5e2bc4341`; học tập chưa xác nhận |
-| P2-04 | Alloy → Loki logs và datasource | P2-02; ưu tiên sau vertical slice P2-03A | **G1 xong tĩnh**; G2 pipeline/runtime acceptance pending |
-| P2-05 | Kiểm chứng pipeline logs và vòng đời stack | P2-03/P2-04; G2 | **Chưa bắt đầu** |
+| P2-04 | Alloy → Loki logs và datasource | P2-02; ưu tiên sau vertical slice P2-03A | **G1/G2 pipeline đạt** cho fixed/research opt-in không tải; xem giới hạn P2-05 |
+| P2-05 | Kiểm chứng pipeline logs và vòng đời stack | P2-03/P2-04; G2 | **Đạt phần pipeline/restart/cleanup không tải; chưa hoàn tất** lifecycle Console runner |
 | P2-06 | Console normal/mixed: none/local/Redis | P2-03A; G3; cùng runner/topology cho cả ma trận | **Chưa bắt đầu** |
 | P2-07 | Demo Redis outage fail-open/fail-closed | P2-06; G4 | **Chờ điều kiện**, tùy chọn |
 | P2-08 | Đóng gói, hướng dẫn và diễn tập | P2-06; ghi rõ có/không P2-07 | **Chưa bắt đầu** |
@@ -58,8 +58,8 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 | P2-01 | Prometheus exposition và JSON `/metrics` nguyên trạng, dùng được cho fixed và research targets | Không sửa counter semantics/schema để tích hợp dashboard. |
 | P2-02 | Stack, image pins, volumes, secrets, datasource UID `project3-prometheus`, loopback ownership | Đã thêm shared scrape network/file_sd; giữ fixed job và datasource. Kiểm tra/evidence P2-03A bên dưới; Console-run acceptance đã đạt trong scope tiếp tục riêng. |
 | P2-03 | Bảy panels, dashboard UID `project3-monitoring-demo`, folder UID `project3-monitoring-folder`, datasource, fixed-job query và toàn bộ evidence/UID-fix | Đã thêm chọn job/rate window và link UTC theo case hoàn tất; fixed panels/list/folder đã regression. Scope tiếp tục đã xác minh research panels/link trên dữ liệu thật của đúng một run. Evidence cũ chỉ chứng minh fixed stack. |
-| P2-03A | Nút, model, runner, generator, topology, lock/cancel/scoped cleanup hiện có | Đã triển khai opt-in file_sd/API-backend allowlist; metrics vertical slice đã đạt; P2-04/05 cần scope mới. |
-| P2-04/05 | App JSON logs hiện có; Alloy/Loki local, fixed demo và research opt-in | P2-04 G1 thêm cấu hình tĩnh; discovery giữ project/service allowlist và label opt-in ở research. G2 pipeline/runtime acceptance cùng P2-05 lifecycle/log checks vẫn pending; chỉ sau logs G2 mới hoàn tất full monitoring. |
+| P2-03A | Nút, model, runner, generator, topology, lock/cancel/scoped cleanup hiện có | Đã triển khai opt-in file_sd/API-backend allowlist; metrics vertical slice đã đạt; P2-04 G2 logs đã kiểm chứng trong scope P2-05; lifecycle runner còn pending. |
+| P2-04/05 | App JSON logs hiện có; Alloy/Loki local, fixed demo và research opt-in | P2-04 G2 đã kiểm chứng discovery/ingestion/Explore fixed và research opt-in; project/service allowlist và label opt-in được kiểm tra runtime. P2-05 còn lifecycle Console runner; chưa tuyên bố full acceptance toàn P2. |
 | P2-06 | Mức tải, số case và giới hạn đã nêu dưới đây | Toàn bộ suite cùng Console runner/topology/instrumentation; không trộn fixed demo, không lấy CLI/redis-outage.sh thay tương tác Console. |
 | P2-07 | G4 optional và ngân sách outage được khóa bên dưới | Chưa có đường fault hook an toàn cho Redis trong run research; không pause Redis fixed project khi load chạy ở research project. Chỉ thiết kế lại P2-07 để target/lifecycle hiện hữu nếu được cấp riêng; nếu không khớp, giữ blocked, không dùng workflow tải thứ hai. |
 | P2-08 | T12 bundle/T10 offline artifacts và learning checklist | Đóng gói hướng dẫn source hiện tại, opt-in path, exact UTC links, offline dashboard/log screenshots hoặc dữ liệu mẫu, recovery/cleanup; không tái sinh hay thay artifacts baseline. |
@@ -122,6 +122,14 @@ Tệp dự kiến: `deploy/monitoring/alloy/config.alloy`, `deploy/monitoring/lo
 ### P2-05 — kiểm chứng logs/lifecycle
 
 Trong G2, kiểm tra log thật từ cả fixed allowlist và run Console opt-in từ source tới Loki/Grafana, filter labels/container, delay/timezone/parse errors/positions/restart, datasource, permissions, health và disk. Kiểm tra runner đăng ký target/file, scrape/log startup trước/sau workload, cancel/SIGTERM cleanup và stale registration sau sự cố; không sửa ownership của stack fixed khi research runner dừng case riêng. Ghi rõ không có exactly-once guarantee. Hoàn tất khi metrics và logs hoạt động cùng nhau trên luồng đã chọn, restart/cleanup không ảnh hưởng project khác. G2 P2-03 fixed-only không được tính lại làm bằng chứng này.
+
+**Kết quả phiên 25/10/2026 — chưa hoàn tất toàn P2-05:** một Luna scoped worker thực thi G2 không tải. Compose config và validator native Prometheus/Loki/Alloy đạt; fixed 3/3 và research 4-API 5/5 targets `UP`; JSON `/metrics` giữ nguyên. Startup JSON đi qua Alloy → Loki → Grafana; browser dashboard 17/17 và Explore 2/2 query trả HTTP 200, không query error. Query UTC 04:00–04:30 có 22 startup entries hợp lệ JSON, 0 parse failure; labels index là `project`, `service`, `service_name` ổn định, không Run ID/container ID. Runtime opt-out và negative control project ngoài allowlist đều không được ingest. Research dùng renderer/registration/lock hiện có, không workflow tải mới. First-visible đủ năm service ≤6,940s sau registration, ≤13,340s từ source event; đây là upper bounds quan sát, không SLA.
+
+**Sửa lỗi và giới hạn:** `65393c0` sửa healthcheck Loki gọi `wget` không tồn tại và supplementary socket GID thực tế `1001`; `713c4fd` bật graceful WAL flush. Native validator đã loại một cấu hình thử sai trước khi áp dụng. Retest Loki graceful recreate giữ 12 entries trên range cố định 04:00–04:25; Alloy restart giữ tập recent và positions volume. Một discrepancy ban đầu dùng rolling query không lưu exact bounds nên không dùng làm định lượng hoặc kết luận nguyên nhân. Replay Docker history cũ bị Loki HTTP 400 `entry too far behind`; không có exactly-once guarantee và chưa thử crash/SIGKILL.
+
+**Evidence và dừng:** guides `37b19c3`, evidence `b5d4ef0`/`96e38ec`; [checks](../../artifacts/monitoring/p2-05-runtime-20261025T041553Z/checks.md), [pending](../../artifacts/monitoring/p2-05-runtime-20261025T041553Z/pending.md), [42 selected checksums](../../artifacts/monitoring/p2-05-runtime-20261025T041553Z/SELECTED_SHA256SUMS). Cuối phiên chín demo containers đều dừng, giữ bảy identity ban đầu, bốn volumes/hai networks; không còn research/sentinel/active manifest. Không `/work`, loadgen, benchmark, Redis outage hoặc T09/T10. P2-03A success và attempt lỗi giữ nguyên.
+
+**Điều kiện tiếp theo, tách khỏi học tập:** cần scope Console/runner lifecycle riêng, quyền G3 và ngân sách tải/attempt rõ cho tiêu chí trước/trong/sau workload, final scrape sau drain, cancel/SIGTERM và stale-manifest recovery. Registration/cleanup không tải đã đạt không thay kiểm tra runner thật. Xác nhận học vẫn chờ người dùng; không thay acceptance kỹ thuật. Dừng trước P2-06/P2-07/P2-08.
 
 ### P2-06 — bounded demo load
 
