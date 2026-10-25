@@ -1,0 +1,115 @@
+{
+  "purpose": "Bounded read-only verification against retained row3 dashboard data; no load, target registration, config change, or container recreation.",
+  "verification_session": {
+    "started_at_utc": "2026-10-25T17:04:34.230199410Z",
+    "grafana_container_started_at_utc": "2026-10-25T17:04:34.507664204Z",
+    "finished_at_utc": "2026-10-25T17:06:24.726318387Z",
+    "readiness": {
+      "prometheus": "ready",
+      "grafana": "healthy"
+    },
+    "browser_closed_before_stop": true
+  },
+  "target_case": {
+    "run_id": "20261025T163206-aabcac391d9b",
+    "source_revision": "c623a305731b3d9ec3efd2890d11e0b913f622bf",
+    "grafana_url": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?var-job=project3-console-run&var-rate_window=4s&from=1792945951420&to=1792945981419",
+    "job": "project3-console-run",
+    "rate_window": "4s",
+    "requested_from_epoch_ms": 1792945951420,
+    "requested_to_epoch_ms": 1792945981419,
+    "displayed_range_utc": "2026-10-25T16:32:31.420Z..2026-10-25T16:33:01.419Z"
+  },
+  "panel": {
+    "id": 7,
+    "title": "API backend errors (/s)",
+    "query": "sum by (service) (rate(project3_api_backend_errors_total{job=\"project3-console-run\"}[4s]))",
+    "ui_dom_after_End_scroll": [
+      "API backend errors (/s)",
+      "api1",
+      "api2"
+    ],
+    "request_http_status": 200,
+    "response_error_present": false,
+    "response_file": "browser-raw/row3-panel7-response.json",
+    "response_sha256": "b671b303cf414ceb5c97d3ddb46d48934e1ba2b7f53f82127763ab9f1300f271",
+    "series": [
+      {
+        "service": "api1",
+        "evaluation_times_epoch_ms": [
+          1792945950000,
+          1792945965000,
+          1792945980000
+        ],
+        "values_per_second": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "service": "api2",
+        "evaluation_times_epoch_ms": [
+          1792945950000,
+          1792945965000,
+          1792945980000
+        ],
+        "values_per_second": [
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "screenshot": {
+    "file": "supplemental/row3-grafana-panel7-corrected.png",
+    "sha256": "1c5773e0bbee0cd97c8d060c7de3f4a921fd16dd5176a3dfbaf5a7d8d0a75e42"
+  },
+  "prior_misattribution": {
+    "row2_and_old_row3_panel7_sha256": "49d5e3a1fc239881e59dd67fcae2b0cc918a6482eb55d327e64a04bd6c7ebf21",
+    "raw_capture_files_showing_row2_range": [
+      "browser-raw/playwright-output/page-2026-10-25T16-36-50-914Z.png",
+      "browser-raw/playwright-output/page-2026-10-25T16-37-29-993Z.png"
+    ],
+    "row3_correct_range_six_panel_capture": "supplemental/row3-grafana-six-panels.png"
+  },
+  "containers": [
+    {
+      "name": "project3-monitoring-demo-prometheus-1",
+      "id": "1e2bcb4bcd72af0b334634a32f662a4cc528ec51dc4e72fd98bbd3a57c051b30",
+      "state_before": "exited",
+      "started_at_utc": "2026-10-25T17:04:34.230199410Z",
+      "state_after": "exited",
+      "finished_at_utc": "2026-10-25T17:06:24.726318387Z"
+    },
+    {
+      "name": "project3-monitoring-demo-grafana-1",
+      "id": "86acfe9546c27e0dcda1ac54404d1b27991c89981e998ed6fd64683d47634ab1",
+      "state_before": "exited",
+      "started_at_utc": "2026-10-25T17:04:34.507664204Z",
+      "state_after": "exited",
+      "finished_at_utc": "2026-10-25T17:06:24.637480163Z"
+    }
+  ],
+  "other_monitoring_containers": "remained stopped; all original container IDs, 4 volumes and 2 network IDs preserved.",
+  "preserved_resources": {
+    "volumes": [
+      "project3-monitoring-demo_alloy-data",
+      "project3-monitoring-demo_grafana-data",
+      "project3-monitoring-demo_loki-data",
+      "project3-monitoring-demo_prometheus-data"
+    ],
+    "networks": [
+      {
+        "name": "project3-monitoring-demo_default",
+        "id": "d20674608854109b09bd9829748e95c4c3d92fde7841f3409ea3bedde7df8cd8"
+      },
+      {
+        "name": "project3-monitoring-scrape",
+        "id": "78c1621e80052f3e8e85584f5109e88c807a428d84e8ca60009e36f55c3175ae"
+      }
+    ],
+    "all_nine_original_monitoring_containers_after_session": "exited, same IDs"
+  }
+}

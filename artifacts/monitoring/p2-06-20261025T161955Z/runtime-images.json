@@ -1,0 +1,332 @@
+{
+  "observed_at_utc": "2026-10-25T16:56:43Z",
+  "docker_engine": "29.3.1",
+  "docker_api": {
+    "client": "1.54",
+    "server": "1.54",
+    "server_minimum": "1.40"
+  },
+  "monitoring_containers": [
+    {
+      "service": "loki",
+      "pinned_or_local_reference": "grafana/loki:3.7.0",
+      "container_id": "9c0454b02c421ae439c71faeca7a9804d38904bbfc4fca974b022a3247c1e48c",
+      "actual_image_id": "sha256:c316b7c7589a5eeca843b6926c7446149d18300b79ac8538dc4ae063bc478da2",
+      "repo_digest": "@sha256:c316b7c7589a5eeca843b6926c7446149d18300b79ac8538dc4ae063bc478da2",
+      "post_cleanup_state": "exited"
+    },
+    {
+      "service": "alloy",
+      "pinned_or_local_reference": "grafana/alloy:v1.21.2",
+      "container_id": "3ecce63f53725bf7576ac7e9ffd6982e00b4bbb96005cee2818c95bf0dca6497",
+      "actual_image_id": "sha256:89a5a320168387336b9ac3c850609c3ba7757eadd4ae5f1d819deb35e9854b18",
+      "repo_digest": "@sha256:89a5a320168387336b9ac3c850609c3ba7757eadd4ae5f1d819deb35e9854b18",
+      "post_cleanup_state": "exited"
+    },
+    {
+      "service": "nginx",
+      "pinned_or_local_reference": "nginx:1.28.0-alpine",
+      "container_id": "a589a0189908b0fc4d06d6610015119fe88009615b299afb01ee189453d58bff",
+      "actual_image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+      "repo_digest": "@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+      "post_cleanup_state": "exited"
+    },
+    {
+      "service": "api2",
+      "pinned_or_local_reference": "project3-monitoring-demo-api2:latest",
+      "container_id": "272da800ef2e0cbc85756f387c8a0668f7676e89cb3fd26820ab2db069e9f1bb",
+      "actual_image_id": "sha256:453a139592511004a2321711e4be8c4fea60fd10a8b8d6f405f2bc4dfa3e2f57",
+      "repo_digest": "@sha256:453a139592511004a2321711e4be8c4fea60fd10a8b8d6f405f2bc4dfa3e2f57",
+      "post_cleanup_state": "exited"
+    },
+    {
+      "service": "api1",
+      "pinned_or_local_reference": "project3-monitoring-demo-api1:latest",
+      "container_id": "663fb5cc9be00572ca4bcc3c93569a4073fd3574c33ee5e51bdf03b65a2b7c78",
+      "actual_image_id": "sha256:8cb5c01837592cc837c0056acae04f9070e51fe385358c204fba3a93f4267c5b",
+      "repo_digest": "@sha256:8cb5c01837592cc837c0056acae04f9070e51fe385358c204fba3a93f4267c5b",
+      "post_cleanup_state": "exited"
+    },
+    {
+      "service": "backend",
+      "pinned_or_local_reference": "project3-monitoring-demo-backend:latest",
+      "container_id": "7c5e8deb126d996ada850a4a62c85b880dcab39d2baeaefa4b7ae9999bd86b8d",
+      "actual_image_id": "sha256:ffcbb11aed32d684e92b6c167a71c89f89383baab2b1a89c7696b0bcf86e3308",
+      "repo_digest": "@sha256:ffcbb11aed32d684e92b6c167a71c89f89383baab2b1a89c7696b0bcf86e3308",
+      "post_cleanup_state": "exited"
+    },
+    {
+      "service": "grafana",
+      "pinned_or_local_reference": "grafana/grafana:12.4.11",
+      "container_id": "86acfe9546c27e0dcda1ac54404d1b27991c89981e998ed6fd64683d47634ab1",
+      "actual_image_id": "sha256:3ea272e5cab64a4a62240c682e2c62433b25614d956d44c299a10cb6994f6f2e",
+      "repo_digest": "@sha256:3ea272e5cab64a4a62240c682e2c62433b25614d956d44c299a10cb6994f6f2e",
+      "post_cleanup_state": "exited"
+    },
+    {
+      "service": "prometheus",
+      "pinned_or_local_reference": "prom/prometheus:v3.15.0",
+      "container_id": "1e2bcb4bcd72af0b334634a32f662a4cc528ec51dc4e72fd98bbd3a57c051b30",
+      "actual_image_id": "sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e",
+      "repo_digest": "@sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e",
+      "post_cleanup_state": "exited"
+    },
+    {
+      "service": "redis",
+      "pinned_or_local_reference": "redis:7.4.2-alpine",
+      "container_id": "8be2ce053153fee41208fcd16d570f4a3888765ddaacca0a75fa2b56534890a4",
+      "actual_image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+      "repo_digest": "@sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+      "post_cleanup_state": "exited"
+    }
+  ],
+  "research_runs": [
+    {
+      "run_id": "20261025T162327-4e8d83985f96",
+      "profile": "normal",
+      "mode": "none",
+      "revision": "c623a305731b3d9ec3efd2890d11e0b913f622bf",
+      "runner_recorded_dirty_state": "?? .playwright-mcp/",
+      "images_file": "artifacts/console/20261025T162327-4e8d83985f96/result/custom-repeat-1/images.json",
+      "images_sha256": "c3280f397564aa379ae2c60b3998e47af93fd0ac2883be9035b92b752a557078",
+      "actual_images": [
+        {
+          "container_name": "project3-research-lab-api1-1",
+          "repository": "project3-research-lab-api1",
+          "tag": "latest",
+          "image_id": "sha256:b776db1a13a957647fee3c705593fa2abc27738c91377c2c3bd7f3b8d3997bf5"
+        },
+        {
+          "container_name": "project3-research-lab-api2-1",
+          "repository": "project3-research-lab-api2",
+          "tag": "latest",
+          "image_id": "sha256:e9402bc05e4a5b14c343ee2d058e7b3528f0b0f96e4b8d1509098fcfcaf27028"
+        },
+        {
+          "container_name": "project3-research-lab-redis-1",
+          "repository": "redis",
+          "tag": "7.4.2-alpine",
+          "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+        },
+        {
+          "container_name": "project3-research-lab-nginx-1",
+          "repository": "nginx",
+          "tag": "1.28.0-alpine",
+          "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+        },
+        {
+          "container_name": "project3-research-lab-backend-1",
+          "repository": "project3-research-lab-backend",
+          "tag": "latest",
+          "image_id": "sha256:b2f6d994051448a6aea049bccf5f33c3c0e00cae3a0c1be31b65aecc42e4cc35"
+        }
+      ]
+    },
+    {
+      "run_id": "20261025T162826-777671c4739c",
+      "profile": "normal",
+      "mode": "local",
+      "revision": "c623a305731b3d9ec3efd2890d11e0b913f622bf",
+      "runner_recorded_dirty_state": "?? .playwright-mcp/",
+      "images_file": "artifacts/console/20261025T162826-777671c4739c/result/custom-repeat-1/images.json",
+      "images_sha256": "4d5b7a51e88a1f56bdf51e8ac03c19f54a49017c311bcd997354e18ae9dd520e",
+      "actual_images": [
+        {
+          "container_name": "project3-research-lab-api1-1",
+          "repository": "project3-research-lab-api1",
+          "tag": "latest",
+          "image_id": "sha256:d85519c219a173b26b5236559f96537347f7fb82f3bf7301152143d8bb40f24b"
+        },
+        {
+          "container_name": "project3-research-lab-backend-1",
+          "repository": "project3-research-lab-backend",
+          "tag": "latest",
+          "image_id": "sha256:df78326412ccd71d8fa6ebfb0ffb46978fb8e1306815037157bc5ed1f6cbf7b4"
+        },
+        {
+          "container_name": "project3-research-lab-api2-1",
+          "repository": "project3-research-lab-api2",
+          "tag": "latest",
+          "image_id": "sha256:d0fbb99fbfcd3e288c9ed500b589dc2f7d540e99194c409c29b59c46620301fd"
+        },
+        {
+          "container_name": "project3-research-lab-redis-1",
+          "repository": "redis",
+          "tag": "7.4.2-alpine",
+          "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+        },
+        {
+          "container_name": "project3-research-lab-nginx-1",
+          "repository": "nginx",
+          "tag": "1.28.0-alpine",
+          "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+        }
+      ]
+    },
+    {
+      "run_id": "20261025T163206-aabcac391d9b",
+      "profile": "normal",
+      "mode": "redis",
+      "revision": "c623a305731b3d9ec3efd2890d11e0b913f622bf",
+      "runner_recorded_dirty_state": "?? .playwright-mcp/",
+      "images_file": "artifacts/console/20261025T163206-aabcac391d9b/result/custom-repeat-1/images.json",
+      "images_sha256": "e5b651932150642bb75690dcec9e5bc839d5636328f46bbdf39171865f3af625",
+      "actual_images": [
+        {
+          "container_name": "project3-research-lab-backend-1",
+          "repository": "project3-research-lab-backend",
+          "tag": "latest",
+          "image_id": "sha256:7613d65458f7a37f7428fe10e26090f0f966be929849186cc9beec86b6adb18a"
+        },
+        {
+          "container_name": "project3-research-lab-api2-1",
+          "repository": "project3-research-lab-api2",
+          "tag": "latest",
+          "image_id": "sha256:a9e3435278a14848df1d1eb459954e05be53f5b6ded3bc7e34b08ed959377a4d"
+        },
+        {
+          "container_name": "project3-research-lab-redis-1",
+          "repository": "redis",
+          "tag": "7.4.2-alpine",
+          "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+        },
+        {
+          "container_name": "project3-research-lab-nginx-1",
+          "repository": "nginx",
+          "tag": "1.28.0-alpine",
+          "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+        },
+        {
+          "container_name": "project3-research-lab-api1-1",
+          "repository": "project3-research-lab-api1",
+          "tag": "latest",
+          "image_id": "sha256:f702d7a4e1d4a91132c7ad3157bfa7c2390b6611e0081e6f7c82a9b64a213cf9"
+        }
+      ]
+    },
+    {
+      "run_id": "20261025T163843-e758f28f6b94",
+      "profile": "mixed",
+      "mode": "none",
+      "revision": "c623a305731b3d9ec3efd2890d11e0b913f622bf",
+      "runner_recorded_dirty_state": "?? .playwright-mcp/",
+      "images_file": "artifacts/console/20261025T163843-e758f28f6b94/result/custom-repeat-1/images.json",
+      "images_sha256": "74387c85865bec49a3b06b39ad177cbd81cbcad00554048afc2a8a6beaf304ae",
+      "actual_images": [
+        {
+          "container_name": "project3-research-lab-backend-1",
+          "repository": "project3-research-lab-backend",
+          "tag": "latest",
+          "image_id": "sha256:98c4379896a80713f72a755962f4965c0906ee3ccd63c6c35edd5f5d6330f16c"
+        },
+        {
+          "container_name": "project3-research-lab-api1-1",
+          "repository": "project3-research-lab-api1",
+          "tag": "latest",
+          "image_id": "sha256:4e442b9d1043841055b4ec7ba2965e1e5a6652ed7bdf267a2e8c32a4ac5d3fe2"
+        },
+        {
+          "container_name": "project3-research-lab-api2-1",
+          "repository": "project3-research-lab-api2",
+          "tag": "latest",
+          "image_id": "sha256:54be1e591e0b429ce85c4f2611888d0f2c64f701867e3be83ee970930437765a"
+        },
+        {
+          "container_name": "project3-research-lab-nginx-1",
+          "repository": "nginx",
+          "tag": "1.28.0-alpine",
+          "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+        },
+        {
+          "container_name": "project3-research-lab-redis-1",
+          "repository": "redis",
+          "tag": "7.4.2-alpine",
+          "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+        }
+      ]
+    },
+    {
+      "run_id": "20261025T164349-295d3f8931d4",
+      "profile": "mixed",
+      "mode": "local",
+      "revision": "c623a305731b3d9ec3efd2890d11e0b913f622bf",
+      "runner_recorded_dirty_state": "?? .playwright-mcp/",
+      "images_file": "artifacts/console/20261025T164349-295d3f8931d4/result/custom-repeat-1/images.json",
+      "images_sha256": "1927f51bd72b6408ea8871bcc59602c9f7b723b468840daa6c7f15f6f7fd9c51",
+      "actual_images": [
+        {
+          "container_name": "project3-research-lab-api1-1",
+          "repository": "project3-research-lab-api1",
+          "tag": "latest",
+          "image_id": "sha256:cecbb22234d73a8800e042b46b6ddb99bea804d62a5a6c89442b1cb695211fe4"
+        },
+        {
+          "container_name": "project3-research-lab-api2-1",
+          "repository": "project3-research-lab-api2",
+          "tag": "latest",
+          "image_id": "sha256:156829e7160b0773eac638475e1412d14d99290e31166528d488bde3db41456b"
+        },
+        {
+          "container_name": "project3-research-lab-backend-1",
+          "repository": "project3-research-lab-backend",
+          "tag": "latest",
+          "image_id": "sha256:4f71d5ba54f9ba0e69ce6caa8c72bebfae865a67e5bb6d55b3d8a0dad5aaecdc"
+        },
+        {
+          "container_name": "project3-research-lab-nginx-1",
+          "repository": "nginx",
+          "tag": "1.28.0-alpine",
+          "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+        },
+        {
+          "container_name": "project3-research-lab-redis-1",
+          "repository": "redis",
+          "tag": "7.4.2-alpine",
+          "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+        }
+      ]
+    },
+    {
+      "run_id": "20261025T164831-642d9b71ee0d",
+      "profile": "mixed",
+      "mode": "redis",
+      "revision": "31bc3389bc3d4a3f21978dde9fb070723ccf56b0",
+      "runner_recorded_dirty_state": "?? .playwright-mcp/",
+      "images_file": "artifacts/console/20261025T164831-642d9b71ee0d/result/custom-repeat-1/images.json",
+      "images_sha256": "a190bb9a3172babf57bfeed722e8573670d193769f2db8aafafb945bdffb61ac",
+      "actual_images": [
+        {
+          "container_name": "project3-research-lab-backend-1",
+          "repository": "project3-research-lab-backend",
+          "tag": "latest",
+          "image_id": "sha256:32065e4f750a7c542d06001a3f2c2c112f91b53e604e506e3b5d0efcd44ce19b"
+        },
+        {
+          "container_name": "project3-research-lab-api2-1",
+          "repository": "project3-research-lab-api2",
+          "tag": "latest",
+          "image_id": "sha256:c4dc17e946b7e8e9532671d6088191ca368620d370379da5691b9fe50155af69"
+        },
+        {
+          "container_name": "project3-research-lab-api1-1",
+          "repository": "project3-research-lab-api1",
+          "tag": "latest",
+          "image_id": "sha256:51703c3b471fcad388c5d452ed8cb4d85a3743b0ac765a05567a6a06ea23bfea"
+        },
+        {
+          "container_name": "project3-research-lab-redis-1",
+          "repository": "redis",
+          "tag": "7.4.2-alpine",
+          "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+        },
+        {
+          "container_name": "project3-research-lab-nginx-1",
+          "repository": "nginx",
+          "tag": "1.28.0-alpine",
+          "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+        }
+      ]
+    }
+  ],
+  "note": "Image identities were inspected after stopping the original session-started containers; this UTC is the evidence assembly timestamp."
+}

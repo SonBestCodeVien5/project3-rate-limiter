@@ -1,0 +1,121 @@
+{
+  "purpose": "Sanitized timestamp/label selection from retained read-only Grafana/Loki responses; raw log Line text intentionally omitted. Timestamps preserve source tsNs to nanosecond precision.",
+  "row5": {
+    "run_id": "20261025T164349-295d3f8931d4",
+    "runner_started_utc": "2026-10-25T16:43:49.051886569Z",
+    "target_registered_utc": "2026-10-25T16:44:09.374Z",
+    "initial_load_covering_query": {
+      "from_utc": "2026-10-25T16:44:10Z",
+      "to_utc": "2026-10-25T16:45:10Z",
+      "http_status": 200,
+      "rows": 0,
+      "response_file": "row5-required-query-response.json",
+      "response_sha256": "5173b832c85a0007258959f772d6997d185aa30d8f68cc7ac440d8639a5fc537"
+    },
+    "startup_diagnostic_api": {
+      "response_file": "row5-required-query-broader-response.json",
+      "response_sha256": "81366fdea9d7603cc1402e3a78ebae6ce68bda1f5e6d70ed1b461d60d29434d3",
+      "http_status": 200,
+      "error_present": false,
+      "query_bounds_utc": "2026-10-25T16:37:05Z..2026-10-25T16:45:10Z",
+      "rows": [
+        {
+          "timestamp_ns": 1792946641329644533,
+          "timestamp_utc": "2026-10-25T16:44:01.329644533Z",
+          "project": "project3-research-lab",
+          "service": "api1",
+          "service_name": "api1",
+          "matches_case_setup_window": true
+        },
+        {
+          "timestamp_ns": 1792946641301416003,
+          "timestamp_utc": "2026-10-25T16:44:01.301416003Z",
+          "project": "project3-research-lab",
+          "service": "api2",
+          "service_name": "api2",
+          "matches_case_setup_window": true
+        }
+      ]
+    },
+    "startup_diagnostic_backend": {
+      "response_file": "row5-backend-startup-response.json",
+      "response_sha256": "16de4ca251812fd0c3f018d62e9872b05f9fad47f6e21458400f176670d42c39",
+      "http_status": 200,
+      "error_present": false,
+      "query_bounds_utc": "2026-10-25T16:37:05Z..2026-10-25T16:45:10Z",
+      "rows": [
+        {
+          "timestamp_ns": 1792946638340153565,
+          "timestamp_utc": "2026-10-25T16:43:58.340153565Z",
+          "project": "project3-research-lab",
+          "service": "backend",
+          "service_name": "backend",
+          "matches_case_setup_window": true
+        },
+        {
+          "timestamp_ns": 1792946331076884396,
+          "timestamp_utc": "2026-10-25T16:38:51.076884396Z",
+          "project": "project3-research-lab",
+          "service": "backend",
+          "service_name": "backend",
+          "matches_case_setup_window": false
+        }
+      ]
+    }
+  },
+  "row6": {
+    "run_id": "20261025T164831-642d9b71ee0d",
+    "runner_started_utc": "2026-10-25T16:48:31.904475545Z",
+    "target_registered_utc": "2026-10-25T16:48:48.919Z",
+    "initial_load_covering_query": {
+      "from_utc": "2026-10-25T16:48:45Z",
+      "to_utc": "2026-10-25T16:49:35Z",
+      "http_status": 200,
+      "rows": 0,
+      "response_file": "row6-required-query-response.json",
+      "response_sha256": "4a68186c4cee21fecf506d465af3d096a8dd89cf9729134af6bb3282b679b2cf"
+    },
+    "startup_diagnostic_api": {
+      "response_file": "row6-required-query-broader-response.json",
+      "response_sha256": "844c1784b71ff92c40f7d259c022d76a28c2cea03596adfbc8ba43b21d68f32b",
+      "http_status": 200,
+      "error_present": false,
+      "query_bounds_utc": "2026-10-25T16:48:25Z..2026-10-25T16:49:40Z",
+      "rows": [
+        {
+          "timestamp_ns": 1792946921482954829,
+          "timestamp_utc": "2026-10-25T16:48:41.482954829Z",
+          "project": "project3-research-lab",
+          "service": "api1",
+          "service_name": "api1",
+          "matches_case_setup_window": true
+        },
+        {
+          "timestamp_ns": 1792946921509566186,
+          "timestamp_utc": "2026-10-25T16:48:41.509566186Z",
+          "project": "project3-research-lab",
+          "service": "api2",
+          "service_name": "api2",
+          "matches_case_setup_window": true
+        }
+      ]
+    },
+    "startup_diagnostic_backend": {
+      "response_file": "row6-backend-startup-response.json",
+      "response_sha256": "06fd95e9c7fe4018985d611800e9b9b4106c9657b39698f43b8629a5c7aec748",
+      "http_status": 200,
+      "error_present": false,
+      "query_bounds_utc": "2026-10-25T16:48:25Z..2026-10-25T16:49:40Z",
+      "rows": [
+        {
+          "timestamp_ns": 1792946918489722665,
+          "timestamp_utc": "2026-10-25T16:48:38.489722665Z",
+          "project": "project3-research-lab",
+          "service": "backend",
+          "service_name": "backend",
+          "matches_case_setup_window": true
+        }
+      ]
+    }
+  }
+}

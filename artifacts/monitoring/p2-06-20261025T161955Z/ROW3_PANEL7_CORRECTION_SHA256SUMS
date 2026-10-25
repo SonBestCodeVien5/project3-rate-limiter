@@ -1,0 +1,15 @@
+17806baa95102e8a1740cf466b90cfc9f95a17c9cc178df151bf76f2daef955d  artifacts/monitoring/p2-06-20261025T161955Z/panel7-correction.md
+cfa3c09cf65165092e4f88fb5286d65ec8093e8e6e7242ced111e2270576405a  artifacts/monitoring/p2-06-20261025T161955Z/row3-panel7-verification.json
+613f99c7f5ad595436ee586307e6c7c53b6c78686ee8a9bd356fea804193f546  artifacts/monitoring/p2-06-20261025T161955Z/row3-checks.md
+d47f92839c0fe11d1ccc71ce2222644e9acb645e988884ffb4897a24edb838a9  artifacts/monitoring/p2-06-20261025T161955Z/supplemental-dashboard-panels.md
+0a9d10107f9804cecb6ea002680a153dd063de1452b27a7e00b8aa12e92e4c49  artifacts/monitoring/p2-06-20261025T161955Z/screenshots/row2-grafana-dashboard.png
+49d5e3a1fc239881e59dd67fcae2b0cc918a6482eb55d327e64a04bd6c7ebf21  artifacts/monitoring/p2-06-20261025T161955Z/supplemental/row2-grafana-panel7.png
+49d5e3a1fc239881e59dd67fcae2b0cc918a6482eb55d327e64a04bd6c7ebf21  artifacts/monitoring/p2-06-20261025T161955Z/supplemental/row3-grafana-panel7.png
+3d5f5f69a7377f5425f15b2f522fe7a3859e3245a574de2de21c0bc28d070ee4  artifacts/monitoring/p2-06-20261025T161955Z/supplemental/row3-grafana-six-panels.png
+1c5773e0bbee0cd97c8d060c7de3f4a921fd16dd5176a3dfbaf5a7d8d0a75e42  artifacts/monitoring/p2-06-20261025T161955Z/supplemental/row3-grafana-panel7-corrected.png
+b671b303cf414ceb5c97d3ddb46d48934e1ba2b7f53f82127763ab9f1300f271  artifacts/monitoring/p2-06-20261025T161955Z/browser-raw/row3-panel7-response.json
+3d5f5f69a7377f5425f15b2f522fe7a3859e3245a574de2de21c0bc28d070ee4  artifacts/monitoring/p2-06-20261025T161955Z/browser-raw/playwright-output/page-2026-10-25T16-34-36-181Z.png
+49d5e3a1fc239881e59dd67fcae2b0cc918a6482eb55d327e64a04bd6c7ebf21  artifacts/monitoring/p2-06-20261025T161955Z/browser-raw/playwright-output/page-2026-10-25T16-36-50-914Z.png
+49d5e3a1fc239881e59dd67fcae2b0cc918a6482eb55d327e64a04bd6c7ebf21  artifacts/monitoring/p2-06-20261025T161955Z/browser-raw/playwright-output/page-2026-10-25T16-37-29-993Z.png
+115e6eb7dc9f1398ebd343ebfa8226b4f13d088ae990478e8bbc0af0453c61aa  artifacts/monitoring/p2-06-20261025T161955Z/browser-raw/row3-verification-playwright-output/page-2026-10-25T17-04-45-788Z.yml
+1541d1a1437ba8ce0f1efc895abde70b77fd630f2ee08e22b09e202738113e76  artifacts/monitoring/p2-06-20261025T161955Z/browser-raw/row3-verification-playwright-output/page-2026-10-25T17-04-54-517Z.yml
