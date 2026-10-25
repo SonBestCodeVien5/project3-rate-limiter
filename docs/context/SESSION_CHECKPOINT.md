@@ -1,5 +1,36 @@
 # Session checkpoint
 
+## Proposal-only review and Drive synchronization — 2026-10-25
+
+The user requested reviewing and editing the proposal in the repo and Drive,
+then clarified that the instructor-facing file is the same proposal, tab `t.0`
+of Google Doc `1Z1N6JJPsmAolE4UiOvVVONA-g32LCQosSt7WlyvSwdE`. No separate
+meeting guide was requested or created. The old source `.txt` was replaced by
+`.md` in `940a7f6`; the abridged proposal note was still present. Added the full
+[reader-facing proposal](../PROPOSAL.md), retaining the source note separately.
+
+One scoped Luna worker prepared the proposal and source note. Root integrated
+business-impact/metric corrections and updated the existing Drive tab under a
+required revision guard. Readback exactly matched the planned text: 11 native
+section headings, 14 native bullet paragraphs, and all four blank personal fields
+preserved. Drive modified time: `2026-10-25T03:05:39.620Z`; the other three source
+timestamps matched the index and their contents were not fetched again.
+No source-scope conflict or new baseline requirement was introduced; the brief
+and historical experiment spec need no requirement change. Current implementation
+choices are labeled separately from instructor approval. RQ1–RQ5, mandatory
+mixed protection/bounded outage, optional extensions and evidence limits remain.
+
+Proposal/source-note commit: `b9ca4a3`. Navigation/source-time commit is recorded
+immediately before this checkpoint in Git history. Checks: exact-once source
+replacement validation, guarded Drive write and exact text/native-structure
+readback, focused local links and staged whitespace. Staging exposed three
+Markdown hard-break spaces in the new file; root changed them to blank lines.
+No code suite, PDF/page-layout inspection, runtime, load, outage, new analysis,
+push or instructor contact. Unrelated concurrent P2-04 changes were preserved;
+their independently committed state below is not part of the proposal review.
+Stop after this documentation-only scope; existing experiment/runtime gates and
+H01/H02 remain unchanged. Instructor review and final personal fields remain pending.
+
 ## P2-04 G1 static implementation complete; runtime pending — 2026-10-25
 
 The user resumed **P2-04 only**, authorizing G1 implementation and focused static
