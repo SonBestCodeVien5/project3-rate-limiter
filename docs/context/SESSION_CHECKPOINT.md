@@ -1,5 +1,49 @@
 # Session checkpoint
 
+## Full verifier and isolated Redis integration — 2026-10-25
+
+User explicitly requested running the remaining checks through a worker. Reused
+`gpt-6-luna` low effort; root did not duplicate tests. Tested source is
+`c840a1edfd14f8b131551249e2b36eb2c9447c6f`, clean tracked tree, including the
+other session's Console cancel fix. Worker used an exact-revision temporary
+local clone `/tmp/project3-full-verify-c840a1e` to isolate runner locks/artifacts;
+pre-existing untracked browser files in the original checkout were untouched.
+
+**Full verifier:** `GOPROXY=off GOSUMDB=off bash scripts/verify.sh` exited 0:
+gofmt, vet, Go race tests/build, shell checks, all wired Python checks, JavaScript
+6/6 and Compose config passed. Go 1.26.1, Python 3.12.3, Node v24.14.1,
+Compose v5.1.1. Initial attempt stopped at read-only Go cache before tests;
+escalated retry passed. Initial Docker listing lacked socket permission; no
+research/Console runner process was seen. Full verification did not start or
+stop project containers. Redis integration initially skipped without its env;
+this gap was closed separately below, not silently counted as full coverage.
+
+**Real Redis:** local `redis-server` absent; used cached `redis:7.4.2-alpine`
+with `--pull=never`, image ID/digest
+`sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952`.
+Dedicated ephemeral container, 128 MB limit, Redis 96 MB/noeviction, persistence
+disabled, no mounts, dynamic loopback port `127.0.0.1:32768`; readiness passed.
+`REDIS_TEST_ADDR=127.0.0.1:32768 GOPROXY=off GOSUMDB=off go test -race -v ./internal/limiter`
+passed: 13 top-level tests + 4 algorithm subtests, zero skipped, 2.255s (worker
+report). Covered shared FW/TB quota, near-exhausted concurrency, refill/expiry,
+isolation, boundary/envelope and forced non-atomic control. Exact container
+`8c27c79c2b40b139ba520141ec5bf08d4153e9a9398ab2afb969ecbcb977c92b` removed by
+trap and confirmed absent; existing monitoring/research containers untouched.
+
+**Local records:** full verifier log `/tmp/project3-full-verify-c840a1e.log`,
+SHA-256 `ba0283000c829b9654e895cc1e29fb8a25c31dfd516d4817704809f9cda41d18`;
+Redis receipt `/tmp/project3-redis-test-receipt-c840a1e.txt`, SHA-256
+`bdbad070c0371fba451686f217b320f4e94a756fc0e53e7b10b618ebb9daadb8`.
+Root verified both hashes. Raw Redis output was not persisted; receipt records
+the worker's observed result, not a raw transcript. Tests were not rerun merely
+to capture logs. These `/tmp` files are local temporary records, not a durable
+research evidence package.
+
+**Stop:** no source fixes required. No benchmark, research load, monitoring
+lifecycle or outage ran in this package; no T09/T10 reanalysis. Test success
+neither completes P2 runtime acceptance nor resolves formal FW/scaling limits.
+No push. P2 status remains owned by its registry and the separate runtime scope.
+
 ## Audit follow-up / T11 reference grounding — 2026-10-25
 
 User authorized the review follow-up: complete verifier coverage, resolve stale
