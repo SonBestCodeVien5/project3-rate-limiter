@@ -83,10 +83,41 @@ services:
     depends_on:
       prometheus:
         condition: service_healthy
+  loki:
+    image: grafana/loki:3.7.0
+    command: ["-config.file=/etc/loki/loki.yml"]
+    volumes:
+      - ./deploy/monitoring/loki.yml:/etc/loki/loki.yml:ro
+      - loki-data:/loki
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3100/ready"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+    mem_limit: 512m
+    logging: *local-logs
+  alloy:
+    image: grafana/alloy:v1.21.2
+    command: ["run", "--server.http.listen-addr=0.0.0.0:12345", "--storage.path=/var/lib/alloy/data", "/etc/alloy/config.alloy"]
+    user: "473:473"
+    group_add: ["65534"]
+    volumes:
+      - ./deploy/monitoring/alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - alloy-data:/var/lib/alloy
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - default
+    depends_on:
+      loki:
+        condition: service_healthy
+    mem_limit: 512m
+    logging: *local-logs
 
 volumes:
   prometheus-data:
   grafana-data:
+  loki-data:
+  alloy-data:
 
 secrets:
   grafana_admin_password:

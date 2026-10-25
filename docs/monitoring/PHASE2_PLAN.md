@@ -2,13 +2,13 @@
 
 P2 là phần mở rộng local do người dùng chọn để học monitoring và cải thiện demo; không đổi yêu cầu hay bằng chứng baseline. Mục tiêu cơ bản là Prometheus, Grafana, Alloy, Loki, một dashboard, truy vấn metrics/logs và demo lặp lại được. Histogram, alerting, tracing, exporters hạ tầng, tự discovery mọi Console run và observability production là tùy chọn/ngoài scope.
 
-**Hiện trạng 24/10/2026:** **P2-03A đã đạt acceptance kỹ thuật Console→Grafana** sau yêu cầu tiếp tục riêng của người dùng. Run `20261024T152427-65c5e2bc4341` qua nút **Chạy benchmark** gửi 600 request, 600 HTTP 2xx, 0 generator drops; API1/API2/backend mỗi target có 31 `query_range` evaluation points trên range đã làm tròn xuống millisecond ở đầu tải; link đúng source/interval; 7 panel render không lỗi/No data. Attempt thất bại trước đó giữ nguyên evidence; không retry dưới ngân sách cũ. P2-04–P2-08 và xác nhận học vẫn pending. Xem [evidence mới](../../artifacts/monitoring/p2-03a-console-recheck/checks.md) và selected manifest [SELECTED_SHA256SUMS](../../artifacts/monitoring/p2-03a-console-recheck/SELECTED_SHA256SUMS).
+**Hiện trạng 25/10/2026:** **P2-03A đã đạt acceptance kỹ thuật Console→Grafana** sau yêu cầu tiếp tục riêng của người dùng. Run `20261024T152427-65c5e2bc4341` qua nút **Chạy benchmark** gửi 600 request, 600 HTTP 2xx, 0 generator drops; API1/API2/backend mỗi target có 31 `query_range` evaluation points trên range đã làm tròn xuống millisecond ở đầu tải; link đúng source/interval; 7 panel render không lỗi/No data. Attempt thất bại trước đó giữ nguyên evidence; không retry dưới ngân sách cũ. P2-04 G1 đã xong ở mức cấu hình tĩnh; G2 pipeline/runtime, P2-05–P2-08 và xác nhận học vẫn pending. Xem [evidence mới](../../artifacts/monitoring/p2-03a-console-recheck/checks.md) và selected manifest [SELECTED_SHA256SUMS](../../artifacts/monitoring/p2-03a-console-recheck/SELECTED_SHA256SUMS).
 
 ## Cách tiếp tục
 
 Đọc đúng task đang làm trong sổ này, rồi phần liên quan của [DESIGN](DESIGN.md), [RUNBOOK](RUNBOOK.md) hoặc [LEARNING_GUIDE](LEARNING_GUIDE.md). Kiểm tra code/caller thuộc gói trước khi sửa. [AGENTS.md](../../AGENTS.md) quy định nguồn bắt buộc, ownership và commit. [Checkpoint](../context/SESSION_CHECKPOINT.md) ghi kiểm tra/giới hạn từng phiên.
 
-Thứ tự ưu tiên hiện hành: `P2-00 → P2-01 → P2-02 → P2-03 → P2-03A → P2-04 → P2-05 → P2-06 → P2-08`; P2-07 là nhánh có điều kiện sau P2-06. P2-00–P2-03 đã hoàn tất cho fixed stack; evidence giữ nguyên và chỉ chứng minh đúng phạm vi lịch sử đó. P2-03A đã hoàn tất kỹ thuật; các gói sau vẫn là kế hoạch, chưa được cấp quyền. Không tự giao hoặc khởi chạy task sau điểm dừng được yêu cầu.
+Thứ tự ưu tiên hiện hành: `P2-00 → P2-01 → P2-02 → P2-03 → P2-03A → P2-04 → P2-05 → P2-06 → P2-08`; P2-07 là nhánh có điều kiện sau P2-06. P2-00–P2-03 đã hoàn tất cho fixed stack; evidence giữ nguyên và chỉ chứng minh đúng phạm vi lịch sử đó. P2-03A đã hoàn tất kỹ thuật; P2-04 G1 đã hoàn tất tĩnh, còn G2/runtime acceptance pending. Gói sau điểm dừng vẫn cần quyền rõ. Không tự giao hoặc khởi chạy task sau điểm dừng được yêu cầu.
 
 ## Phạm vi và bảo toàn evidence
 
@@ -44,7 +44,7 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 | P2-02 | Compose overlay, Prometheus/Grafana và provisioning | P2-01; G1 | **Xong G1**, `d785529`; runtime được kiểm chứng trong P2-03 |
 | P2-03 | Dashboard metrics và runtime smoke | P2-02; G2 | **Xong kỹ thuật**; dashboard `bedb095`, evidence và giới hạn ở phần P2-03; học tập chưa xác nhận |
 | P2-03A | Scrape các run Chạy benchmark hiện có khi bật monitoring | P2-03; G1/G2/G3 theo phạm vi được cấp | **Xong kỹ thuật G1/G2/G3**; run `20261024T152427-65c5e2bc4341`; học tập chưa xác nhận |
-| P2-04 | Alloy → Loki logs và datasource | P2-02; ưu tiên sau vertical slice P2-03A | **Chưa bắt đầu** |
+| P2-04 | Alloy → Loki logs và datasource | P2-02; ưu tiên sau vertical slice P2-03A | **G1 xong tĩnh**; G2 pipeline/runtime acceptance pending |
 | P2-05 | Kiểm chứng pipeline logs và vòng đời stack | P2-03/P2-04; G2 | **Chưa bắt đầu** |
 | P2-06 | Console normal/mixed: none/local/Redis | P2-03A; G3; cùng runner/topology cho cả ma trận | **Chưa bắt đầu** |
 | P2-07 | Demo Redis outage fail-open/fail-closed | P2-06; G4 | **Chờ điều kiện**, tùy chọn |
@@ -59,7 +59,7 @@ Trạng thái chỉ đổi khi có bằng chứng; `Xong` kỹ thuật không th
 | P2-02 | Stack, image pins, volumes, secrets, datasource UID `project3-prometheus`, loopback ownership | Đã thêm shared scrape network/file_sd; giữ fixed job và datasource. Kiểm tra/evidence P2-03A bên dưới; Console-run acceptance đã đạt trong scope tiếp tục riêng. |
 | P2-03 | Bảy panels, dashboard UID `project3-monitoring-demo`, folder UID `project3-monitoring-folder`, datasource, fixed-job query và toàn bộ evidence/UID-fix | Đã thêm chọn job/rate window và link UTC theo case hoàn tất; fixed panels/list/folder đã regression. Scope tiếp tục đã xác minh research panels/link trên dữ liệu thật của đúng một run. Evidence cũ chỉ chứng minh fixed stack. |
 | P2-03A | Nút, model, runner, generator, topology, lock/cancel/scoped cleanup hiện có | Đã triển khai opt-in file_sd/API-backend allowlist; metrics vertical slice đã đạt; P2-04/05 cần scope mới. |
-| P2-04/05 | App JSON logs hiện có; định hướng pipeline Alloy/Loki local và fixed demo teaching path | Pipeline chưa triển khai. Filter rõ fixed project + opted-in research services; P2-05 kiểm tra registration/log discovery/lifecycle/cancel/kill/stale manifest và dừng từng project đúng owner. Chỉ sau logs G2 mới hoàn tất full monitoring. |
+| P2-04/05 | App JSON logs hiện có; Alloy/Loki local, fixed demo và research opt-in | P2-04 G1 thêm cấu hình tĩnh; discovery giữ project/service allowlist và label opt-in ở research. G2 pipeline/runtime acceptance cùng P2-05 lifecycle/log checks vẫn pending; chỉ sau logs G2 mới hoàn tất full monitoring. |
 | P2-06 | Mức tải, số case và giới hạn đã nêu dưới đây | Toàn bộ suite cùng Console runner/topology/instrumentation; không trộn fixed demo, không lấy CLI/redis-outage.sh thay tương tác Console. |
 | P2-07 | G4 optional và ngân sách outage được khóa bên dưới | Chưa có đường fault hook an toàn cho Redis trong run research; không pause Redis fixed project khi load chạy ở research project. Chỉ thiết kế lại P2-07 để target/lifecycle hiện hữu nếu được cấp riêng; nếu không khớp, giữ blocked, không dùng workflow tải thứ hai. |
 | P2-08 | T12 bundle/T10 offline artifacts và learning checklist | Đóng gói hướng dẫn source hiện tại, opt-in path, exact UTC links, offline dashboard/log screenshots hoặc dữ liệu mẫu, recovery/cleanup; không tái sinh hay thay artifacts baseline. |

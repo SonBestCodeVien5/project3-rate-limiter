@@ -1,6 +1,6 @@
 # Hướng dẫn đọc tài liệu Project 3
 
-Không cần đọc toàn bộ `docs/`. Mốc hiện tại (24/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-03 đã kiểm tra dashboard 7 panel trên fixed stack, dùng 5/10 request `/work`; sửa lỗi UID Grafana sau đó được ghi trong [runbook](monitoring/RUNBOOK.md). P2-03A đã đạt acceptance kỹ thuật cho **Chạy benchmark** opt-in: API/backend samples hiển thị trong Grafana đúng source/UTC range. Attempt cũ thất bại giữ nguyên evidence; scope tiếp tục riêng đã dùng một attempt thành công. Dừng tại P2-03A; P2-04+ và học tập chưa hoàn tất. Xem [sổ P2](monitoring/PHASE2_PLAN.md) để biết trạng thái/gate, [kế hoạch baseline](REMAINING_WORK_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
+Không cần đọc toàn bộ `docs/`. Mốc hiện tại (25/10/2026): T09/T10 hoàn tất; T11 đã tích hợp bản nháp, còn định dạng cuối/rubric chờ; T12 đã kiểm tra gói demo; T13 chưa có deck. P2-03A đã đạt acceptance kỹ thuật cho **Chạy benchmark** opt-in; attempt lỗi trước đó vẫn giữ evidence. P2-04 G1 cấu hình Alloy/Loki đã hoàn tất tĩnh; logs pipeline/runtime và P2-05 còn pending. Xem [sổ P2](monitoring/PHASE2_PLAN.md) để biết trạng thái/gate, [kế hoạch baseline](REMAINING_WORK_PLAN.md) và [cổng đo](experiments/PROTOCOL_READINESS.md).
 
 ## Chọn đường đọc
 

@@ -58,9 +58,19 @@ class RendererTest(unittest.TestCase):
                 self.assertEqual(set(config["services"]), {"backend", "redis", "nginx", *(f"api{i}" for i in range(1, count + 1))})
                 for i in range(1, count + 1):
                     self.assertIn(f"console-api{i}", config["services"][f"api{i}"]["networks"]["monitoring-scrape"]["aliases"])
+                    self.assertEqual(config["services"][f"api{i}"]["labels"]["project3.monitoring.logs"], "true")
                 self.assertEqual(config["services"]["backend"]["networks"]["monitoring-scrape"]["aliases"], ["console-backend"])
+                self.assertEqual(config["services"]["backend"]["labels"]["project3.monitoring.logs"], "true")
+                for name in ("redis", "nginx"):
+                    self.assertNotIn("project3.monitoring.logs", config["services"][name].get("labels", {}))
                 self.assertNotIn("monitoring-scrape", config["services"]["redis"].get("networks", {}))
                 self.assertNotIn("monitoring-scrape", config["services"]["nginx"].get("networks", {}))
+
+    def test_monitoring_log_opt_out_has_no_opt_in_labels(self):
+        config, _, _ = module.render(self.base, 4, Path("/tmp"), 18080, monitoring=False)
+        self.assertNotIn("labels", config["services"]["api1"])
+        self.assertNotIn("labels", config["services"]["api2"])
+        self.assertNotIn("project3.monitoring.logs", config["services"]["backend"].get("labels", {}))
 
     def test_invalid_count_and_no_unproved_reset(self):
         with tempfile.TemporaryDirectory() as temp:

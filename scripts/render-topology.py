@@ -31,9 +31,11 @@ def render(base, instances, output, host_port, fresh_state=False, monitoring=Fal
         api["environment"]["INSTANCE_ID"] = f"api-{number}"
         api.pop("ports", None)
         if monitoring:
+            api.setdefault("labels", {})["project3.monitoring.logs"] = "true"
             api.setdefault("networks", {}).setdefault("monitoring-scrape", {"aliases": []})["aliases"].append(f"console-api{number}")
         config["services"][f"api{number}"] = api
     if monitoring:
+        config["services"]["backend"].setdefault("labels", {})["project3.monitoring.logs"] = "true"
         config["services"]["backend"].setdefault("networks", {}).setdefault("monitoring-scrape", {"aliases": []})["aliases"].append("console-backend")
         config.setdefault("networks", {})["monitoring-scrape"] = {"name": "project3-monitoring-scrape", "external": True}
     nginx = config["services"]["nginx"]

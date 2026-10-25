@@ -1,0 +1,36 @@
+discovery.docker "local" {
+  host             = "unix:///var/run/docker.sock"
+  refresh_interval = "5s"
+}
+
+discovery.relabel "project3_logs" {
+  targets = discovery.docker.local.targets
+
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_project", "__meta_docker_container_label_com_docker_compose_service", "__meta_docker_container_label_project3_monitoring_logs"]
+    regex         = "project3-monitoring-demo;(api1|api2|backend);|project3-research-lab;(api[1-4]|backend);true"
+    action        = "keep"
+  }
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
+    regex         = "(project3-monitoring-demo|project3-research-lab)"
+    target_label  = "project"
+  }
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_service"]
+    regex         = "(api[1-4]|backend)"
+    target_label  = "service"
+  }
+}
+
+loki.source.docker "project3" {
+  host       = "unix:///var/run/docker.sock"
+  targets    = discovery.relabel.project3_logs.output
+  forward_to = [loki.write.local.receiver]
+}
+
+loki.write "local" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
