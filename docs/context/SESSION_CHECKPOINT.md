@@ -1,5 +1,37 @@
 # Session checkpoint
 
+## Root-only final proposal review — 2026-10-25
+
+User explicitly requested personal root review with no delegation before reading
+and submitting the instructor proposal. Root read the current native Drive Doc,
+Roadmap priority, detailed repo proposal and relevant T10 conclusions; no worker
+was started or consulted for this review. Previous authorization to complete the
+proposal covered four small wording/precision corrections in place.
+
+**Findings corrected:** clarified controlled comparisons and equal target
+long-term rate for FW/TB with different burst semantics; stated three benchmark
+repetitions (existing formal design); clarified goodput versus latency on
+successful legitimate requests and joint reading with reject/error outcomes;
+separated outage first success from stable recovery. Rephrased FW trace
+inconclusiveness as a limit of evidence rather than an assertion that the
+algorithm is wrong. Simplified the business pain wording and Token Bucket
+explanation. No scope, RQ, existing measured result or production claim changed.
+
+**Verification:** guarded native updates, each replacement matched once. Final
+readback differs only by the four intended text edits; title/personal fields,
+seven HEADING_1 paragraphs, 13 native list paragraphs and four source hyperlinks
+preserved. Full-paragraph replacement briefly inherited heading formatting on
+three body paragraphs; root corrected them to NORMAL_TEXT/11pt and verified
+all seven heading roles again. Drive modified time
+`2026-10-25T16:46:33.201Z` synchronized to SOURCE_INDEX. Existing source notes
+already cover the clarified design and unchanged scope; no brief/spec update.
+
+**Verdict/stop:** content suitable to send for instructor review of the proposal.
+Rubric-specific format, official dates and instructor acceptance remain external;
+PDF pagination was not inspected. No submission/email/sharing change, experiment,
+code tests or T10 reanalysis. The unrelated `.playwright-mcp/` directory was left
+untouched. No push.
+
 ## Proposal completion and concise instructor version — 2026-10-25
 
 User authorized finishing the proposal via a cheap worker, then explicitly
