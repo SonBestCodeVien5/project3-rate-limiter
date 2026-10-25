@@ -4,7 +4,7 @@ Không cần đọc toàn bộ `docs/`. Tra trạng thái T01–T13/H01–H02 t�
 
 ## Chọn đường đọc
 
-- **Đọc proposal để trao đổi với giảng viên:** [đề cương đầy đủ](PROPOSAL.md); [bản Drive](https://docs.google.com/document/d/1Z1N6JJPsmAolE4UiOvVVONA-g32LCQosSt7WlyvSwdE/edit?tab=t.0) là nguồn có thẩm quyền. Ghi chú trong `context/sources/` chỉ là bản rút gọn.
+- **Gửi đề cương cho giảng viên:** dùng [bản Drive rút gọn](https://docs.google.com/document/d/1Z1N6JJPsmAolE4UiOvVVONA-g32LCQosSt7WlyvSwdE/edit?tab=t.0). [Bản repo chi tiết](PROPOSAL.md) giữ phần kỹ thuật và liên kết evidence để tra cứu; hai bản cùng phạm vi, khác mức chi tiết. Drive vẫn là nguồn có thẩm quyền; `context/sources/` giữ ghi chú nguồn cho công việc repo.
 - **Đường đọc chính:** [lộ trình học và tự kiểm tra](PROJECT_ROADMAP.md) → [ngữ nghĩa triển khai](IMPLEMENTATION.md) → [kết quả trong bản nháp](REPORT_DRAFT.md) → [kịch bản trình bày](DEMO_SCRIPT.md).
 - **Tài liệu tra theo nhu cầu:** [bối cảnh và tự kiểm tra](PROJECT_ROADMAP.md); [kết quả và cách đọc T10](analysis/T10_RESULTS.md); [nội dung slide](slides/project3-defense.md). Kịch bản demo chứa phần chuẩn bị kỹ thuật và câu hỏi bảo vệ.
 - **Tra công cụ:** [Console](CONSOLE.md) hướng dẫn giao diện/saved runs; [scripts README](../scripts/README.md) hướng dẫn runner, kiểm tra và exporter.
