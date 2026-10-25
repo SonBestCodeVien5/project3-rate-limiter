@@ -3,11 +3,15 @@ package console
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 )
@@ -21,6 +25,90 @@ func request(t *testing.T, h http.Handler, method, path, body string) *httptest.
 	w := httptest.NewRecorder()
 	h.ServeHTTP(w, r)
 	return w
+}
+
+func TestResearchRunnerLoadgenSharesConsoleProcessGroup(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join("..", "..", "scripts", "research-pilot.sh"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var launch string
+	for _, line := range strings.Split(string(data), "\n") {
+		line = strings.TrimSpace(line)
+		if strings.HasPrefix(line, "timeout ") && strings.Contains(line, `"$LAB_OUTPUT/loadgen" "${args[@]}"`) {
+			launch = line
+			break
+		}
+	}
+	if !strings.HasPrefix(launch, "timeout --foreground ") {
+		t.Fatalf("research-pilot loadgen must remain in the Console process group, got %q", launch)
+	}
+
+	root := t.TempDir()
+	caseDir := filepath.Join(root, "case")
+	if err := os.Mkdir(caseDir, 0700); err != nil {
+		t.Fatal(err)
+	}
+	loadgen := filepath.Join(root, "loadgen")
+	pidFile := filepath.Join(root, "loadgen.pid")
+	if err := os.WriteFile(loadgen, []byte("#!/bin/bash\necho $BASHPID > \"$LOADGEN_PID_FILE\"\nexec sleep 30\n"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("LAB_OUTPUT", root)
+	t.Setenv("LOADGEN_PID_FILE", pidFile)
+	cmd := exec.Command("bash", "-c", "DURATION=30; case_dir=\"$LAB_OUTPUT/case\"; args=(); "+launch)
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	if err := cmd.Start(); err != nil {
+		t.Fatal(err)
+	}
+	var loadgenPID int
+	deadline := time.Now().Add(2 * time.Second)
+	for time.Now().Before(deadline) {
+		if pidData, err := os.ReadFile(pidFile); err == nil {
+			loadgenPID, _ = strconv.Atoi(strings.TrimSpace(string(pidData)))
+			if loadgenPID > 0 {
+				break
+			}
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	if loadgenPID == 0 {
+		_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		_ = cmd.Wait()
+		t.Fatal("loadgen fixture did not start")
+	}
+	loadgenPGID, err := syscall.Getpgid(loadgenPID)
+	if err != nil {
+		_ = syscall.Kill(loadgenPID, syscall.SIGKILL)
+		_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		_ = cmd.Wait()
+		t.Fatal(err)
+	}
+	if loadgenPGID != cmd.Process.Pid {
+		_ = syscall.Kill(-loadgenPGID, syscall.SIGKILL)
+		_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		_ = cmd.Wait()
+		t.Fatalf("loadgen PGID=%d, want Console runner PGID=%d", loadgenPGID, cmd.Process.Pid)
+	}
+	if err := syscall.Kill(-cmd.Process.Pid, syscall.SIGTERM); err != nil {
+		t.Fatal(err)
+	}
+	done := make(chan error, 1)
+	go func() { done <- cmd.Wait() }()
+	select {
+	case <-done:
+	case <-time.After(2 * time.Second):
+		_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		t.Fatal("runner group did not exit promptly after SIGTERM")
+	}
+	deadline = time.Now().Add(1 * time.Second)
+	for time.Now().Before(deadline) {
+		if err := syscall.Kill(loadgenPID, 0); errors.Is(err, syscall.ESRCH) {
+			return
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	t.Fatalf("loadgen child %d survived Console process-group SIGTERM", loadgenPID)
 }
 
 func TestRunLifecycleAndArtifacts(t *testing.T) {

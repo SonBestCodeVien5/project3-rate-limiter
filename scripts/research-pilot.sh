@@ -223,7 +223,8 @@ PY
     args=(-target "http://127.0.0.1:$LAB_HOST_PORT/work" -duration "${DURATION}s" -rps "$RPS" -legitimate-rps "$LEGIT_RPS" -legitimate-clients 5 -max-inflight 200 -timeout 2s -run-id "$case_name-repeat-$repeat" -out "$case_dir/load" -mode "$MODE" -algorithm "$ALGORITHM" -fail-policy "$FAIL_POLICY" -profile "$PROFILE")
     if [[ "$PROFILE" == burst ]]; then args+=(-burst-start "${BURST_START}s" -burst-duration "${BURST_DURATION}s" -burst-rps "$BURST_RPS"); fi
     if [[ "$PROFILE" == concurrent ]]; then args+=(-concurrent-at "${CONCURRENT_AT}s" -concurrent-count "$CONCURRENT_COUNT"); fi
-    timeout "$((DURATION + 15))s" "$LAB_OUTPUT/loadgen" "${args[@]}" >"$case_dir/loadgen.log" 2>&1
+    # Console cancels the runner process group; keep timeout and loadgen in that group.
+    timeout --foreground "$((DURATION + 15))s" "$LAB_OUTPUT/loadgen" "${args[@]}" >"$case_dir/loadgen.log" 2>&1
     lab_stop_sample
     if ((MONITORING)); then
       read -r load_start load_end drain_end < <(python3 - "$case_dir/load/summary.json" "$case_dir/load/metadata.json" <<'PY'
