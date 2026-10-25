@@ -1,5 +1,47 @@
 # Session checkpoint
 
+## Proposal completion and concise instructor version — 2026-10-25
+
+User authorized finishing the proposal via a cheap worker, then explicitly
+requested a detailed repo version and a simpler Drive submission version.
+Reused one `gpt-6-luna` low-effort worker for drafting; root integrated content,
+checked scope and performed revision-guarded Google Docs updates. User said to
+leave personal fields for their own editing. During final Drive readback, user
+had filled them; all four current personal paragraphs were preserved exactly.
+Repository personal placeholders remain blank by request.
+
+**Results:** `94e3f80` completes detailed `docs/PROPOSAL.md` with dated progress,
+relative work plan, explicit source/config/reproduction deliverables, theory
+and four primary references. Drive document
+`1Z1N6JJPsmAolE4UiOvVVONA-g32LCQosSt7WlyvSwdE` was first completed, then
+condensed per user steering to seven sections, roughly 924 whitespace-delimited
+words including references. Internal task IDs, revision/artifact mechanics and
+long baseline results were removed from the instructor copy; required FW/TB,
+local/shared/none, topology, mixed backend-protection, atomic/non-atomic control
+and bounded Redis-outage comparisons remain. Five RQs, key measures, relative
+plan, source/report/evidence/slides/demo deliverables and FW/scaling caveats
+remain. No dates, approval or production readiness were invented.
+
+`7dcdc49` synchronizes source note/index: modified time
+`2026-10-25T16:17:34.894Z`. The Drive copy is the concise authoritative proposal;
+repo proposal retains technical detail, so they are intentionally not verbatim.
+The reader index now routes each audience to the appropriate version. No new
+requirements affect the active brief or experiment spec; other sources were
+not fetched again.
+
+**Checks:** native readback matches the final condensed draft exactly; seven
+HEADING_1 paragraphs, 13 native list paragraphs and four reference hyperlinks.
+Title and personal content preserved; draft note shortened for the instructor.
+The full repo keeps sections 1–8 and 10–11 content unchanged and all recorded
+numerical results/limits. Local links and staged whitespace checked. No code
+suite, runtime, new experiment or T10 analysis. PDF pagination and instructor
+rubric/template not checked; source references were reused from earlier verified
+primary-source reads. Drafting in `/tmp` is temporary, Drive/repo are deliverables.
+No export, sharing change, email, submission or push.
+
+**Stop:** proposal content work complete; instructor feedback/formal format and
+official dates remain external prerequisites. No P2 gate or task state changed.
+
 ## Proposal Drive/repo comparison — 2026-10-25
 
 User asked whether the repository proposal matches the Drive submission copy.
