@@ -49,4 +49,4 @@ Phần **So sánh các lượt đã lưu** chọn ba lượt hoàn tất riêng 
 
 Biểu đồ artifact, preset khóa, tiến trình runner và outage UI là đề xuất tùy chọn; chưa phải tính năng hiện có hoặc yêu cầu baseline. Fault injection từ UI, history database và truy cập LAN hiện chưa có.
 
-Prometheus/Grafana thuộc stack cố định P2 đã được kiểm tra; request mẫu trong Console đi qua đúng ingress fixed stack. P2-03A đã thêm opt-in scrape cho nút **Chạy benchmark** hiện có mà không đổi generator; runtime acceptance đã được kiểm chứng trong [evidence P2-03A](../artifacts/monitoring/p2-03a-console-recheck/checks.md). Alloy/Loki còn chờ. Truy cập LAN cần thiết kế quyền điều khiển process riêng.
+Prometheus/Grafana thuộc stack cố định P2 đã được kiểm tra; request mẫu trong Console đi qua đúng ingress fixed stack. P2-03A đã thêm opt-in scrape cho nút **Chạy benchmark** hiện có mà không đổi generator; runtime acceptance đã được kiểm chứng trong [evidence P2-03A](../artifacts/monitoring/p2-03a-console-recheck/checks.md). Alloy/Loki và lifecycle P2-05 đã được kiểm chứng; xem trạng thái/giới hạn tại [sổ P2](monitoring/PHASE2_PLAN.md). Truy cập LAN cần thiết kế quyền điều khiển process riêng.

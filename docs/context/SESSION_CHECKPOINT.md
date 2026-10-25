@@ -1,5 +1,77 @@
 # Session checkpoint
 
+## P2-05 technically complete: Console lifecycle and cancellation fix — 2026-10-25
+
+User requested completing the remaining P2-05 criteria after normal-run,
+live cancel/SIGTERM and stale recovery were explained. This authorized their
+bounded G3 verification; one existing scoped `gpt-6-luna` worker was reused.
+Root coordinated, reviewed the named cancellation finding/test watcher and
+integrated status documents without duplicating runtime tests. Initial HEAD
+`ff17594`, clean at first inspection. Concurrent audit/report/checkpoint work
+appeared and was preserved; normal/pre-fix cancel ran at `3689f24`, post-fix
+runs at `c840a1edfd14f8b131551249e2b36eb2c9447c6f`. Per-run source/dirty metadata
+is retained. No P2-06/P2-07/P2-08, outage, baseline rerun or T10 reanalysis.
+
+**Fix:** `c840a1e` changes only the runner loadgen timeout to `--foreground`
+and adds `TestResearchRunnerLoadgenSharesConsoleProcessGroup`, which extracts
+the real launch command and proves group SIGTERM reaches the child. The first
+cancel POST was timely, but GNU timeout's isolated group let the generator
+finish; the preliminary late-click hypothesis was disproved. Worker reports
+focused console/server/experiment checks, shell syntax and final `go test ./...`
+pass. Initial sandbox httptest loopback denials were resolved with elevated
+rerun; not counted as test passes before that. The separate verifier/Redis
+session and its commits below are not this package's work.
+
+**Lifecycle evidence:** [closeout matrix](../../artifacts/monitoring/p2-05-lifecycle-20261025T0503Z/closeout-criteria.md),
+[selected manifest](../../artifacts/monitoring/p2-05-lifecycle-20261025T0503Z/SELECTED_SHA256SUMS).
+Evidence commits `dd71e7a`, `a5a0986`; manifest SHA-256
+`882696f116656b489461cb87dec245c6ebee3d8a0e8ea785b68b77f841e4fdcc`.
+It references unchanged prior G2 config/image/restart/exclusion evidence and
+fingerprints the final code/test; normal and cancel summaries record actual
+source/config/image/timestamps. Root verified all 22 listed hashes and local
+links/staged whitespace. No secret/TSDB/chunks/raw browser output in selected
+commits; raw browser artifacts preserved under ignored batch `browser-raw/`.
+
+Normal `20261025T050941-8f78f2d67c87`: 600 scheduled/sent/legitimate 2xx,
+zero drops; baseline/lookback before load, three final scrapes +540ms after
+drain, complete registration, exact Grafana range, retained samples/logs and
+rendered dashboard/Explore. Lock refusal `20261025T050643-35adea68462d` and
+stale refusal `20261025T050806-863d39e474fd` happened before workload. Foreign
+owner could not remove/overwrite the stale manifest; matching owner recovery
+and subsequent valid registration succeeded.
+
+Four load-bearing UI attempts were preserved: normal success; timely cancel
+`20261025T051659-d1cc11d15a14` exposing the timeout group bug; post-fix normal
+`20261025T052516-883b4d2fed22` missing cancellation due test orchestration;
+then bounded prearmed-watcher retest `20261025T053020-e13041f1c4b5`.
+Actual total 1,831 scheduled requests; root announced/reviewed each necessary
+retest, no fifth attempt. Watcher used read-only Console metrics and the same
+existing Hủy DOM button, with new-ID/config guards and timeout. At first positive
+counters it clicked at 05:30:45.034Z, HTTP 202 at .040Z. Loadgen ran
+05:30:43.503Z–05:30:45.037Z (1.534s), `canceled=true`, 31 sent, 30 2xx,
+one transport error at SIGTERM. Incomplete owner record deregistered at
+05:30:45.161Z; no final scrape expected for interrupted run. Initial auto-review
+misclassification was resolved by contextual re-review of the same UI action,
+not an alternate load/cancel execution path.
+
+**Final state (worker):** same nine fixed container identities, all Exited (0);
+four volumes/two networks preserved. Last stored health probes succeeded before
+stop around 05:38:35Z. Research containers/process group/loadgen/sampler and
+active manifest absent, lock free; browser and session-owned Console closed.
+Concurrent `638ed98` briefly mixed evidence/checkpoint; the other session split
+it into `68d88c9` and `dd71e7a`. Current separated history was preserved, not
+rewritten by this package. Root's final status commit follows runtime evidence
+separately; no push.
+
+**Acceptance/stop:** P2-04/P2-05 technical acceptance is complete for the selected
+local scope, combining prior G2 and this actual Console lifecycle evidence.
+Delivery limitations remain: old-log replay can be rejected, no exactly-once,
+crash/SIGKILL/disk-pressure acceptance not claimed. Learner confirmation remains
+unconfirmed and separate. P2-06 requires a new explicit scope and approved
+matrix/budget; lifecycle runs do not automatically count as its coverage.
+Stop before P2-06/P2-07/P2-08. P2-03A evidence and all T09/T10 sources,
+artifacts, numbers and limitations are preserved.
+
 ## Full verifier and isolated Redis integration — 2026-10-25
 
 User explicitly requested running the remaining checks through a worker. Reused
