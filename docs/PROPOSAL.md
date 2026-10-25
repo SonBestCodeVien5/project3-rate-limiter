@@ -10,7 +10,7 @@ Lớp: ........................................................
 
 Giảng viên hướng dẫn: ........................................................
 
-> Bản dự thảo để trao đổi với giảng viên; không phải rubric, lịch chính thức hay xác nhận phê duyệt. Đề tài và các trường cá nhân được giữ theo bản nguồn: [Google Doc proposal](https://docs.google.com/document/d/1Z1N6JJPsmAolE4UiOvVVONA-g32LCQosSt7WlyvSwdE/edit). Các quyết định kỹ thuật mô tả dưới đây là lựa chọn triển khai hiện tại, không phải yêu cầu bổ sung hay phê duyệt của giảng viên.
+> Đây là bản đề cương chi tiết để tra cứu kỹ thuật trong repo. [Bản Drive gửi giảng viên](https://docs.google.com/document/d/1Z1N6JJPsmAolE4UiOvVVONA-g32LCQosSt7WlyvSwdE/edit) được rút gọn theo cùng phạm vi, không phải bản sao nguyên văn. Thông tin cá nhân ở bản repo để người dùng tự điền. Các quyết định kỹ thuật là lựa chọn triển khai hiện tại; ngày chính thức, rubric và phê duyệt vẫn chờ xác nhận.
 
 ## 1. Bối cảnh doanh nghiệp
 
@@ -69,11 +69,15 @@ Thiết kế đánh giá gắn với câu hỏi nghiên cứu:
 
 Latency được đo bằng mili giây; kết quả tách success, reject và error. p50/p95/p99 được tính riêng từng lượt rồi mới tổng hợp, không tính trên trace gộp. Throughput được báo theo request/giây; goodput là số request hợp lệ thành công chia cho thời gian lượt chạy gồm drain. Backend arrivals là request tới backend, kể cả success và overload. Các loại reject hợp lệ và lỗi hệ thống được giữ riêng. Báo cáo nêu cấu hình, protocol, revision và artifact liên quan; đây là kết quả testbed chứ không phải cam kết về vận hành thật.
 
-## 9. Kết quả mong đợi
+## 9. Kết quả mong đợi và tiến độ
 
 Sản phẩm là prototype và đánh giá có thể tái lập về trade-off giữa correctness, latency, throughput, tài nguyên và khả năng phục vụ client hợp lệ dưới các workload đã định. Mục tiêu là trả lời câu hỏi nghiên cứu bằng số đo và giới hạn rõ ràng, không phải chứng minh trước rằng một thuật toán hoặc mode luôn tốt hơn.
 
-Đã có baseline đo T09 và phân tích offline T10: 46 cấu hình, 3 lượt mỗi cấu hình, 138 lượt được chấp nhận theo protocol. T10 ghi Fixed Window correctness là **inconclusive** do chưa đủ độ phủ cửa sổ; đây không phải correctness pass. Redis network counters là tổng traffic quan sát được, outage run thiếu resource sampling, và kết quả scaling bị giới hạn bởi backend mô phỏng. Chi tiết, nguồn, protocol khóa và giới hạn được duy trì trong [phân tích kết quả T10](analysis/T10_RESULTS.md), [protocol đo](experiments/PROTOCOL_READINESS.md) và [kế hoạch phần việc baseline](REMAINING_WORK_PLAN.md).
+**Tiến độ ghi nhận ngày 25/10/2026:** Baseline đo T09 và phân tích offline T10 đã hoàn tất: 46 cấu hình, 3 lượt mỗi cấu hình, 138 lượt được chấp nhận theo protocol. T10 ghi Fixed Window correctness là **inconclusive** do chưa đủ độ phủ cửa sổ; đây không phải correctness pass. Redis network counters là tổng traffic quan sát được, outage run thiếu resource sampling, và kết quả scaling bị giới hạn bởi backend mô phỏng. T06 có kiểm tra atomicity riêng với Redis thật và đối chứng non-atomic có barrier; giới hạn và provenance được nêu trong hồ sơ T06.
+
+**Kết quả dự kiến:** Hồ sơ cuối cùng sẽ tổng hợp câu trả lời cho RQ1–RQ5 từ evidence phù hợp, giữ riêng số đo formal, kiểm tra correctness và giới hạn của từng phép đo. Không giả định trước kết quả sẽ xác nhận thuật toán hay mode nào tốt hơn.
+
+Chi tiết số liệu, nguồn và giới hạn được duy trì trong [phân tích kết quả T10](analysis/T10_RESULTS.md), [protocol đo](experiments/PROTOCOL_READINESS.md), [hồ sơ T06](worklog/2026-10-19-atomicity/README.md) và [kế hoạch phần việc baseline](REMAINING_WORK_PLAN.md).
 
 ## 10. Hướng phát triển thành Đồ án tốt nghiệp
 
@@ -82,3 +86,33 @@ Nếu được chọn làm hướng tương lai riêng, đề tài có thể m�
 ## 11. Lý do lựa chọn đề tài
 
 Khi backend chuyển sang nhiều instance, kiểm soát quota và bảo vệ backend cần phối hợp qua ranh giới instance, đồng thời phải cân nhắc correctness, độ trễ và khả năng phục vụ người dùng hợp lệ. Distributed rate limiting là một bài toán kỹ thuật cụ thể để khảo sát các trade-off đó bằng prototype và testbed có kiểm soát. Kết quả có thể làm nền tảng học tập cho hướng nghiên cứu traffic management rộng hơn, nhưng không khẳng định sẵn khả năng áp dụng production.
+
+## 12. Kế hoạch công việc và sản phẩm bàn giao
+
+Các mốc dưới đây là trình tự tương đối theo phụ thuộc công việc, không phải ngày chính thức. Baseline T09/T10 và kiểm tra T06 đã có evidence; phần còn lại tập trung hoàn thiện hồ sơ, tiếp nhận yêu cầu hình thức và đồng bộ sản phẩm trình bày. Mọi lượt đo mới (nếu cần) chỉ thực hiện sau khi phạm vi và kế hoạch thí nghiệm được thống nhất riêng.
+
+- **Mốc 1 — Hoàn thiện báo cáo:** đối chiếu yêu cầu trình bày/rubric và phản hồi giảng viên khi được cung cấp; hoàn thiện phần phương pháp, kết quả RQ1–RQ5, giới hạn và trích dẫn, truy nguyên số liệu về protocol, revision và artifacts. Giữ rõ các kết quả inconclusive và những phân tích chưa thực hiện.
+- **Mốc 2 — Rà soát nguồn và lập luận:** đọc các phần nguồn được dẫn trong cơ sở lý thuyết, giải thích liên hệ với thiết kế Project 3 và xác nhận hiểu biết; hoàn thiện định dạng tài liệu tham khảo theo yêu cầu nộp.
+- **Mốc 3 — Hoàn thiện slide và demo:** rút gọn câu chuyện từ vấn đề doanh nghiệp đến yêu cầu kỹ thuật, giải pháp, thí nghiệm và đánh giá; chọn các evidence đại diện đã có, chuẩn bị demo giới hạn theo kịch bản và kiểm tra liên kết giữa slide, báo cáo và artifacts.
+- **Mốc 4 — Rà soát trước khi nộp/trình bày:** kiểm tra nhất quán thuật ngữ, số liệu, giới hạn và sản phẩm; cập nhật theo phản hồi giảng viên và xác nhận lịch chính thức khi có thông tin.
+
+**Sản phẩm bàn giao dự kiến:**
+
+- Báo cáo Project 3 có tài liệu tham khảo và traceability.
+- Mã nguồn prototype, cấu hình thí nghiệm và hướng dẫn tái lập.
+- Bộ evidence đo lường và phân tích gắn với protocol, revision, run/cell và artifacts.
+- Slide trình bày.
+- Demo prototype theo kịch bản giới hạn.
+
+Quy cách cuối cùng của báo cáo, slide và demo sẽ theo yêu cầu chính thức nếu được cung cấp.
+
+## 13. Cơ sở lý thuyết và tài liệu tham khảo
+
+Token Bucket mô hình hóa việc tích lũy quyền gửi theo thời gian và cho phép burst trong giới hạn bucket; RFC 3290 phụ lục A.2 cung cấp nền tảng thuật ngữ cho mô hình này [1]. Nghiên cứu về distributed rate limiting đặt ra trade-off giữa phối hợp trạng thái toàn cục, độ chính xác, chi phí trao đổi thông tin và khả năng mở rộng [2]. Project 3 khảo sát một trường hợp hẹp hơn là quota request dùng Redis shared state trên testbed, không tái triển khai thuật toán điều phối băng thông của công trình đó. Công trình về tail latency giải thích vì sao cần quan sát p95/p99 bên cạnh throughput; nó không dự đoán rằng limiter sẽ cải thiện các số đo này [3]. Redis Lua scripting cung cấp primitive thực thi atomic và blocking cho thao tác quota [4]; semantics đó là căn cứ triển khai, còn correctness và hiệu năng của prototype cần evidence riêng.
+
+Các nguồn này hỗ trợ cách đặt câu hỏi và lựa chọn thiết kế; chúng không thay thế kết quả thực nghiệm Project 3. Định dạng danh mục có thể được điều chỉnh theo yêu cầu nộp chính thức.
+
+1. Yoram Bernet, Steven Blake, Daniel Grossman và Andrew Smith. *An Informal Management Model for Diffserv Routers*. RFC 3290, Informational, tháng 5/2002, phụ lục A.2. [Bản RFC](https://www.rfc-editor.org/rfc/rfc3290.html#appendix-A.2).
+2. Barath Raghavan, Kashi Vishwanath, Sriram Ramabhadran, Kenneth Yocum và Alex C. Snoeren. *Cloud Control with Distributed Rate Limiting*. ACM SIGCOMM, 2007, mục 1–3. [Bản tác giả](https://cseweb.ucsd.edu/~kvishwanath/papers/fp076-raghavan.pdf).
+3. Jeffrey Dean và Luiz André Barroso. *The Tail at Scale*. Communications of the ACM, 56(2), 2013, tr. 74–80; phần được viện dẫn: tr. 74–76. DOI: `10.1145/2408776.2408794`. [Bản tác giả](https://www.barroso.org/publications/TheTailAtScale.pdf).
+4. Redis. *Scripting with Lua*. Tài liệu chính thức, phần mở đầu về atomic/blocking execution. [Tài liệu](https://redis.io/docs/latest/develop/programmability/eval-intro/).
