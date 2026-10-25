@@ -4,4 +4,4 @@
 - Giữ nguyên bốn named volumes: `project3-monitoring-demo_alloy-data`, `project3-monitoring-demo_grafana-data`, `project3-monitoring-demo_loki-data`, `project3-monitoring-demo_prometheus-data`.
 - Giữ nguyên network `project3-monitoring-demo_default` và external network `project3-monitoring-scrape`.
 - Không còn container research hoặc sentinel negative-control. `artifacts/monitoring/console-targets/active.json` không tồn tại.
-- Browser evidence đã chọn được sao chép vào `screenshots/`. Thư mục `.playwright-mcp/` do browser tool tạo vẫn ở worktree vì tiến trình Playwright còn hoạt động; auto-review chặn xóa thư mục ignored. Không thay đổi hoặc di chuyển thư mục khi còn writer.
+- Browser evidence đã chọn được sao chép vào `screenshots/`. Sau khi đóng trang Grafana, các output thô do browser tool tạo được chuyển nguyên trạng vào `browser-raw/` trong thư mục ignored này; không đưa vào commit hoặc `SELECTED_SHA256SUMS`.
