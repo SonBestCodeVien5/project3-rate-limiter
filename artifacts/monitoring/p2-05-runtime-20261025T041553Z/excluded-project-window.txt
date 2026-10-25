@@ -1,0 +1,8 @@
+project=project3-p2-05-excluded
+service=backend
+opt_in_label=true
+query_start_ns=1792902797708117683
+query_end_ns=1792902818827783481
+healthz_http=200
+wait_seconds=20
+excluded_project_loki_entries 0

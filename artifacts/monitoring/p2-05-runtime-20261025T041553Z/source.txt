@@ -1,0 +1,10 @@
+Task: P2-05 G2 runtime smoke and log lifecycle checks
+Runtime batch: 2026-10-25 UTC
+Starting revision: 6ad7fbd822da319c0e9fcd36c9375f73702b1525
+Implementation revisions exercised: 65393c0 (Compose socket group/Loki readiness), 713c4fd (Loki graceful WAL flush); subsequent documentation revision: 37b19c3.
+Starting worktree: clean (confirmed by root and worker)
+Runtime source state: checks exercised changes later committed as 65393c0 and 713c4fd; documentation-only changes were committed after runtime at 37b19c3.
+Relevant config fingerprint list: config-fingerprints.txt
+Secret handling: GRAFANA_ADMIN_PASSWORD_FILE was passed to Compose as a path; secret contents were not printed, copied, or saved. Docker inspect environment was not requested.
+No /work request, loadgen, benchmark, Redis outage, or T09/T10 analysis was run.
+Final tracked worktree after implementation/docs commits: clean. One generated ignored Playwright output directory remains in place because the browser processes were still active and auto-review rejected recursive deletion; see final-state.md. Runtime evidence is in this batch directory and was not included in the implementation commits.

@@ -1,0 +1,23 @@
+project	service	loki_timestamp_utc	app_time_utc	delta_ms	json	message
+project3-monitoring-demo	api1	2026-10-25T04:05:01.973139+00:00	2026-10-25T04:05:01.972636+00:00	0.503	valid	server started
+project3-monitoring-demo	api1	2026-10-25T04:09:08.046950+00:00	2026-10-25T04:09:08.046427+00:00	0.523	valid	server started
+project3-monitoring-demo	api1	2026-10-25T04:14:33.773621+00:00	2026-10-25T04:14:33.772936+00:00	0.685	valid	server started
+project3-monitoring-demo	api2	2026-10-25T04:05:01.934615+00:00	2026-10-25T04:05:01.934052+00:00	0.563	valid	server started
+project3-monitoring-demo	api2	2026-10-25T04:09:07.926262+00:00	2026-10-25T04:09:07.925789+00:00	0.473	valid	server started
+project3-monitoring-demo	api2	2026-10-25T04:14:33.878644+00:00	2026-10-25T04:14:33.877627+00:00	1.017	valid	server started
+project3-monitoring-demo	backend	2026-10-25T04:04:59.169304+00:00	2026-10-25T04:04:59.167457+00:00	1.847	valid	server started
+project3-monitoring-demo	backend	2026-10-25T04:09:07.872576+00:00	2026-10-25T04:09:07.871942+00:00	0.634	valid	server started
+project3-monitoring-demo	backend	2026-10-25T04:14:33.932822+00:00	2026-10-25T04:14:33.932091+00:00	0.731	valid	server started
+project3-research-lab	api1	2026-10-25T04:17:42.279351+00:00	2026-10-25T04:17:42.278705+00:00	0.646	valid	server started
+project3-research-lab	api1	2026-10-25T04:19:24.402306+00:00	2026-10-25T04:19:24.401734+00:00	0.572	valid	server started
+project3-research-lab	api1	2026-10-25T04:22:32.878995+00:00	2026-10-25T04:22:32.878617+00:00	0.378	valid	server started
+project3-research-lab	api2	2026-10-25T04:17:42.303481+00:00	2026-10-25T04:17:42.302873+00:00	0.608	valid	server started
+project3-research-lab	api2	2026-10-25T04:19:24.453812+00:00	2026-10-25T04:19:24.453275+00:00	0.537	valid	server started
+project3-research-lab	api2	2026-10-25T04:22:32.932116+00:00	2026-10-25T04:22:32.931429+00:00	0.687	valid	server started
+project3-research-lab	api3	2026-10-25T04:19:24.446688+00:00	2026-10-25T04:19:24.446049+00:00	0.639	valid	server started
+project3-research-lab	api3	2026-10-25T04:22:32.907270+00:00	2026-10-25T04:22:32.906498+00:00	0.772	valid	server started
+project3-research-lab	api4	2026-10-25T04:19:24.407128+00:00	2026-10-25T04:19:24.406460+00:00	0.668	valid	server started
+project3-research-lab	api4	2026-10-25T04:22:32.948902+00:00	2026-10-25T04:22:32.948149+00:00	0.753	valid	server started
+project3-research-lab	backend	2026-10-25T04:17:39.501842+00:00	2026-10-25T04:17:39.501195+00:00	0.647	valid	server started
+project3-research-lab	backend	2026-10-25T04:19:21.492668+00:00	2026-10-25T04:19:21.492250+00:00	0.418	valid	server started
+project3-research-lab	backend	2026-10-25T04:22:29.997960+00:00	2026-10-25T04:22:29.997520+00:00	0.440	valid	server started

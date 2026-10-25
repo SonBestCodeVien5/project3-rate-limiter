@@ -1,0 +1,82 @@
+{
+  "owner": "p2-05-runtime-20261025T041553Z-first-visible-4",
+  "registered_at": "2026-10-25T04:22:36.297Z",
+  "targets": [
+    {
+      "targets": [
+        "console-api1:8080"
+      ],
+      "labels": {
+        "service": "api1",
+        "topology": "4",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-api2:8080"
+      ],
+      "labels": {
+        "service": "api2",
+        "topology": "4",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-api3:8080"
+      ],
+      "labels": {
+        "service": "api3",
+        "topology": "4",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-api4:8080"
+      ],
+      "labels": {
+        "service": "api4",
+        "topology": "4",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-backend:8080"
+      ],
+      "labels": {
+        "service": "backend",
+        "topology": "4",
+        "project": "project3-research-lab"
+      }
+    }
+  ],
+  "services": [
+    "api1",
+    "api2",
+    "api3",
+    "api4",
+    "backend"
+  ],
+  "instances": 4,
+  "baseline_scrapes_utc": {
+    "api2": "2026-10-25T04:22:37.395Z",
+    "api1": "2026-10-25T04:22:37.395Z",
+    "api4": "2026-10-25T04:22:37.395Z",
+    "api3": "2026-10-25T04:22:37.395Z",
+    "backend": "2026-10-25T04:22:37.395Z"
+  },
+  "lookback_started_at": "2026-10-25T04:22:37.396Z",
+  "lookback_finished_at": "2026-10-25T04:22:41.400Z",
+  "post_lookback_scrapes_utc": {
+    "api2": "2026-10-25T04:22:41.398Z",
+    "api1": "2026-10-25T04:22:41.398Z",
+    "api4": "2026-10-25T04:22:41.398Z",
+    "api3": "2026-10-25T04:22:41.398Z",
+    "backend": "2026-10-25T04:22:41.398Z"
+  },
+  "status": "incomplete",
+  "deregistered_at": "2026-10-25T04:22:43.752Z"
+}

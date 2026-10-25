@@ -1,0 +1,5 @@
+Grafana browser verification, UTC range 2026-10-25 04:10:00–04:25:00; browser timezone Asia/Bangkok (UTC+07:00), shown as 11:10–11:25:
+- Dashboard UID project3-monitoring-demo, datasource project3-prometheus, job project3-demo, rate window 20s: 17/17 POST /api/ds/query returned HTTP 200; browser console had 0 errors.
+- Explore datasource project3-loki, query {project="project3-research-lab",service=~"api1|api2|api3|api4|backend"}: Loki query and logs-volume requests returned HTTP 200; Explore rendered 13 startup log lines in the selected range; browser console had 0 errors.
+- One Moment deprecation warning was recorded while the Explore time picker was moving from relative now-1h to the exact range; the final exact-range query succeeded.
+- Sanitized screenshots: screenshots/grafana-dashboard-fixed-0410-0425z.png, screenshots/grafana-explore-research-0410-0425z.png.

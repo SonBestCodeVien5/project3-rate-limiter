@@ -1,0 +1,7 @@
+compose_start_utc=2026-10-25T04:22:25,639288112+00:00
+compose_healthy_utc=2026-10-25T04:22:36,208479207+00:00
+query_completed_utc=2026-10-25T04:22:43,349671653+00:00
+first_all_services_visible_utc=2026-10-25T04:22:43.337Z
+first_query_range_utc=2026-10-25T04:22:25.639288112Z..2026-10-25T04:22:43.337Z
+visible_after_registration_upper_bound_s=6.940
+source_to_first_query_upper_bound_s=13.340

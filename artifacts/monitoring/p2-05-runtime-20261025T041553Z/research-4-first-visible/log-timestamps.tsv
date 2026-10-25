@@ -1,0 +1,6 @@
+project	service	loki_timestamp_utc	app_time_utc	delta_ms	message
+project3-research-lab	api1	2026-10-25T04:22:32.878995+00:00	2026-10-25T04:22:32.878617+00:00	0.378	server started
+project3-research-lab	api2	2026-10-25T04:22:32.932116+00:00	2026-10-25T04:22:32.931429+00:00	0.687	server started
+project3-research-lab	api3	2026-10-25T04:22:32.907270+00:00	2026-10-25T04:22:32.906498+00:00	0.772	server started
+project3-research-lab	api4	2026-10-25T04:22:32.948902+00:00	2026-10-25T04:22:32.948149+00:00	0.753	server started
+project3-research-lab	backend	2026-10-25T04:22:29.997960+00:00	2026-10-25T04:22:29.997520+00:00	0.440	server started

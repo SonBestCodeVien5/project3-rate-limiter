@@ -1,0 +1,4 @@
+indexed_labels=project,service,service_name
+project_values=project3-monitoring-demo,project3-research-lab
+service_values=api1,api2,api3,api4,backend
+excluded_redis_nginx_monitoring_services=absent
