@@ -1,0 +1,35 @@
+{
+  "query": "{project=\"project3-research-lab\",service=~\"api1|api2|backend\"}",
+  "range_utc": {
+    "start": "2026-10-25T05:09:30Z",
+    "end": "2026-10-25T05:10:53.749Z"
+  },
+  "entries": [
+    {
+      "service": "backend",
+      "project": "project3-research-lab",
+      "loki_ts_ns": "1792904987745039748",
+      "source_time": "2026-10-25T05:09:47.744403196Z",
+      "level": "INFO",
+      "message": "server started"
+    },
+    {
+      "service": "api1",
+      "project": "project3-research-lab",
+      "loki_ts_ns": "1792904994812568033",
+      "source_time": "2026-10-25T05:09:54.812061693Z",
+      "level": "INFO",
+      "message": "server started"
+    },
+    {
+      "service": "api2",
+      "project": "project3-research-lab",
+      "loki_ts_ns": "1792904995371217776",
+      "source_time": "2026-10-25T05:09:55.370630177Z",
+      "level": "INFO",
+      "message": "server started"
+    }
+  ],
+  "json_parse_errors": 0,
+  "status": "success"
+}

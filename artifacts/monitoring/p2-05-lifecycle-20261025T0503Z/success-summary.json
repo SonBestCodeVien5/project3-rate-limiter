@@ -1,0 +1,133 @@
+{
+  "run_id": "20261025T050941-8f78f2d67c87",
+  "console_state": "completed",
+  "monitoring_status": "complete",
+  "request": {
+    "case": "custom",
+    "repetitions": 1,
+    "monitoring": true,
+    "mode": "redis",
+    "algorithm": "fixed-window",
+    "fail_policy": "closed",
+    "profile": "normal",
+    "instances": 2,
+    "limit": 20,
+    "window_ms": 1000,
+    "rps": 20,
+    "legitimate_rps": 20,
+    "duration_seconds": 30,
+    "backend_capacity": 4,
+    "backend_service_ms": 50
+  },
+  "source_utc": {
+    "load_start": "2026-10-25T05:10:08.020Z",
+    "load_end": "2026-10-25T05:10:38.020Z",
+    "generator_drain": "2026-10-25T05:10:38.025Z",
+    "final_scrapes": {
+      "api1": "2026-10-25T05:10:38.565Z",
+      "backend": "2026-10-25T05:10:38.565Z",
+      "api2": "2026-10-25T05:10:38.565Z"
+    },
+    "final_scrape_after_drain_all_services": true,
+    "grafana_link": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?var-job=project3-console-run&var-rate_window=4s&from=1792905008020&to=1792905038020",
+    "grafana_from_utc": "2026-10-25T05:10:08.020Z",
+    "grafana_to_utc": "2026-10-25T05:10:38.020Z",
+    "grafana_bounds_match_run_ms": true
+  },
+  "load_summary": {
+    "scheduled": 600,
+    "sent": 600,
+    "generator_dropped": 0,
+    "canceled": false,
+    "http_2xx": 600,
+    "http_429": 0,
+    "http_5xx": 0,
+    "timeouts": 0,
+    "transport_errors": 0,
+    "legitimate_sent": 600,
+    "legitimate_successful": 600,
+    "started_at": "2026-10-25T12:10:08.020268105+07:00",
+    "ended_at": "2026-10-25T12:10:38.025131947+07:00"
+  },
+  "target_registration": {
+    "owner": "result-custom-1",
+    "services": [
+      "api1",
+      "api2",
+      "backend"
+    ],
+    "registered_at": "2026-10-25T05:10:02.105Z",
+    "baseline_scrapes_utc": {
+      "api1": "2026-10-25T05:10:02.974Z",
+      "backend": "2026-10-25T05:10:02.974Z",
+      "api2": "2026-10-25T05:10:02.974Z"
+    },
+    "lookback_started_at": "2026-10-25T05:10:02.975Z",
+    "lookback_finished_at": "2026-10-25T05:10:06.982Z",
+    "post_lookback_scrapes_utc": {
+      "api1": "2026-10-25T05:10:06.978Z",
+      "backend": "2026-10-25T05:10:06.978Z",
+      "api2": "2026-10-25T05:10:06.978Z"
+    },
+    "final_scrapes_utc": {
+      "api1": "2026-10-25T05:10:38.565Z",
+      "backend": "2026-10-25T05:10:38.565Z",
+      "api2": "2026-10-25T05:10:38.565Z"
+    },
+    "deregistered_at": "2026-10-25T05:10:38.567Z"
+  },
+  "images": [
+    {
+      "repository": "project3-research-lab-api2",
+      "tag": "latest",
+      "image_id": "sha256:7fa4b22351864bf6bc7034d10ec6af45e03752cec63aaa8481d611ece4733a9f",
+      "repo_digests": [
+        "project3-research-lab-api2@sha256:7fa4b22351864bf6bc7034d10ec6af45e03752cec63aaa8481d611ece4733a9f"
+      ]
+    },
+    {
+      "repository": "project3-research-lab-backend",
+      "tag": "latest",
+      "image_id": "sha256:13e935cacc653d4606e7d667774cb72d6bedba4b204d1dec5c2b868ec84c146c",
+      "repo_digests": [
+        "project3-research-lab-backend@sha256:13e935cacc653d4606e7d667774cb72d6bedba4b204d1dec5c2b868ec84c146c"
+      ]
+    },
+    {
+      "repository": "project3-research-lab-api1",
+      "tag": "latest",
+      "image_id": "sha256:c31f595fc04b0e0def8e153cbc310c3c1b778525af5ee2908a546f609070c57c",
+      "repo_digests": [
+        "project3-research-lab-api1@sha256:c31f595fc04b0e0def8e153cbc310c3c1b778525af5ee2908a546f609070c57c"
+      ]
+    },
+    {
+      "repository": "redis",
+      "tag": "7.4.2-alpine",
+      "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+      "repo_digests": [
+        "redis@sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952"
+      ]
+    },
+    {
+      "repository": "nginx",
+      "tag": "1.28.0-alpine",
+      "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+      "repo_digests": [
+        "nginx@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284"
+      ]
+    }
+  ],
+  "source": {
+    "git_revision": "3689f24729f8294cbd1c37756642d835800f1664",
+    "git_dirty_paths_at_loadgen_start": [
+      {
+        "index_worktree_status": "??",
+        "path": ".playwright-mcp/"
+      }
+    ],
+    "go_version": "go1.26.1",
+    "os": "linux",
+    "arch": "amd64"
+  }
+}

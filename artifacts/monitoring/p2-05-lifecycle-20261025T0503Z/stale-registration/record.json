@@ -1,0 +1,44 @@
+{
+  "owner": "p2-05-lifecycle-stale-control",
+  "registered_at": "2026-10-25T05:07:49.796Z",
+  "targets": [
+    {
+      "targets": [
+        "console-api1:8080"
+      ],
+      "labels": {
+        "service": "api1",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-api2:8080"
+      ],
+      "labels": {
+        "service": "api2",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    },
+    {
+      "targets": [
+        "console-backend:8080"
+      ],
+      "labels": {
+        "service": "backend",
+        "topology": "2",
+        "project": "project3-research-lab"
+      }
+    }
+  ],
+  "services": [
+    "api1",
+    "api2",
+    "backend"
+  ],
+  "instances": 2,
+  "status": "incomplete",
+  "deregistered_at": "2026-10-25T05:09:08.001Z"
+}

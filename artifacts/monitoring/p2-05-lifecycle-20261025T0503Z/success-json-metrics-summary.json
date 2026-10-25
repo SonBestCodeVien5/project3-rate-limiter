@@ -1,0 +1,152 @@
+{
+  "api1": {
+    "json_schema_unchanged": true,
+    "fields": [
+      "algorithm",
+      "allowed",
+      "arrivals",
+      "backend_attempts",
+      "backend_confirmed_arrivals",
+      "backend_errors",
+      "canceled",
+      "fail_closed",
+      "fail_open",
+      "instance_id",
+      "limiter_errors",
+      "mode",
+      "overload",
+      "rejected",
+      "requests",
+      "role",
+      "success"
+    ],
+    "before": {
+      "requests": 0,
+      "allowed": 0,
+      "rejected": 0,
+      "backend_attempts": 0,
+      "backend_confirmed_arrivals": 0,
+      "backend_errors": 0,
+      "fail_closed": 0
+    },
+    "after": {
+      "requests": 300,
+      "allowed": 300,
+      "rejected": 0,
+      "backend_attempts": 300,
+      "backend_confirmed_arrivals": 300,
+      "backend_errors": 0,
+      "fail_closed": 0
+    },
+    "delta": {
+      "requests": 300,
+      "allowed": 300,
+      "rejected": 0,
+      "backend_attempts": 300,
+      "backend_confirmed_arrivals": 300,
+      "backend_errors": 0,
+      "fail_closed": 0
+    },
+    "role": "api",
+    "instance_id": "api-1",
+    "mode": "redis",
+    "algorithm": "fixed-window"
+  },
+  "api2": {
+    "json_schema_unchanged": true,
+    "fields": [
+      "algorithm",
+      "allowed",
+      "arrivals",
+      "backend_attempts",
+      "backend_confirmed_arrivals",
+      "backend_errors",
+      "canceled",
+      "fail_closed",
+      "fail_open",
+      "instance_id",
+      "limiter_errors",
+      "mode",
+      "overload",
+      "rejected",
+      "requests",
+      "role",
+      "success"
+    ],
+    "before": {
+      "requests": 0,
+      "allowed": 0,
+      "rejected": 0,
+      "backend_attempts": 0,
+      "backend_confirmed_arrivals": 0,
+      "backend_errors": 0,
+      "fail_closed": 0
+    },
+    "after": {
+      "requests": 300,
+      "allowed": 300,
+      "rejected": 0,
+      "backend_attempts": 300,
+      "backend_confirmed_arrivals": 300,
+      "backend_errors": 0,
+      "fail_closed": 0
+    },
+    "delta": {
+      "requests": 300,
+      "allowed": 300,
+      "rejected": 0,
+      "backend_attempts": 300,
+      "backend_confirmed_arrivals": 300,
+      "backend_errors": 0,
+      "fail_closed": 0
+    },
+    "role": "api",
+    "instance_id": "api-2",
+    "mode": "redis",
+    "algorithm": "fixed-window"
+  },
+  "backend": {
+    "json_schema_unchanged": true,
+    "fields": [
+      "algorithm",
+      "allowed",
+      "arrivals",
+      "backend_attempts",
+      "backend_confirmed_arrivals",
+      "backend_errors",
+      "canceled",
+      "fail_closed",
+      "fail_open",
+      "instance_id",
+      "limiter_errors",
+      "mode",
+      "overload",
+      "rejected",
+      "requests",
+      "role",
+      "success"
+    ],
+    "before": {
+      "arrivals": 0,
+      "success": 0,
+      "overload": 0,
+      "canceled": 0
+    },
+    "after": {
+      "arrivals": 600,
+      "success": 600,
+      "overload": 0,
+      "canceled": 0
+    },
+    "delta": {
+      "arrivals": 600,
+      "success": 600,
+      "overload": 0,
+      "canceled": 0
+    },
+    "role": "backend",
+    "instance_id": "backend-1",
+    "mode": "local",
+    "algorithm": "fixed-window"
+  }
+}

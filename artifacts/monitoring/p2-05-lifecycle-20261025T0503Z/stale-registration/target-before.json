@@ -1,0 +1,32 @@
+[
+  {
+    "targets": [
+      "console-api1:8080"
+    ],
+    "labels": {
+      "service": "api1",
+      "topology": "2",
+      "project": "project3-research-lab"
+    }
+  },
+  {
+    "targets": [
+      "console-api2:8080"
+    ],
+    "labels": {
+      "service": "api2",
+      "topology": "2",
+      "project": "project3-research-lab"
+    }
+  },
+  {
+    "targets": [
+      "console-backend:8080"
+    ],
+    "labels": {
+      "service": "backend",
+      "topology": "2",
+      "project": "project3-research-lab"
+    }
+  }
+]

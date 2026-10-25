@@ -1,0 +1,133 @@
+{
+  "query_range_utc": {
+    "start": "2026-10-25T05:10:08.020Z",
+    "end": "2026-10-25T05:10:38.020Z",
+    "step_seconds": 1,
+    "after_research_cleanup": true
+  },
+  "results": {
+    "targets": {
+      "expression": "up{job=\"project3-console-run\"}",
+      "status": "success",
+      "series": [
+        {
+          "labels": {
+            "job": "project3-console-run",
+            "project": "project3-research-lab",
+            "service": "api1",
+            "topology": "2"
+          },
+          "points": 31,
+          "first": 1.0,
+          "min": 1.0,
+          "max": 1.0,
+          "last": 1.0,
+          "first_utc": "2026-10-25T05:10:08Z",
+          "last_utc": "2026-10-25T05:10:38Z"
+        },
+        {
+          "labels": {
+            "job": "project3-console-run",
+            "project": "project3-research-lab",
+            "service": "api2",
+            "topology": "2"
+          },
+          "points": 31,
+          "first": 1.0,
+          "min": 1.0,
+          "max": 1.0,
+          "last": 1.0,
+          "first_utc": "2026-10-25T05:10:08Z",
+          "last_utc": "2026-10-25T05:10:38Z"
+        },
+        {
+          "labels": {
+            "job": "project3-console-run",
+            "project": "project3-research-lab",
+            "service": "backend",
+            "topology": "2"
+          },
+          "points": 31,
+          "first": 1.0,
+          "min": 1.0,
+          "max": 1.0,
+          "last": 1.0,
+          "first_utc": "2026-10-25T05:10:08Z",
+          "last_utc": "2026-10-25T05:10:38Z"
+        }
+      ]
+    },
+    "api_requests": {
+      "expression": "sum by (service) (rate(project3_api_requests_total{job=\"project3-console-run\"}[4s]))",
+      "status": "success",
+      "series": [
+        {
+          "labels": {
+            "service": "api1"
+          },
+          "points": 31,
+          "first": 0.0,
+          "min": 0.0,
+          "max": 10.0,
+          "last": 10.0,
+          "first_utc": "2026-10-25T05:10:08Z",
+          "last_utc": "2026-10-25T05:10:38Z"
+        },
+        {
+          "labels": {
+            "service": "api2"
+          },
+          "points": 31,
+          "first": 0.0,
+          "min": 0.0,
+          "max": 10.0,
+          "last": 10.0,
+          "first_utc": "2026-10-25T05:10:08Z",
+          "last_utc": "2026-10-25T05:10:38Z"
+        }
+      ]
+    },
+    "backend_arrivals": {
+      "expression": "rate(project3_backend_arrivals_total{job=\"project3-console-run\",service=\"backend\"}[4s])",
+      "status": "success",
+      "series": [
+        {
+          "labels": {
+            "job": "project3-console-run",
+            "project": "project3-research-lab",
+            "service": "backend",
+            "topology": "2"
+          },
+          "points": 31,
+          "first": 0.0,
+          "min": 0.0,
+          "max": 20.0,
+          "last": 20.0,
+          "first_utc": "2026-10-25T05:10:08Z",
+          "last_utc": "2026-10-25T05:10:38Z"
+        }
+      ]
+    },
+    "backend_success": {
+      "expression": "rate(project3_backend_success_total{job=\"project3-console-run\",service=\"backend\"}[4s])",
+      "status": "success",
+      "series": [
+        {
+          "labels": {
+            "job": "project3-console-run",
+            "project": "project3-research-lab",
+            "service": "backend",
+            "topology": "2"
+          },
+          "points": 31,
+          "first": 0.0,
+          "min": 0.0,
+          "max": 20.0,
+          "last": 20.0,
+          "first_utc": "2026-10-25T05:10:08Z",
+          "last_utc": "2026-10-25T05:10:38Z"
+        }
+      ]
+    }
+  }
+}

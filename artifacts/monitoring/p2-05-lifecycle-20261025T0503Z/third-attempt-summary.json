@@ -1,0 +1,57 @@
+{
+  "run_id": "20261025T052516-883b4d2fed22",
+  "state": "completed",
+  "cancel_requested": false,
+  "config": {
+    "duration_ns": 30000000000,
+    "rps": 20,
+    "legitimate_rps": 20,
+    "mode_label": "redis",
+    "algorithm_label": "fixed-window",
+    "fail_policy_label": "closed",
+    "profile": "normal"
+  },
+  "instances": 2,
+  "repetitions": 1,
+  "monitoring": true,
+  "load": {
+    "started_at": "2026-10-25T12:26:02.997829491+07:00",
+    "ended_at": "2026-10-25T12:26:33.001849119+07:00",
+    "scheduled": 600,
+    "sent": 600,
+    "dropped": null,
+    "http_2xx": 600,
+    "http_429": 0,
+    "http_5xx": 0,
+    "timeouts": 0,
+    "transport_errors": 0,
+    "canceled": false
+  },
+  "timestamps_utc": {
+    "registered_at": "2026-10-25T05:25:57.074Z",
+    "baseline_scrapes_utc": {
+      "api1": "2026-10-25T05:25:57.954Z",
+      "backend": "2026-10-25T05:25:57.954Z",
+      "api2": "2026-10-25T05:25:57.954Z"
+    },
+    "lookback_started_at": "2026-10-25T05:25:57.955Z",
+    "lookback_finished_at": "2026-10-25T05:26:01.958Z",
+    "post_lookback_scrapes_utc": {
+      "api1": "2026-10-25T05:26:01.957Z",
+      "backend": "2026-10-25T05:26:01.957Z",
+      "api2": "2026-10-25T05:26:01.957Z"
+    },
+    "load_started_at": "2026-10-25T05:26:02.997Z",
+    "load_ended_at": "2026-10-25T05:26:32.997Z",
+    "generator_drained_at": "2026-10-25T05:26:33.001Z",
+    "final_scrapes_utc": {
+      "api1": "2026-10-25T05:26:33.579Z",
+      "backend": "2026-10-25T05:26:33.579Z",
+      "api2": "2026-10-25T05:26:33.579Z"
+    },
+    "deregistered_at": "2026-10-25T05:26:33.581Z"
+  },
+  "monitoring_status": "complete",
+  "grafana_url": "http://127.0.0.1:13000/d/project3-monitoring-demo/f67e2fb?var-job=project3-console-run&var-rate_window=4s&from=1792905962998&to=1792905992997",
+  "interpretation": "Third UI run completed full 30-second generator with 600/600 requests and was not canceled. It verifies the normal runner lifecycle after c840a1e, not active-cancel acceptance."
+}

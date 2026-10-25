@@ -1,0 +1,33 @@
+{
+  "[r]esearch-pilot.sh --output": {
+    "present": false,
+    "matches": []
+  },
+  "[c]onsole-monitoring.py (register|wait|finish|remove)": {
+    "present": false,
+    "matches": []
+  },
+  "[l]oadgen": {
+    "present": false,
+    "matches": []
+  },
+  "[g]o run ./cmd/console": {
+    "present": false,
+    "matches": []
+  },
+  "active_manifest": {
+    "present": false
+  },
+  "research_lock": {
+    "free": true
+  },
+  "research_containers": {
+    "count": 0,
+    "ids": []
+  },
+  "browser_pages": {
+    "open": false,
+    "close_confirmed": true
+  },
+  "captured_at_utc": "2026-10-25T11:15:28Z"
+}

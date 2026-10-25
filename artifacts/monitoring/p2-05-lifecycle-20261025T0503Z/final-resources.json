@@ -1,0 +1,182 @@
+{
+  "initial_state": "all nine fixed containers were Exited before the session; IDs preserved",
+  "final_state": "all nine fixed containers Exited (0), no recreation/removal",
+  "containers": [
+    {
+      "id": "3ecce63f53725bf7576ac7e9ffd6982e00b4bbb96005cee2818c95bf0dca6497",
+      "name": "project3-monitoring-demo-alloy-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.269534202Z",
+      "image_id": "sha256:89a5a320168387336b9ac3c850609c3ba7757eadd4ae5f1d819deb35e9854b18",
+      "healthcheck_present": false,
+      "health_status_when_inspected": null,
+      "last_health_probe_utc": null,
+      "last_health_probe_exit_code": null,
+      "mounts": [
+        "bind:/etc/alloy/config.alloy",
+        "bind:/var/run/docker.sock",
+        "project3-monitoring-demo_alloy-data:/var/lib/alloy"
+      ],
+      "networks": [
+        "project3-monitoring-demo_default"
+      ]
+    },
+    {
+      "id": "663fb5cc9be00572ca4bcc3c93569a4073fd3574c33ee5e51bdf03b65a2b7c78",
+      "name": "project3-monitoring-demo-api1-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.247056027Z",
+      "image_id": "sha256:8cb5c01837592cc837c0056acae04f9070e51fe385358c204fba3a93f4267c5b",
+      "healthcheck_present": true,
+      "health_status_when_inspected": "unhealthy",
+      "last_health_probe_utc": "2026-10-25T05:38:33.522Z",
+      "last_health_probe_exit_code": 0,
+      "mounts": [],
+      "networks": [
+        "project3-monitoring-demo_default"
+      ]
+    },
+    {
+      "id": "272da800ef2e0cbc85756f387c8a0668f7676e89cb3fd26820ab2db069e9f1bb",
+      "name": "project3-monitoring-demo-api2-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.244377535Z",
+      "image_id": "sha256:453a139592511004a2321711e4be8c4fea60fd10a8b8d6f405f2bc4dfa3e2f57",
+      "healthcheck_present": true,
+      "health_status_when_inspected": "unhealthy",
+      "last_health_probe_utc": "2026-10-25T05:38:34.399Z",
+      "last_health_probe_exit_code": 0,
+      "mounts": [],
+      "networks": [
+        "project3-monitoring-demo_default"
+      ]
+    },
+    {
+      "id": "7c5e8deb126d996ada850a4a62c85b880dcab39d2baeaefa4b7ae9999bd86b8d",
+      "name": "project3-monitoring-demo-backend-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.245812999Z",
+      "image_id": "sha256:ffcbb11aed32d684e92b6c167a71c89f89383baab2b1a89c7696b0bcf86e3308",
+      "healthcheck_present": true,
+      "health_status_when_inspected": "unhealthy",
+      "last_health_probe_utc": "2026-10-25T05:38:34.397Z",
+      "last_health_probe_exit_code": 0,
+      "mounts": [],
+      "networks": [
+        "project3-monitoring-demo_default"
+      ]
+    },
+    {
+      "id": "86acfe9546c27e0dcda1ac54404d1b27991c89981e998ed6fd64683d47634ab1",
+      "name": "project3-monitoring-demo-grafana-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.295838415Z",
+      "image_id": "sha256:3ea272e5cab64a4a62240c682e2c62433b25614d956d44c299a10cb6994f6f2e",
+      "healthcheck_present": true,
+      "health_status_when_inspected": "unhealthy",
+      "last_health_probe_utc": "2026-10-25T05:38:29.451Z",
+      "last_health_probe_exit_code": 0,
+      "mounts": [
+        "bind:/etc/grafana/dashboards",
+        "bind:/etc/grafana/provisioning",
+        "bind:/run/secrets/grafana_admin_password",
+        "project3-monitoring-demo_grafana-data:/var/lib/grafana"
+      ],
+      "networks": [
+        "project3-monitoring-demo_default"
+      ]
+    },
+    {
+      "id": "9c0454b02c421ae439c71faeca7a9804d38904bbfc4fca974b022a3247c1e48c",
+      "name": "project3-monitoring-demo-loki-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.7832169Z",
+      "image_id": "sha256:c316b7c7589a5eeca843b6926c7446149d18300b79ac8538dc4ae063bc478da2",
+      "healthcheck_present": false,
+      "health_status_when_inspected": null,
+      "last_health_probe_utc": null,
+      "last_health_probe_exit_code": null,
+      "mounts": [
+        "bind:/etc/loki/loki.yml",
+        "project3-monitoring-demo_loki-data:/loki"
+      ],
+      "networks": [
+        "project3-monitoring-demo_default"
+      ]
+    },
+    {
+      "id": "a589a0189908b0fc4d06d6610015119fe88009615b299afb01ee189453d58bff",
+      "name": "project3-monitoring-demo-nginx-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.304942837Z",
+      "image_id": "sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+      "healthcheck_present": true,
+      "health_status_when_inspected": "unhealthy",
+      "last_health_probe_utc": "2026-10-25T05:38:33.522Z",
+      "last_health_probe_exit_code": 0,
+      "mounts": [
+        "bind:/etc/nginx/nginx.conf"
+      ],
+      "networks": [
+        "project3-monitoring-demo_default"
+      ]
+    },
+    {
+      "id": "1e2bcb4bcd72af0b334634a32f662a4cc528ec51dc4e72fd98bbd3a57c051b30",
+      "name": "project3-monitoring-demo-prometheus-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.279139935Z",
+      "image_id": "sha256:efd719c99d83b060d9daefdcf00360461adf279f45ef5391f8d111892118753e",
+      "healthcheck_present": true,
+      "health_status_when_inspected": "unhealthy",
+      "last_health_probe_utc": "2026-10-25T05:38:32.861Z",
+      "last_health_probe_exit_code": 0,
+      "mounts": [
+        "bind:/etc/prometheus/console-targets",
+        "bind:/etc/prometheus/prometheus.yml",
+        "project3-monitoring-demo_prometheus-data:/prometheus"
+      ],
+      "networks": [
+        "project3-monitoring-demo_default",
+        "project3-monitoring-scrape"
+      ]
+    },
+    {
+      "id": "8be2ce053153fee41208fcd16d570f4a3888765ddaacca0a75fa2b56534890a4",
+      "name": "project3-monitoring-demo-redis-1",
+      "state": "exited",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-25T05:38:35.33221139Z",
+      "image_id": "sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952",
+      "healthcheck_present": true,
+      "health_status_when_inspected": "unhealthy",
+      "last_health_probe_utc": "2026-10-25T05:38:34.398Z",
+      "last_health_probe_exit_code": 0,
+      "mounts": [
+        "700b666091c6938b38df92a4807ff551372d6468a9d8bdcaababf9dce013ef2e:/data"
+      ],
+      "networks": [
+        "project3-monitoring-demo_default"
+      ]
+    }
+  ],
+  "volumes": [
+    "project3-monitoring-demo_alloy-data",
+    "project3-monitoring-demo_grafana-data",
+    "project3-monitoring-demo_loki-data",
+    "project3-monitoring-demo_prometheus-data"
+  ],
+  "networks": [
+    "project3-monitoring-demo_default",
+    "project3-monitoring-scrape"
+  ],
+  "research_manifest_present": false
+}

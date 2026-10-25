@@ -1,0 +1,37 @@
+{
+  "phase": "queried while Console UI run active and loadgen PID present",
+  "run_id": "20261025T051659-d1cc11d15a14",
+  "query": "{project=\"project3-research-lab\",service=~\"api1|api2|backend\"}",
+  "range_utc": {
+    "start": "2026-10-25T05:16:50Z",
+    "end": "2026-10-25T05:17:34.945Z"
+  },
+  "entries": [
+    {
+      "project": "project3-research-lab",
+      "service": "api1",
+      "source_time": "2026-10-25T05:17:10.654050962Z",
+      "loki_ts_ns": "1792905430654751917",
+      "level": "INFO",
+      "message": "server started"
+    },
+    {
+      "project": "project3-research-lab",
+      "service": "api2",
+      "source_time": "2026-10-25T05:17:10.673311815Z",
+      "loki_ts_ns": "1792905430673744449",
+      "level": "INFO",
+      "message": "server started"
+    },
+    {
+      "project": "project3-research-lab",
+      "service": "backend",
+      "source_time": "2026-10-25T05:17:07.876259513Z",
+      "loki_ts_ns": "1792905427876901626",
+      "level": "INFO",
+      "message": "server started"
+    }
+  ],
+  "json_parse_errors": 0,
+  "status": "success"
+}
