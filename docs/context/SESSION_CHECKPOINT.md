@@ -1,5 +1,86 @@
 # Session checkpoint
 
+## P2-06 complete: six Console cases and retained-data correction — 2026-10-25 UTC
+
+User resumed P2-06 only with G2, the exact six-case G3 budget and focused G1
+fixes for concrete findings, then explicitly said to proceed. Root coordinated
+one scoped `gpt-6-luna`, low effort, fork none; the same worker was reused for
+provenance corrections and the final G2 check. No P2-07/P2-08 was opened.
+Root initially observed `94e3f80` with unrelated staged source notes and an
+unstaged reader-index change; concurrent proposal work committed these and
+later context updates independently. All unrelated work was preserved.
+
+**Actual source/config:** rows 1–5 recorded
+`c623a305731b3d9ec3efd2890d11e0b913f622bf`; row6 recorded
+`31bc3389bc3d4a3f21978dde9fb070723ccf56b0`. The intervening changes were to
+SOURCE_INDEX/SESSION_CHECKPOINT only, not runtime code/config. Each runner
+recorded dirty state `?? .playwright-mcp/`; those raw outputs were subsequently
+preserved under ignored batch `browser-raw/`, not erased from source records.
+All six cases used the existing Console button, research-pilot/topology/loadgen,
+monitoring enabled, 2 APIs, Fixed Window Q20/W1s, backend capacity4/service50ms,
+fail-closed where applicable, 30s and one repeat. Normal: 20 legitimate RPS;
+mixed: 120 total/20 legitimate RPS, same key distributions and other settings.
+No code/config fix, retry, replacement run, seventh load or extra work probe.
+
+**Coverage:** normal none/local/Redis each sent 600/600, all HTTP 2xx. Mixed
+none sent 3600/3600, 2028 2xx/1572 5xx; mixed local scheduled3600/sent3599,
+one schedule_backlog drop, 1223 2xx/1759 429/617 5xx; mixed Redis sent3600/3600,
+905 2xx/2393 429/302 5xx. All timeouts/transport errors were zero. Workload
+outcomes remain observations, not correctness claims or grounds for retry.
+All six have owned registration, fresh state/baseline/lookback and targets UP,
+post-drain final scrape, deregistration and scoped cleanup; retained metrics,
+all seven panels and case-owned startup JSON are verified. Runner summaries,
+not dashboard counters, own traffic counts and response outcomes.
+
+**Evidence and limitations:** [batch checks](../../artifacts/monitoring/p2-06-20261025T161955Z/checks.md),
+[pre-load plan](../../artifacts/monitoring/p2-06-20261025T161955Z/scenario-plan.md),
+[runtime identities/cleanup](../../artifacts/monitoring/p2-06-20261025T161955Z/runtime-preflight-and-cleanup.md),
+[Loki ownership](../../artifacts/monitoring/p2-06-20261025T161955Z/loki-startup-ownership.json).
+Mixed/none showed an unexplained Explore toast despite successful relevant
+HTTP200 queries; query-specific acceptance passed, UI-clean diagnosis remains
+incomplete. Last two startup queries initially returned zero in load-covering
+ranges: preserve those responses. Explicit startup diagnostics match entries
+inside each run-start→registration interval; mixed/local's backend query used
+16:37:05Z–16:45:10Z and contained one older backend entry, explicitly excluded.
+Grafana links use helper-rounded milliseconds, with per-case deltas recorded.
+Grafana also aligns query evaluation points: the row3 panel7 verification has
+three points per API at 16:32:30Z/45Z and 16:33:00Z despite browser bounds
+16:32:31.420Z–16:33:01.419Z. These are not raw scrape sample counts; no bounds
+were manually shifted or durations extended to hide missing data.
+
+**Correction preserved:** root found row3's panel7 screenshot was byte-identical
+to row2 and the blanket source-revision claim was wrong. The worker corrected
+both using actual artifacts. [Panel correction](../../artifacts/monitoring/p2-06-20261025T161955Z/panel7-correction.md)
+retains/excludes the misattributed image. Existing G2 authorization covered
+starting only the original Prometheus/Grafana containers, opening row3's exact
+retained range and querying panel7. HTTP200, api1/api2 and the new correct-range
+screenshot resolve the missing check; no load or app/Redis startup. The two
+containers were stopped again after 17:04:34Z–17:06:24Z verification. Root
+inspected the named corrected screenshot and concise reports, not a second
+runtime suite. Earlier stage snapshots were refreshed after `.git` read-only
+errors using authorized elevated Git access; no auto-review rejection occurred.
+
+**Commits/checks:** evidence-only `fdb9722` contains 43 selected files; raw
+Console/browser data stays ignored and preserved. Latest
+[FINAL_SELECTED_SHA256SUMS-v2](../../artifacts/monitoring/p2-06-20261025T161955Z/FINAL_SELECTED_SHA256SUMS-v2)
+SHA-256 `db6ee79a7b240108360d2c46895d593d67965ad46d95b1d46ca078a4324c667c`
+covers 146 entries, including references to local raw artifacts; not all entries
+are committed files. Root verified all 146 hashes with zero mismatches and
+inspected staged evidence; historical manifests remain for the correction trail.
+Status/checkpoint changes are committed separately. No code suite rerun was
+needed; root checked status-document links and staged whitespace. No push.
+
+**Final state/next prerequisite:** worker restored all nine original container
+IDs to Exited (0), preserved four volumes/two networks, no research resources,
+active manifest, loadgen/research process, session Console/browser or 8090
+listener; lock free. Root relocated the session-owned loose correction PNG into
+ignored browser-raw without deleting it. P2-06 is technically complete; learner
+confirmation remains unconfirmed and separate. Stop before P2-07/P2-08. Exact
+next prerequisite is a new scoped request for P2-08; optional P2-07 instead
+needs separate G4 and its safe same-run fault-hook prerequisite. All six load
+attempts are consumed; no further load is authorized by this closeout. T09/T10,
+prior P2-03A/P2-05 attempts and their conclusions are unchanged.
+
 ## Root-only final proposal review — 2026-10-25
 
 User explicitly requested personal root review with no delegation before reading
