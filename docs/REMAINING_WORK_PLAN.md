@@ -1,6 +1,6 @@
 # Công việc còn lại và trạng thái Project 3
 
-**Hiện trạng baseline 25/10/2026:** T09/T10 đã hoàn tất. T11 đã tích hợp bản nháp; định dạng cuối/rubric còn chờ. T12 demo/source đã kiểm tra; T13 chưa có PowerPoint. Trạng thái, gói tiếp theo và cổng quyền của monitoring chỉ được quản lý tại [sổ P2](monitoring/PHASE2_PLAN.md). Tài liệu này không cấp quyền chạy tải, stack, smoke runtime hay Redis outage.
+**Hiện trạng baseline 26/10/2026:** T09/T10 đã hoàn tất. T11 đã tích hợp bản nháp; định dạng cuối/rubric còn chờ. T12 demo/source đã kiểm tra; T13 chưa có PowerPoint. Trạng thái, gói tiếp theo và cổng quyền của monitoring chỉ được quản lý tại [sổ P2](monitoring/PHASE2_PLAN.md). Tài liệu này không cấp quyền chạy tải, stack, smoke runtime hay Redis outage.
 
 ## Việc đang chờ
 
@@ -14,6 +14,26 @@
 
 T09/T10 không có lượt đo nào đang mở. Đừng chạy lại hoặc ghép telemetry P2 vào bằng chứng nghiên cứu. Cổng và protocol đo ở [readiness](experiments/PROTOCOL_READINESS.md); chỉ mở [checkpoint](context/SESSION_CHECKPOINT.md) khi cần revision, artifact hoặc kiểm tra của phiên trước.
 
+## Đề xuất chưa thực hiện
+
+Các đề xuất dưới đây ghi nhận câu hỏi còn lại, không mở lại T09/T10, không cấp quyền đo và không thay đổi kết luận hiện có. Trước mọi lượt mới cần phạm vi, protocol/configuration, ngân sách và authorization riêng.
+
+| Ưu tiên | Đề xuất | Điều kiện trước khi cân nhắc đo |
+| --- | --- | --- |
+| 1 | Thiết kế oracle FW bounded có thể đưa ra kết luận cho cấu hình được kiểm tra | Trước hết đặc tả instrument/oracle và focused tests: fresh state, thời gian authoritative và biên window xác định, capture đầy đủ request/decision, quota/reject/reset; kiểm tra local và Redis riêng. Không đảm bảo kết quả pass; chỉ cân nhắc measurement sau protocol và quyền riêng. |
+| 2 | Scaling-only follow-up với backend không còn bottleneck ở offered 250 RPS | Hiệu chỉnh riêng để xác nhận headroom ở backend và các lớp dùng chung; định nghĩa ma trận 1/2/4 API, giữ nguyên evidence T09, đặt budget/gate riêng. Không suy từ đây rằng cần multihost, HA hay production cloud. |
+| 3 | Tăng số repetition hoặc phân tích suy luận thống kê | Chỉ cân nhắc nếu có ngân sách lặp lại đủ lớn và câu hỏi thống kê được định nghĩa trước; n=3 hiện tại chỉ hỗ trợ mô tả median/min–max. Không áp dụng kiểm định hậu nghiệm để đổi kết luận T10. |
+| 4 | Hòa giải provenance T06 | Đã đối chiếu artifact manifest, command, focused log và Git blob: `SHA256SUMS` ghi `28bd8a66…`, khớp blob tại commit hậu kỳ; narrative trong worklog ghi `b51ef6d5…`. Không có source snapshot riêng để xác minh file thực thi và chưa rõ nguyên nhân hai ghi nhận khác nhau; giữ nguyên gap này, không sửa hash/revision lịch sử. Chỉ cân nhắc test mới từ source đã commit nếu thật sự cần và được cấp authorization runtime/test riêng. |
+| Khi cần chia sẻ | Cập nhật metadata repository GitHub — đang chờ từ 26/10/2026 | Mô tả đề xuất: `Prototype rate limiter phân tán bằng Go và Redis: Fixed Window, Token Bucket, quota dùng chung và bảo vệ backend.` Topics đề xuất: `go`, `redis`, `rate-limiting`, `distributed-systems`, `fixed-window`, `token-bucket`, `benchmark`. Connector không hỗ trợ chỉnh repo/topics và `gh` chưa có trong môi trường; chưa có remote update. Lệnh áp dụng sau bảng, khi đã có `gh` đăng nhập. |
+| Khi cần tái sử dụng | Chọn license | MIT là lựa chọn đề xuất nếu mục đích là cho phép tái sử dụng rộng; xác nhận ý định trước khi thêm license. Đây không phải điều kiện bắt buộc của baseline. |
+| Khi deliverables sẵn sàng | Xem xét release/tag | Chỉ sau khi kiểm tra T13 deliverables và yêu cầu chia sẻ; chưa tạo release hoặc tag. Đây không phải gate nghiên cứu. |
+
+Lệnh cập nhật description/topics (chưa thực thi):
+
+```sh
+gh repo edit SonBestCodeVien5/project3-rate-limiter --description 'Prototype rate limiter phân tán bằng Go và Redis: Fixed Window, Token Bucket, quota dùng chung và bảo vệ backend.' --add-topic go --add-topic redis --add-topic rate-limiting --add-topic distributed-systems --add-topic fixed-window --add-topic token-bucket --add-topic benchmark
+```
+
 ## Baseline và bằng chứng theo task
 
 Giữ phạm vi: Fixed Window/Token Bucket; local/Redis shared state; concurrency và scaling; mixed legitimate/abusive traffic để đo backend protection; một Redis outage ngắn với fail-open/fail-closed. Sliding Window và dashboard là tùy chọn. Nguồn ưu tiên Roadmap > Proposal > Research Context > Positioning; protocol kỹ thuật không phải rubric của trường.
@@ -25,7 +45,7 @@ Giữ phạm vi: Fixed Window/Token Bucket; local/Redis shared state; concurrenc
 | T03 | T01–T02 | Gate normal/mixed — **pilot gate đạt giới hạn** | FW oracle `inconclusive`, không phải correctness pass hay formal benchmark. Cùng [gate worklog](worklog/2026-10-19-measurement-gate/README.md). |
 | T04 | T03 | Hiệu chỉnh normal/burst FW/TB và none — **hoàn tất có giới hạn** | FW inconclusive, một lượt không kết luận hiệu năng. [Worklog](worklog/2026-10-19-calibration-next/README.md). |
 | T05 | T03 | Hiệu chỉnh scaling 1/2/4 — **hoàn tất có giới hạn** | Backend chung giới hạn suy luận; chưa chứng minh mode/API scaling nào tốt hơn. [Worklog](worklog/2026-10-19-calibration-next/T05-README.md). |
-| T06 | T03 | Atomicity/concurrency — **hoàn tất bằng tests** | Lua quota và non-atomic forced-race control; không suy tần suất race tự nhiên/performance HTTP. Test-source hash và uncommitted-patch caveat tại [T06 worklog](worklog/2026-10-19-atomicity/README.md) và [T10 results](analysis/T10_RESULTS.md). |
+| T06 | T03 | Atomicity/concurrency — **hoàn tất bằng tests** | Lua quota và non-atomic forced-race control; không suy tần suất race tự nhiên/performance HTTP. Có provenance cần hòa giải; chi tiết và bước theo dõi ở [T10 RQ4](analysis/T10_RESULTS.md#rq4--atomicityconcurrency-từ-t06), bằng chứng gốc tại [T06 worklog](worklog/2026-10-19-atomicity/README.md). |
 | T07 | T03 | Redis outage runner/recovery — **bounded calibration hoàn tất** | Stable recovery 4s theo tiêu chí đã khóa; first success riêng, FW inconclusive. Không suy thành HA production. [Worklog](worklog/2026-10-19-outage-recovery/README.md). |
 | T08 | T04–T07 | Protocol/manifest — **khóa protocol v1** | T09 dùng [v1.2](experiments/protocol-v1.2/protocol.md) và [manifest](experiments/protocol-v1.2/manifest.json); [v1.3 addendum](experiments/protocol-v1.3/protocol.md) chỉ bổ sung slot thiếu được cho phép. [T08 worklog](worklog/2026-10-19-t08-network/README.md). |
 | T09 | T08 | Formal measurement — **hoàn tất** | 138/138 slot, 46/46 cấu hình; một lượt v1.3 bổ sung slot thiếu. Measurement source: `0291a80fb404fea0eafee8c3431acc3631bb423e`. [T09 evidence/checksums](worklog/2026-10-20-t09-v1.3/README.md). Không chạy thêm tải. |

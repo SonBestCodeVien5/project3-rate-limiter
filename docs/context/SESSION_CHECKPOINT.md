@@ -1,5 +1,50 @@
 # Session checkpoint
 
+## Review follow-up: reader summary and evidence limits — 2026-10-26
+
+User authorized feasible improvements from the six-point assessment and asked
+to record proposals for work that cannot be completed immediately. Root reused
+one scoped `gpt-6-luna`, low effort, for current documentation and focused checks;
+root integrated, inspected staged diffs and separated commits by topic.
+
+**Delivered:** README now surfaces measured results and reuses the implementation
+architecture diagram (`39ca6f7`). Current report/T10 clarify T06 provenance
+(`eb1805d`), explain why longer passive FW traces alone cannot resolve the oracle
+(`f0d4ba1`), and state statistical/setup validity limits (`5f82d5c`). Existing
+REMAINING_WORK_PLAN owns deferred FW observation/oracle design, scaling with
+backend/shared-layer headroom, statistical follow-up, T06 reconciliation and
+repository presentation tasks. No new guide or worklog was created.
+
+**T06 named finding:** dated narrative records tested-file SHA-256
+`b51ef6d5c7c63dac5ae84e729911d4f7fc34cc761384c85674a56cff4d4ca46f`;
+the retained artifact manifest records
+`28bd8a66a8ec39350954ce31b6caa390f35b895e0a9a1e7a89394ba227e3fc84`,
+matching the current tracked file and blob at later commit
+`3e938a20925feef05c3608c05675c5149580a837`. That commit precedes T09 source
+`0291a80fb404fea0eafee8c3431acc3631bb423e`. The patch was uncommitted when
+T06 ran against base `26b5decb835dbb136eb2d45b361920a414434f6b`.
+Retained COMMAND.txt/SHA256SUMS/focused-final.log contain no separate tested-source
+snapshot; the cause of the conflicting hash records remains unresolved. Current
+docs disclose it; historical worklog, checksums and recorded revisions are intact.
+This finding alone does not establish a failed test or a byte-identical executed
+snapshot. Any new test is separate evidence, not a replacement of the old run.
+
+**Remote metadata:** no mutation. GitHub connector lacks repository-description/
+topics editing, `gh` is absent and a bounded browser check was signed out.
+The created tab was closed; session browser outputs were moved into ignored
+`artifacts/review-20261026/browser-raw/`. The plan includes proposed description,
+topics and an unexecuted command for authenticated `gh`. License remains an owner
+choice; release/tag awaits checked deliverables. No installation/login attempted.
+
+**Checks/stop:** worker checked changed Markdown file targets and whitespace,
+Git tracking, ancestry and hashes; root inspected the named manifest conflict and
+each staged diff. No code suite, runtime, load, outage, new T10 analysis or P2
+gate. No historical evidence/protocol/result changed. Git staging later required
+authorized escalation after `.git/index` became read-only; no auto-review
+rejection. Commits are local; no push. Deferred measurements require scoped
+design, configuration, budget and authorization; FW remains inconclusive and
+the original scaling conclusion remains backend-limited.
+
 ## Proposal: business need and early requirements — 2026-10-26
 
 User relayed instructor feedback: sections 1–3 should explain what the system
