@@ -110,9 +110,11 @@ T09 gồm 138/138 lượt được chấp nhận trên 46/46 cấu hình, mỗi 
 
 Các số trên là mô tả thực nghiệm, không có kiểm định ý nghĩa thống kê. Valid measurement không đồng nghĩa correctness đã được chứng minh. Các nguồn số liệu được truy về manifest v1.2, các run/cell và artifacts trong [traceability](worklog/2026-10-20-t10/traceability.csv), [provenance](worklog/2026-10-20-t10/provenance.json) và [checksums](worklog/2026-10-20-t10/SHA256SUMS); revision đo là `0291a80fb404fea0eafee8c3431acc3631bb423e`. RQ4 là nguồn evidence T06 riêng như đã nêu.
 
-### Giới hạn
+### Giới hạn và các yếu tố ảnh hưởng độ tin cậy
 
-FW correctness oracle còn inconclusive; Redis network là tổng traffic chứ không cô lập lưu lượng limiter; outage không có resource sampling. UTC accuracy tuyệt đối, độ bền restart/resume và khả năng khái quát từ backend mô phỏng chưa được xác minh. Kiểm tra atomicity ép race bằng barrier, không ước lượng tần suất race tự nhiên. Latency là median p95 theo run, không phải pooled p95. Stable recovery không phải first success. Tác động flash-sale vẫn là giả định nghiệp vụ; không có số liệu doanh thu hay SLO thực tế. Pilot/calibration lịch sử không thay thế kết quả formal T09/T10.
+Mỗi cell chỉ có n=3; median và min–max là thống kê mô tả, không phải confidence interval, và không có kiểm định ý nghĩa thống kê. Vì vậy độ biến thiên và khác biệt nhỏ chưa được đánh giá bằng suy luận thống kê. API, Redis, generator và backend chạy trong cùng môi trường cục bộ, nên cạnh tranh tài nguyên có thể ảnh hưởng độ trễ; đây là giới hạn thiết lập, không khẳng định topology vật lý cụ thể của mọi thành phần T09. Backend mô phỏng và workload khóa hạn chế khả năng khái quát hóa.
+
+FW correctness oracle còn inconclusive: analyzer giữ mọi FW window là partial vì trace không xác định đầy đủ khoảng quan sát trong miền giờ server/Redis. Thêm thời lượng trace thụ động không đủ; một đánh giá có thể kết luận cần thiết kế fresh-state với biên window theo thời gian authoritative, capture đầy đủ request/decision, quota và reject path, reset state, rồi kiểm tra local/Redis riêng. Kết quả vẫn chỉ bao trùm cấu hình được kiểm tra. Redis network là tổng traffic chứ không cô lập lưu lượng limiter; outage không có resource sampling. UTC accuracy tuyệt đối, độ bền restart/resume chưa xác minh. Kiểm tra atomicity ép race bằng barrier, không ước lượng tần suất race tự nhiên. Latency là median p95 theo run, không phải pooled p95. Stable recovery không phải first success. Tác động flash-sale vẫn là giả định nghiệp vụ; không có số liệu doanh thu hay SLO thực tế. Pilot/calibration lịch sử không thay thế kết quả formal T09/T10.
 
 ## 6. Kết luận tạm thời và hướng phát triển
 
