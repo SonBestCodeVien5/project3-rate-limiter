@@ -6,6 +6,27 @@ Bắt đầu ở [hướng dẫn đọc tài liệu](docs/README.md). Tài liệ
 
 **Theo dõi tiến độ:** [Kế hoạch baseline](docs/REMAINING_WORK_PLAN.md) quản lý T01–T13/H01–H02; [sổ P2](docs/monitoring/PHASE2_PLAN.md) quản lý trạng thái/gate monitoring và phần acceptance còn thiếu. Nếu cần chạy app cùng monitoring, theo [runbook monitoring](docs/monitoring/RUNBOOK.md) trong phạm vi đã được cho phép.
 
+## Kết quả chính đã đo
+
+T09/T10 hoàn tất 138 lượt hợp lệ trên 46 cấu hình (n=3 mỗi cấu hình); xem [bản phân tích và giới hạn](docs/analysis/T10_RESULTS.md) cùng [bản nháp báo cáo](docs/REPORT_DRAFT.md).
+
+- Trong workload mixed trên testbed đã đo, limiter bảo vệ backend tốt hơn `none` và tăng goodput client hợp lệ; không suy rộng thành hiệu quả kinh doanh hay backend production.
+- Local và Redis đều xử lý workload này; goodput mixed khác nhau theo mode/thuật toán, nên kết quả không xác lập lựa chọn phổ quát.
+- Ở offered load 250 RPS, backend capacity 10/service time 50 ms giới hạn goodput quanh 191/s; đây không phải bằng chứng API scaling.
+- FW correctness oracle còn `inconclusive`; các lượt HTTP hiện tại không đủ quan sát đầy đủ các cửa sổ theo server time.
+- Thí nghiệm Redis outage có giới hạn cho thấy fail-open phục vụ được request trong pha pause còn fail-closed từ chối; đây không phải kiểm thử production HA.
+
+```mermaid
+flowchart LR
+    G[Load generator] --> N[Nginx round robin]
+    N --> A[API 1 + limiter]
+    N --> B[API 2 + limiter]
+    A <--> R[(Redis shared state)]
+    B <--> R
+    A --> C[Backend giới hạn concurrency]
+    B --> C
+```
+
 ## Chạy prototype (base Compose, không gồm monitoring)
 
 Các lệnh dưới đây chỉ chạy prototype bằng base Compose; chúng không khởi động Prometheus/Grafana. Muốn chạy app cùng monitoring, dùng riêng [runbook monitoring](docs/monitoring/RUNBOOK.md). Cần Go 1.26.1 trở lên, Docker Compose, Bash, curl và GNU `timeout`.
