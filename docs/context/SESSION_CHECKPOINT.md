@@ -1,5 +1,46 @@
 # Session checkpoint
 
+## Proposal: business need and early requirements — 2026-10-26
+
+User relayed instructor feedback: sections 1–3 should explain what the system
+is and why a business needs it, closer to an initial SDLC requirements document,
+while retaining an instructor-facing proposal. Root personally drafted and
+integrated this package; no workers or runtime work. Read current native Doc,
+Roadmap/source index and relevant Proposal/Positioning notes before editing.
+
+**Drive:** expanded only sections 1–3: business scenario and conditional impact;
+stakeholders and operational objectives; client quota/shared-state/error-behavior
+requirements; definition of rate limiter/distributed quota; reason load balancing
+or more API instances alone does not establish shared quota or backend capacity.
+Clarified applicability and expected value as hypotheses, technology choices
+versus business needs, experiment parameters versus real deployment policy, and
+trusted workload identity versus bot detection/authentication. Preserved all five
+RQs, mixed none/local/Redis backend-protection baseline, real-Redis atomicity and
+forced-race control, bounded fail-open/fail-closed outage and scope limits.
+Personal/title content and sections 4–7 are byte-identical in text readback.
+
+**Repo/source sync:** detailed `docs/PROPOSAL.md` mirrors the rationale across
+its sections 1–4, preserving its different outline and engineering detail.
+Front matter and sections 5–13 are unchanged. Source note records the instructor
+feedback as relayed by user; SOURCE_INDEX modification time is
+`2026-10-26T01:47:04.886Z`. Before this edit the live Doc metadata already showed
+`2026-10-26T01:25:58.931Z`; root fetched the current full content and used its
+revision, not older cached positions. Only Proposal was fetched; other source
+Docs were not re-read. Requirements and study scope remain Roadmap-compatible,
+so no active brief/experiment-spec change was needed.
+
+**Checks:** revision-guarded scoped edit; readback exactly matches unchanged
+front + intended sections 1–3 + unchanged tail. Seven HEADING_1 paragraphs and
+17 native list paragraphs. Local checks confirm unchanged front/sections 5–13,
+17 valid local file links, required scope distinctions and clean whitespace;
+staged diff inspected. No code suite needed for prose changes. No benchmark,
+load, outage, P2 gate, measurement evidence or scientific conclusion changed.
+
+**Stop:** updated existing Drive proposal and detailed repo; no export,
+email/submission, sharing change or push. Business impact remains hypothetical;
+no real enterprise interviews/data, production applicability guarantee or formal
+instructor approval is implied. PDF pagination/rubric format was not checked.
+
 ## P2-06 complete: six Console cases and retained-data correction — 2026-10-25 UTC
 
 User resumed P2-06 only with G2, the exact six-case G3 budget and focused G1
