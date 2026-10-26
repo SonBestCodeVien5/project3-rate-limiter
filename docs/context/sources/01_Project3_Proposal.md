@@ -8,6 +8,14 @@
 
 Prototype cần quyết định quota trước backend, so sánh Fixed Window/Token Bucket, local/Redis shared state và scaling từ một lên nhiều API instance. Phạm vi bắt buộc gồm tải normal, burst, concurrent và mixed legitimate/abusive, kiểm tra atomic quota bằng test race có kiểm soát, cùng Redis outage ngắn để đo fail-open/fail-closed. Không mở rộng thành gateway, production HA/cloud/Kubernetes, service mesh hay auth platform.
 
+## Làm rõ nhu cầu ban đầu theo góp ý giảng viên
+
+Ngày 26/10/2026, người dùng yêu cầu đào sâu mục 1–3 của bản Drive theo hướng tài liệu xác định nhu cầu ban đầu trong SDLC, vẫn giữ dạng proposal gửi giảng viên. Bản cập nhật làm rõ các bên liên quan, tình huống doanh nghiệp cần kiểm soát API, việc chia tải không tự tạo quota chung và giá trị kỳ vọng cần kiểm chứng. Tác động kinh doanh vẫn là giả định, chưa phải kết quả doanh nghiệp thực tế.
+
+Các yêu cầu tập trung vào quota theo client trước backend, quota chung khi nhiều instance/request đồng thời, phản hồi phân biệt policy reject với lỗi, hành vi khi shared state gián đoạn và chi phí hiệu năng/tài nguyên. Ngưỡng quota của prototype là tham số thí nghiệm; policy triển khai thực tế cần xác nhận theo nhu cầu và năng lực hệ thống. Redis, FW/TB và Lua là lựa chọn triển khai, không phải công nghệ doanh nghiệp bắt buộc phải dùng.
+
+Rate limiter không tự nhận diện bot hoặc bảo đảm mọi request hợp lệ thành công. Bản Drive giữ đủ năm RQ và các so sánh none/local/Redis, concurrency, mixed backend protection và bounded outage; phần đánh giá, sản phẩm, kế hoạch và nguồn tham khảo không đổi. Các làm rõ này không mở thêm phạm vi đo hay thay đổi kết quả baseline.
+
 ## Câu hỏi nghiên cứu
 
 - **RQ1:** FW và TB ảnh hưởng latency, throughput và burst behavior thế nào?

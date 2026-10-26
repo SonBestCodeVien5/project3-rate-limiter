@@ -14,25 +14,40 @@ Giảng viên hướng dẫn: ..................................................
 
 ## 1. Bối cảnh doanh nghiệp
 
-Nhiều doanh nghiệp cung cấp dịch vụ qua API và mở rộng backend từ một máy chủ sang nhiều instance khi tải tăng. Đề tài dùng tình huống giả định của một ứng dụng bán hàng trực tuyến trong đợt flash sale: người mua hợp lệ và client tạo tải bất thường cùng truy cập API sau load balancer. Đây là kịch bản nghiên cứu, không phải sự cố đã được xác minh tại doanh nghiệp cụ thể.
+Đề tài xét tình huống giả định của một doanh nghiệp bán hàng trực tuyến, cung cấp chức năng cho khách hàng qua API. Khi có chiến dịch quảng cáo hoặc flash sale, nhiều khách hàng cùng truy cập trong thời gian ngắn. Bên cạnh nhu cầu sử dụng hợp lệ, một số client có thể gửi request với tần suất quá lớn do tự động hóa, cấu hình sai hoặc hành vi lạm dụng. Các nguồn traffic này cùng sử dụng năng lực xử lý có giới hạn của backend.
 
 ## 2. Vấn đề doanh nghiệp gặp phải
 
-Traffic có thể tăng đột biến do chiến dịch quảng cáo, ra mắt sản phẩm, client tự động hoặc bot. Nếu mỗi API instance giữ bộ đếm riêng, request của cùng một client có thể được load balancer phân phối qua nhiều instance và vượt quota chung. Cập nhật state đồng thời không atomic cũng có thể tạo race condition. Backend quá tải có thể làm tăng độ trễ, gây lỗi dịch vụ và ảnh hưởng người dùng hợp lệ; mất giao dịch là rủi ro giả định, chưa được đo trong đề tài.
+Khó khăn của doanh nghiệp là duy trì khả năng phục vụ khách hàng hợp lệ trong khi kiểm soát mức tài nguyên mà mỗi client được sử dụng. Nếu tiếp nhận mọi request, một số nguồn gửi quá nhiều có thể chiếm phần lớn năng lực xử lý, làm tăng độ trễ hoặc khiến request khác thất bại. Hệ quả có thể là trải nghiệm sử dụng bị gián đoạn, tăng công sức xử lý sự cố và nguy cơ mất giao dịch. Đây là tác động giả định để đặt bài toán; đề tài không có số liệu doanh thu hoặc sự cố của một doanh nghiệp cụ thể.
 
-Pain point phía doanh nghiệp là khách hàng hợp lệ phải cạnh tranh với traffic bất thường, từ đó có thể gặp request chậm hoặc thất bại và nguy cơ giao dịch bị gián đoạn. Quota chung và state dùng chung là yêu cầu kỹ thuật để khảo sát cách giảm vấn đề này. Testbed đo proxy ở mức request và backend; đề tài không đo giao dịch mua hàng hay doanh thu, nên tác động kinh doanh vẫn là giả thuyết.
+Khi hệ thống có nhiều API instance sau load balancer, request của cùng một client có thể đến các instance khác nhau. Load balancer phân phối request nhưng không tự tạo ra quota chung. Nếu mỗi instance tự đếm độc lập, client có thể được nhận tổng số request cao hơn mức doanh nghiệp muốn cho phép. Hơn nữa, tăng số API instance chưa chắc tăng được năng lực của backend dùng chung.
+
+Vì vậy, nhu cầu cần khảo sát là một cơ chế kiểm soát lưu lượng trước backend, áp dụng quota nhất quán theo client trên nhiều instance. Cơ chế này phù hợp khi doanh nghiệp có chính sách giới hạn sử dụng API, có nhiều nơi tiếp nhận request và có nguy cơ traffic tăng vượt khả năng phục vụ. Giá trị kỳ vọng là hạn chế phần tải vượt policy, giảm áp lực lên backend và duy trì cơ hội phục vụ client hợp lệ; mức cải thiện phải được kiểm chứng thay vì mặc định có lợi.
 
 ## 3. Nhu cầu của doanh nghiệp
 
-Cơ chế cần quyết định trước xử lý backend, hỗ trợ quota chung theo client trên nhiều API instance, giữ quota đúng khi có request đồng thời, và đo chi phí độ trễ, thông lượng cùng tài nguyên. Thí nghiệm tải hỗn hợp cần quan sát đồng thời client hợp lệ và backend; không giả định trước rằng limiter luôn cải thiện kết quả. Với Redis tạm thời unavailable, prototype phải có hành vi fail-open hoặc fail-closed để đo trade-off về khả năng phục vụ và quota enforcement. Đây là fault injection ngắn, có kiểm soát, không phải yêu cầu chịu lỗi production.
+Mục tiêu nghiệp vụ là kiểm soát việc sử dụng API theo policy đã định và đánh giá khả năng phục vụ client hợp lệ khi có tải bất thường. Ba bên liên quan là người dùng/client hợp lệ, doanh nghiệp cung cấp dịch vụ và đội phát triển/vận hành cần hiểu hành vi hệ thống khi quá tải hoặc có lỗi.
+
+Từ bài toán đó, đề tài xác định các yêu cầu cần khảo sát:
+
+- Áp dụng quota theo client trước khi request được xử lý tại backend; phản hồi rõ khi request vượt quota để client có thể điều chỉnh cách gửi.
+- Giữ quota chung nhất quán khi request đi qua nhiều API instance, kể cả khi nhiều request của cùng client đến đồng thời.
+- Phân biệt request bị từ chối đúng policy với request thất bại do lỗi hệ thống; đánh giá cả khả năng phục vụ client hợp lệ và mức tải thực sự tới backend.
+- Xác định hành vi khi không truy cập được trạng thái quota chung, đồng thời đo chi phí độ trễ và tài nguyên của cơ chế kiểm soát.
+
+Đề tài xây dựng prototype để đánh giá các đánh đổi giữa tính đúng của quota, hiệu năng và khả năng phục vụ. Các ngưỡng quota trong prototype là tham số thí nghiệm; chính sách triển khai thực tế cần được xác nhận theo nhu cầu và năng lực hệ thống của doanh nghiệp. Các yêu cầu này được cụ thể hóa thành các câu hỏi nghiên cứu tại mục 5.
 
 ## 4. Giải pháp đề xuất
 
-Xây dựng prototype rate limiter gắn trong middleware của API. Topology thí nghiệm là **client → load balancer → middleware rate limiter tại API → backend mô phỏng có concurrency giới hạn**. Redis chỉ là nhánh lưu state dùng chung khi chạy chế độ Redis; Redis không phải đích xử lý request. Ở chế độ local, mỗi API instance có state riêng để làm đối chứng. Backend mô phỏng giữ năng lực xử lý có thể kiểm soát khi thay số API instance.
+Rate limiter là cơ chế kiểm tra request theo giới hạn sử dụng đã cấu hình, chẳng hạn số request một client được gửi trong một khoảng thời gian. Request còn trong quota được chuyển tiếp; request vượt quota bị từ chối chủ động trước backend. Tính phân tán ở đây là việc kiểm tra được thực hiện tại nhiều API instance nhưng cùng tuân thủ một quota chung, thay vì mỗi instance cấp thêm một phần quota độc lập.
 
-So sánh Fixed Window (FW) và Token Bucket (TB), local state và Redis shared state, một và nhiều API instance. FW và TB được cấu hình cùng tốc độ dài hạn mục tiêu, nhưng có semantics burst khác nhau; không xem chúng là tương đương từng thời điểm. Lua Script là lựa chọn triển khai atomic cho quyết định quota trên Redis. Đối chứng không atomic chỉ dùng test có barrier để tạo race có kiểm soát, không dùng làm phép đo HTTP performance.
+Trong prototype, luồng xử lý là client → load balancer → API instance có rate limiter → backend mô phỏng giới hạn concurrency. Redis là lựa chọn lưu trạng thái quota dùng chung; local state là đối chứng để đánh giá khác biệt khi các instance không chia sẻ trạng thái. Fixed Window (FW) và Token Bucket (TB) là hai thuật toán được so sánh. Quyết định kiểm tra và cập nhật quota cần được thực hiện như một thao tác atomic để tránh nhiều request đồng thời cùng sử dụng phần quota còn lại. Đây là lựa chọn triển khai để đáp ứng yêu cầu, không phải yêu cầu doanh nghiệp bắt buộc phải dùng Redis hay một thuật toán cụ thể.
 
-`X-Client-ID` là định danh tin cậy do load generator cung cấp trong testbed, không phải xác thực người dùng hay bảo đảm danh tính trong môi trường thật. Phạm vi không bao gồm nền tảng API Gateway hoàn chỉnh, production HA, service mesh, production Kubernetes/cloud, nền tảng authentication hoặc dịch vụ không liên quan.
+Phạm vi thực nghiệm gồm tải bình thường, burst, concurrent và tải hỗn hợp giữa client hợp lệ với client tạo tải bất thường. So sánh không limiter, local và Redis trên cùng workload/backend; kiểm tra atomicity với Redis thật và đối chứng non-atomic tạo race có kiểm soát. Một Redis outage ngắn được dùng để so sánh fail-open (tiếp tục cho request đi qua) và fail-closed (từ chối khi không kiểm tra được quota), làm rõ đánh đổi giữa khả năng phục vụ và quota enforcement.
+
+Client trong testbed được nhận diện bằng `X-Client-ID` do load generator tin cậy cung cấp; đây không phải xác thực người dùng. Rate limiter không tự nhận diện bot hoặc bảo đảm mọi request hợp lệ đều thành công: kết quả còn phụ thuộc định danh, policy và năng lực backend. Prototype tập trung vào cơ chế giới hạn lưu lượng và đánh giá bằng số đo; không xây dựng API Gateway hoàn chỉnh, service mesh, nền tảng xác thực, hệ thống HA production, Kubernetes/cloud production hoặc dịch vụ không liên quan. Sliding Window và monitoring là phần mở rộng tùy thời gian.
+
+FW và TB được cấu hình cùng tốc độ dài hạn mục tiêu nhưng có burst semantics khác nhau. Lua Script là lựa chọn triển khai atomic trên Redis; đối chứng non-atomic chỉ phục vụ test có barrier, không dùng đo HTTP performance.
 
 ## 5. Câu hỏi nghiên cứu
 
